@@ -815,7 +815,7 @@ obj\
 
 # [**Etcd**](https://github.com/etcd-io/etcd)
 
-> [`etcd`](https://coreos.com/etcd/docs/latest/demo.html) 分布式、可靠的键值存储，用于分布式系统中共享配置和服务发现。 [`download`](https://github.com/etcd-io/etcd/releases) [`play...`](http://play.etcd.io/install)
+> [`etcd`](https://coreos.com/etcd/docs/latest/demo.html) 分布式、可靠的键值存储，用于分布式系统中共享配置和服务发现。 [`install`](https://www.jianshu.com/p/e892997b387b)  [`download`](https://github.com/etcd-io/etcd/releases)  [`play...`](http://play.etcd.io/install)
  * 简单: 良好定义的HTTP接口，面向用户的API(gRPC)，易理解；支持消息发布与订阅；
  * 安全: 支持SSL客户端安全认证；数据持久化(默认数据更新就进行持久化)；
  * 快速: 每秒1w/qps；版本高速迭代和开发中，这既是一个优点，也是一个缺点；
@@ -824,7 +824,7 @@ obj\
 # 版本: 默认API版本为2(修改参数ETCDCTL_API=3)；
 # 端口: 默认2379为客户端通讯，2380进行服务器间通讯；
 # <本地简单运行>----------------------------------------------------
- > nssm install EtcdServer etcd.exe # 以管理员运行服务
+ > nssm install EtcdServer etcd.exe --config-file etcd.conf.yml # 以管理员运行服务
  # 运行(客户端) > etcdctl [command]  # etcdctl和etcd交互,命令如下:
  # put[输入], get[输出--rev=1'取版本号1'], del[删除], watch[观察历史修订], compact[压缩修订版本]
  # lease grant 10 (1.授予租约>'TTL为10秒';返回[id]); put --lease=[id] [key] [value] (指定key授予租约)

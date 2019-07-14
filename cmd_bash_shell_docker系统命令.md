@@ -72,6 +72,21 @@
   $ groups          # 用户所在组
   $ groupadd        # 添加用户组
   
+  # 网络端口
+  > netstat -anT                                                  # tcp端口(本地地址,外部地址,状态)
+  > netstat -anp tcp | findstr -i "listening" # 查找本机tcp端口监听列表
+  $ netstat -anp |grep 3306                          # 1.通过端口查看进程; 2.通过进程id查看占用端口; [p显示进程]
+  $ netstat -atW |grep -i "listen"                 # tcp端口-centos $ yum install -y net-tools & yum install -y traceroute
+  $ netstat -tulnp | grep -i "time_wait" # tcp超时-ubuntu $ apt-get update & apt-get install -y net-tools
+  $ ss -t4 state time-wait                                # tcp超时-ubuntu $ apt-get install -y iproute2 iproute2-doc
+  $ ss -at '( dport = :ssh or sport = :ssh )' # 端口为 ssh 的套接字
+  $ ss -lntp '( dst :443 or dst :80 )'               # 目的端口为 80,443 的套接字
+  $ ss -nt state connected dport = :80
+  $ ss -nt dport lt :100  # 端口小于100
+  $ ss -nt dport gt :1024 # 端口大于1024
+  $ ss -lntp  # tcp端口+users进程name-pid-fd  # 常用ss(iproute工具)比netstat(net-tools工具)更强大
+  $ ss -aup   # udp端口
+  
   # 进程详情
   > tasklist
   > wmic process where "caption = 'java.exe' and commandline like '%server-1.properties%'" get processid
@@ -139,20 +154,6 @@
 export http_proxy=http://127.0.0.1:5005
 export https_proxy=http://127.0.0.1:5005
 export ftp_proxy=http://127.0.0.1:5005
-  
-  # 网络端口
-  > netstat -anT                                                  # tcp端口(本地地址,外部地址,状态)
-  > netstat -anp tcp | findstr -i "listening" # 查找本机tcp端口监听列表
-  $ netstat -atW | grep -i "listen"                 # tcp端口-centos $ yum install -y net-tools & yum install -y traceroute
-  $ netstat -tulnp | grep -i "time_wait" # tcp超时-ubuntu $ apt-get update & apt-get install -y net-tools
-  $ ss -t4 state time-wait                                # tcp超时-ubuntu $ apt-get install -y iproute2 iproute2-doc
-  $ ss -at '( dport = :ssh or sport = :ssh )' # 端口为 ssh 的套接字
-  $ ss -lntp '( dst :443 or dst :80 )'               # 目的端口为 80,443 的套接字
-  $ ss -nt state connected dport = :80
-  $ ss -nt dport lt :100  # 端口小于100
-  $ ss -nt dport gt :1024 # 端口大于1024
-  $ ss -lntp  # tcp端口+users进程name-pid-fd  # 常用ss(iproute工具)比netstat(net-tools工具)更强大
-  $ ss -aup   # udp端口
   
   # 网络共享
   > net share           # 查找

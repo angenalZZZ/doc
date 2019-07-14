@@ -1,3 +1,5 @@
+#!/bin/sh
+
 for Repo in $* ; do
 curl -s -S "https://registry.hub.docker.com/v2/repositories/library/$Repo/tags/" | \
 sed -e 's/,/,\n/g' -e 's/\[/\[\n/g' | \

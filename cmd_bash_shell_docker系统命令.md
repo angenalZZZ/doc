@@ -348,6 +348,17 @@ $ source ~/.zshrc # 使配置生效
   $ sudo mysqladmin -u root password root      # 设置密码
   $ mysql -u root -p                                                         # 登录mysql
   $ mysql> source db.sql                                               # 执行sql
+  
+  # 安装数据库mongodb 文档 docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu
+  $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
+  $ echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
+  $ sudo apt-get update
+  $ sudo apt-get install -y mongodb-org                             # 安装/下面是指定版本
+  $ sudo apt-get install -y mongodb-org=4.0.10 mongodb-org-server=4.0.10 mongodb-org-shell=4.0.10 mongodb-org-mongos=4.0.10 mongodb-org-tools=4.0.10
+  $ sudo service mongod start,stop,restart                       # 启动,停止,重启
+  $ sudo systemctl enable mongod.service                      # 开机启动
+  $ sudo apt-get purge mongodb-org*                                # 卸载
+  $ sudo rm -r /var/log/mongodb  /var/lib/mongodb
 
   # 安装数据库Pilosa (分布式位图索引) www.pilosa.com
   $ curl -L -O https://github.com/pilosa/pilosa/releases/download/v1.3.0/pilosa-v1.3.0-linux-amd64.tar.gz

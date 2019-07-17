@@ -1,6 +1,20 @@
 
 # **[安装Git for Mac & Linux](https://gist.github.com/derhuerst/1b15ff4652a867391f03)**、[安装Git for Windows](https://github.com/git-for-windows/git/releases)
 
+#### Global Config
+~~~bash
+git config --global user.name                 # 查询全局git用户配置
+git config --global user.name "yangzhou"      # 修改全局git用户配置
+git config --global user.email "angenal@hotmail.com"
+git config --global http.postBuffer 524288000 # 上传文件大小限制500M=1024*1024*500(默认100M)
+git config --global http.sslVerify "false"    # 关闭ssl验证(网络异常)
+git config --global http.lowSpeedLimit 0      # 下载文件限制
+git config --global http.lowSpeedTime 999999  # 下载文件时速
+
+git clone --depth=1 https://***/***/***.git   # 下载失败时，首先浅层clone..
+git fetch --unshallow                         # ..然后更新远程库到本地,或者使用SSH进行下载.
+~~
+
 #### Create a new repository on the command line, push into github.com
 ~~~bash
 echo "# CSharpOpen" >> README.md
@@ -33,17 +47,7 @@ git push -u origin master
 ####  1.新建项目-目录-初始化本地git仓库(1个隐藏的目录.git)
 
 ~~~bash
-git config --global user.name                 # 查询全局git用户配置
-git config --global user.name "yangzhou"      # 修改全局git用户配置
-git config --global user.email "angenal@hotmail.com"
-git config --global http.postBuffer 524288000 # 上传文件大小限制500M=1024*1024*500(默认100M)
-git config --global http.sslVerify "false"    # 关闭ssl验证(网络异常)
-git config --global http.lowSpeedLimit 0      # 下载文件限制
-git config --global http.lowSpeedTime 999999  # 下载文件时速
-git clone --depth=1 https://***/***/***.git   # 下载失败时，首先浅层clone..
-git fetch --unshallow                         # ..然后更新远程库到本地,或者使用SSH进行下载.
-
-$ rm -rf * && rm -rf .git/   # 初始化之前,清空当前目录 > del /f/s/q *
+$ rm -rf * && rm -rf .git/                   # 初始化之前,清空当前目录 > del /f/s/q *
 git init  # 初始化目录=当前工作区, .git/*(index索引add的暂存区数据,objects存储commit的本地仓库数据)
 git config --local user.name "用户名"        # 当前项目git用户配置
 git config --local user.email "用户邮箱地址"  # 当前项目git用户邮箱地址>注册远程git账号

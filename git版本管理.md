@@ -1,4 +1,3 @@
-~
 # **[安装Git for Mac & Linux](https://gist.github.com/derhuerst/1b15ff4652a867391f03)**、[安装Git for Windows](https://github.com/git-for-windows/git/releases)
 
 #### Global Config
@@ -10,9 +9,8 @@ git config --global http.postBuffer 524288000 # 上传文件大小限制500M=102
 git config --global http.sslVerify "false"    # 关闭ssl验证(网络异常)
 git config --global http.lowSpeedLimit 0      # 下载文件限制
 git config --global http.lowSpeedTime 999999  # 下载文件时速
-
-git clone --depth=1 https://***/***/***.git   # 下载失败时，首先浅层clone..
-git fetch --unshallow                         # ..然后更新远程库到本地,或者使用SSH进行下载.
+git clone --depth=1 https://***/***/***.git   # 下载失败时，1.首先浅层clone..
+git fetch --unshallow                         # ..然后更新远程库到本地; 2.或者使用SSH进行下载.
 ~~~
 
 #### Create a new repository on the command line, push into github.com

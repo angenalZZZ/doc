@@ -165,7 +165,7 @@
   > net share c         # 添加
   > net share c /delete # 删除
   
-  # 主机环境
+  # 主机环境 github.com/googlehosts/hosts
   > notepad C:\Windows\System32\drivers\etc\hosts
   > set              # 查看系统环境变量windows
   $ export       # 查看系统环境变量linux

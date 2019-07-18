@@ -5,12 +5,21 @@
 git config --global user.name                 # 查询全局git用户配置
 git config --global user.name "yangzhou"      # 修改全局git用户配置
 git config --global user.email "angenal@hotmail.com"
+# 1.通过修改默认配置, 解决网络问题! http限制..
 git config --global http.postBuffer 524288000 # 上传文件大小限制500M=1024*1024*500(默认100M)
 git config --global http.sslVerify "false"    # 关闭ssl验证(网络异常)
 git config --global http.lowSpeedLimit 0      # 下载文件限制
 git config --global http.lowSpeedTime 999999  # 下载文件时速
 git clone --depth=1 https://***/***/***.git   # 下载失败时，1.首先浅层clone..
 git fetch --unshallow                         # ..然后更新远程库到本地; 2.或者使用SSH进行下载.
+# 2.通过获取以下 DNS Resource Records, 解决网络问题! CDN被屏蔽..
+# fix git clone github project failed /etc/hosts
+151.101.185.194 github.global.ssl.fastly.net  # github.global.ssl.fastly.net.ipaddress.com
+140.82.113.4 github.com                       # github.com.ipaddress.com
+# 3.刷新dns缓存..
+$ sudo killall -HUP mDNSResponder
+$ sudo dscacheutil -flushcache
+> ipconfig /flushdns
 ~~~
 
 #### Create a new repository on the command line, push into github.com

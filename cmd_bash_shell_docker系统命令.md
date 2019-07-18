@@ -151,9 +151,14 @@
   $ ifconfig | grep inet
   # 科学上网 - 代理设置 (解决网络问题)
   $ sudo vim /etc/profile [用户配置：~/.profile] # 将以下三行填入：
-export http_proxy=http://127.0.0.1:5005
-export https_proxy=http://127.0.0.1:5005
-export ftp_proxy=http://127.0.0.1:5005
+  export http_proxy=http://127.0.0.1:5005
+  export https_proxy=http://127.0.0.1:5005
+  export ftp_proxy=http://127.0.0.1:5005
+
+  # 刷新dns缓存
+  > ipconfig /flushdns
+  $ sudo killall -HUP mDNSResponder
+  $ sudo dscacheutil -flushcache
   
   # 网络共享
   > net share           # 查找

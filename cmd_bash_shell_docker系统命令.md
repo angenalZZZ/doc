@@ -389,18 +389,18 @@ $ source ~/.zshrc # 使配置生效
   $ cp config/server.properties config/server-1.properties        # setting up a multi-broker cluster
   $ cp config/server.properties config/server-2.properties        # setting up a multi-broker cluster
   
-  # 消息平台3 gotify 服务: github.com/gotify/server  配置config.yml: gotify.net/docs/config
+  # 消息平台3 gotify 服务: github.com/gotify/server
   $ wget https://github.com/gotify/server/releases/download/v2.0.5/gotify-linux-amd64.zip
   $ wget -O config.yml https://raw.githubusercontent.com/gotify/server/master/config.example.yml
   $ unzip gotify-linux-amd64.zip && chmod +x gotify-linux-amd64
-  $ sudo ./gotify-linux-amd64
+  $ sudo ./gotify-linux-amd64  # 配置文件config.yml: gotify.net/docs/config
+  > nssm install Gotify %gopath%\bin\gotify\server\gotify.exe
   
   # 消息平台4 centrifugo 服务: github.com/centrifugal/centrifugo
   $ curl -s https://packagecloud.io/install/repositories/FZambia/centrifugo/script.deb.sh | sudo bash
 
   # 安装 Chat Bots 聊天机器人 (Windows服务)
   > nssm install Botpress D:\Program\botpress\bp.exe serve
-  > nssm install Gotify %gopath%\bin\gotify\server\gotify.exe
 
   # 安装 SSH 建立安全的加密连接：一个密码对应一个SSH-key
   > ssh-keygen -t rsa -C "angenal.2008@yahoo.com.cn"

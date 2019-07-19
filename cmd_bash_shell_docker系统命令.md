@@ -371,12 +371,13 @@ $ source ~/.zshrc # 使配置生效
   $ pilosa server --data-dir ~/.pilosa --bind :10101 --handler.allowed-origins "*"&     # 或指定origins: http://localhost:10102
   $ go get github.com/pilosa/console && cd $GOPATH/src/github.com/pilosa/console && make install && pilosa-console -bind :10102
 
-  # 安装消息平台 nsq.io
-  > nsqlookupd                                                                                                                               # 先启动 nsqlookud 消息服务
+  # 消息平台1 nsq 服务: nsq.io
+  > nsqlookupd    # 先启动 nsqlookud 消息服务
   > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4150       # 再启动几个 nsqd 存储数据
   > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4152 --http-address=0.0.0.0:4153
   > nsqadmin --lookupd-http-address=127.0.0.1:4161 #--tcp-address=0.0.0.0:4171 # 最后启动 nqsadmin Web 服务
-  # 安装消息平台 kafka.apache.org/quickstart
+  
+  # 消息平台2 kafka 服务: kafka.apache.org/quickstart
   $ wget http://mirrors.tuna.tsinghua.edu.cn/apache/kafka/2.3.0/kafka_2.12-2.3.0.tgz
   $ tar -xzf kafka_2.12-2.3.0.tgz && cd kafka_2.12-2.3.0
   $ bin/zookeeper-server-start.sh config/zookeeper.properties     # start a ZooKeeper server
@@ -387,6 +388,15 @@ $ source ~/.zshrc # 使配置生效
   $ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning ## start a consumer
   $ cp config/server.properties config/server-1.properties        # setting up a multi-broker cluster
   $ cp config/server.properties config/server-2.properties        # setting up a multi-broker cluster
+  
+  # 消息平台3 gotify 服务: github.com/gotify/server  配置config.yml: gotify.net/docs/config
+  $ wget https://github.com/gotify/server/releases/download/v2.0.5/gotify-linux-amd64.zip
+  $ wget -O config.yml https://raw.githubusercontent.com/gotify/server/master/config.example.yml
+  $ unzip gotify-linux-amd64.zip && chmod +x gotify-linux-amd64
+  $ sudo ./gotify-linux-amd64
+  
+  # 消息平台4 centrifugo 服务: github.com/centrifugal/centrifugo
+  $ curl -s https://packagecloud.io/install/repositories/FZambia/centrifugo/script.deb.sh | sudo bash
 
   # 安装 Chat Bots 聊天机器人 (Windows服务)
   > nssm install Botpress D:\Program\botpress\bp.exe serve

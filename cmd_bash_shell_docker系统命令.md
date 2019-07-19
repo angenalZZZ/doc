@@ -399,6 +399,8 @@ $ source ~/.zshrc # 使配置生效
   $ cat ~/.ssh/id_rsa.pub                 # https://code.aliyun.com/help/ssh/README
   $ xclip -sel clip < ~/.ssh/id_rsa.pub   # GNU/Linux (requires xclip)
   $ pbcopy < ~/.ssh/id_rsa.pub            # Mac-OS
+  # 提供 SSH Web管理后台 + RESTful Api接口<ssh+gin+GORM> | 源码 github.com/dejavuzhou/felix
+  > felix sshw -a :3030 -x 1440 -u admin -p admin -s @Ubr)Vrp~Zoo6Rvrk1PP1*ZXPYby_Z)s
 
   # 安装 构建工具|代码仓库|版本管理 < make、curl、git、gitea >
   > ftp://ftp.equation.com/make/64/make.exe # 下载构建工具make < Windows >

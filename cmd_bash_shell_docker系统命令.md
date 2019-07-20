@@ -103,6 +103,7 @@
   $ ps -e -o stat,ppid,pid,cmd | grep -e '^[Zz]' | awk '{print $2}' | xargs kill -9 # 批量删除僵尸(Z开头的)进程
   $ killall            # 杀死进程使用, 杀死单个进程: kill -9 [ProcessId]
   $ lsof -i @localhost:3000 && kill -9 <<PID>> # 杀死进程使用, 指定占用的端口号
+  $ lsof -i:22         # 查看22端口连接情况(默认为sshd端口) lsof 列出当前系统打开的文件(list open files)
   $ smem -k -s USS     # 进程的内存使用情况
   # < ubuntu > apt update & apt install smem
   # < centos > yum install epel-release & yum install smem python-matplotlib python-tk
@@ -146,15 +147,21 @@
   > rd /s /q %windir%\temp & md %windir%\temp [删除临时文件]
   $ rm -f -r [r删除目录,否则删除文件] [f强制] [rmdir移除空目录]
   
-  # 网络地址
+  # 网络地址 - inet&inet6
   > ipconfig /?
-  $ ifconfig | grep inet
+  $ ifconfig |grep inet
   # 科学上网 - 代理设置 (解决网络问题)
-  $ sudo vim /etc/profile [用户配置：~/.profile] # 将以下三行填入：
-  export http_proxy=http://127.0.0.1:5005
+  $ sudo vim /etc/profile [全局|用户配置：~/.profile]# 填写如下VPN转发PORT
+  export http_proxy=http://127.0.0.1:5005           # 临时使用
   export https_proxy=http://127.0.0.1:5005
   export ftp_proxy=http://127.0.0.1:5005
-
+  # 主机环境 - 解析设置 github.com/googlehosts/hosts
+  > notepad C:\Windows\System32\drivers\etc\hosts
+  > set                 # 查看系统环境变量windows
+  $ export              # 查看系统环境变量linux
+  $ cat /etc/hosts      # 一次显示整个文件
+  $ cat > /etc/hosts    # 从键盘创建一个文件
+  
   # 刷新dns缓存
   > ipconfig /flushdns
   $ sudo killall -HUP mDNSResponder
@@ -164,13 +171,6 @@
   > net share           # 查找
   > net share c         # 添加
   > net share c /delete # 删除
-  
-  # 主机环境 github.com/googlehosts/hosts
-  > notepad C:\Windows\System32\drivers\etc\hosts
-  > set              # 查看系统环境变量windows
-  $ export       # 查看系统环境变量linux
-  $ cat /etc/hosts   # 一次显示整个文件
-  $ cat > /etc/hosts # 从键盘创建一个文件
   
   # 关机命令
   > sleep 9000; shutdown -s
@@ -263,12 +263,13 @@ $ source ~/.zshrc # 使配置生效
   $ lsb_release -c                    # 获取系统代号,更新软件源sources.list
   $ sudo vim /etc/apt/sources.list    # 更新软件源 https://www.cnblogs.com/xudalin/p/9071902.html
   $ sudo apt-get update && sudo apt-get upgrade # 更新升级apt
+  $ sudo apt-get install language-pack-zh-hans  # 中文语言包
   $ sudo apt install gcc              # 安装gcc编译工具(可选)
   $ sudo apt install make             # 安装构建工具make(可选)
   $ sudo apt install build-essential  # 安装gcc/g++/gdb/make等工具链
   $ sudo apt install libgtk2.0-dev pkg-config gnome-core # 安装桌面开发gtk,glib,gnome.
   $ sudo apt install openjdk-8-jdk    # 安装JavaSDK:openjdk
-  $ sudo apt install openssh-server
+  $ sudo apt install openssh-server   # 安装SSH
   $ sudo apt install python3          # 安装Python3
   $ sudo apt install python3-pip      # 安装pip3           将Python3设为默认?参考如下
   $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 100
@@ -316,22 +317,21 @@ $ source ~/.zshrc # 使配置生效
   $ cd utils && sudo ./install_server.sh                       # 安装Redis
   $ rm -f -r ~/redis-stable && rm -f ~/redis-stable.tar.gz     # 删除源码
   $ ps aux |grep redis                   # 查看进程: /usr/local/bin/redis-server 127.0.0.1:6379
-  $ redis-server                         # 启动服务(独立模式), 可通过 ps aux 查看进程
-  ~ /etc/redis/6379.conf                 # 修改配置...
-  ~ bind 0.0.0.0                         # 允许远程连接
+  $ redis-server                         # 启动服务(独立模式|常规启动), 可通过 ps aux 查看进程
+  ~ bind 0.0.0.0                         # 允许远程连接> sudo vi /etc/redis/6379.conf
   ~ requirepass 123456                   # 设置访问密码
   ~ protected-mode no                    # 关闭保护模式
-  $ sudo service redis_6379 start        # (可选)启动服务(非独立模式) start|stop|restart
-  $ sudo update-rc.d redis_6379 defaults # (可选)将 Redis init 脚本添加到所有默认运行级别(stop服务后)
-  $ sudo systemctl enable redis_6379     # (可选)开机启动Redis
+  $ sudo service redis_6379 start        # (可选)启动服务(非独立模式|后台启动服务) start|stop|restart
+  $ sudo update-rc.d redis_6379 defaults # (可选)开机启动Redis init脚本添加到所有默认运行级别(stop后处理)
   > nssm install RedisWSLubuntu1804 bash.exe -c redis-server # 启动前设置Windows服务登录账户为Administrator
   # 客户端命令Redis
-  $ redis-cli -h 127.0.0.1 -p 6379 -a "123456" -n 0     # [p端口],[a密码],[n数据库]
-  $ config set requirepass "123456"   # 修改配置> sudo vi /etc/redis/6379.conf
-  $ auth 123456                                         # 密码认证;再执行其它命令.
+  $ redis-cli -h 127.0.0.1 -p 6379 -a "123456" -n 0 # [p端口],[a密码],[n数据库]
+  $ redis-cli shutdown                   # 关闭Redis服务
+  $ config set requirepass "123456"      # 设置访问密码
+  $ auth 123456                          # 密码认证;再执行其它命令.
   # 性能测试Redis
-  > redis-benchmark -n 10000 -q       # 本机Redis  < SET: 90K, GET: 90K > requests per second
-  > buntdb-benchmark -n 10000 -q      # 本机BuntDB < SET:230K,GET:5000K > requests per second
+  > redis-benchmark -n 10000 -q          # 本机Redis  < SET: 90K, GET: 90K > requests per second
+  > buntdb-benchmark -n 10000 -q         # 本机BuntDB < SET:230K,GET:5000K > requests per second
   
   # 安装 MySQL
   $ sudo apt-get update
@@ -506,15 +506,15 @@ $ apt-get remove docker docker-engine
 # 安装 Docker Compose
 $ curl -L https://get.daocloud.io/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose 
 $ chmod +x /usr/local/bin/docker-compose
-# 安装 Docker Machine   #  http://github.com/docker/machine/releases/download/v0.16.1/docker-machine-Linux-x86_64
+# 安装 Docker Machine  github.com/docker/machine/releases/download/v0.16.1/docker-machine-Linux-x86_64
 $ sudo dpkg -i virtualbox-6.0_6.0.8-130520_Ubuntu_bionic_amd64.deb --fix-missing  #基于virtualBox | www.virtualbox.org/wiki/Linux_Downloads
 $ curl -L https://github.com/docker/machine/releases/download/v0.16.1/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine
 $ chmod +x /tmp/docker-machine && sudo cp /tmp/docker-machine /usr/local/bin/docker-machine  # install /tmp/docker-machine /usr/local/bin/docker-machine
-$ docker-machine version                    # 安装完毕
+$ docker-machine version                   # 安装完毕
 # 不使用sudo执行docker命令，先切换当前用户( root ~ exit )
-$ sudo gpasswd -a ${USER} docker  # 将当前用户加入docker组 
+$ sudo gpasswd -a ${USER} docker           # 将当前用户加入docker组 
 $ sudo service docker restart              # 重启docker
-$ newgrp - docker                                    # 刷新docker组
+$ newgrp - docker                          # 刷新docker组
 ~~~
 
 > **Shell** [samples](https://docs.docker.com/samples)、[labs/tutorials](https://github.com/angenal/labs)、[小结](https://github.com/AlexWoo/doc/blob/master/devops/docker小结.md)
@@ -543,8 +543,8 @@ $ newgrp - docker                                    # 刷新docker组
 
   # 基础
   docker [COMMAND] --help
-  docker images # 查看镜像
-  docker ps -a  # 查看容器 | docker container ls -a
+  docker images        # 查看镜像
+  docker ps -a         # 查看容器 | docker container ls -a
   docker search ubuntu # 搜索镜像
   docker pull ubuntu   # 下载镜像
   docker load -i /opt/images/ubuntu_latest.tar # 加载镜像 (使用Xftp将镜像tar上传至Docker虚拟机或共享盘)
@@ -558,17 +558,17 @@ $ newgrp - docker                                    # 刷新docker组
   docker container start $(docker ps -aq)   # 启动所有容器
   docker container stop $(docker ps -aq)    # 停止所有容器
   docker container restart $(docker ps -aq) # 重启所有容器
-  docker kill $(docker ps -a -q)   # 杀死所有运行的容器
-  docker container prune             # 删除所有停止的容器
-  docker volume prune                 # 删除未使用volumes
-  docker system prune                  # 删除未使用数据
-  docker rm [container]                # 删除1个容器
-  docker rm $(docker ps -a -q)   # 删除所有容器
-  docker rmi [image]                      # 删除1个镜像
-  docker rmi $(docker images -q) # 删除所有镜像
-  docker port [container]            # 查看端口映射
-  docker inspect [container]      # 查看容器详情
-  docker rename web [container]  # 容器重命名 > 查看容器 docker ps -a
+  docker kill $(docker ps -a -q)            # 杀死所有运行的容器
+  docker container prune                    # 删除所有停止的容器
+  docker volume prune                       # 删除未使用volumes
+  docker system prune                       # 删除未使用数据
+  docker rm [container]                     # 删除1个容器
+  docker rm $(docker ps -a -q)              # 删除所有容器
+  docker rmi [image]                        # 删除1个镜像
+  docker rmi $(docker images -q)            # 删除所有镜像
+  docker port [container]                   # 查看端口映射
+  docker inspect [container]                # 查看容器详情
+  docker rename web [container]             # 容器重命名 > 查看容器 docker ps -a
   docker logs [container]                   # 查看容器日志
   docker update --restart=always [container] # 修改配置: 设置为开机启动 (可在 docker run 时添加此参数)
   
@@ -589,7 +589,7 @@ $ newgrp - docker                                    # 刷新docker组
   ## https://docs.docker.com/compose/aspnet-mssql-compose/  ${PWD} = d:\docker\app\microsoft.net\mvc
   # Startup.sh1: docker run -v ${PWD}:/app --workdir /app microsoft/aspnetcore-build:lts dotnet new mvc --auth Individual
   docker run --name dotnet --network=workgroup -it -m 512m -p 8080:80 -v "d:\docker\app\microsoft.net\app:/app" 
-    microsoft/dotnet # 最新版dotnet
+    microsoft/dotnet     # 最新版dotnet
     microsoft/dotnet:sdk # 最新版dotnet-sdk
     microsoft/dotnet:aspnetcore-runtime #最新版dotnet-runtime
   

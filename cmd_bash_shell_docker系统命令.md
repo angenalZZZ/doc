@@ -52,8 +52,8 @@
   > mkdir -p %USERPROFILE% # 用户目录
   > mkdir.\to\path         # 创建目录 $ mkdir -p to/path
   $ mkdir -p $HOME         # 用户目录 > cd ~ ; cd /home/$(whoami) # root用户为 / = cd ~
-  > quser             # 当前用户状态
-  $ whoami && w && id # 当前用户信息
+  > quser                  # 当前用户状态
+  $ whoami && w && id      # 当前用户信息
   $ echo $USER
   $ id              # 返回 uid=0(root) gid=0(root) groups=0(root)
   $ id -u           # 返回 uid                     添加用户(-d=$home)      (G=选择用户组)(用户名admin)
@@ -73,18 +73,18 @@
   $ groupadd        # 添加用户组
   
   # 网络端口
-  > netstat -anT                                                  # tcp端口(本地地址,外部地址,状态)
+  > netstat -anT                              # tcp端口(本地地址,外部地址,状态)
   > netstat -anp tcp | findstr -i "listening" # 查找本机tcp端口监听列表
-  $ netstat -anp |grep 3306                          # 1.通过端口查看进程; 2.通过进程id查看占用端口; [p显示进程]
-  $ netstat -atW |grep -i "listen"                 # tcp端口-centos $ yum install -y net-tools & yum install -y traceroute
+  $ netstat -anp |grep 3306                   # 1.通过端口查看进程; 2.通过进程id查看占用端口; [p显示进程]
+  $ netstat -atW |grep -i "listen"            # tcp端口-centos $ yum install -y net-tools & yum install -y traceroute
   $ netstat -tulnp | grep -i "time_wait" # tcp超时-ubuntu $ apt-get update & apt-get install -y net-tools
-  $ ss -t4 state time-wait                                # tcp超时-ubuntu $ apt-get install -y iproute2 iproute2-doc
+  $ ss -t4 state time-wait                    # tcp超时-ubuntu $ apt-get install -y iproute2 iproute2-doc
   $ ss -at '( dport = :ssh or sport = :ssh )' # 端口为 ssh 的套接字
-  $ ss -lntp '( dst :443 or dst :80 )'               # 目的端口为 80,443 的套接字
+  $ ss -lntp '( dst :443 or dst :80 )'        # 目的端口为 80,443 的套接字
+  $ ss -lntp  # tcp端口+users进程name-pid-fd   # 常用ss(iproute工具)比netstat(net-tools工具)更强大
   $ ss -nt state connected dport = :80
   $ ss -nt dport lt :100  # 端口小于100
   $ ss -nt dport gt :1024 # 端口大于1024
-  $ ss -lntp  # tcp端口+users进程name-pid-fd  # 常用ss(iproute工具)比netstat(net-tools工具)更强大
   $ ss -aup   # udp端口
   
   # 进程详情
@@ -92,28 +92,28 @@
   > wmic process where "caption = 'java.exe' and commandline like '%server-1.properties%'" get processid
   > netstat -ano | findstr :3000 # 杀死进程使用, 指定占用的端口号
   > taskkill /F /PID <<PID>>     # PowerShell
-  $ ps aux              # 进程列表: USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND
-  $ ps -eo pid,cmd | grep uuid # [o输出字段,e依赖的系统环境]
+  $ ps aux                       # 进程列表: USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND
+  $ ps -eo pid,cmd | grep uuid   # [o输出字段,e依赖的系统环境]
   $ ps -u $USER -o pid,%cpu,tty,cputime,cmd
-  $ ps -ef | grep dotnet # 查看dotnet进程id
-  $ top -Hp [进程id]      # 进程列表: 内存&CPU占用
+  $ ps -ef | grep dotnet         # 查看dotnet进程id
+  $ top -Hp [进程id]             # 进程列表: 内存&CPU占用
   $ dotnet-dump collect -p [进程id] ; dotnet-dump analyze core_***  # 查找.NET Core 占用CPU 100% 的原因
     > clrthreads ; setthread [线程DBG] ; clrstack ; clrstack -a ; dumpobj 0x00*** # 分析线程/堆栈/内存数据
   $ ps aux | head -1; ps aux | sort -rn -k3 | head -10 # 占用CPU最高的前10个进程
   $ ps -e -o stat,ppid,pid,cmd | grep -e '^[Zz]' | awk '{print $2}' | xargs kill -9 # 批量删除僵尸(Z开头的)进程
-  $ killall           # 杀死进程使用, 杀死单个进程: kill -9 [ProcessId]
+  $ killall            # 杀死进程使用, 杀死单个进程: kill -9 [ProcessId]
   $ lsof -i @localhost:3000 && kill -9 <<PID>> # 杀死进程使用, 指定占用的端口号
-  $ smem -k -s USS    # 进程的内存使用情况
+  $ smem -k -s USS     # 进程的内存使用情况
   # < ubuntu > apt update & apt install smem
   # < centos > yum install epel-release & yum install smem python-matplotlib python-tk
   
   # 文件系统
-  > dir [目录]          # 默认当前目录(命令pwd)
-  $ ls -an [目录]       # 查看目录及文件读写权限[-al]
-  $ touch main.js       # 新建文件
-  $ mv main.js main.cs  # 重命名文件,移动文件位置
-  $ cat main.cs         # 输出文件内容
-  $ namo|vi main.cs     # 编辑文件内容
+  > dir [目录]           # 默认当前目录(命令pwd)
+  $ ls -an [目录]        # 查看目录及文件读写权限[-al]
+  $ touch main.js        # 新建文件
+  $ mv main.js main.cs   # 重命名文件,移动文件位置
+  $ cat main.cs          # 输出文件内容
+  $ namo|vi main.cs      # 编辑文件内容
   $ file main.js && ls -an main.js # 查看文件类型-信息 & 查看文件读写权限&更新时间
   $ for n in {1..10000}; do echo content > "__${n}.tmp"; done  # 创建 10000 个临时文件
   
@@ -125,8 +125,8 @@
   
   # 目录访问权限
   > cd [目录]
-  $ sudo chmod 777 .         # 修改当前目录(.)权限为可读写
-  $ sudo chown -R 1000 [目录] # 改变[目录](R所有子目录)的"拥有者"为uid:1000 = $(id -u)
+  $ sudo chmod 777 .          # 修改当前目录(.)权限为可读写
+  $ sudo chown -R 1000 [目录]  # 改变[目录](R所有子目录)的"拥有者"为uid:1000 = $(id -u)
   $ sudo chgrp –R users [目录] # 改变[目录]的"所属用户组"为G:users = $(id -g)
   $ sudo chmod -R 777 to/path # 每个人都有读和写以及执行的权限(约定的三个数字owner=7;group=7;others=7)
   $ sudo chmod 666 to/path    # 每个人都有读和写的权限
@@ -247,7 +247,7 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源操作完毕.
 # 安装 zsh
 $ sudo apt-get -y install zsh
 # 设置终端shell默认为zsh, 输入以下命令后(重启终端>选择>2) [加sudo修改root的默认shell]
-$ chsh -s `which zsh`  # 安装完毕
+$ chsh -s `which zsh`    # 安装完毕
 # 安装 antigen 设置主题
 $ curl -L https://raw.githubusercontent.com/skywind3000/vim/30b702725847bac4708de34664bb68454b54e0c0/etc/zshrc.zsh > ~/.zshrc
 # 修改配置 ~/.zshrc ; 添加[主题ys] antigen theme ys 至文件`# antigen theme`处; 参考 github.com/robbyrussell/oh-my-zsh/wiki/themes
@@ -260,26 +260,26 @@ $ source ~/.zshrc # 使配置生效
   # 环境搭建
   # < Windows Subsystem for Linux | WSL >---------------------------
   $ sudo do-release-upgrade -d        # 升级至18.04LTS ( 如果是16.04? > cat /etc/issue )
-  $ lsb_release -c                            # 获取系统代号,更新软件源sources.list
+  $ lsb_release -c                    # 获取系统代号,更新软件源sources.list
   $ sudo vim /etc/apt/sources.list    # 更新软件源 https://www.cnblogs.com/xudalin/p/9071902.html
   $ sudo apt-get update && sudo apt-get upgrade # 更新升级apt
-  $ sudo apt install gcc                 # 安装gcc编译工具(可选)
+  $ sudo apt install gcc              # 安装gcc编译工具(可选)
   $ sudo apt install make             # 安装构建工具make(可选)
   $ sudo apt install build-essential  # 安装gcc/g++/gdb/make等工具链
   $ sudo apt install libgtk2.0-dev pkg-config gnome-core # 安装桌面开发gtk,glib,gnome.
   $ sudo apt install openjdk-8-jdk    # 安装JavaSDK:openjdk
   $ sudo apt install openssh-server
-  $ sudo apt install python3              # 安装Python3
-  $ sudo apt install python3-pip      # 安装pip3               将Python3设为默认?参考下面!
+  $ sudo apt install python3          # 安装Python3
+  $ sudo apt install python3-pip      # 安装pip3           将Python3设为默认?参考如下
   $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 100
   $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 150
-  $ sudo update-alternatives --config python # 手动配置/切换版本: python --version
-  $ sudo apt install nodejs                  # 安装Nodejs(此安装的版本太低; 推荐wget安装方式)
+  $ sudo update-alternatives --config python  # 手动配置/切换版本: python --version
+  $ sudo apt install nodejs                   # 安装Nodejs(此安装的版本太低; 推荐wget安装方式)
   $ wget https://npm.taobao.org/mirrors/node/v10.16.0/node-v10.16.0-linux-x64.tar.xz
   $ sudo tar -zxf node-v10.16.0-linux-x64.tar.xz -C /usr/local/
   $ sudo mv /usr/local/node-v10.16.0-linux-x64 /usr/local/node
   $ vi ~/.bashrc  # 配置 export PATH=/usr/local/node/bin:$PATH # bash生效 source ~/.bashrc ; zsh需修改~/.zshrc
-   # (选项)设置软链接: ln -s /usr/local/node/bin/node /usr/local/bin/node ; ln -s /usr/local/node/bin/npm /usr/local/bin/npm
+  # (选项)设置软链接: ln -s /usr/local/node/bin/node /usr/local/bin/node ; ln -s /usr/local/node/bin/npm /usr/local/bin/npm
   $ npm install -g npm
   
   # 安装Git
@@ -296,79 +296,83 @@ $ source ~/.zshrc # 使配置生效
   $ git diff
   $ git add [filename]
   $ git commit -m "添加文件"
-  $ git checkout -- [filename]  # 签出，放弃工作区最新的更改，适用于还未提交的情况
-  $ git stash && git stash drop # 加入了暂存区后再清除暂存区，适用于还未提交的情况
-  $ git reset HEAD [filename]   # 放弃最新提交[取消git.add]，不改变工作区和库区，只改变了暂存区
-  $ git reset --hard HEAD^         # 版本回退，工作区和库区都进行相应的回退
+  $ git checkout -- [filename]    # 签出，放弃工作区最新的更改，适用于还未提交的情况
+  $ git stash && git stash drop   # 加入了暂存区后再清除暂存区，适用于还未提交的情况
+  $ git reset HEAD [filename]     # 放弃最新提交[取消git.add]，不改变工作区和库区，只改变了暂存区
+  $ git reset --hard HEAD^        # 版本回退，工作区和库区都进行相应的回退
   $ rm [filename] && git rm [filename] && git commit -m "删除文件"
   $ git remote add origin https://github.com/dragonFly12345/ubuntuGitTest.git # 使用远程HTTPS
-  $ git remote remove origin                                               # 删除后用于重新绑定远程
-  $ git remote add origin git@github.com:dragonFly12345/ubuntuGitTest.git # 使用远程SSH
-  $ ssh-keygen -t rsa -C "angenal@hotmail.com"      # 使用远程SSH，需要创建SSH认证
-  $ git push origin master -u                                                # [u用在第一次推送时]
+  $ git remote remove origin                                                  # 删除后用于重新绑定远程
+  $ git remote add origin git@github.com:dragonFly12345/ubuntuGitTest.git     # 使用远程SSH
+  $ ssh-keygen -t rsa -C "angenal@hotmail.com"                                # 使用远程SSH要创建SSH认证
+  $ git push origin master -u                                                 # [u用在第一次推送时]
   # 安装lazyGit，方便管理。
   $ wget https://github.com/jesseduffield/lazygit/releases/download/v0.8.1/lazygit_0.8.1_Linux_x86_64.tar.gz
   
   # 安装数据库Redis (Key-Value数据库) www.redis.cn
   $ wget http://download.redis.io/releases/redis-stable.tar.gz # 下载源码
   $ tar xzf redis-stable.tar.gz                                # 解压源码
-  $ cd redis-stable && sudo make install        # 编译Redis
-  $ cd utils && sudo ./install_server.sh            # 安装Redis
+  $ cd redis-stable && sudo make install                       # 编译Redis
+  $ cd utils && sudo ./install_server.sh                       # 安装Redis
   $ rm -f -r ~/redis-stable && rm -f ~/redis-stable.tar.gz     # 删除源码
-  $ ps aux |grep redis              # 查看进程: /usr/local/bin/redis-server 127.0.0.1:6379
+  $ ps aux |grep redis                   # 查看进程: /usr/local/bin/redis-server 127.0.0.1:6379
   $ redis-server                         # 启动服务(独立模式), 可通过 ps aux 查看进程
-  $ sudo service redis_6379 start                  # (可选)启动服务(非独立模式) start|stop|restart
+  ~ /etc/redis/6379.conf                 # 修改配置...
+  ~ bind 0.0.0.0                         # 允许远程连接
+  ~ requirepass 123456                   # 设置访问密码
+  ~ protected-mode no                    # 关闭保护模式
+  $ sudo service redis_6379 start        # (可选)启动服务(非独立模式) start|stop|restart
   $ sudo update-rc.d redis_6379 defaults # (可选)将 Redis init 脚本添加到所有默认运行级别(stop服务后)
-  # 开机启动Redis
-  > nssm install RedisWSLubuntu1804 bash.exe -c redis-server # 启动前,设置Windows服务登录账户为Administrator
+  $ sudo systemctl enable redis_6379     # (可选)开机启动Redis
+  > nssm install RedisWSLubuntu1804 bash.exe -c redis-server # 启动前设置Windows服务登录账户为Administrator
   # 客户端命令Redis
-  $ redis-cli -h 127.0.0.1 -p 6379 -a "123456" -n 0 # [p端口],[a密码],[n数据库]
-  $ config set requirepass "123456" # 修改配置> sudo vi /etc/redis/6379.conf
+  $ redis-cli -h 127.0.0.1 -p 6379 -a "123456" -n 0     # [p端口],[a密码],[n数据库]
+  $ config set requirepass "123456"   # 修改配置> sudo vi /etc/redis/6379.conf
   $ auth 123456                                         # 密码认证;再执行其它命令.
   # 性能测试Redis
   > redis-benchmark -n 10000 -q       # 本机Redis  < SET: 90K, GET: 90K > requests per second
-  > buntdb-benchmark -n 10000 -q  # 本机BuntDB < SET:230K,GET:5000K > requests per second
+  > buntdb-benchmark -n 10000 -q      # 本机BuntDB < SET:230K,GET:5000K > requests per second
   
   # 安装 MySQL
   $ sudo apt-get update
-  $ sudo apt-get install mysql-server       # 安装
-  $ sudo mysql_secure_installation         # 配置
-  $ systemctl status mysql.service             # 检查服务状态
-  $ ps aux |grep mysqld　　　　　            # 查看进程: /usr/sbin/mysqld --daemonize --pid-file=/run/mysqld/mysqld.pid
+  $ sudo apt-get install mysql-server  # 安装
+  $ sudo mysql_secure_installation     # 配置
+  $ systemctl status mysql.service     # 检查服务状态
+  $ ps aux |grep mysqld　　　　　       # 查看进程: /usr/sbin/mysqld --daemonize --pid-file=/run/mysqld/mysqld.pid
   $ sudo mysql -uroot -p
   $ 配置远程访问   (@localhost本机访问; @"%"所有主机都可连接)
   > CREATE USER 'newusername'@'host_name' IDENTIFIED BY 'password';
-  > select host,user,password from user;    # 当前用户: SELECT USER();
+  > select host,user,password from user;  # 当前用户: SELECT USER();
   > grant select,insert,update,delete,create,drop,index,alter on dbname.* to newusername@192.168.1.10 identified by '123456';
   > GRANT ALL PRIVILEGES ON dbname.* TO newusername@"%" IDENTIFIED BY "123456"; 
   > GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY "123456";
   > SET PASSWORD FOR 'root'@'host_name' = PASSWORD('password');
   > mysqladmin -u root -h host_name password "password"   # 连接mysql
-  > mysqladmin -u root -p '123456' password 'newpassword'  # 修改密码
-  > mysqladmin -u root -p shutdown                                                    # 关闭mysql
+  > mysqladmin -u root -p '123456' password 'newpassword' # 修改密码
+  > mysqladmin -u root -p shutdown                        # 关闭mysql
   # 安装 MySQL 的一个开源分支 MariaDB 
   $ sudo yum -y install mariadb mariadb-server # CentOS 7
-  $ sudo systemctl start mariadb                           # 启动
-  $ sudo systemctl enable mariadb                       # 开机启动
-  $ sudo mysqladmin -u root password root      # 设置密码
-  $ mysql -u root -p                                                         # 登录mysql
-  $ mysql> source db.sql                                               # 执行sql
+  $ sudo systemctl start mariadb                          # 启动
+  $ sudo systemctl enable mariadb                         # 开机启动
+  $ sudo mysqladmin -u root password root                 # 设置密码
+  $ mysql -u root -p                                      # 登录mysql
+  $ mysql> source db.sql                                  # 执行sql
   
   # 安装数据库mongodb 文档 docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu
   $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
   $ echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
   $ sudo apt-get update
-  $ sudo apt-get install -y mongodb-org                             # 安装/下面是指定版本
+  $ sudo apt-get install -y mongodb-org                   # 安装/下面是指定版本
   $ sudo apt-get install -y mongodb-org=4.0.10 mongodb-org-server=4.0.10 mongodb-org-shell=4.0.10 mongodb-org-mongos=4.0.10 mongodb-org-tools=4.0.10
-  $ sudo service mongod start,stop,restart                       # 启动,停止,重启
-  $ sudo systemctl enable mongod.service                      # 开机启动
-  $ sudo apt-get purge mongodb-org*                                # 卸载
+  $ sudo service mongod start,stop,restart                # 启动,停止,重启
+  $ sudo systemctl enable mongod.service                  # 开机启动
+  $ sudo apt-get purge mongodb-org*                       # 卸载
   $ sudo rm -r /var/log/mongodb  /var/lib/mongodb
 
   # 安装数据库Pilosa (分布式位图索引) www.pilosa.com
   $ curl -L -O https://github.com/pilosa/pilosa/releases/download/v1.3.0/pilosa-v1.3.0-linux-amd64.tar.gz
   $ tar xfz pilosa-v1.3.0-linux-amd64.tar.gz & cp -i pilosa-v1.3.0-linux-amd64/pilosa /usr/local/bin
-  $ pilosa server --data-dir ~/.pilosa --bind :10101 --handler.allowed-origins "*"&     # 或指定origins: http://localhost:10102
+  $ pilosa server --data-dir ~/.pilosa --bind :10101 --handler.allowed-origins "*"&       # 指定origins: http://localhost:10102
   $ go get github.com/pilosa/console && cd $GOPATH/src/github.com/pilosa/console && make install && pilosa-console -bind :10102
 
   # 消息平台1 nsq 服务: nsq.io
@@ -383,8 +387,8 @@ $ source ~/.zshrc # 使配置生效
   $ bin/zookeeper-server-start.sh config/zookeeper.properties     # start a ZooKeeper server
   $ bin/kafka-server-start.sh config/server.properties            # start the Kafka server
   $ bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic test
-  $ bin/kafka-topics.sh --list --bootstrap-server localhost:9092  ## create a topic and list topic
-  $ bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test ## send some messages
+  $ bin/kafka-topics.sh --list --bootstrap-server localhost:9092  #_ create a topic and list topic
+  $ bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test #_ send some messages
   $ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning ## start a consumer
   $ cp config/server.properties config/server-1.properties        # setting up a multi-broker cluster
   $ cp config/server.properties config/server-2.properties        # setting up a multi-broker cluster
@@ -432,8 +436,8 @@ $ source ~/.zshrc # 使配置生效
   $ docker [COMMAND] --help                 # 执行Docker命令
 
   # Docker正式环境: 修改Linux内核参数 https://blog.csdn.net/guanheng68/article/details/81710406
-  $ sysctl -w vm.max_map_count=262144      # 操作无效时, 使用 vi /etc/sysctl.conf 修改
-  $ grep vm.max_map_count /etc/sysctl.conf # 检查设置
+  $ sysctl -w vm.max_map_count=262144       # 操作无效时, 使用 vi /etc/sysctl.conf 修改
+  $ grep vm.max_map_count /etc/sysctl.conf  # 检查设置
 
   # 安装 Ansible 配置管理和IT自动化工具-(系统运维)(Ubuntu)一个由Python编写的强大的配置管理解决方案
   $ sudo apt update
@@ -445,27 +449,27 @@ $ source ~/.zshrc # 使配置生效
   $ mkdir airflow && cd airflow
   $ pip install setuptools_git
   $ pip download pymssql
-  $ pip download apache-airflow[all]                                                     # 1.离线: tar -zcf airflow.tar.gz *
-  $ cd airflow                                                                                                      # 2.解压: tar -zxf airflow.tar.gz
-  $ pip install apache-airflow[all] --no-index -f ./                                # 3.安装airflow[all]
+  $ pip download apache-airflow[all]                       # 1.离线: tar -zcf airflow.tar.gz *
+  $ cd airflow                                             # 2.解压: tar -zxf airflow.tar.gz
+  $ pip install apache-airflow[all] --no-index -f ./       # 3.安装airflow[all]
   $ echo "export AIRFLOW_HOME=~/app/airflow" >> ~/.bashrc  # 4.配置
-  $ source ~/.bashrc && airflow initdb                                                     # 5.部署
+  $ source ~/.bashrc && airflow initdb                     # 5.部署
 
   # 图片压缩
   $ sudo apt-get install jpegoptim   # jpg 图片压缩: jpegoptim *.jpg ; find . -name '*.jpg' | xargs jpegoptim --strip-all;
-  $ sudo apt-get install optipng        # png 图片压缩: optipng *.png ; find -type f -name "*.png" -exec optipng {} \;
+  $ sudo apt-get install optipng     # png 图片压缩: optipng *.png ; find -type f -name "*.png" -exec optipng {} \;
   $ git clone git://github.com/xing/TinyPNG.git && ./TinyPNG/install.sh  # TinyPNG 图片压缩
   
   # 加密解密
   $ chmod +x toplip # 赋予可执行权限
-  $ ./toplip   # 运行 http://os.51cto.com/art/201903/593569.htm https://2ton.com.au/standalone_binaries/toplip
+  $ ./toplip        # 运行 http://os.51cto.com/art/201903/593569.htm https://2ton.com.au/standalone_binaries/toplip
   
   # 检测工具
   # < fio 检测存储性能 >---------------------------
   $ wget https://github.com/axboe/fio/archive/fio-3.14.tar.gz  #! http://brick.kernel.dk/snaps/fio-2.1.10.tar.gz
   $ tar -zxf fio-3.14.tar.gz && cd fio-fio-3.14
   $ ./configure --enable-gfio # 配置: enable gfio (参数可选)
-  $ make                                    # 编译: make fio && make gfio
+  $ make                      # 编译: make fio && make gfio
   $ sudo make install         # 安装: install fio gfio genfio fio-* /usr/local/bin
   $ cd .. && rm -rf fio-*     # 安装完毕后删除源(可选)
   $ fio -S& [--server]        # 启动后端← + →客户端↓测试↓ [参考:examples/*.fio]

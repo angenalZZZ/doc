@@ -268,7 +268,13 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt install make             # 安装构建工具make(可选)
   $ sudo apt install build-essential  # 安装gcc/g++/gdb/make等工具链
   $ sudo apt install libgtk2.0-dev pkg-config gnome-core # 安装桌面开发gtk,glib,gnome.
-  $ sudo apt install openjdk-8-jdk    # 安装JavaSDK:openjdk
+  $ sudo apt install default-jre      # 安装jre > java -version
+  $ sudo apt install openjdk-8-jdk    # 安装OpenJDK
+  $ sudo apt-get install software-properties-common
+  $ sudo add-apt-repository ppa:webupd8team/java && sudo apt-get update
+  $ sudo apt-get install oracle-java8-installer
+  $ sudo apt-get install oracle-java8-set-default  # 使用默认版本jdk1.8
+  $ sudo update-alternatives –config java  # 多版本JDK之间切换
   $ sudo apt install openssh-server   # 安装SSH
   $ sudo apt install python3          # 安装Python3
   $ sudo apt install python3-pip      # 安装pip3           将Python3设为默认?参考如下

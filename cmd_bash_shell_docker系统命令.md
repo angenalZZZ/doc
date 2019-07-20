@@ -341,7 +341,7 @@ $ source ~/.zshrc # 使配置生效
   
   # 安装 MySQL
   $ sudo apt-get update
-  $ sudo apt-get install mysql-server  # 安装
+  $ sudo apt-get install mysql-server  # 安装 > sudo yum install mysql-server
   $ sudo mysql_secure_installation     # 配置
   $ systemctl status mysql.service     # 检查服务状态
   $ ps aux |grep mysqld　　　　　       # 查看进程: /usr/sbin/mysqld --daemonize --pid-file=/run/mysqld/mysqld.pid
@@ -356,13 +356,14 @@ $ source ~/.zshrc # 使配置生效
   > mysqladmin -u root -h host_name password "password"   # 连接mysql
   > mysqladmin -u root -p '123456' password 'newpassword' # 修改密码
   > mysqladmin -u root -p shutdown                        # 关闭mysql
-  # 安装 MySQL 的一个开源分支 MariaDB 
-  $ sudo yum -y install mariadb mariadb-server # CentOS 7
-  $ sudo systemctl start mariadb                          # 启动
-  $ sudo systemctl enable mariadb                         # 开机启动
-  $ sudo mysqladmin -u root password root                 # 设置密码
-  $ mysql -u root -p                                      # 登录mysql
-  $ mysql> source db.sql                                  # 执行sql
+  
+  # 推荐 TiDB, PingCAP公司设计的开源分布式HTAP'混合事务处理和分析'NewSQL-兼容MySQL: pingcap.com/docs-cn
+  
+  # 推荐 MySQL 的一个数据库集群系统 Vitess 用于水平弹性扩展MySQL: vitess.io/docs/tutorials
+  $ sudo service apparmor stop               # 1. Disable AppArmor
+  $ sudo service apparmor teardown           # safe to ignore if this errors
+  $ sudo update-rc.d -f apparmor remove
+  $ export VTROOT=/path/to/extracted-tarball # 2. Configure Environment >> .bashrc ...
   
   # 安装数据库mongodb 文档 docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu
   $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4

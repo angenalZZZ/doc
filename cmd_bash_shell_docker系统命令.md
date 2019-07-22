@@ -357,6 +357,16 @@ $ source ~/.zshrc # 使配置生效
   > mysqladmin -u root -p '123456' password 'newpassword' # 修改密码
   > mysqladmin -u root -p shutdown                        # 关闭mysql
   
+  # GitHub在线使用的数据库迁移工具 github.com/github/gh-ost
+  $ gh-ost help
+  # 同步MySQL数据至elasticsearch的工具 github.com/siddontang/go-mysql-elasticsearch
+  $ go-mysql-elasticsearch -config=./etc/river.toml
+  # 使用SQL综合查询数据源(JSON & CSV & PostgreSQL & MySQL & Redis)的工具 github.com/cube2222/octosql/cmd/octosql
+  $ octosql help
+  # 推荐一个对SQL进行优化和改写的自动化工具SOAR(SQL Optimizer And Rewriter)
+  $ wget https://github.com/XiaoMi/soar/releases/download/0.11.0/soar.linux-amd64 -O soar && chmod a+x soar
+  $ soar 'select * from film'
+  
   # 推荐 TiDB, PingCAP公司设计的开源分布式HTAP'混合事务处理和分析'NewSQL-兼容MySQL: pingcap.com/docs-cn
   
   # 推荐 MySQL 的一个数据库集群系统 Vitess 用于水平弹性扩展MySQL: vitess.io/docs/tutorials

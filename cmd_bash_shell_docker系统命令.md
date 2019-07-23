@@ -227,8 +227,9 @@
 
 ## Linux开发环境及常用安装zsh-Redis-mysql-nsq-Botpress-Gotify-SSH-fio等
 
+> `更新软件源` 镜像下载-提高速度 (推荐-阿里源ubuntu`18.04`bionic`)
 ~~~bash
-# *更新软件源* sudo vi /etc/apt/sources.list (复制[阿里源ubuntu`18.04`bionic`]到文件顶部)
+$ sudo vi /etc/apt/sources.list  # 更新软件源-修改配置文件-内容如下:
 deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
@@ -239,10 +240,10 @@ deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted univer
 deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
 deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
 deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
-$ sudo apt-get update && sudo apt-get upgrade # 更新软件源操作完毕.
+$ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
 ~~~
 
- `zsh`是一款强大的虚拟终端，推荐使用 [oh my zsh](https://github.com/robbyrussell/oh-my-zsh) 配置管理终端
+> `zsh`是一款强大的虚拟终端，推荐使用 [oh my zsh](https://github.com/robbyrussell/oh-my-zsh) 配置管理终端
 ~~~bash
 # 安装 zsh
 $ sudo apt-get -y install zsh
@@ -256,8 +257,8 @@ $ sudo chmod -R 755 /usr/local/share/zsh/site-functions
 $ source ~/.zshrc # 使配置生效
 ~~~
 
+> `开发环境搭建` 安装gcc,make,gtk,glib,gnome,java,openjdk,oraclejdk,ssh,python,nodejs,npm等
 ~~~shell
-  # 环境搭建
   # < Windows Subsystem for Linux | WSL >---------------------------
   $ sudo do-release-upgrade -d        # 升级至18.04LTS ( 如果是16.04? > cat /etc/issue )
   $ lsb_release -c                    # 获取系统代号,更新软件源sources.list
@@ -288,8 +289,10 @@ $ source ~/.zshrc # 使配置生效
   $ vi ~/.bashrc  # 配置 export PATH=/usr/local/node/bin:$PATH # bash生效 source ~/.bashrc ; zsh需修改~/.zshrc
   # (选项)设置软链接: ln -s /usr/local/node/bin/node /usr/local/bin/node ; ln -s /usr/local/node/bin/npm /usr/local/bin/npm
   $ npm install -g npm
-  
-  # 安装Git
+~~~
+
+> `Git` 代码版本管理
+~~~shell
   $ sudo add-apt-repository ppa:git-core/ppa
   $ sudo apt-get update
   $ sudo apt install git
@@ -315,8 +318,10 @@ $ source ~/.zshrc # 使配置生效
   $ git push origin master -u                                                 # [u用在第一次推送时]
   # 安装lazyGit，方便管理。
   $ wget https://github.com/jesseduffield/lazygit/releases/download/v0.8.1/lazygit_0.8.1_Linux_x86_64.tar.gz
-  
-  # 安装数据库Redis (Key-Value数据库) www.redis.cn
+~~~
+
+> `Redis` 内存数据库 (Key-Value数据库) www.redis.cn
+~~~shell
   $ wget http://download.redis.io/releases/redis-stable.tar.gz # 下载源码
   $ tar xzf redis-stable.tar.gz                                # 解压源码
   $ cd redis-stable && sudo make install                       # 编译Redis
@@ -338,8 +343,10 @@ $ source ~/.zshrc # 使配置生效
   # 性能测试Redis
   > redis-benchmark -n 10000 -q          # 本机Redis  < SET: 90K, GET: 90K > requests per second
   > buntdb-benchmark -n 10000 -q         # 本机BuntDB < SET:230K,GET:5000K > requests per second
-  
-  # 安装 MySQL
+~~~
+
+> `MySQL` 关系型数据库
+~~~shell
   $ sudo apt-get update
   $ sudo apt-get install mysql-server  # 安装 > sudo yum install mysql-server
   $ sudo mysql_secure_installation     # 配置
@@ -374,8 +381,10 @@ $ source ~/.zshrc # 使配置生效
   $ sudo service apparmor teardown           # safe to ignore if this errors
   $ sudo update-rc.d -f apparmor remove
   $ export VTROOT=/path/to/extracted-tarball # 2. Configure Environment >> .bashrc ...
-  
-  # 安装数据库mongodb 文档 docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu
+~~~
+
+> `mongodb` NoSql数据库 - 文档 docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu
+~~~shell
   $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
   $ echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
   $ sudo apt-get update
@@ -385,20 +394,25 @@ $ source ~/.zshrc # 使配置生效
   $ sudo systemctl enable mongod.service                  # 开机启动
   $ sudo apt-get purge mongodb-org*                       # 卸载
   $ sudo rm -r /var/log/mongodb  /var/lib/mongodb
+~~~
 
-  # 安装数据库Pilosa (分布式位图索引) www.pilosa.com
+> `Pilosa` 分布式位图索引数据库 www.pilosa.com
+~~~shell
   $ curl -L -O https://github.com/pilosa/pilosa/releases/download/v1.3.0/pilosa-v1.3.0-linux-amd64.tar.gz
   $ tar xfz pilosa-v1.3.0-linux-amd64.tar.gz & cp -i pilosa-v1.3.0-linux-amd64/pilosa /usr/local/bin
   $ pilosa server --data-dir ~/.pilosa --bind :10101 --handler.allowed-origins "*"&       # 指定origins: http://localhost:10102
   $ go get github.com/pilosa/console && cd $GOPATH/src/github.com/pilosa/console && make install && pilosa-console -bind :10102
+~~~
 
-  # 消息平台1 nsq 服务: nsq.io
+> `消息平台` nsq、kafka、gotify、centrifugo、botpress
+~~~shell
+# 消息平台1 nsq 服务: nsq.io
   > nsqlookupd    # 先启动 nsqlookud 消息服务
   > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4150       # 再启动几个 nsqd 存储数据
   > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4152 --http-address=0.0.0.0:4153
   > nsqadmin --lookupd-http-address=127.0.0.1:4161 #--tcp-address=0.0.0.0:4171 # 最后启动 nqsadmin Web 服务
   
-  # 消息平台2 kafka 服务: kafka.apache.org/quickstart
+# 消息平台2 kafka 服务: kafka.apache.org/quickstart
   $ wget http://mirrors.tuna.tsinghua.edu.cn/apache/kafka/2.3.0/kafka_2.12-2.3.0.tgz
   $ tar -xzf kafka_2.12-2.3.0.tgz && cd kafka_2.12-2.3.0
   $ bin/zookeeper-server-start.sh config/zookeeper.properties     # start a ZooKeeper server
@@ -410,20 +424,23 @@ $ source ~/.zshrc # 使配置生效
   $ cp config/server.properties config/server-1.properties        # setting up a multi-broker cluster
   $ cp config/server.properties config/server-2.properties        # setting up a multi-broker cluster
   
-  # 消息平台3 gotify 服务: github.com/gotify/server
+# 消息平台3 gotify 服务: github.com/gotify/server
   $ wget https://github.com/gotify/server/releases/download/v2.0.5/gotify-linux-amd64.zip
   $ wget -O config.yml https://raw.githubusercontent.com/gotify/server/master/config.example.yml
   $ unzip gotify-linux-amd64.zip && chmod +x gotify-linux-amd64
   $ sudo ./gotify-linux-amd64  # 配置文件config.yml: gotify.net/docs/config
   > nssm install Gotify %gopath%\bin\gotify\server\gotify.exe
   
-  # 消息平台4 centrifugo 服务: github.com/centrifugal/centrifugo
+# 消息平台4 centrifugo 服务: github.com/centrifugal/centrifugo
   $ curl -s https://packagecloud.io/install/repositories/FZambia/centrifugo/script.deb.sh | sudo bash
 
-  # 安装 Chat Bots 聊天机器人 (Windows服务)
+# 安装 Chat Bots 聊天机器人 (Windows服务)
   > nssm install Botpress D:\Program\botpress\bp.exe serve
 
-  # 安装 SSH 建立安全的加密连接：一个密码对应一个SSH-key
+~~~
+
+> `SSH` 建立安全的加密连接：一个密码对应一个SSH-key
+~~~shell
   > ssh-keygen -t rsa -C "angenal.2008@yahoo.com.cn"
   > dir "C:\Users\Administrator/.ssh"     # 存储的本地公钥位置
   > clip < %USERPROFILE%/.ssh/id_rsa.pub  # 拷贝公钥到粘贴板中
@@ -445,8 +462,10 @@ $ source ~/.zshrc # 使配置生效
   > sc create gitea start= auto binPath= "D:\Program\Git\Server\gitea\gitea.exe web --config \"D:\Program\Git\Server\gitea\custom\conf\app.ini\""
   # 删除Windows服务
   > sc delete gitea
+~~~
 
-  # 安装Docker客户端 (连接到 Docker for Windows10)
+> `Docker` 客户端 (连接到 Docker for Windows10)
+~~~shell
   # < Windows Subsystem for Linux | WSL >---------------------------
   $ sudo apt install docker.io              # 安装Docker客户端 | docker.io get client connection.
   $ export DOCKER_HOST=tcp://127.0.0.1:2375 # 设置环境, 使用 vi ~/.bashrc [~/.bash_profile](在文件结尾添加)
@@ -471,17 +490,23 @@ $ source ~/.zshrc # 使配置生效
   $ pip install apache-airflow[all] --no-index -f ./       # 3.安装airflow[all]
   $ echo "export AIRFLOW_HOME=~/app/airflow" >> ~/.bashrc  # 4.配置
   $ source ~/.bashrc && airflow initdb                     # 5.部署
+~~~
 
-  # 图片压缩
+> `图片压缩`
+~~~shell
   $ sudo apt-get install jpegoptim   # jpg 图片压缩: jpegoptim *.jpg ; find . -name '*.jpg' | xargs jpegoptim --strip-all;
   $ sudo apt-get install optipng     # png 图片压缩: optipng *.png ; find -type f -name "*.png" -exec optipng {} \;
-  $ git clone git://github.com/xing/TinyPNG.git && ./TinyPNG/install.sh  # TinyPNG 图片压缩
-  
-  # 加密解密
+  $ git clone git://github.com/xing/TinyPNG.git && ./TinyPNG/install.sh
+~~~
+
+> `加密解密文件`
+~~~shell
   $ chmod +x toplip # 赋予可执行权限
   $ ./toplip        # 运行 http://os.51cto.com/art/201903/593569.htm https://2ton.com.au/standalone_binaries/toplip
-  
-  # 检测工具
+~~~
+
+> `io检测工具`
+~~~shell
   # < fio 检测存储性能 >---------------------------
   $ wget https://github.com/axboe/fio/archive/fio-3.14.tar.gz  #! http://brick.kernel.dk/snaps/fio-2.1.10.tar.gz
   $ tar -zxf fio-3.14.tar.gz && cd fio-fio-3.14

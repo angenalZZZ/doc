@@ -227,7 +227,7 @@
 
 ## Linux开发环境及常用安装zsh-Redis-mysql-nsq-Botpress-Gotify-SSH-fio等
 
-> `更新软件源` 镜像下载-提高速度 (推荐-阿里源ubuntu`18.04`bionic`)
+> `更新软件源` 镜像下载-提高速度 (推荐-阿里源ubuntu`18.04``bionic`)
 ~~~bash
 $ sudo vi /etc/apt/sources.list  # 更新软件源-修改配置文件-内容如下:
 deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
@@ -347,13 +347,14 @@ $ source ~/.zshrc # 使配置生效
 
 > `MySQL` 关系型数据库
 ~~~shell
+  # 安装
   $ sudo apt-get update
-  $ sudo apt-get install mysql-server  # 安装 > sudo yum install mysql-server
-  $ sudo mysql_secure_installation     # 配置
+  $ sudo apt-get install mysql-server  # 默认版本 > sudo yum install mysql-server
+  $ sudo mysql_secure_installation     # 安装配置
   $ systemctl status mysql.service     # 检查服务状态
   $ ps aux |grep mysqld　　　　　       # 查看进程: /usr/sbin/mysqld --daemonize --pid-file=/run/mysqld/mysqld.pid
   $ sudo mysql -uroot -p
-  $ 配置远程访问   (@localhost本机访问; @"%"所有主机都可连接)
+  # 配置远程访问 (@localhost本机访问; @"%"所有主机都可连接)
   > CREATE USER 'newusername'@'host_name' IDENTIFIED BY 'password';
   > select host,user,password from user;  # 当前用户: SELECT USER();
   > grant select,insert,update,delete,create,drop,index,alter on dbname.* to newusername@192.168.1.10 identified by '123456';

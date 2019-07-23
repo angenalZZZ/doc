@@ -1,0 +1,12 @@
+[user]
+	name = yangzhou
+	email = angenal@hotmail.com
+[http]
+	postBuffer = 524288000
+	sslVerify = false
+[credential]
+	helper = store
+	protocol = https
+	host = github.com
+	username = angenal
+	password = ******

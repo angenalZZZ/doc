@@ -571,6 +571,7 @@ $ newgrp - docker                          # 刷新docker组
   # 网络
   docker network ls                                 # 查看网络列表
   docker network create -d bridge [network-name]    # 创建自定义网络[-d bridge 网络驱动=桥接模式]
+  docker network create -o "com.docker.network.bridge.name"="***-net" --subnet 172.18.0.0/16 ***-net # 指定子网ip
   docker network connect [network-name] [container] # 1.加入自定义网络(参数2,3,4可一起写)
   docker network connect --alias db [network-name] [container-db] # 2.入网,提供别名访问
   docker network connect --link other_container:alias_name [network-name] [container] # 3.入网,其它容器连接别名
@@ -582,7 +583,8 @@ $ newgrp - docker                          # 刷新docker组
   docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" [container] # 查询IP地址
   docker inspect -f "Name:{{.Name}}, Hostname:{{.Config.Hostname}}, IP:{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" [container]
   docker inspect -f "{{.Config.Hostname}} {{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" $(docker ps -aq) #Shell
-  docker run --name myweb -d -P --network=workgroup --link redis5:redis5 nginx # 容器之间安全互联 myweb连接redis5:redis5别名
+  docker run --name myweb --network=workgroup --link -d -P redis5:redis5 nginx # 容器之间安全互联 myweb连接redis5:redis5别名
+  docker run --name myweb --network bridge --ip 172.18.0.2 --network=***-net ... ...  # 指定子网ip
 
   # 基础
   docker [COMMAND] --help

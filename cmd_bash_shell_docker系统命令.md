@@ -304,8 +304,9 @@ $ source ~/.zshrc # 使配置生效
   $ git init [Git项目所在目录-默认当前目录]                # git init app && ls app/.git/
   $ git status && git stash list
   $ git diff
-  $ git add [filename]
-  $ git commit -m "添加文件"
+  $ git add [filename]                            # 新增file
+  $ git commit -m "添加文件"                      # 新增commit
+  $ git reset --soft HEAD^ && git reset HEAD *   # 取消本次提交
   $ git checkout -- [filename]    # 签出，放弃工作区最新的更改，适用于还未提交的情况
   $ git stash && git stash drop   # 加入了暂存区后再清除暂存区，适用于还未提交的情况
   $ git reset HEAD [filename]     # 放弃最新提交[取消git.add]，不改变工作区和库区，只改变了暂存区

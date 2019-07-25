@@ -407,11 +407,11 @@ $ source ~/.zshrc # 使配置生效
 
 > `消息平台` nsq、kafka、gotify、centrifugo、botpress
 ~~~shell
-# 消息平台1 nsq 服务: nsq.io
-  > nsqlookupd    # 先启动 nsqlookud 消息服务
+# 消息平台1 nsq 服务: nsq.io  开源的分布式消息平台(每天处理数十亿的消息，容错和高可用，可靠的消息交付保证)
+  > nsqlookupd    # 先启动消息服务 (提供近乎实时的分析系统，被Docker、Stripe和BuzzFeed在内的一系列公司使用)
   > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4150       # 再启动几个 nsqd 存储数据
   > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4152 --http-address=0.0.0.0:4153
-  > nsqadmin --lookupd-http-address=127.0.0.1:4161 #--tcp-address=0.0.0.0:4171 # 最后启动 nqsadmin Web 服务
+  > nsqadmin --lookupd-http-address=127.0.0.1:4161 #--tcp-address=0.0.0.0:4171 # 最后启动 nqsadmin Web管理
   
 # 消息平台2 kafka 服务: kafka.apache.org/quickstart
   $ wget http://mirrors.tuna.tsinghua.edu.cn/apache/kafka/2.3.0/kafka_2.12-2.3.0.tgz

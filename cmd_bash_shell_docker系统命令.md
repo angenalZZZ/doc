@@ -271,9 +271,8 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt install libgtk2.0-dev pkg-config gnome-core # 安装桌面开发gtk,glib,gnome.
   $ sudo apt install default-jre      # 安装jre > java -version
   $ sudo apt install openjdk-8-jdk    # 安装OpenJDK
-  $ sudo apt-get install software-properties-common
   $ sudo add-apt-repository ppa:webupd8team/java && sudo apt-get update
-  $ sudo apt-get install oracle-java8-installer
+  $ sudo apt-get install oracle-java8-installer    # 在线安装, 离线下载 download.oracle.com/otn/java/jdk/8u221-b11/230deb18db3e4014bb8e3e8324f81b43/jdk-8u221-linux-x64.tar.gz
   $ sudo apt-get install oracle-java8-set-default  # 使用默认版本jdk1.8
   $ sudo update-alternatives –config java  # 多版本JDK之间切换
   $ sudo apt install openssh-server   # 安装SSH

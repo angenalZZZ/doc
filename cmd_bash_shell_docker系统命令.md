@@ -662,9 +662,9 @@ $ newgrp - docker                          # 刷新docker组
   docker run --name dble-backend-mysql2 --network bridge --ip 172.166.0.3 -e MYSQL_ROOT_PASSWORD=123456 -p 33062:3306 
     --network=dble-net -d -v "d:\docker\app\dble\mysql2:/var/lib/mysql" mysql:5.7 --server-id=2
   docker run --name dble-server -itd --ip 172.166.0.5 -p 8066:8066 -p 9066:9066 --network=dble-net actiontech/dble
-  docker cp dble-server:/opt/dble d:\docker\app\dble  #复制dble后改配置d:/docker/app/dble/dble/conf/schema.xml 
+  docker cp dble-server:/opt/dble d:\docker\app\dble #复制后配置/opt/dble/conf/schema.xml <dataHost.name,writeHost.url>
   docker update -v "d:\docker\app\dble\dble:/opt/dble" dble-server #更新容器配置
-  docker restart dble-server  #重启dble服务
+  docker restart dble-server  #重启dble容器服务
   
   # 数据库 PostgreSql + 时序数据timescaledb + 云计算
   docker run --name timescaledb -d -p 5432:5432 -e POSTGRES_PASSWORD=123456 timescale/timescaledb:latest-pg11

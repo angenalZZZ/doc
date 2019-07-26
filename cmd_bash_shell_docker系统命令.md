@@ -571,7 +571,7 @@ $ newgrp - docker                          # 刷新docker组
   # 网络
   docker network ls                                 # 查看网络列表
   docker network create -d bridge [network-name]    # 创建自定义网络[-d bridge 网络驱动=桥接模式]
-  docker network create -o "com.docker.network.bridge.name"="***-net" --subnet 172.18.0.0/16 ***-net # 指定子网ip
+  docker network create -o "com.docker.network.bridge.name"="***-net" --subnet 172.18.0.0/16 ***-net # 指定子网172.18/255
   docker network connect [network-name] [container] # 1.加入自定义网络(参数2,3,4可一起写)
   docker network connect --alias db [network-name] [container-db] # 2.入网,提供别名访问
   docker network connect --link other_container:alias_name [network-name] [container] # 3.入网,其它容器连接别名
@@ -584,7 +584,7 @@ $ newgrp - docker                          # 刷新docker组
   docker inspect -f "Name:{{.Name}}, Hostname:{{.Config.Hostname}}, IP:{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" [container]
   docker inspect -f "{{.Config.Hostname}} {{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" $(docker ps -aq) #Shell
   docker run --name myweb --network=workgroup --link -d -P redis5:redis5 nginx # 容器之间安全互联 myweb连接redis5:redis5别名
-  docker run --name myweb --network bridge --ip 172.18.0.2 --network=***-net ... ...  # 指定子网ip
+  docker run --name myweb --network bridge --ip 172.18.0.2 --network=***-net ... ...  # 指定子网172.18/255 +bridge
 
   # 基础
   docker [COMMAND] --help
@@ -624,6 +624,7 @@ $ newgrp - docker                          # 刷新docker组
   docker run -it --rm -e AUTHOR="Test" alpine /bin/sh #查找镜像alpine+运行容器alpine+终端交互it+停止自动删除+执行命令
   docker run --name mysite -d -p 8080:80 -p 8081:443 dockersamples/static-site #查找镜像&运行容器mysite&服务&端口映射
   
+  # 内存KV数据库redis
   docker run --name redis5 --network=workgroup --network-alias=redis5 --restart=always -d -m 512m -p 6379:6379 
     -v d:\docker\app\redis5\redis.conf:/etc/redis/redis.conf -v d:\docker\app\redis5\data:/data 
     redis:5.0.3-alpine redis-server /etc/redis/redis.conf # 执行Sh /usr/local/bin/docker-entrypoint.sh
@@ -631,25 +632,30 @@ $ newgrp - docker                          # 刷新docker组
   docker run --name ssdb --network=workgroup --network-alias=ssdb -d -m 512m -p 8888:8888 
     -v d:\docker\app\ssdb\ssdb.conf:/ssdb/ssdb.conf leobuskin/ssdb-docker # 替代Redis http://ssdb.io/zh_cn
   
-  ## https://docs.docker.com/compose/aspnet-mssql-compose/  ${PWD} = d:\docker\app\microsoft.net\mvc
+  # 微软开源.netcore 参考 https://docs.docker.com/compose/aspnet-mssql-compose
   # Startup.sh1: docker run -v ${PWD}:/app --workdir /app microsoft/aspnetcore-build:lts dotnet new mvc --auth Individual
   docker run --name dotnet --network=workgroup -it -m 512m -p 8080:80 -v "d:\docker\app\microsoft.net\app:/app" 
     microsoft/dotnet     # 最新版dotnet
-    microsoft/dotnet:sdk # 最新版dotnet-sdk
-    microsoft/dotnet:aspnetcore-runtime #最新版dotnet-runtime
+    microsoft/dotnet:sdk # 最新版dotnet-sdk 用于开发
+    microsoft/dotnet:aspnetcore-runtime #最新版dotnet-runtime 用于生产
   
+  # 开源系统 Linux 分支 centos
   docker run --name centos -it --network=workgroup -m 512m -p 8000:80 -v "d:\docker\app\centos\home:/home" -w /home 
     centos /bin/bash # 其它: --workdir /home/ConsoleApp2NewLife centos /bin/sh -c "/bin/bash ./entrypoint.sh"
     $ rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-runtime-2.1
     $ dotnet /home/ConsoleApp2NewLife/ConsoleApp2NewLife.dll # 访问tcp://127.0.0.1:8000
   
+  # 开源数据库mysql
   docker run --name mysql -itd -p 3306:3306 --network=workgroup --network-alias=mysql --env MYSQL_ROOT_PASSWORD=HGJ766GR767FKJU0 
     mysql:5.7 # mariadb、mongo、mysql/mysql-server、microsoft/mssql-server-linux, (--network-alias)其它容器连此容器
+  # 微软数据库mssql
   docker run --name mssql -itd -p 1433:1433 --network=workgroup --network-alias=mssql -v "d:\docker\app\mssql\data:/var/opt/mssql/data" 
     -v "d:\docker\app\mssql\log:/var/opt/mssql/log" -e SA_PASSWORD=HGJ766GR767FKJU0 -e ACCEPT_EULA=Y 
-    mcr.microsoft.com/mssql/server # 数据库mssql
-  # 外部访问控制：(--link)其它容器连db, (--net=host -bind=192.168.1.2)不安全连接(与主机共享一个IP)+内网私有访问bind-ip
-  # MySQL中间件,开源分布式中间件dble 上海-爱可生开源社区 opensource.actionsky.com
+    mcr.microsoft.com/mssql/server
+    
+  # 外部访问控制：(--link)其它容器连db, 外部内网访问控制：(--net=host -bind=192.168.1.2)不安全连接(与主机共享一个IP)+内网私有访问bind-ip
+  
+  # 开源数据库mysql中间件, 开源分布式中间件dble, 上海.爱可生开源社区 opensource.actionsky.com
   docker network create -o "com.docker.network.bridge.name"="dble-net" --subnet 172.166.0.0/16 dble-net
   docker run --name dble-backend-mysql1 --network bridge --ip 172.166.0.2 -e MYSQL_ROOT_PASSWORD=123456 -p 33061:3306 
     --network=dble-net -d -v "d:\docker\app\dble\mysql1:/var/lib/mysql" mysql:5.7 --server-id=1
@@ -657,12 +663,14 @@ $ newgrp - docker                          # 刷新docker组
     --network=dble-net -d -v "d:\docker\app\dble\mysql2:/var/lib/mysql" mysql:5.7 --server-id=2
   docker run --name dble-server -itd --ip 172.166.0.5 -p 8066:8066 -p 9066:9066 --network=dble-net actiontech/dble
   
-  # 消息平台 rabbitmq | github.com/judasn/Linux-Tutorial/blob/master/markdown-file/RabbitMQ-Install-And-Settings.md
-  docker run --name rabbitmq3 -d --network=workgroup --network-alias=rabbitmq 
-    -p 5671:5671 -p 5672:5672 -p 4369:4369 -p 25672:25672 -p 15671:15671 -p 15672:15672 -p 61613:61613 
-    -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=HGJ766GR767FKJU0 
-    rabbitmq:3-management # 消息库rabbitmq http://localhost:15672 访问控制台
-    # 消息服务rabbitmq插件: docker exec -it rabbitmq3 bash ; cd plugins ; rabbitmq-plugins enable rabbitmq_web_stomp
+  # 数据库 postgre + 时序数据存储|云计算
+  docker run --name timescaledb -d -p 5432:5432 -e POSTGRES_PASSWORD=123456 timescale/timescaledb:latest-pg11
+  # 开源时序数据库 opentsdb http://opentsdb.net/docs/build/html/resources.html
+  docker run --name opentsdb -d -p 4242:4242 -v d:\docker\app\opentsdb\tmp:/tmp -v d:\docker\app\opentsdb\data\hbase:/data/hbase 
+    -v d:\docker\app\opentsdb\opentsdb-plugins:/opentsdb-plugins petergrace/opentsdb-docker
+  # 开源分布式时序数据库M3DB(单节点时?可能吃掉整个磁盘资源!) m3db.github.io/m3/how_to/single_node  github.com/m3db/m3
+  docker run --name m3db -d -p 7201:7201 -p 7203:7203 -p 9003:9003 quay.io/m3/m3dbnode 
+  
   # 消息平台 nsq | nsq.io/deployment/docker.html
   docker run --name nsqlookupd --network=workgroup --network-alias=nsqlookupd -p 4160:4160 -p 4161:4161 
     nsqio/nsq /nsqlookupd  # First Run nsqlookupd for nsqd & nsqadmin 
@@ -671,28 +679,27 @@ $ newgrp - docker                          # 刷新docker组
   docker run --name nsqadmin -d --network=workgroup -p 4171:4171 nsqio/nsq /nsqadmin --lookupd-http-address=nsqlookupd:4161
   # 消息平台 kafka | wurstmeister.github.io/kafka-docker
   docker run --name kafka wurstmeister/kafka
+  # 消息平台 rabbitmq | github.com/judasn/Linux-Tutorial/blob/master/markdown-file/RabbitMQ-Install-And-Settings.md
+  docker run --name rabbitmq3 -d --network=workgroup --network-alias=rabbitmq 
+    -p 5671:5671 -p 5672:5672 -p 4369:4369 -p 25672:25672 -p 15671:15671 -p 15672:15672 -p 61613:61613 
+    -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=HGJ766GR767FKJU0 
+    rabbitmq:3-management # 消息库rabbitmq http://localhost:15672 访问控制台
+    # 消息服务rabbitmq插件: docker exec -it rabbitmq3 bash ; cd plugins ; rabbitmq-plugins enable rabbitmq_web_stomp
   
   # 事件|代理|自动化系统
   docker run --name beehive -d --network=workgroup -p 8181:8181 -v d:\docker\app\beehive\conf:/conf gabrielalacchi/beehive
   # 高性能的图形数据库(NoSQL)
   docker run --name neo4j --network=workgroup --network-alias=neo4j -m 512m -p 7474:7474 -p 7687:7687 
     -v "d:\docker\app\neo4j\data:/data" -v "d:\docker\app\neo4j\logs:/logs" neo4j:3.0
-  # 大数据+分布式位图索引+实时计算
+  # 大数据+分布式位图索引+实时计算(高IO)
   docker run --name pilosa --network=workgroup --network-alias=pilosa -d -p 10101:10101 -v d:\docker\app\pilosa\data:/data 
     pilosa/pilosa server --data-dir /data --bind :10101 --handler.allowed-origins http://localhost:10102
-  # 一个基于celery任务DAG管理工具 kuanshijiao.com/2017/03/07/airflow1
+  # airflow: 一个基于celery任务DAG管理工具 kuanshijiao.com/2017/03/07/airflow1
   docker run --name airflow --network=workgroup --network-alias=airflow -d -p 8480:8080 -e LOAD_EX=y puckel/docker-airflow
-  # 一个安全的消息服务平台，自带后台管理
+  # mattermost: 一个安全的消息服务平台,自带后台管理
   docker run --name mattermost-preview -d -p 8065:8065 --add-host dockerhost:127.0.0.1 mattermost/mattermost-preview
   
-  docker run --name timescaledb -d -p 5432:5432 -e POSTGRES_PASSWORD=123456 timescale/timescaledb:latest-pg11 # PostgreSQL
-  docker run --name opentsdb -d -p 4242:4242 -v d:\docker\app\opentsdb\tmp:/tmp -v d:\docker\app\opentsdb\data\hbase:/data/hbase 
-    -v d:\docker\app\opentsdb\opentsdb-plugins:/opentsdb-plugins petergrace/opentsdb-docker
-    # 时序数据库opentsdb http://opentsdb.net/docs/build/html/resources.html
-  docker run --name m3db -d -p 7201:7201 -p 7203:7203 -p 9003:9003 quay.io/m3/m3dbnode 
-    # 分布式时序数据库M3DB(单节点时?可能吃掉整个磁盘资源!) # m3db.github.io/m3/how_to/single_node/ github.com/m3db/m3
-  
-  # 云存储解决方案minio  文档指南 https://docs.min.io/cn
+  # 云存储解决方案 minio 参考 docs.min.io/cn
   > minio.exe server d:\docker\app\minio\data  # 本地网盘svr：http://127.0.0.1:9000/ : Access-Key & Secret-Key
   > hidec /w minio.exe server d:\docker\app\minio\data # 隐藏控制台 & 后台运行 & 配置↑ data\.minio.sys\config\config.json
   > nssm install MinIO minio.exe server d:\docker\app\minio\data # 安装/Windows服务/云存储MinIO

@@ -661,9 +661,10 @@ $ newgrp - docker                          # 刷新docker组
     --network=dble-net -d -v "d:\docker\app\dble\mysql1:/var/lib/mysql" mysql:5.7 --server-id=1
   docker run --name dble-backend-mysql2 --network bridge --ip 172.166.0.3 -e MYSQL_ROOT_PASSWORD=123456 -p 33062:3306 
     --network=dble-net -d -v "d:\docker\app\dble\mysql2:/var/lib/mysql" mysql:5.7 --server-id=2
-  docker run --name dble-server -itd --ip 172.166.0.5 -p 8066:8066 -p 9066:9066 --network=dble-net actiontech/dble
+  docker run --name dble-server -itd --ip 172.166.0.5 -p 8066:8066 -p 9066:9066 
+    --network=dble-net -v "d:\docker\app\dble\dble:/opt/dble" actiontech/dble
   
-  # 数据库 postgre + 时序数据存储|云计算
+  # 数据库 PostgreSql + 时序数据timescaledb + 云计算
   docker run --name timescaledb -d -p 5432:5432 -e POSTGRES_PASSWORD=123456 timescale/timescaledb:latest-pg11
   # 开源时序数据库 opentsdb http://opentsdb.net/docs/build/html/resources.html
   docker run --name opentsdb -d -p 4242:4242 -v d:\docker\app\opentsdb\tmp:/tmp -v d:\docker\app\opentsdb\data\hbase:/data/hbase 

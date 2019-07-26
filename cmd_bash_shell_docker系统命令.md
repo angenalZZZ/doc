@@ -665,7 +665,7 @@ $ newgrp - docker                          # 刷新docker组
   docker cp dble-server:/opt/dble d:\docker\app\dble #复制后配置/opt/dble/conf/schema.xml <dataHost.name,writeHost.url>
   docker update -v "d:\docker\app\dble\dble:/opt/dble" dble-server #更新容器配置
   docker restart dble-server  #重启dble容器服务
-  #连接dble sql服务端⼝ (连接dble,其它mysql客户端工具无法使用!)
+  #连接dble sql服务端⼝ 非java开发的mysql客户端可能无法使用;建议用dbeaver下载:pan.baidu.com/s/1RTib8RyX92O0LQSi0wz3EQ 提取码:avm5
   mysql -P8066 -u root -p123456 -h 127.0.0.1
   #连接dble 控制管理端⼝
   mysql -P9066 -u man1 -p123456 -h 127.0.0.1

@@ -665,6 +665,14 @@ $ newgrp - docker                          # 刷新docker组
   docker cp dble-server:/opt/dble d:\docker\app\dble #复制后配置/opt/dble/conf/schema.xml <dataHost.name,writeHost.url>
   docker update -v "d:\docker\app\dble\dble:/opt/dble" dble-server #更新容器配置
   docker restart dble-server  #重启dble容器服务
+  #连接dble sql服务端⼝ (连接dble,其它mysql客户端工具无法使用!)
+  mysql -P8066 -u root -p123456 -h 127.0.0.1
+  #连接dble 控制管理端⼝
+  mysql -P9066 -u man1 -p123456 -h 127.0.0.1
+  #连接后端mysql1
+  mysql -P33061 -u root -p123456 -h 127.0.0.1
+  #连接后端mysql2
+  mysql -P33062 -u root -p123456 -h 127.0.0.1
   
   # 数据库 PostgreSql + 时序数据timescaledb + 云计算
   docker run --name timescaledb -d -p 5432:5432 -e POSTGRES_PASSWORD=123456 timescale/timescaledb:latest-pg11

@@ -649,6 +649,13 @@ $ newgrp - docker                          # 刷新docker组
     -v "d:\docker\app\mssql\log:/var/opt/mssql/log" -e SA_PASSWORD=HGJ766GR767FKJU0 -e ACCEPT_EULA=Y 
     mcr.microsoft.com/mssql/server # 数据库mssql
   # 外部访问控制：(--link)其它容器连db, (--net=host -bind=192.168.1.2)不安全连接(与主机共享一个IP)+内网私有访问bind-ip
+  # MySQL中间件,开源分布式中间件dble 上海-爱可生开源社区 opensource.actionsky.com
+  docker network create -o "com.docker.network.bridge.name"="dble-net" --subnet 172.166.0.0/16 dble-net
+  docker run --name dble-backend-mysql1 --network bridge --ip 172.166.0.2 -e MYSQL_ROOT_PASSWORD=123456 -p 33061:3306 
+    --network=dble-net -d -v "d:\docker\app\dble\mysql1:/var/lib/mysql" mysql:5.7 --server-id=1
+  docker run --name dble-backend-mysql2 --network bridge --ip 172.166.0.3 -e MYSQL_ROOT_PASSWORD=123456 -p 33062:3306 
+    --network=dble-net -d -v "d:\docker\app\dble\mysql2:/var/lib/mysql" mysql:5.7 --server-id=2
+  docker run --name dble-server -itd --ip 172.166.0.5 -p 8066:8066 -p 9066:9066 --network=dble-net actiontech/dble
   
   # 消息平台 rabbitmq | github.com/judasn/Linux-Tutorial/blob/master/markdown-file/RabbitMQ-Install-And-Settings.md
   docker run --name rabbitmq3 -d --network=workgroup --network-alias=rabbitmq 

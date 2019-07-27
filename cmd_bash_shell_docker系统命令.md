@@ -161,7 +161,6 @@
   $ export              # 查看系统环境变量linux
   $ cat /etc/hosts      # 一次显示整个文件
   $ cat > /etc/hosts    # 从键盘创建一个文件
-  
   # 刷新dns缓存
   > ipconfig /flushdns
   $ sudo killall -HUP mDNSResponder
@@ -281,6 +280,13 @@ $ source ~/.zshrc # 使配置生效
   $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 100
   $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 150
   $ sudo update-alternatives --config python  # 手动配置/切换版本: python --version
+  $ sudo add-apt-repository ppa:ondrej/php  && sudo apt-get update   # 安装php (PPA源)
+  $ sudo apt install php7.2-fpm php7.2-mysql php7.2-curl php7.2-gd php7.2-mbstring php7.2-xml php7.2-xmlrpc php7.2-zip php7.2-opcache -y
+  $ sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/' /etc/php/7.2/fpm/php.ini # 设置php 替换 ;cgi.fix_pathinfo=1 为 cgi.fix_pathinfo=0
+  $ systemctl restart php7.2-fpm  # 重启php
+  $ systemctl status php7.2-fpm  # 检查状态
+  $ sudo apt install apache2          # 安装apache
+  $ sudo apt-get install libapache2-mod-php7.2  # 让apache能识别php文件
   $ sudo apt install nodejs                   # 安装Nodejs(此安装的版本太低; 推荐wget安装方式)
   $ wget https://npm.taobao.org/mirrors/node/v10.16.0/node-v10.16.0-linux-x64.tar.xz
   $ sudo tar -zxf node-v10.16.0-linux-x64.tar.xz -C /usr/local/
@@ -351,18 +357,27 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt-get update
   $ sudo apt-get install mysql-server  # 默认版本 > sudo yum install mysql-server
   $ sudo mysql_secure_installation     # 安装配置
-  $ systemctl status mysql.service     # 检查服务状态
+  $ systemctl status mysql.service      # 检查服务状态
   $ ps aux |grep mysqld　　　　　       # 查看进程: /usr/sbin/mysqld --daemonize --pid-file=/run/mysqld/mysqld.pid
   $ sudo mysql -uroot -p
   $ mysql --help
+  $ cat /etc/mysql/debian.cnf              # 查看系统密码
+  $ mysql -P3306 -u debian-sys-maint -p  # 准备修改密码
+  > use mysql;
+  > update mysql.user set authentication_string=password('123456') where user='root' and Host ='localhost';
+  > update user set plugin="mysql_native_password"; 
+  > flush privileges;
+  > quit;
+  $ sudo service mysql restart  # 重启
+  $ mysql -P3306 -u root -p         # 以root身份登录
   # 配置远程访问 (@localhost本机访问; @"%"所有主机都可连接)
-  > CREATE USER 'newusername'@'host_name' IDENTIFIED BY 'password';
+  > CREATE USER 'newusername'@'host***' IDENTIFIED BY 'password';
   > select host,user,password from user;  # 当前用户: SELECT USER();
   > grant select,insert,update,delete,create,drop,index,alter on dbname.* to newusername@192.168.1.10 identified by '123456';
   > GRANT ALL PRIVILEGES ON dbname.* TO newusername@"%" IDENTIFIED BY "123456"; 
   > GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY "123456";
-  > SET PASSWORD FOR 'root'@'host_name' = PASSWORD('password');
-  > mysqladmin -u root -h host_name password "password"   # 连接mysql
+  > SET PASSWORD FOR 'root'@'host***' = PASSWORD('password');
+  > mysqladmin -u root -h host*** password "password"       # 连接mysql
   > mysqladmin -u root -p '123456' password 'newpassword' # 修改密码
   > mysqladmin -u root -p shutdown                        # 关闭mysql
   

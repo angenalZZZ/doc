@@ -10,22 +10,25 @@
 #
 # Additionally, comments (such as these) may be inserted on individual
 # lines or following the machine name denoted by a '#' symbol.
-#
-# For example:
-#
-# 102.54.94.97 rhino.acme.com # source server
-# 38.25.63.10 x.acme.com # x client host
 
 # localhost name resolution is handled within DNS itself.
 127.0.0.1 localhost
+127.0.0.1 ANGENAL-PC
+127.0.0.1 yangzhou-PC
 ::1	localhost
 ::1	ip6-localhost
 ::1	ip6-loopback
 
-# Copyright (c) 2014-2017, racaljk.
-# https://github.com/racaljk/hosts
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
 ###############################################################
 # Localhost (DO NOT REMOVE) Start
+###############################################################
 
 # shopping
 127.0.0.1 www.shop.com
@@ -34,21 +37,25 @@
 127.0.0.1 ui.shop.com
 
 # Gogs local Git Server
-127.0.1.1   gogs
+127.0.1.1 gogs
 ::1	gogs
 
 # PerfTap local StatSite
-127.0.1.1   perftap
+127.0.1.1 perftap
 ::1	perftap
 
 # Wamp/php VirtualHost
 # kod file explorer
-127.0.0.1	local.kod.com
+127.0.0.1 local.kod.com
 ::1	local.kod.com
 # crawl movie
-127.0.0.1   local.crawlmovie.com
+127.0.0.1 local.crawlmovie.com
 ::1	local.crawlmovie.com
 
+
+###############################################################
+# Copyright (c) 2014-2017, racaljk.
+# https://github.com/racaljk/hosts
 ###############################################################
 
 # adobe
@@ -78,6 +85,7 @@
 107.22.3.110 status.github.com
 204.232.175.78 training.github.com
 
+###############################################################
 # Localhost (DO NOT REMOVE) End
 ###############################################################
 

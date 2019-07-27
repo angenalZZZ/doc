@@ -354,6 +354,7 @@ $ source ~/.zshrc # 使配置生效
   $ systemctl status mysql.service     # 检查服务状态
   $ ps aux |grep mysqld　　　　　       # 查看进程: /usr/sbin/mysqld --daemonize --pid-file=/run/mysqld/mysqld.pid
   $ sudo mysql -uroot -p
+  $ mysql --help
   # 配置远程访问 (@localhost本机访问; @"%"所有主机都可连接)
   > CREATE USER 'newusername'@'host_name' IDENTIFIED BY 'password';
   > select host,user,password from user;  # 当前用户: SELECT USER();

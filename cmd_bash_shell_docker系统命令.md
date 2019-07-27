@@ -724,6 +724,8 @@ $ newgrp - docker                          # 刷新docker组
     rabbitmq:3-management # 消息库rabbitmq http://localhost:15672 访问控制台
     # 消息服务rabbitmq插件: docker exec -it rabbitmq3 bash ; cd plugins ; rabbitmq-plugins enable rabbitmq_web_stomp
   
+  # 工作流(Cadence)可扩展|长时间运行|业务应用系统  cadenceworkflow.io
+  docker pull ubercadence/server
   # 事件|代理|自动化系统
   docker run --name beehive -d --network=workgroup -p 8181:8181 -v d:\docker\app\beehive\conf:/conf gabrielalacchi/beehive
   # 高性能的图形数据库(NoSQL)

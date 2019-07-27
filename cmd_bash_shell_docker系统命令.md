@@ -271,7 +271,7 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt install default-jre      # 安装jre > java -version
   $ sudo apt install openjdk-8-jdk    # 安装OpenJDK
   $ sudo add-apt-repository ppa:webupd8team/java && sudo apt-get update
-  $ sudo apt-get install oracle-java8-installer    # 在线安装, 离线下载 download.oracle.com/otn/java/jdk/8u221-b11/230deb18db3e4014bb8e3e8324f81b43/jdk-8u221-linux-x64.tar.gz
+  $ sudo apt-get install oracle-java8-installer    # 在线安装, 离线下载 download.oracle.com/otn/java/jdk
   $ sudo apt-get install oracle-java8-set-default  # 使用默认版本jdk1.8
   $ sudo update-alternatives –config java  # 多版本JDK之间切换
   $ sudo apt install openssh-server   # 安装SSH
@@ -284,8 +284,9 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt install php7.2-fpm php7.2-mysql php7.2-curl php7.2-gd php7.2-mbstring php7.2-xml php7.2-xmlrpc php7.2-zip php7.2-opcache -y
   $ sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/' /etc/php/7.2/fpm/php.ini # 设置php 替换 ;cgi.fix_pathinfo=1 为 cgi.fix_pathinfo=0
   $ systemctl restart php7.2-fpm  # 重启php
-  $ systemctl status php7.2-fpm  # 检查状态
-  $ sudo apt install apache2          # 安装apache
+  $ systemctl status php7.2-fpm   # 检查状态
+  $ sudo apt update -y
+  $ sudo apt install apache2  -y        # 安装apache
   $ sudo apt-get install libapache2-mod-php7.2  # 让apache能识别php文件
   $ sudo apt install nodejs                   # 安装Nodejs(此安装的版本太低; 推荐wget安装方式)
   $ wget https://npm.taobao.org/mirrors/node/v10.16.0/node-v10.16.0-linux-x64.tar.xz

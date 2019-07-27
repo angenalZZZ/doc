@@ -89,7 +89,8 @@ git status 或 git stash & git checkout [现有分支] ... 或 git checkout mast
 ####  6.提交到本地git仓库(添加了文件版本 -m备注, -am添加变更文件和备注)
 
 ~~~bash
-git commit -m "Add cute octocat story"
+git commit -m "Add cute octocat story"       # 本次提交
+git reset --soft HEAD^ && git reset HEAD *   # 取消本次提交
 ~~~
 
 ####  7.提交所有更改到本地git仓库(-a添加并处理冲突)

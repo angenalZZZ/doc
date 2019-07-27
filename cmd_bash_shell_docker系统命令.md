@@ -271,9 +271,8 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt install libgtk2.0-dev pkg-config gnome-core # 安装桌面开发gtk,glib,gnome.
   $ sudo apt install default-jre      # 安装jre > java -version
   $ sudo apt install openjdk-8-jdk    # 安装OpenJDK
-  $ sudo apt-get install software-properties-common
   $ sudo add-apt-repository ppa:webupd8team/java && sudo apt-get update
-  $ sudo apt-get install oracle-java8-installer
+  $ sudo apt-get install oracle-java8-installer    # 在线安装, 离线下载 download.oracle.com/otn/java/jdk/8u221-b11/230deb18db3e4014bb8e3e8324f81b43/jdk-8u221-linux-x64.tar.gz
   $ sudo apt-get install oracle-java8-set-default  # 使用默认版本jdk1.8
   $ sudo update-alternatives –config java  # 多版本JDK之间切换
   $ sudo apt install openssh-server   # 安装SSH
@@ -304,8 +303,9 @@ $ source ~/.zshrc # 使配置生效
   $ git init [Git项目所在目录-默认当前目录]                # git init app && ls app/.git/
   $ git status && git stash list
   $ git diff
-  $ git add [filename]
-  $ git commit -m "添加文件"
+  $ git add [filename]                            # 新增file
+  $ git commit -m "添加文件"                      # 新增commit
+  $ git reset --soft HEAD^ && git reset HEAD *   # 取消本次提交
   $ git checkout -- [filename]    # 签出，放弃工作区最新的更改，适用于还未提交的情况
   $ git stash && git stash drop   # 加入了暂存区后再清除暂存区，适用于还未提交的情况
   $ git reset HEAD [filename]     # 放弃最新提交[取消git.add]，不改变工作区和库区，只改变了暂存区
@@ -407,11 +407,11 @@ $ source ~/.zshrc # 使配置生效
 
 > `消息平台` nsq、kafka、gotify、centrifugo、botpress
 ~~~shell
-# 消息平台1 nsq 服务: nsq.io
-  > nsqlookupd    # 先启动 nsqlookud 消息服务
+# 消息平台1 nsq 服务: nsq.io  开源的分布式消息平台(每天处理数十亿的消息，容错和高可用，可靠的消息交付保证)
+  > nsqlookupd    # 先启动消息服务 (提供近乎实时的分析系统，被Docker、Stripe和BuzzFeed在内的一系列公司使用)
   > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4150       # 再启动几个 nsqd 存储数据
   > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4152 --http-address=0.0.0.0:4153
-  > nsqadmin --lookupd-http-address=127.0.0.1:4161 #--tcp-address=0.0.0.0:4171 # 最后启动 nqsadmin Web 服务
+  > nsqadmin --lookupd-http-address=127.0.0.1:4161 #--tcp-address=0.0.0.0:4171 # 最后启动 nqsadmin Web管理
   
 # 消息平台2 kafka 服务: kafka.apache.org/quickstart
   $ wget http://mirrors.tuna.tsinghua.edu.cn/apache/kafka/2.3.0/kafka_2.12-2.3.0.tgz
@@ -571,6 +571,7 @@ $ newgrp - docker                          # 刷新docker组
   # 网络
   docker network ls                                 # 查看网络列表
   docker network create -d bridge [network-name]    # 创建自定义网络[-d bridge 网络驱动=桥接模式]
+  docker network create -o "com.docker.network.bridge.name"="***-net" --subnet 172.18.0.0/16 ***-net # 指定子网172.18/255
   docker network connect [network-name] [container] # 1.加入自定义网络(参数2,3,4可一起写)
   docker network connect --alias db [network-name] [container-db] # 2.入网,提供别名访问
   docker network connect --link other_container:alias_name [network-name] [container] # 3.入网,其它容器连接别名
@@ -582,7 +583,8 @@ $ newgrp - docker                          # 刷新docker组
   docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" [container] # 查询IP地址
   docker inspect -f "Name:{{.Name}}, Hostname:{{.Config.Hostname}}, IP:{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" [container]
   docker inspect -f "{{.Config.Hostname}} {{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" $(docker ps -aq) #Shell
-  docker run --name myweb -d -P --network=workgroup --link redis5:redis5 nginx # 容器之间安全互联 myweb连接redis5:redis5别名
+  docker run --name myweb --network=workgroup --link -d -P redis5:redis5 nginx # 容器之间安全互联 myweb连接redis5:redis5别名
+  docker run --name myweb --network bridge --ip 172.18.0.2 --network=***-net ... ...  # 指定子网172.18/255 +bridge
 
   # 基础
   docker [COMMAND] --help
@@ -622,6 +624,7 @@ $ newgrp - docker                          # 刷新docker组
   docker run -it --rm -e AUTHOR="Test" alpine /bin/sh #查找镜像alpine+运行容器alpine+终端交互it+停止自动删除+执行命令
   docker run --name mysite -d -p 8080:80 -p 8081:443 dockersamples/static-site #查找镜像&运行容器mysite&服务&端口映射
   
+  # 内存KV数据库redis
   docker run --name redis5 --network=workgroup --network-alias=redis5 --restart=always -d -m 512m -p 6379:6379 
     -v d:\docker\app\redis5\redis.conf:/etc/redis/redis.conf -v d:\docker\app\redis5\data:/data 
     redis:5.0.3-alpine redis-server /etc/redis/redis.conf # 执行Sh /usr/local/bin/docker-entrypoint.sh
@@ -629,31 +632,56 @@ $ newgrp - docker                          # 刷新docker组
   docker run --name ssdb --network=workgroup --network-alias=ssdb -d -m 512m -p 8888:8888 
     -v d:\docker\app\ssdb\ssdb.conf:/ssdb/ssdb.conf leobuskin/ssdb-docker # 替代Redis http://ssdb.io/zh_cn
   
-  ## https://docs.docker.com/compose/aspnet-mssql-compose/  ${PWD} = d:\docker\app\microsoft.net\mvc
+  # 微软开源.netcore 参考 https://docs.docker.com/compose/aspnet-mssql-compose
   # Startup.sh1: docker run -v ${PWD}:/app --workdir /app microsoft/aspnetcore-build:lts dotnet new mvc --auth Individual
   docker run --name dotnet --network=workgroup -it -m 512m -p 8080:80 -v "d:\docker\app\microsoft.net\app:/app" 
     microsoft/dotnet     # 最新版dotnet
-    microsoft/dotnet:sdk # 最新版dotnet-sdk
-    microsoft/dotnet:aspnetcore-runtime #最新版dotnet-runtime
+    microsoft/dotnet:sdk # 最新版dotnet-sdk 用于开发
+    microsoft/dotnet:aspnetcore-runtime #最新版dotnet-runtime 用于生产
   
+  # 开源系统 Linux 分支 centos
   docker run --name centos -it --network=workgroup -m 512m -p 8000:80 -v "d:\docker\app\centos\home:/home" -w /home 
     centos /bin/bash # 其它: --workdir /home/ConsoleApp2NewLife centos /bin/sh -c "/bin/bash ./entrypoint.sh"
     $ rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-runtime-2.1
     $ dotnet /home/ConsoleApp2NewLife/ConsoleApp2NewLife.dll # 访问tcp://127.0.0.1:8000
   
+  # 开源数据库mysql
   docker run --name mysql -itd -p 3306:3306 --network=workgroup --network-alias=mysql --env MYSQL_ROOT_PASSWORD=HGJ766GR767FKJU0 
     mysql:5.7 # mariadb、mongo、mysql/mysql-server、microsoft/mssql-server-linux, (--network-alias)其它容器连此容器
+  # 微软数据库mssql
   docker run --name mssql -itd -p 1433:1433 --network=workgroup --network-alias=mssql -v "d:\docker\app\mssql\data:/var/opt/mssql/data" 
     -v "d:\docker\app\mssql\log:/var/opt/mssql/log" -e SA_PASSWORD=HGJ766GR767FKJU0 -e ACCEPT_EULA=Y 
-    mcr.microsoft.com/mssql/server # 数据库mssql
-  # 外部访问控制：(--link)其它容器连db, (--net=host -bind=192.168.1.2)不安全连接(与主机共享一个IP)+内网私有访问bind-ip
+    mcr.microsoft.com/mssql/server
+    
+  # 外部访问控制：(--link)其它容器连db, 外部内网访问控制：(--net=host -bind=192.168.1.2)不安全连接(与主机共享一个IP)+内网私有访问bind-ip
   
-  # 消息平台 rabbitmq | github.com/judasn/Linux-Tutorial/blob/master/markdown-file/RabbitMQ-Install-And-Settings.md
-  docker run --name rabbitmq3 -d --network=workgroup --network-alias=rabbitmq 
-    -p 5671:5671 -p 5672:5672 -p 4369:4369 -p 25672:25672 -p 15671:15671 -p 15672:15672 -p 61613:61613 
-    -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=HGJ766GR767FKJU0 
-    rabbitmq:3-management # 消息库rabbitmq http://localhost:15672 访问控制台
-    # 消息服务rabbitmq插件: docker exec -it rabbitmq3 bash ; cd plugins ; rabbitmq-plugins enable rabbitmq_web_stomp
+  # 开源数据库mysql中间件, 开源分布式中间件dble, 上海.爱可生开源社区 opensource.actionsky.com
+  docker network create -o "com.docker.network.bridge.name"="dble-net" --subnet 172.166.0.0/16 dble-net
+  docker run --name dble-backend-mysql1 --network bridge --ip 172.166.0.2 -e MYSQL_ROOT_PASSWORD=123456 -p 33061:3306 
+    --network=dble-net -d -v "d:\docker\app\dble\mysql1:/var/lib/mysql" mysql:5.7 --server-id=1
+  docker run --name dble-backend-mysql2 --network bridge --ip 172.166.0.3 -e MYSQL_ROOT_PASSWORD=123456 -p 33062:3306 
+    --network=dble-net -d -v "d:\docker\app\dble\mysql2:/var/lib/mysql" mysql:5.7 --server-id=2
+  docker run --name dble-server -itd --ip 172.166.0.5 -p 8066:8066 -p 9066:9066 --network=dble-net actiontech/dble
+  docker cp dble-server:/opt/dble d:\docker\app\dble #复制后配置/opt/dble/conf/schema.xml <dataHost.name,writeHost.url>
+  docker update -v "d:\docker\app\dble\dble:/opt/dble" dble-server #更新容器配置
+  docker restart dble-server  #重启dble容器服务
+  #连接dble sql服务端⼝ 非java开发的mysql客户端可能无法使用;建议用dbeaver下载:pan.baidu.com/s/1RTib8RyX92O0LQSi0wz3EQ 提取码:avm5
+  mysql -P8066 -u root -p123456 -h 127.0.0.1
+  #连接dble 控制管理端⼝
+  mysql -P9066 -u man1 -p123456 -h 127.0.0.1
+  #连接后端mysql1
+  mysql -P33061 -u root -p123456 -h 127.0.0.1
+  #连接后端mysql2
+  mysql -P33062 -u root -p123456 -h 127.0.0.1
+  
+  # 数据库 PostgreSql + 时序数据timescaledb + 云计算
+  docker run --name timescaledb -d -p 5432:5432 -e POSTGRES_PASSWORD=123456 timescale/timescaledb:latest-pg11
+  # 开源时序数据库 opentsdb http://opentsdb.net/docs/build/html/resources.html
+  docker run --name opentsdb -d -p 4242:4242 -v d:\docker\app\opentsdb\tmp:/tmp -v d:\docker\app\opentsdb\data\hbase:/data/hbase 
+    -v d:\docker\app\opentsdb\opentsdb-plugins:/opentsdb-plugins petergrace/opentsdb-docker
+  # 开源分布式时序数据库M3DB(单节点时?可能吃掉整个磁盘资源!) m3db.github.io/m3/how_to/single_node  github.com/m3db/m3
+  docker run --name m3db -d -p 7201:7201 -p 7203:7203 -p 9003:9003 quay.io/m3/m3dbnode 
+  
   # 消息平台 nsq | nsq.io/deployment/docker.html
   docker run --name nsqlookupd --network=workgroup --network-alias=nsqlookupd -p 4160:4160 -p 4161:4161 
     nsqio/nsq /nsqlookupd  # First Run nsqlookupd for nsqd & nsqadmin 
@@ -662,28 +690,27 @@ $ newgrp - docker                          # 刷新docker组
   docker run --name nsqadmin -d --network=workgroup -p 4171:4171 nsqio/nsq /nsqadmin --lookupd-http-address=nsqlookupd:4161
   # 消息平台 kafka | wurstmeister.github.io/kafka-docker
   docker run --name kafka wurstmeister/kafka
+  # 消息平台 rabbitmq | github.com/judasn/Linux-Tutorial/blob/master/markdown-file/RabbitMQ-Install-And-Settings.md
+  docker run --name rabbitmq3 -d --network=workgroup --network-alias=rabbitmq 
+    -p 5671:5671 -p 5672:5672 -p 4369:4369 -p 25672:25672 -p 15671:15671 -p 15672:15672 -p 61613:61613 
+    -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=HGJ766GR767FKJU0 
+    rabbitmq:3-management # 消息库rabbitmq http://localhost:15672 访问控制台
+    # 消息服务rabbitmq插件: docker exec -it rabbitmq3 bash ; cd plugins ; rabbitmq-plugins enable rabbitmq_web_stomp
   
   # 事件|代理|自动化系统
   docker run --name beehive -d --network=workgroup -p 8181:8181 -v d:\docker\app\beehive\conf:/conf gabrielalacchi/beehive
   # 高性能的图形数据库(NoSQL)
   docker run --name neo4j --network=workgroup --network-alias=neo4j -m 512m -p 7474:7474 -p 7687:7687 
     -v "d:\docker\app\neo4j\data:/data" -v "d:\docker\app\neo4j\logs:/logs" neo4j:3.0
-  # 大数据+分布式位图索引+实时计算
+  # 大数据+分布式位图索引+实时计算(高IO)
   docker run --name pilosa --network=workgroup --network-alias=pilosa -d -p 10101:10101 -v d:\docker\app\pilosa\data:/data 
     pilosa/pilosa server --data-dir /data --bind :10101 --handler.allowed-origins http://localhost:10102
-  # 一个基于celery任务DAG管理工具 kuanshijiao.com/2017/03/07/airflow1
+  # airflow: 一个基于celery任务DAG管理工具 kuanshijiao.com/2017/03/07/airflow1
   docker run --name airflow --network=workgroup --network-alias=airflow -d -p 8480:8080 -e LOAD_EX=y puckel/docker-airflow
-  # 一个安全的消息服务平台，自带后台管理
+  # mattermost: 一个安全的消息服务平台,自带后台管理
   docker run --name mattermost-preview -d -p 8065:8065 --add-host dockerhost:127.0.0.1 mattermost/mattermost-preview
   
-  docker run --name timescaledb -d -p 5432:5432 -e POSTGRES_PASSWORD=123456 timescale/timescaledb:latest-pg11 # PostgreSQL
-  docker run --name opentsdb -d -p 4242:4242 -v d:\docker\app\opentsdb\tmp:/tmp -v d:\docker\app\opentsdb\data\hbase:/data/hbase 
-    -v d:\docker\app\opentsdb\opentsdb-plugins:/opentsdb-plugins petergrace/opentsdb-docker
-    # 时序数据库opentsdb http://opentsdb.net/docs/build/html/resources.html
-  docker run --name m3db -d -p 7201:7201 -p 7203:7203 -p 9003:9003 quay.io/m3/m3dbnode 
-    # 分布式时序数据库M3DB(单节点时?可能吃掉整个磁盘资源!) # m3db.github.io/m3/how_to/single_node/ github.com/m3db/m3
-  
-  # 云存储解决方案minio  文档指南 https://docs.min.io/cn
+  # 云存储解决方案 minio 参考 docs.min.io/cn
   > minio.exe server d:\docker\app\minio\data  # 本地网盘svr：http://127.0.0.1:9000/ : Access-Key & Secret-Key
   > hidec /w minio.exe server d:\docker\app\minio\data # 隐藏控制台 & 后台运行 & 配置↑ data\.minio.sys\config\config.json
   > nssm install MinIO minio.exe server d:\docker\app\minio\data # 安装/Windows服务/云存储MinIO

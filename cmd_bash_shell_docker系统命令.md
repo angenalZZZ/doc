@@ -283,18 +283,28 @@ $ source ~/.zshrc # 使配置生效
   $ sudo add-apt-repository ppa:ondrej/php  && sudo apt-get update   # 安装php (PPA源)
   $ sudo apt install php7.2-fpm php7.2-mysql php7.2-curl php7.2-gd php7.2-mbstring php7.2-xml php7.2-xmlrpc php7.2-zip php7.2-opcache -y
   $ sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/' /etc/php/7.2/fpm/php.ini # 设置php 替换 ;cgi.fix_pathinfo=1 为 cgi.fix_pathinfo=0
-  $ systemctl restart php7.2-fpm  # 重启php
-  $ systemctl status php7.2-fpm   # 检查状态
-  $ sudo apt update -y
+  $ sudo systemctl restart php7.2-fpm  # 重启php
+  $ sudo systemctl status php7.2-fpm   # 检查状态
+  $ sudo apt-get update
   $ sudo apt install apache2  -y        # 安装apache
   $ sudo apt-get install libapache2-mod-php7.2  # 让apache能识别php文件
+  $ sudo apt install nginx        # 安装Nginx
+  $ sudo systemctl status nginx      # 检查状态
+  $ sudo nginx -v 
+  $ sudo ufw allow 'Nginx Full'   # 配置防火墙
+  $ sudo ufw status      # 验证更改
+  $ sudo systemctl restart nginx  # 重启Nginx服务
+  $ sudo systemctl disable nginx # 禁止开机启动
+  $ sudo systemctl reload nginx   # 修改配置后，需要重新加载Nginx服务
+  $ ls /etc/nginx/sites-available # 设置Nginx服务器模块(类似于Apache虚拟主机)  www.linuxidc.com/Linux/2018-05/152258.htm
+  $ sudo apt install certbot          # 使用Let's Encrypt保护Nginx  www.linuxidc.com/Linux/2018-05/152259.htm
   $ sudo apt install nodejs                   # 安装Nodejs(此安装的版本太低; 推荐wget安装方式)
   $ wget https://npm.taobao.org/mirrors/node/v10.16.0/node-v10.16.0-linux-x64.tar.xz
   $ sudo tar -zxf node-v10.16.0-linux-x64.tar.xz -C /usr/local/
   $ sudo mv /usr/local/node-v10.16.0-linux-x64 /usr/local/node
   $ vi ~/.bashrc  # 配置 export PATH=/usr/local/node/bin:$PATH # bash生效 source ~/.bashrc ; zsh需修改~/.zshrc
   # (选项)设置软链接: ln -s /usr/local/node/bin/node /usr/local/bin/node ; ln -s /usr/local/node/bin/npm /usr/local/bin/npm
-  $ npm install -g npm
+  $ npm install -g npm # 更新安装npm
 ~~~
 
 > `Git` 代码版本管理

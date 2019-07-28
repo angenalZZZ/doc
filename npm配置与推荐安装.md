@@ -119,6 +119,7 @@ npm i -S hapi            # hapi基于express构建 https://github.com/hapijs/hap
 # orm 数据库访问
 npm i -S mongoose  # for Mongodb https://mongoosejs.com/docs/index.html
 npm i -S knex | npm i -S pg sqlite3 mysql mysql2 oracle mssql  # https://knexjs.org
+npm i -S typeorm # 推荐ORM for TypeScript and JavaScript (ES7, ES6, ES5) http://typeorm.io
 npm i redis     # 高性能缓存数据库 Redis
 npm i level     # 高性能缓存数据库Google LevelDB https://github.com/Level/level
 npm i ssdb-node # SSDB 基于 LevelDB https://github.com/reanote/ssdb-node

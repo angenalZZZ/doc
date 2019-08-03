@@ -111,25 +111,6 @@
   
   # 文件系统
   > dir [目录]           # 默认当前目录(命令pwd)
-  /dev/char
-  /dev/console
-  /dev/core -> /proc/kcore
-  /dev/cpu
-  /dev/disk
-  /dev/initctl -> /run/systemd/initctl/fifo
-  /dev/input
-  /dev/log -> /run/systemd/journal/dev-log
-  /dev/mqueue
-  /dev/net
-  /dev/null
-  /dev/port
-  /dev/snapshot
-  /dev/stdin -> /proc/self/fd/0
-  /dev/stdout -> /proc/self/fd/1
-  /dev/stderr -> /proc/self/fd/2
-  /dev/tty
-  /dev/usb
-  /dev/zero
   $ ls -an [目录]        # 查看目录及文件读写权限[-al]
   $ touch main.js        # 新建文件
   $ mv main.js main.cs   # 重命名文件,移动文件位置
@@ -200,6 +181,25 @@
   
   # 系统硬件驱动
   > devmgmt.msc
+  /dev/char
+  /dev/console
+  /dev/core -> /proc/kcore
+  /dev/cpu
+  /dev/disk
+  /dev/initctl -> /run/systemd/initctl/fifo
+  /dev/input
+  /dev/log -> /run/systemd/journal/dev-log
+  /dev/mqueue
+  /dev/net
+  /dev/null
+  /dev/port
+  /dev/snapshot
+  /dev/stdin -> /proc/self/fd/0
+  /dev/stdout -> /proc/self/fd/1
+  /dev/stderr -> /proc/self/fd/2
+  /dev/tty
+  /dev/usb
+  /dev/zero
   
   # 系统硬件序列号
   > wmic memorychip get serialnumber

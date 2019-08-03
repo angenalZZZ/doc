@@ -61,7 +61,7 @@
   $ mkdir -p /home/admin & chmod 777 /home/admin & useradd -d /home/admin -G root,adm,users admin
   $ passwd admin    # 修改密码
   
-  $ sudo su -       # 切换用户至root (并切换到用户目录/root) [或执行: sudo bash || sh]
+  $ sudo su -       # 切换用户至root (并切换到用户主目录/root；超级用户提示符结尾 # 普通用户$ 主目录/home/*) [或执行: sudo bash || sh]
   $ su admin        # 切换用户至admin
   $ exit            # 退出
   

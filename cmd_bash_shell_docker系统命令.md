@@ -181,18 +181,27 @@
   
   # 系统硬件驱动
   > devmgmt.msc
+  # Linux硬件设备文件名称
   /dev/char
+  /dev/cdrom                                                        # 光驱
   /dev/console
   /dev/core -> /proc/kcore
   /dev/cpu
   /dev/disk
+  /dev/fd -> /proc/self/fd                                  # 软驱 /dev/fd[0-1] 
   /dev/initctl -> /run/systemd/initctl/fifo
   /dev/input
   /dev/log -> /run/systemd/journal/dev-log
+  /dev/lp                                                                  # 打印机 /dev/lp[0-15] 
+  /dev/mem
+  /dev/memory_bandwidth
+  /dev/mouse                                                        # 鼠标
   /dev/mqueue
   /dev/net
   /dev/null
   /dev/port
+  /dev/sda{sda1-3,sdb,sdc,$sdd~sdp}      # 硬盘 (a~p 代表 16 块不同的硬盘; 数字代表分区数)
+  /dev/
   /dev/snapshot
   /dev/stdin -> /proc/self/fd/0
   /dev/stdout -> /proc/self/fd/1

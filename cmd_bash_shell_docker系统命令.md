@@ -111,7 +111,7 @@
   
   # 文件系统
   > dir [目录]           # 默认当前目录(命令pwd)
-  $ ls -an [目录]        # 查看目录及文件读写权限[-al]
+  $ ls -al [目录]        # 查看目录及文件读写权限  alias ll='ls -alF'  ;   alias la='ls -A'   ;   alias l='ls -CF'
   $ touch main.js        # 新建文件
   $ mv main.js main.cs   # 重命名文件,移动文件位置
   $ cat main.cs          # 输出文件内容

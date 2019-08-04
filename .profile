@@ -1,4 +1,6 @@
 
+# local time
+export TZ='Asia/Shanghai'
 
 # go
 export GOROOT=/usr/local/go

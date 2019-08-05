@@ -135,6 +135,8 @@
   $ sudo chmod 700 to/path    # 只有所有者有读和写以及执行的权限
   $ sudo chmod 600 to/path    # 只有所有者有读和写的权限
   $ sudo chmod 644 to/path    # 所有者有读和写的权限，组用户只有读的权限
+  $ sudo mkdir /temp && sudo chmod -vR 1777 /temp # 创建共享目录drwxrwxrwt
+  $ sudo chmod -vR +t /temp   # 添加目录[文件的删除+文件重命名]的权限
   
   # 文件复制
   > xcopy /isy C:\...\bin\Release\netcoreapp2.1\* F:\app\dotnetcore\centos\a

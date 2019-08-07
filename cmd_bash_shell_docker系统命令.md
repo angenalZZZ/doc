@@ -590,7 +590,7 @@ $ source ~/.zshrc # 使配置生效
   `环境 & 版本` : `Linux x64, Kernel^3.10 cgroups & namespaces.`, `docker-ce`社区版 + `docker-ee`企业版 <br>
   `加速器`      : [`阿里云`](https://cr.console.aliyun.com/#/accelerator)、[`DaoCloud道客`](https://dashboard.daocloud.io/packages/explore)   [..](http://8fe1b42e.m.daocloud.io)
 ~~~
-curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io   # for Linux
+curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io  # for Linux
 sudo systemctl daemon-reload && sudo systemctl restart docker.service
 ~~~
 > `Dockerfile` : `docker build Image(tag=name+version)` > `push Registry` <br>
@@ -607,15 +607,18 @@ $ apt-get remove docker docker-engine
 # 安装 Docker Compose
 $ curl -L https://get.daocloud.io/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose 
 $ chmod +x /usr/local/bin/docker-compose
-# 安装 Docker Machine  github.com/docker/machine/releases/download/v0.16.1/docker-machine-Linux-x86_64
-$ sudo dpkg -i virtualbox-6.0_6.0.8-130520_Ubuntu_bionic_amd64.deb --fix-missing  #基于virtualBox | www.virtualbox.org/wiki/Linux_Downloads
+# 安装 Docker Machine基于virtualBox github.com/docker/machine/releases/download/v0.16.1/docker-machine-Linux-x86_64
+$ sudo dpkg -i virtualbox-6.0_6.0.8-130520_Ubuntu_bionic_amd64.deb --fix-missing  # www.virtualbox.org/wiki/Linux_Downloads
 $ curl -L https://github.com/docker/machine/releases/download/v0.16.1/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine
 $ chmod +x /tmp/docker-machine && sudo cp /tmp/docker-machine /usr/local/bin/docker-machine  # install /tmp/docker-machine /usr/local/bin/docker-machine
 $ docker-machine version                   # 安装完毕
-# 不使用sudo执行docker命令，先切换当前用户( root ~ exit )
+# 设置 Docker, 不使用sudo执行docker命令，先切换当前用户-user(root~exit)
 $ sudo gpasswd -a ${USER} docker           # 将当前用户加入docker组 
 $ sudo service docker restart              # 重启docker
 $ newgrp - docker                          # 刷新docker组
+# 安装 kubectl
+curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubectl 
+sudo chmod +x kubectl && sudo mv kubectl /usr/local/bin/
 ~~~
 
 > **Shell** [samples](https://docs.docker.com/samples)、[labs/tutorials](https://github.com/angenal/labs)、[小结](https://github.com/AlexWoo/doc/blob/master/devops/docker小结.md)
@@ -918,6 +921,45 @@ obj\
 ~~~
 > `k8s`扩展<br>
   　[istio](https://istio.io/docs/setup/kubernetes/platform-setup/)：连接、安全、控制和观察服务
+
+#### [**Minikube**](https://github.com/kubernetes/minikube) 搭建本地`Kubernetes`集群
+
+> Nuclio (serverless)用于高性能事件和数据处理
+~~~bash
+# 安装 minikube
+curl -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v0.26.1/minikube-linux-amd64 
+sudo chmod +x minikube && sudo mv minikube /usr/local/bin/
+# 启动 minikube 参数(虚拟机--vm-driver=none; 镜像--registry-mirror=http://f1361db2.m.daocloud.io )
+sudo minikube start --registry-mirror=https://registry.docker-cn.com
+# 添加 RBAC
+sudo kubectl apply -f https://raw.githubusercontent.com/nuclio/nuclio/master/hack/minikube/resources/kubedns-rbac.yaml
+# 在Minikube中引入一个Docker注册表(执行耗时，需要打开virtualbox终端才会继续执行)
+sudo minikube ssh -- docker run -d -p 5000:5000 registry:2
+# 创建Nuclio命名空间
+sudo kubectl create namespace nuclio
+# 创建RBAC Nuclio role
+sudo kubectl apply -f https://raw.githubusercontent.com/nuclio/nuclio/master/hack/k8s/resources/nuclio-rbac.yaml
+# 将nuclio部署到集群(执行耗时)：以下命令将部署nuclio控制器和仪表板以及其他资源：
+sudo kubectl apply -f https://raw.githubusercontent.com/nuclio/nuclio/master/hack/k8s/resources/nuclio.yaml
+# 验证控制器和仪表板正在运行。
+sudo kubectl get pods --namespace nuclio
+# 转发nuclio仪表板端口：nuclio仪表板在端口8070上发布服务。要使用仪表板，首先需要将此端口转发到本地IP地址：
+sudo kubectl port-forward -n nuclio $(sudo kubectl get pods -n nuclio -l nuclio.io/app=dashboard -o jsonpath='{.items[0].metadata.name}') 8070:8070
+# 启动一个Nuclio QuickStart Docker容器
+sudo docker run -p 8070:8070 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp nuclio/dashboard:stable-amd64
+# Get into the Nuclio Container
+sudo docker exec -it 52adc3421439 /bin/sh
+sudo docker attach e27d895245c0
+# 从minikube访问到集群
+sudo minikube ssh -- xxxxxxx(加需要执行的命令)
+# 如查看minikube集群中Docker运行容器的列表命令
+sudo minikube ssh -- docker ps
+###错误###
+# 1. [preflight] Some fatal errors occurred: [ERROR Port-10250]: Port 10250 is in use
+$ sudo kubeadm reset
+# 2. an error occurred forwarding 8070 -> 8070: error forwarding port 8070 to pod 9226ab69cce2345af8b9600d410038032ebd93e47919babec000339c2eff6d81, uid : unable to do port forwarding: socat not found.
+$ sudo apt-get install socat
+~~~
 
 # [**Consul**](https://hub.docker.com/_/consul)
 

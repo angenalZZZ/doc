@@ -922,9 +922,10 @@ obj\
 > `k8s`扩展<br>
   　[istio](https://istio.io/docs/setup/kubernetes/platform-setup/)：连接、安全、控制和观察服务
 
-#### [**Minikube**](https://github.com/kubernetes/minikube) 搭建本地`Kubernetes`集群
+#### [**Minikube**](https://github.com/kubernetes/minikube)
 
-> Nuclio (serverless)用于高性能事件和数据处理
+> `Minikube`用于搭建本地`k8s`集群<br>
+  　`Nuclio` 用于高性能事件和数据处理服务(serverless)
 ~~~bash
 # 安装 minikube
 curl -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v0.26.1/minikube-linux-amd64 

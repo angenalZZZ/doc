@@ -23,6 +23,7 @@
   $ uname -a         # 系统信息: $(uname -s)=系统'Linux'; $(uname -m)=CPU架构'x86_64';
   $ cat /etc/issue   # 系统版本号'发行版本名称'*** Linux | lsb_release -cs
   $ cat /etc/redhat-release
+  $ echo "Linux-x86_64" && echo $(uname -s)-$(uname -m) && echo `uname -s`-`uname -m`
   
   # 时间
   > wmic OS Get localdatetime /value # 当前本地时间
@@ -598,7 +599,6 @@ sudo systemctl daemon-reload && sudo systemctl restart docker.service
   `Docker`     : `pull Image from-Registry` | `load Image .tar from-Disk` <br>
   `Data`       : `docker container run Image` - `--volumes-from Data-Container` - `-v from-Disk:Data-Dir`
 
-> `安装`
 ~~~shell
 # 安装Docker，先切换用户root ~ su
 $ curl -sSL https://get.daocloud.io/docker | sh  
@@ -616,9 +616,6 @@ $ docker-machine version                   # 安装完毕
 $ sudo gpasswd -a ${USER} docker           # 将当前用户加入docker组 
 $ sudo service docker restart              # 重启docker
 $ newgrp - docker                          # 刷新docker组
-# 安装 kubectl
-curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubectl 
-sudo chmod +x kubectl && sudo mv kubectl /usr/local/bin/
 ~~~
 
 > **Shell** [samples](https://docs.docker.com/samples)、[labs/tutorials](https://github.com/angenal/labs)、[小结](https://github.com/AlexWoo/doc/blob/master/devops/docker小结.md)
@@ -915,9 +912,12 @@ obj\
 > [`k8s`](https://www.kubernetes.org.cn) 是一个流行的容器管理编排平台，集中式管理数个服务的容器集群；<br>
   　[docker-desktop](https://www.docker.com/products/docker-desktop)已添加Docker-Compose与Kubernetes进行完整的集成。<br>
 ~~~
-  # 部署
-  > docker-compose build && kubectl apply -f /path/to/kube-deployment.yml  # 1 deploy of apply config
-  > docker stack deploy -c /path/to/docker-compose.yml mystack             # 2 deploy stack with compose
+# 安装 kubectl - client
+curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubectl 
+sudo chmod +x kubectl && sudo mv kubectl /usr/local/bin/
+# 部署 kubernetes
+> docker-compose build && kubectl apply -f /path/to/kube-deployment.yml  # 1 deploy of apply config
+> docker stack deploy -c /path/to/docker-compose.yml mystack                # 2 deploy stack with compose
 ~~~
 > `k8s`扩展<br>
   　[istio](https://istio.io/docs/setup/kubernetes/platform-setup/)：连接、安全、控制和观察服务
@@ -925,41 +925,38 @@ obj\
 #### [**Minikube**](https://github.com/kubernetes/minikube)
 
 > `Minikube`用于搭建本地`k8s`集群<br>
-  　`Nuclio` 用于高性能事件和数据处理服务(serverless)
+  　[nuclio](https://nuclio.io)：高性能事件驱动和数据处理服务(serverless)
 ~~~bash
 # 安装 minikube
-curl -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v0.26.1/minikube-linux-amd64 
-sudo chmod +x minikube && sudo mv minikube /usr/local/bin/
-# 启动 minikube 参数(虚拟机--vm-driver=none; 镜像--registry-mirror=http://f1361db2.m.daocloud.io )
-sudo minikube start --registry-mirror=https://registry.docker-cn.com
-# 添加 RBAC
-sudo kubectl apply -f https://raw.githubusercontent.com/nuclio/nuclio/master/hack/minikube/resources/kubedns-rbac.yaml
+$ curl -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v1.2.0/minikube-linux-amd64
+$ sudo chmod +x minikube && sudo mv minikube /usr/local/bin/ && sudo apt-get install socat
+# 启动 minikube  参数: 虚拟机--vm-driver=none; 镜像--registry-mirror=https://registry.docker-cn.com
+$ sudo minikube start --registry-mirror=http://f1361db2.m.daocloud.io  # Starting local Kubernetes v1.10.0 cluster... Starting VM... Downloading
+# 添加 RBAC (Role-Based Access Control, 基于角色的访问控制)
+$ sudo kubectl apply -f https://raw.githubusercontent.com/nuclio/nuclio/master/hack/minikube/resources/kubedns-rbac.yaml
 # 在Minikube中引入一个Docker注册表(执行耗时，需要打开virtualbox终端才会继续执行)
-sudo minikube ssh -- docker run -d -p 5000:5000 registry:2
+$ sudo minikube ssh -- docker run -d -p 5000:5000 registry:2
 # 创建Nuclio命名空间
-sudo kubectl create namespace nuclio
+$ sudo kubectl create namespace nuclio
 # 创建RBAC Nuclio role
-sudo kubectl apply -f https://raw.githubusercontent.com/nuclio/nuclio/master/hack/k8s/resources/nuclio-rbac.yaml
+$ sudo kubectl apply -f https://raw.githubusercontent.com/nuclio/nuclio/master/hack/k8s/resources/nuclio-rbac.yaml
 # 将nuclio部署到集群(执行耗时)：以下命令将部署nuclio控制器和仪表板以及其他资源：
-sudo kubectl apply -f https://raw.githubusercontent.com/nuclio/nuclio/master/hack/k8s/resources/nuclio.yaml
+$ sudo kubectl apply -f https://raw.githubusercontent.com/nuclio/nuclio/master/hack/k8s/resources/nuclio.yaml
 # 验证控制器和仪表板正在运行。
-sudo kubectl get pods --namespace nuclio
+$ sudo kubectl get pods --namespace nuclio
 # 转发nuclio仪表板端口：nuclio仪表板在端口8070上发布服务。要使用仪表板，首先需要将此端口转发到本地IP地址：
-sudo kubectl port-forward -n nuclio $(sudo kubectl get pods -n nuclio -l nuclio.io/app=dashboard -o jsonpath='{.items[0].metadata.name}') 8070:8070
+$ sudo kubectl port-forward -n nuclio $(sudo kubectl get pods -n nuclio -l nuclio.io/app=dashboard -o jsonpath='{.items[0].metadata.name}') 8070:8070
 # 启动一个Nuclio QuickStart Docker容器
-sudo docker run -p 8070:8070 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp nuclio/dashboard:stable-amd64
+$ sudo docker run -p 8070:8070 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp nuclio/dashboard:stable-amd64
 # Get into the Nuclio Container
-sudo docker exec -it 52adc3421439 /bin/sh
-sudo docker attach e27d895245c0
+$ sudo docker exec -it 52adc3421439 /bin/sh
+$ sudo docker attach e27d895245c0
 # 从minikube访问到集群
-sudo minikube ssh -- xxxxxxx(加需要执行的命令)
+$ sudo minikube ssh -- xxxxxxx(加需要执行的命令)
 # 如查看minikube集群中Docker运行容器的列表命令
-sudo minikube ssh -- docker ps
-###错误###
-# 1. [preflight] Some fatal errors occurred: [ERROR Port-10250]: Port 10250 is in use
+$ sudo minikube ssh -- docker ps
+# 错误处理 [preflight] Some fatal errors occurred: [ERROR Port-10250]: Port 10250 is in use
 $ sudo kubeadm reset
-# 2. an error occurred forwarding 8070 -> 8070: error forwarding port 8070 to pod 9226ab69cce2345af8b9600d410038032ebd93e47919babec000339c2eff6d81, uid : unable to do port forwarding: socat not found.
-$ sudo apt-get install socat
 ~~~
 
 # [**Consul**](https://hub.docker.com/_/consul)

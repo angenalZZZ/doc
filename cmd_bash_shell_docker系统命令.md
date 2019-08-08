@@ -932,7 +932,10 @@ $ curl -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/rele
 $ sudo chmod +x minikube && sudo mv minikube /usr/local/bin/ && sudo apt-get install socat
 # 启动 minikube  参数: 虚拟机--vm-driver=none; 镜像--registry-mirror=https://registry.docker-cn.com
 $ sudo minikube start --registry-mirror=http://f1361db2.m.daocloud.io  # Starting local Kubernetes cluster... Starting VM... Downloading
-# 添加 RBAC (Role-Based Access Control, 基于角色的访问控制)
+# 下载 Nuclio 源码
+$ mkdir -p $GOPATH/src/github.com/nuclio/nuclio
+$ git clone --depth=1 https://github.com/nuclio/nuclio.git $GOPATH/src/github.com/nuclio/nuclio
+# 添加 RBAC (Role-Based Access Control, 基于角色的访问控制) (下面的 *.yaml 可设为下载的源码中的对应文件)
 $ sudo kubectl apply -f https://raw.githubusercontent.com/nuclio/nuclio/master/hack/minikube/resources/kubedns-rbac.yaml
 # 在Minikube中引入一个Docker注册表(执行耗时;需要打开virtualbox终端才会继续执行)
 $ sudo minikube ssh -- docker run -d -p 5000:5000 registry:2

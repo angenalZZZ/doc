@@ -913,16 +913,51 @@ obj\
   　[docker-desktop](https://www.docker.com/products/docker-desktop)已添加Docker-Compose与Kubernetes进行完整的集成。<br>
 ~~~
 # 安装 kubectl - client
-curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubectl 
-sudo chmod +x kubectl && sudo mv kubectl /usr/local/bin/
+$ curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubectl 
+$ sudo chmod +x kubectl && sudo mv kubectl /usr/local/bin/
 # 部署 kubernetes
-> docker-compose build && kubectl apply -f /path/to/kube-deployment.yml  # 1 deploy of apply config
-> docker stack deploy -c /path/to/docker-compose.yml mystack                 # 2 deploy stack with compose
+$ docker-compose build && kubectl apply -f /path/to/kube-deployment.yml  # 1 deploy of apply config
+$ docker stack deploy -c /path/to/docker-compose.yml mystack             # 2 deploy stack with compose
+
+# 查看集群情况
+$ kubectl cluster-info
+# 查看nodes节点[IP和状态]
+$ kubectl get nodes
+# 查看事件
+$ kubectl get events
+# 查看已创建的pods
+$ kubectl get pods
+$ kubectl get pods -l app=nginx #根据label筛选pods
+# 查看pod详情
+$ kubectl get pods nginx -o yaml
+$ kubectl describe pods redis
+# 查看secret
+$ kubectl get secret
+# 查看services
+$ kubectl get services
+# 查看namespace
+$ kubectl get namespace
+# 查看deployment
+$ kubectl get deployments
+
+# 创建service或pods    [~ su #]
+$ kubectl create -f development.yaml #创建Pods[使用yaml创建]
+$ kubectl run nginx --image=nginx --port=8080
+$ kubectl replace -f development     #更新Pods
+$ kubectl replace --force -f development #[--force强制更新]
+$ kubectl delete deploy/nginx -n test #删除Pods [-n代表namespace]
+$ kubectl delete -f development
+$ kubectl delete pods nginx
+$ kubectl logs $pods_name -n test      #查看日志[-n代表namespace]
+$ kubectl exec $pods_name -it -n test -- /bin/sh #执行Pods -pods/service describe
+# kubectl describe pod/$pods_name -n test
+# kubectl describe deploy/$deploy_name -n test
+# kubectl describe service/$service_name -n test
 ~~~
 > `k8s`扩展<br>
   　[istio](https://istio.io/docs/setup/kubernetes/platform-setup/)：连接、安全、控制和观察服务
 
-#### [**Minikube**](https://github.com/kubernetes/minikube)
+## [**Minikube**](https://github.com/kubernetes/minikube)
 
 > `Minikube`用于搭建本地`k8s`集群<br>
   　[nuclio](https://nuclio.io)：高性能(serverless)事件微服务和数据处理平台(结合MQ,Kafka,DB)
@@ -931,7 +966,11 @@ sudo chmod +x kubectl && sudo mv kubectl /usr/local/bin/
 $ curl -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v1.2.0/minikube-linux-amd64
 $ sudo chmod +x minikube && sudo mv minikube /usr/local/bin/ && sudo apt-get install socat
 # 启动 minikube  参数: 虚拟机--vm-driver=none; 镜像--registry-mirror=https://registry.docker-cn.com
-$ sudo minikube start --registry-mirror=http://f1361db2.m.daocloud.io  # Starting local Kubernetes cluster... Starting VM... Downloading
+$ sudo minikube start --registry-mirror=http://f1361db2.m.daocloud.io  #Starting local Kubernetes cluster...Starting VM...Downloading
+# 访问集群 from minikube
+$ sudo minikube ssh -- [+执行的命令+]
+~~~
+~~~bash
 # 下载 Nuclio 源码
 $ mkdir -p $GOPATH/src/github.com/nuclio/nuclio
 $ git clone --depth=1 https://github.com/nuclio/nuclio.git $GOPATH/src/github.com/nuclio/nuclio
@@ -939,31 +978,29 @@ $ git clone --depth=1 https://github.com/nuclio/nuclio.git $GOPATH/src/github.co
 $ sudo kubectl apply -f https://raw.githubusercontent.com/nuclio/nuclio/master/hack/minikube/resources/kubedns-rbac.yaml
 # 在Minikube中引入一个Docker注册表(执行耗时;需要打开virtualbox终端才会继续执行)
 $ sudo minikube ssh -- docker run -d -p 5000:5000 registry:2
-# 创建 Nuclio命名空间
+# 创建 Nuclio 命名空间
 $ sudo kubectl create namespace nuclio
 # 创建 RBAC Nuclio Role
 $ sudo kubectl apply -f https://raw.githubusercontent.com/nuclio/nuclio/master/hack/k8s/resources/nuclio-rbac.yaml
-# 将nuclio部署到集群(执行耗时;将部署nuclio控制器和仪表板以及其他资源)
+# 将 Nuclio 部署到集群(执行耗时;将部署nuclio控制器和仪表板以及其他资源)
 $ sudo kubectl apply -f https://raw.githubusercontent.com/nuclio/nuclio/master/hack/k8s/resources/nuclio.yaml
 # 验证控制器和仪表板正在运行
 $ sudo kubectl get pods --namespace nuclio
-# 转发nuclio仪表板端口（nuclio仪表板在端口8070上发布服务；要使用仪表板，首先需要将此端口转发到本地IP地址）
+# 转发 Nuclio 仪表板端口（nuclio仪表板在端口8070上发布服务；要使用仪表板，首先需要将此端口转发到本地IP地址）
 $ sudo kubectl port-forward -n nuclio $(sudo kubectl get pods -n nuclio -l nuclio.io/app=dashboard -o jsonpath='{.items[0].metadata.name}') 8070:8070
 # 启动一个 Nuclio QuickStart Docker 容器
 $ sudo docker run --name nucliodm -p 8070:8070 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp quay.io/nuclio/dashboard:stable-amd64
  # sudo docker run --name nucliodm -p 8070:8070 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp nuclio/dashboard:stable-amd64
 # 进入 Nuclio Container
 $ sudo docker exec -it nucliodm /bin/sh
-# sudo docker attach ---?--
-# 从minikube访问到集群
-$ sudo minikube ssh -- [加需要执行的命令]
+# sudo docker attach ---?---
 # 查看minikube集群中的容器列表
 $ sudo minikube ssh -- docker ps
 # 处理端口占用问题 [preflight] Some fatal errors occurred: [ERROR Port-10250]: Port 10250 is in use
 $ sudo kubeadm reset
 ~~~
 
-# [**Consul**](https://hub.docker.com/_/consul)
+## [**Consul**](https://hub.docker.com/_/consul)
 
 > [`Consul`](https://www.consul.io) 是google开源的一个使用go语言开发的服务发现、配置管理中心服务。<br>
   　[`Docker`+`Consul`+`Nginx`](https://www.jianshu.com/p/9976e874c099)基于nginx和consul构建高可用及自动发现的docker服务架构。Consul集群中的每个主机都运行Consul代理，与Docker守护程序一起运行。每个群集在服务器模式下至少有一个代理，通常为3到5个以实现高可用性。在给定主机上运行的应用程序仅使用其HTTP-API或DNS-API与其本地Consul代理进行通信。主机上的服务也要向本地Consul代理进行注册，该代理将信息与Consul服务器同步。多个HTTP应用程序与Consul的服务发现功能深入集成，并允许应用程序在没有任何中间代理的情况下定位服务并平衡负载。[`查看安装说明`](https://hub.docker.com/_/consul)、[`参数`/`开发模式`](https://www.consul.io/docs/agent/options.html#_dev)、[`代理API`](https://www.consul.io/docs/agent/http/agent.html)
@@ -1020,7 +1057,7 @@ $ sudo kubeadm reset
       # 如果Docker守护程序暴露给Consul代理并且DOCKER_HOST设置了环境变量，则可以使用Docker容器ID配置检查以执行。
 ~~~
 
-# [**Etcd**](https://github.com/etcd-io/etcd)
+## [**Etcd**](https://github.com/etcd-io/etcd)
 
 > [`etcd`](https://coreos.com/etcd/docs/latest/demo.html) 分布式、可靠的键值存储，用于分布式系统中共享配置和服务发现。 [`install`](https://www.jianshu.com/p/e892997b387b)  [`download`](https://github.com/etcd-io/etcd/releases)  [`play...`](http://play.etcd.io/install)
  * 简单: 良好定义的HTTP接口，面向用户的API(gRPC)，易理解；支持消息发布与订阅；
@@ -1056,7 +1093,7 @@ $ sudo kubeadm reset
     --peer-cert-file /etcd-ssl-certs-dir/s1.pem --peer-key-file /etcd-ssl-certs-dir/s1-key.pem 
 ~~~
 
-#### Nginx
+## Nginx
 
  * 基本配置与参数说明
 ~~~

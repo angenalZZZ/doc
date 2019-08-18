@@ -976,13 +976,13 @@ $ mkdir -p $GOPATH/src/github.com/nuclio/nuclio
 $ git clone --depth=1 https://github.com/nuclio/nuclio.git $GOPATH/src/github.com/nuclio/nuclio
 # 添加 RBAC (Role-Based Access Control, 基于角色的访问控制) (下面的 *.yaml 可设为下载的源码中的对应文件)
 $ sudo kubectl apply -f https://raw.githubusercontent.com/nuclio/nuclio/master/hack/minikube/resources/kubedns-rbac.yaml
-# 在Minikube中引入一个Docker注册表(执行耗时;需要打开virtualbox终端才会继续执行)
+# 在Minikube中引入一个Docker注册表(运行容器registry:2)
 $ sudo minikube ssh -- docker run -d -p 5000:5000 registry:2
 # 创建 Nuclio 命名空间
 $ sudo kubectl create namespace nuclio
 # 创建 RBAC Nuclio Role
 $ sudo kubectl apply -f https://raw.githubusercontent.com/nuclio/nuclio/master/hack/k8s/resources/nuclio-rbac.yaml
-# 将 Nuclio 部署到集群(执行耗时;将部署nuclio控制器和仪表板以及其他资源)
+# 部署 Nuclio 到集群(运行容器quay.io/nuclio/{controller,dashboard};即部署nuclio控制器和仪表板以及其他资源)
 $ sudo kubectl apply -f https://raw.githubusercontent.com/nuclio/nuclio/master/hack/k8s/resources/nuclio.yaml
 # 验证控制器和仪表板正在运行
 $ sudo kubectl get pods --namespace nuclio
@@ -993,17 +993,17 @@ $ sudo docker run --name nucliodm -p 8070:8070 -v /var/run/docker.sock:/var/run/
  # sudo docker run --name nucliodm -p 8070:8070 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp nuclio/dashboard:stable-amd64
 # 进入 Nuclio Container
 $ sudo docker exec -it nucliodm /bin/sh
-# sudo docker attach ---?---
+# sudo docker attach ---容器?---
 # 查看minikube集群中的容器列表
 $ sudo minikube ssh -- docker ps
-# 处理端口占用问题 [preflight] Some fatal errors occurred: [ERROR Port-10250]: Port 10250 is in use
+# ?处理端口占用问题 [preflight] Some fatal errors occurred: [ERROR Port-10250]: Port 10250 is in use
 $ sudo kubeadm reset
 ~~~
 
 ## [**Consul**](https://hub.docker.com/_/consul)
 
 > [`Consul`](https://www.consul.io) 是google开源的一个使用go语言开发的服务发现、配置管理中心服务。<br>
-  　[`Docker`+`Consul`+`Nginx`](https://www.jianshu.com/p/9976e874c099)基于nginx和consul构建高可用及自动发现的docker服务架构。Consul集群中的每个主机都运行Consul代理，与Docker守护程序一起运行。每个群集在服务器模式下至少有一个代理，通常为3到5个以实现高可用性。在给定主机上运行的应用程序仅使用其HTTP-API或DNS-API与其本地Consul代理进行通信。主机上的服务也要向本地Consul代理进行注册，该代理将信息与Consul服务器同步。多个HTTP应用程序与Consul的服务发现功能深入集成，并允许应用程序在没有任何中间代理的情况下定位服务并平衡负载。[`查看安装说明`](https://hub.docker.com/_/consul)、[`参数`/`开发模式`](https://www.consul.io/docs/agent/options.html#_dev)、[`代理API`](https://www.consul.io/docs/agent/http/agent.html)
+  　[`Docker`+`Consul`+`Nginx`](https://www.jianshu.com/p/9976e874c099)基于nginx和consul构建高可用及自动发现的docker服务架构。Consul集群中的每个主机都运行Consul代理，与Docker守护程序一起运行。每个群集在服务器模式下至少有一个代理，通常为3到5个以实现高可用性。在给定主机上运行的应用程序仅使用其HTTP-API或DNS-API与其本地Consul代理进行通信。主机上的服务也要向本地Consul代理进行注册，该代理将信息与Consul服务器同步。多个HTTP应用程序与Consul的服务发现功能深入集成，并允许应用程序在没有任何中间代理的情况下定位服务并平衡负载 [`查看安装说明`](https://hub.docker.com/_/consul)、[`参数`/`开发模式`](https://www.consul.io/docs/agent/options.html#_dev)、[`API`](https://www.consul.io/docs/agent/http/agent.html)
 ~~~
   # /consul/data   容器暴露VOLUME
     # 对于客户端代理，存储有关群集的一些信息以及客户端的运行状况检查，以防重新启动容器。

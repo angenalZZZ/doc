@@ -983,14 +983,15 @@ $ sudo kubectl create namespace nuclio
 # 创建 RBAC Nuclio Role
 $ sudo kubectl apply -f https://raw.githubusercontent.com/nuclio/nuclio/master/hack/k8s/resources/nuclio-rbac.yaml
 # 部署 Nuclio 到集群(运行容器quay.io/nuclio/{controller,dashboard};即部署nuclio控制器和仪表板以及其他资源)
+$ docker pull quay.io/nuclio/controller:1.1.10-amd64
+$ docker pull quay.io/nuclio/dashboard:1.1.10-amd64
 $ sudo kubectl apply -f https://raw.githubusercontent.com/nuclio/nuclio/master/hack/k8s/resources/nuclio.yaml
 # 验证控制器和仪表板正在运行
 $ sudo kubectl get pods --namespace nuclio
 # 转发 Nuclio 仪表板端口（nuclio仪表板在端口8070上发布服务；要使用仪表板，首先需要将此端口转发到本地IP地址）
 $ sudo kubectl port-forward -n nuclio $(sudo kubectl get pods -n nuclio -l nuclio.io/app=dashboard -o jsonpath='{.items[0].metadata.name}') 8070:8070
-# 启动一个 Nuclio QuickStart Docker 容器
-$ sudo docker run --name nucliodm -p 8070:8070 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp quay.io/nuclio/dashboard:stable-amd64
- # sudo docker run --name nucliodm -p 8070:8070 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp nuclio/dashboard:stable-amd64
+# 启动一个 Nuclio QuickStart Docker 容器 (可选nuclio/dashboard:1.1.10-amd64)
+$ sudo docker run --name nucliodm -p 8070:8070 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp quay.io/nuclio/dashboard:1.1.10-amd64
 # 进入 Nuclio Container
 $ sudo docker exec -it nucliodm /bin/sh
 # sudo docker attach ---容器?---

@@ -33,13 +33,13 @@
   > unixdate "+%Y/%m/%d %X" # 当前本地时间 yyyy/MM/dd HH:mm:ss
   $ date -u "+%Y/%m/%d %X"  # 当前UTC时间 yyyy/MM/dd HH:mm:ss
   $ /usr/share/zoneinfo/localtime -> /etc/localtime  # 本地时间文件
-  $ export TZ='Asia/Shanghai' # 设置本地时区 | 帮助选择时区命令 tzselect | vi ~/.profile < TZ='Asia/Shanghai'
-  $ date "+%Y/%m/%d %X"     # 当前本地时间 | 本地日期 date +%Y%m%d | $(Hardware-Clock) hwclock
-  $ date --date='TZ="Europe/Paris" 2004-10-31 06:30' # 指定时区时间
-  $ echo $(date +%Y%m%d)
+  $ export TZ='Asia/Shanghai' # 设置本地时区 | 帮助选择时区的命令 tzselect | 配置文件 vi ~/.profile < TZ='Asia/Shanghai'
+  $ date "+%Y/%m/%d %X"     # 打印当前本地时间 | 本地日期 date +%Y%m%d | $(Hardware-Clock) hwclock
+  $ date --date='TZ="Europe/Paris" 2004-10-31 06:30:00' # 修改时区&时间
+  $ echo $(date +%Y%m%d)   # 打印当前本地时间-变量
   # <Windows+Ubuntu>双系统时间同步问题  | www.jianshu.com/p/cf445a2c55e8
-  $ sudo timedatectl set-local-rtc 1   # Ubuntu先将RTC硬件时间由UTC改为CST(中国标准时间);然后,设置"日期和时间";
-  $ sudo hwclock --localtime --systohc # 然后,同步机器时间(将CST本地时间更新到RTC硬件时间;Windows使用RTC为CST)
+  $ sudo timedatectl set-local-rtc 1   # Ubuntu先将RTC硬件时间由UTC改为CST(中国标准时间);然后设置"日期和时间";
+  $ sudo hwclock --localtime --systohc # 然后,同步机器时间(将CST本地时间更新到RTC硬件时间;Windows使用的RTC为CST)
   
   # 帮助
   > help cmd
@@ -66,7 +66,8 @@
   $ su admin        # 切换用户至admin
   $ exit            # 退出
   
-  $ cat /etc/passwd # 查看密码
+  $ cat /etc/passwd # 查看所有用户
+  $ cat /etc/passwd |grep `id -un` # 查看当前登录用户
   $ login           # 用户登录
   $ cat /etc/shadow # 用户列表
   $ userdel -r admin# 删除用户

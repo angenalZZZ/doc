@@ -614,9 +614,18 @@ $ curl -L https://github.com/docker/machine/releases/download/v0.16.1/docker-mac
 $ chmod +x /tmp/docker-machine && sudo cp /tmp/docker-machine /usr/local/bin/docker-machine  # install /tmp/docker-machine /usr/local/bin/docker-machine
 $ docker-machine version                   # 安装完毕
 # 设置 Docker, 不使用sudo执行docker命令，先切换当前用户-user(root~exit)
-$ sudo gpasswd -a ${USER} docker           # 将当前用户加入docker组 
+$ sudo gpasswd -a ${USER} docker           # 将当前用户加入docker组
 $ sudo service docker restart              # 重启docker
-$ newgrp - docker                          # 刷新docker组
+$ newgrp - docker                           # 刷新docker组
+# 本机启动 Docker daemon
+$ sudo docker-machine create -d virtualbox default  # 1.下载安装服务 ~/.docker/machine/cache/boot2docker.iso
+$ sudo docker-machine env default                                   # 2.设置客户端docker-cli的环境变量
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://192.168.99.102:2376"          #对应> docker-machine ip
+export DOCKER_CERT_PATH="/home/yangzhou/.docker/machine/machines/default"
+export DOCKER_MACHINE_NAME="default"
+$ sudo chmod 777 ~/.docker && docker info
+$ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/containerd/containerd.sock # 监听tcp+TLS: 允许cli远程访问
 ~~~
 
 > **Shell** [samples](https://docs.docker.com/samples)、[labs/tutorials](https://github.com/angenal/labs)、[小结](https://github.com/AlexWoo/doc/blob/master/devops/docker小结.md)

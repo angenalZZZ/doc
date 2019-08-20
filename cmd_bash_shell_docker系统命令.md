@@ -9,7 +9,7 @@
  * [Windows10安装Linux子系统(WSL)](https://www.cnblogs.com/xiaoliangge/p/9124089.html)
  * [Linux开发环境及常用安装zsh-Redis-mysql-nsq-Botpress-Gotify-SSH-fio等](#Linux开发环境及常用安装zsh-redis-mysql-nsq-botpress-gotify-ssh-fio等)
  * [Linux常用命令](#Linux常用命令)
- * [docker](#docker) | [k8s](#Kubernetes) | [consul](#Consul) | [etcd](#Etcd) | [Nginx](#Nginx)
+ * [docker](#docker) | [k8s](#Kubernetes) | [Minikube](#Minikube) | [consul](#Consul) | [etcd](#Etcd) | [Nginx](#Nginx)
 
 ~~~shell
   # 清屏
@@ -938,6 +938,7 @@ $ kubectl get events
 # 查看已创建的pods
 $ kubectl get pods
 $ kubectl get pods -l app=nginx #根据label筛选pods
+$ kubectl get pods -n nuclio         #根据namespace筛选pods
 # 查看pod详情
 $ kubectl get pods nginx -o yaml
 $ kubectl describe pods redis
@@ -958,6 +959,7 @@ $ kubectl replace --force -f development #[--force强制更新]
 $ kubectl delete deploy/nginx -n test #删除Pods [-n代表namespace]
 $ kubectl delete -f development
 $ kubectl delete pods nginx
+$ kubectl delete --all pods --namespace nginx
 $ kubectl logs $pods_name -n test      #查看日志[-n代表namespace]
 $ kubectl exec $pods_name -it -n test -- /bin/sh #执行Pods -pods/service describe
 # kubectl describe pod/$pods_name -n test
@@ -995,16 +997,17 @@ $ sudo kubectl apply -f https://raw.githubusercontent.com/nuclio/nuclio/master/h
 # 部署 Nuclio 到集群(运行容器quay.io/nuclio/{controller,dashboard};即部署nuclio控制器和仪表板以及其他资源)
 $ docker pull quay.io/nuclio/controller:1.1.10-amd64
 $ docker pull quay.io/nuclio/dashboard:1.1.10-amd64
+$ sudo kubectl delete --all pods --namespace nuclio       #用于重建nuclio(当部署失败时)
 $ sudo kubectl apply -f https://raw.githubusercontent.com/nuclio/nuclio/master/hack/k8s/resources/nuclio.yaml
 # 验证控制器和仪表板正在运行
-$ sudo kubectl get pods --namespace nuclio
+$ sudo kubectl get pods -n nuclio
+$ sudo kubectl describe pods -n nuclio
 # 转发 Nuclio 仪表板端口（nuclio仪表板在端口8070上发布服务；要使用仪表板，首先需要将此端口转发到本地IP地址）
 $ sudo kubectl port-forward -n nuclio $(sudo kubectl get pods -n nuclio -l nuclio.io/app=dashboard -o jsonpath='{.items[0].metadata.name}') 8070:8070
 # 启动一个 Nuclio QuickStart Docker 容器 (可选nuclio/dashboard:1.1.10-amd64)
-$ sudo docker run --name nucliodm -p 8070:8070 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp quay.io/nuclio/dashboard:1.1.10-amd64
+$ sudo docker run --name nucliodm -itd -p 8070:8070 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp quay.io/nuclio/dashboard:1.1.10-amd64
 # 进入 Nuclio Container
-$ sudo docker exec -it nucliodm /bin/sh
-# sudo docker attach ---容器?---
+$ sudo docker exec -it nucliodm /bin/sh  # docker attach ---容器---
 # 查看minikube集群中的容器列表
 $ sudo minikube ssh -- docker ps
 # ?处理端口占用问题 [preflight] Some fatal errors occurred: [ERROR Port-10250]: Port 10250 is in use

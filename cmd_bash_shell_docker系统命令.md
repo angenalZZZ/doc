@@ -624,8 +624,8 @@ export DOCKER_TLS_VERIFY="1"
 export DOCKER_HOST="tcp://192.168.99.102:2376"          #对应> docker-machine ip
 export DOCKER_CERT_PATH="/home/yangzhou/.docker/machine/machines/default"
 export DOCKER_MACHINE_NAME="default"
-$ sudo chmod 777 ~/.docker && docker info
-$ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/containerd/containerd.sock # 监听tcp+TLS: 允许cli远程访问
+$ sudo chmod 777 -R ~/.docker && docker info
+$ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/containerd/containerd.sock # 监听tcp&TLS:允许cli远程访问
 ~~~
 
 > **Shell** [samples](https://docs.docker.com/samples)、[labs/tutorials](https://github.com/angenal/labs)、[小结](https://github.com/AlexWoo/doc/blob/master/devops/docker小结.md)

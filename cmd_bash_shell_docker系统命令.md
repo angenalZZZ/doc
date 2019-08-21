@@ -975,12 +975,24 @@ $ kubectl exec $pods_name -it -n test -- /bin/sh #执行Pods -pods/service descr
   　[nuclio](https://nuclio.io)：高性能(serverless)事件微服务和数据处理平台(结合MQ,Kafka,DB)
 ~~~bash
 # 安装 minikube
-$ curl -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v1.2.0/minikube-linux-amd64
-$ sudo chmod +x minikube && sudo mv minikube /usr/local/bin/ && sudo apt-get install socat
-# 启动 minikube  参数: 虚拟机--vm-driver=none; 镜像--registry-mirror=https://registry.docker-cn.com
+$ sudo apt-get install socat
+$ curl -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v1.3.0/minikube-linux-amd64
+$ sudo install minikube-linux-amd64 /usr/local/bin/minikube   # install 2> sudo chmod +x minikube && sudo mv minikube /usr/local/bin/
+# 启动 minikube 集群,  参数: 虚拟机--vm-driver=none; 镜像--registry-mirror=https://registry.docker-cn.com
 $ sudo minikube start --registry-mirror=http://f1361db2.m.daocloud.io  #Starting local Kubernetes cluster...Starting VM...Downloading
-# 访问集群 from minikube
+# #启动第n个集群,  参数: -p
+$ sudo minikube start -p <Multi-cluster-name>
+# #然后，在集群中运行一个容器服务<hello-minikube>
+$ sudo kubectl run hello-minikube --image=k8s.gcr.io/echoserver:1.4 --port=8080
+$ #然后，使该服务节点为外部提供服务，并支持浏览器访问。
+$ sudo kubectl expose deployment hello-minikube --type=NodePort
+$ sudo minikube service hello-minikube
+# 访问 Kubernetes 仪表盘
+$ sudo minikube dashboard
+# 执行 Kubernetes 命令
 $ sudo minikube ssh -- [+执行的命令+]
+# 停止本地集群
+$ sudo minikube stop|delete
 ~~~
 ~~~bash
 # 下载 Nuclio 源码

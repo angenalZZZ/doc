@@ -21,8 +21,9 @@
   > net config workstation
   > shell:startup    # [开始]菜单/启动/添加*.vbs
   $ uname -a         # 系统信息: $(uname -s)=系统'Linux'; $(uname -m)=CPU架构'x86_64';
-  $ cat /etc/issue   # 系统版本号'发行版本名称'*** Linux | lsb_release -cs
-  $ cat /etc/redhat-release
+  $ egrep -c ' lm ' /proc/cpuinfo  &&  egrep -c '(vmx|svm)' /proc/cpuinfo
+  # 系统版本号'发行版本名称'*** Linux-redhat > cat /etc/redhat-release
+  $ cat /etc/issue && lsb_release -cs
   $ echo "Linux-x86_64" && echo $(uname -s)-$(uname -m) && echo `uname -s`-`uname -m`
   
   # 时间
@@ -975,10 +976,20 @@ $ kubectl exec $pods_name -it -n test -- /bin/sh #执行Pods -pods/service descr
   　[nuclio](https://nuclio.io)：高性能(serverless)事件微服务和数据处理平台(结合MQ,Kafka,DB)
 ~~~bash
 # 安装 minikube
-$ sudo apt-get install socat
-$ curl -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v1.3.0/minikube-linux-amd64
-$ sudo install minikube-linux-amd64 /usr/local/bin/minikube   # install 2> sudo chmod +x minikube && sudo mv minikube /usr/local/bin/
-# 启动 minikube 集群,  参数: 虚拟机--vm-driver=none; 镜像--registry-mirror=https://registry.docker-cn.com
+$ sudo apt install socat cpu-checker -y
+$ curl -LO https://github.com/kubernetes/minikube/releases/download/v1.3.1/minikube-linux-amd64
+$ sudo install minikube-linux-amd64 /usr/local/bin/minikube # install 2> curl -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v1.3.0/minikube-linux-amd64 && sudo chmod +x minikube && sudo mv minikube /usr/local/bin/
+# 安装虚拟机驱动kvm | https://help.ubuntu.com/community/KVM/Installation
+$ kvm-ok  && uname -m  # INFO: /dev/kvm exists; x86_64
+$ sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils  # Ubuntu 18.04 LTS 升级到 Ubuntu 18.10
+$ curl -LO https://github.com/kubernetes/minikube/releases/download/v1.3.1/docker-machine-driver-kvm2
+$ sudo adduser `id -un` libvirt
+$ virsh list --all      # Verify Installation
+$ sudo chown root:libvirtd /dev/kvm # 如果> ll /dev/kvm ;返回root
+$ rmmod kvm && modprobe -a kvm
+$ sudo apt-get install virt-manager  # Optional: Install virt-manager UI
+$ sudo install docker-machine-driver-kvm2 /usr/local/bin/ # 最后安装kvm2
+# 启动 minikube 集群,  参数: 虚拟机--vm-driver=none|kvm2|..; 镜像--registry-mirror=https://registry.docker-cn.com
 $ sudo minikube start --registry-mirror=http://f1361db2.m.daocloud.io  #Starting local Kubernetes cluster...Starting VM...Downloading
 # #启动第n个集群,  参数: -p
 $ sudo minikube start -p <Multi-cluster-name>

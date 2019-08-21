@@ -981,11 +981,11 @@ $ curl -LO https://github.com/kubernetes/minikube/releases/download/v1.3.1/minik
 $ sudo install minikube-linux-amd64 /usr/local/bin/minikube # install 2> curl -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v1.3.0/minikube-linux-amd64 && sudo chmod +x minikube && sudo mv minikube /usr/local/bin/
 # 安装虚拟机驱动kvm | https://help.ubuntu.com/community/KVM/Installation
 $ kvm-ok  && uname -m  # INFO: /dev/kvm exists; x86_64
-$ sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils  # Ubuntu 18.04 LTS 升级到 Ubuntu 18.10
+$ sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils  # Ubuntu 18.04需升级到18.10 > sudo do-release-upgrade -d
 $ curl -LO https://github.com/kubernetes/minikube/releases/download/v1.3.1/docker-machine-driver-kvm2
 $ sudo adduser `id -un` libvirt
 $ virsh list --all      # Verify Installation
-$ sudo chown root:libvirtd /dev/kvm # 如果> ll /dev/kvm ;返回root
+$ sudo chown root:libvirtd /dev/kvm # 如果> ll /dev/kvm ;返回root属主
 $ rmmod kvm && modprobe -a kvm
 $ sudo apt-get install virt-manager  # Optional: Install virt-manager UI
 $ sudo install docker-machine-driver-kvm2 /usr/local/bin/ # 最后安装kvm2

@@ -105,7 +105,8 @@
     > clrthreads ; setthread [线程DBG] ; clrstack ; clrstack -a ; dumpobj 0x00*** # 分析线程/堆栈/内存数据
   $ ps aux | head -1; ps aux | sort -rn -k3 | head -10 # 占用CPU最高的前10个进程
   $ ps -e -o stat,ppid,pid,cmd | grep -e '^[Zz]' | awk '{print $2}' | xargs kill -9 # 批量删除僵尸(Z开头的)进程
-  $ killall            # 杀死进程使用, 杀死单个进程: kill -9 [ProcessId]
+  $ kill -l            # 查看软件中断SIG [Linux标准信号1~31] (实时信号:32~64)
+  $ killall            # 杀死进程使用, 杀死单个进程: kill -9 [ProcessId] (-9=KILL)
   $ lsof -i @localhost:3000 && kill -9 <<PID>> # 杀死进程使用, 指定占用的端口号
   $ lsof -i:22         # 查看22端口连接情况(默认为sshd端口) lsof 列出当前系统打开的文件(list open files)
   $ smem -k -s USS     # 进程的内存使用情况

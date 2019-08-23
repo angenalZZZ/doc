@@ -945,7 +945,7 @@ $ curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.
 $ sudo chmod +x kubectl && sudo mv kubectl /usr/local/bin/
 # 部署 kubernetes
 $ docker-compose build && kubectl apply -f /path/to/kube-deployment.yml  # 1 deploy of apply config
-$ docker stack deploy -c /path/to/docker-compose.yml mystack             # 2 deploy stack with compose
+$ docker stack deploy -c /path/to/docker-compose.yml mystack               # 2 deploy stack with compose
 
 # 查看集群情况
 $ kubectl cluster-info
@@ -1000,13 +1000,14 @@ $ sudo install minikube-linux-amd64 /usr/local/bin/minikube # install 2> curl -L
 $ kvm-ok  && uname -m  # INFO: /dev/kvm exists; x86_64
 $ sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils  # Ubuntu 18.04需升级到18.10 > sudo do-release-upgrade -d
 $ curl -LO https://github.com/kubernetes/minikube/releases/download/v1.3.1/docker-machine-driver-kvm2
-$ sudo adduser `id -un` libvirt
-$ virsh list --all      # Verify Installation
-$ sudo chown root:libvirtd /dev/kvm # 如果> ll /dev/kvm ;返回root属主
-$ rmmod kvm && modprobe -a kvm
-$ sudo apt-get install virt-manager  # Optional: Install virt-manager UI
-$ sudo install docker-machine-driver-kvm2 /usr/local/bin/ # 最后安装kvm2
-# 启动 minikube 集群,  参数: 虚拟机--vm-driver=none|kvm2|..; 镜像--registry-mirror=https://registry.docker-cn.com
+$ sudo adduser `id -un` libvirt          #添加当前用户到组libvirt
+$ virsh list --all                                            #Verify Installation
+$ sudo chown root:libvirt /dev/kvm  #改变目录kvm的属主 (如果> ll /dev/kvm ;返回root属主)
+$ rmmod kvm && modprobe -a kvm #ERROR: Module kvm is in use by: kvmgt kvm_intel
+$ sudo apt-get install virt-manager    #Optional: Install virt-manager UI
+$ sudo install docker-machine-driver-kvm2 /usr/local/bin/ # 最后,安装kvm2
+# 启动 minikube 集群,  参数: 虚拟机 --vm-driver=virtualbox|kvm2|none; 镜像 --registry-mirror=https://registry.docker-cn.com
+$ minikube start --vm-driver=kvm2 --registry-mirror=http://f1361db2.m.daocloud.io  #Downloading VM boot image ...
 $ sudo minikube start --registry-mirror=http://f1361db2.m.daocloud.io  #Starting local Kubernetes cluster...Starting VM...Downloading
 # #启动第n个集群,  参数: -p
 $ sudo minikube start -p <Multi-cluster-name>

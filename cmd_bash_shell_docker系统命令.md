@@ -159,9 +159,10 @@
   $ ifconfig |grep inet
   # 科学上网 - 代理设置 (解决网络问题)
   $ sudo vim /etc/profile [全局|用户配置：~/.profile]# 填写如下VPN转发PORT
-  export http_proxy=http://127.0.0.1:5005           # 临时使用
-  export https_proxy=http://127.0.0.1:5005
-  export ftp_proxy=http://127.0.0.1:5005
+  export FTP_PROXY=http://<proxy hostname:port>        # 临时使用
+  export HTTP_PROXY=http://<proxy hostname:port>
+  export HTTPS_PROXY=https://<proxy hostname:port>
+  export NO_PROXY=localhost,127.0.0.1,10.96.0.0/12,192.168.99.0/24,192.168.39.0/24
   # 主机环境 - 解析设置 github.com/googlehosts/hosts
   > notepad C:\Windows\System32\drivers\etc\hosts
   > set                 # 查看系统环境变量windows

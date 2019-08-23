@@ -311,10 +311,11 @@ $ source ~/.zshrc # 使配置生效
   $ sudo update-alternatives –config java  # 多版本JDK之间切换
   $ sudo apt install openssh-server   # 安装SSH
   $ sudo apt install python3          # 安装Python3
-  $ sudo apt install python3-pip      # 安装pip3           将Python3设为默认?参考如下
+  $ sudo apt install python3-pip      # 安装pip3           #将Python3设为默认?参考如下
   $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 100
   $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 150
   $ sudo update-alternatives --config python  # 手动配置/切换版本: python --version
+  $ sudo ln -sf /usr/bin/python2.7 /usr/bin/python #将Python2设为默认(恢复)
   $ sudo add-apt-repository ppa:ondrej/php  && sudo apt-get update   # 安装php (PPA源)
   $ sudo apt install php7.2-fpm php7.2-mysql php7.2-curl php7.2-gd php7.2-mbstring php7.2-xml php7.2-xmlrpc php7.2-zip php7.2-opcache -y
   $ sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/' /etc/php/7.2/fpm/php.ini # 设置php 替换 ;cgi.fix_pathinfo=1 为 cgi.fix_pathinfo=0

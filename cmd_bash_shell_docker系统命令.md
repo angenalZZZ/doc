@@ -461,10 +461,22 @@ $ source ~/.zshrc # 使配置生效
 
 > `Pilosa` 分布式位图索引数据库 www.pilosa.com
 ~~~shell
-  $ curl -L -O https://github.com/pilosa/pilosa/releases/download/v1.3.0/pilosa-v1.3.0-linux-amd64.tar.gz
-  $ tar xfz pilosa-v1.3.0-linux-amd64.tar.gz & cp -i pilosa-v1.3.0-linux-amd64/pilosa /usr/local/bin
+  $ curl -LO https://github.com/pilosa/pilosa/releases/download/v1.3.0/pilosa-v1.3.0-linux-amd64.tar.gz
+  $ tar xfz pilosa-v1.3.0-linux-amd64.tar.gz 
+  $ sudo cp -i pilosa-v1.3.0-linux-amd64/pilosa /usr/local/bin
   $ pilosa server --data-dir ~/.pilosa --bind :10101 --handler.allowed-origins "*"&       # 指定origins: http://localhost:10102
   $ go get github.com/pilosa/console && cd $GOPATH/src/github.com/pilosa/console && make install && pilosa-console -bind :10102
+~~~
+
+> `Influxdb` 时间序列数据库 portal.influxdata.com
+~~~shell
+  $ curl -LO https://dl.influxdata.com/influxdb/releases/influxdb_2.0.0-alpha.17_linux_amd64.tar.gz
+  $ tar xfz influxdb_2.0.0-alpha.17_linux_amd64.tar.gz 
+  $ sudo cp influxdb_2.0.0-alpha.17_linux_amd64/{influx,influxd} /usr/local/bin
+  # TCP port 9999 | https://v2.docs.influxdata.com/v2.0/reference/api
+  # Start InfluxDB > influxd [--reporting-disabled]
+  # Setup InfluxDB | https://v2.docs.influxdata.com/v2.0/get-started
+  $ influx setup
 ~~~
 
 > `消息平台` nsq、kafka、gotify、centrifugo、botpress

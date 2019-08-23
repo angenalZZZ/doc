@@ -473,9 +473,9 @@ $ source ~/.zshrc # 使配置生效
   $ curl -LO https://dl.influxdata.com/influxdb/releases/influxdb_2.0.0-alpha.17_linux_amd64.tar.gz
   $ tar xfz influxdb_2.0.0-alpha.17_linux_amd64.tar.gz 
   $ sudo cp influxdb_2.0.0-alpha.17_linux_amd64/{influx,influxd} /usr/local/bin
-  # TCP port 9999 | https://v2.docs.influxdata.com/v2.0/reference/api
-  # Start InfluxDB > influxd [--reporting-disabled]
-  # Setup InfluxDB | https://v2.docs.influxdata.com/v2.0/get-started
+  # 配置TCP port 9999 | https://v2.docs.influxdata.com/v2.0/reference/api
+  # 启动 > influxd [--reporting-disabled]
+  # 安装 | https://v2.docs.influxdata.com/v2.0/get-started
   $ influx setup
 ~~~
 
@@ -758,11 +758,14 @@ $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/contain
   
   # 数据库 PostgreSql + 时序数据timescaledb + 云计算
   docker run --name timescaledb -d -p 5432:5432 -e POSTGRES_PASSWORD=123456 timescale/timescaledb:latest-pg11
-  # 开源时序数据库 opentsdb http://opentsdb.net/docs/build/html/resources.html
-  docker run --name opentsdb -d -p 4242:4242 -v d:\docker\app\opentsdb\tmp:/tmp -v d:\docker\app\opentsdb\data\hbase:/data/hbase 
+  # 开源时序数据库 influxdb  portal.influxdata.com
+  docker run --name influxdb -d -p 9999:9999 quay.io/influxdb/influxdb:2.0.0-alpha
+  # 开源时序数据库 opentsdb  opentsdb.net/docs/build/html/resources.html
+  docker run --name opentsdb -d -p 4242:4242 
+    -v d:\docker\app\opentsdb\tmp:/tmp -v d:\docker\app\opentsdb\data\hbase:/data/hbase 
     -v d:\docker\app\opentsdb\opentsdb-plugins:/opentsdb-plugins petergrace/opentsdb-docker
-  # 开源分布式时序数据库M3DB(单节点时?可能吃掉整个磁盘资源!) m3db.github.io/m3/how_to/single_node  github.com/m3db/m3
-  docker run --name m3db -d -p 7201:7201 -p 7203:7203 -p 9003:9003 quay.io/m3/m3dbnode 
+  # 开源分布式时序数据库M3DB(注意配置单节点时?可能吃掉整个磁盘资源!) m3db.github.io/m3/how_to/single_node github.com/m3db/m3
+  docker run --name m3db -d -p 7201:7201 -p 7203:7203 -p 9003:9003 quay.io/m3/m3dbnode
   
   # 消息平台 nsq | nsq.io/deployment/docker.html
   docker run --name nsqlookupd --network=workgroup --network-alias=nsqlookupd -p 4160:4160 -p 4161:4161 

@@ -473,12 +473,13 @@ $ source ~/.zshrc # 使配置生效
 > `Influxdb` 时间序列数据库 portal.influxdata.com
 ~~~shell
   $ curl -LO https://dl.influxdata.com/influxdb/releases/influxdb_2.0.0-alpha.17_linux_amd64.tar.gz
-  $ tar xfz influxdb_2.0.0-alpha.17_linux_amd64.tar.gz 
+  $ tar xfz influxdb_2.0.0-alpha.17_linux_amd64.tar.gz
   $ sudo cp influxdb_2.0.0-alpha.17_linux_amd64/{influx,influxd} /usr/local/bin
-  # 配置TCP port 9999 | https://v2.docs.influxdata.com/v2.0/reference/api
-  # 启动 > influxd [--reporting-disabled]
-  # 安装 | https://v2.docs.influxdata.com/v2.0/get-started
-  $ influx setup
+  # 配置TCP port 9999  |  https://v2.docs.influxdata.com/v2.0/reference/api
+  # 启动 > influxd [--reporting-disabled]  |  https://v2.docs.influxdata.com/v2.0/get-started
+  # 安装 http://localhost:9999   <打开website或者cli> influx setup
+  # 配置 Usr: default ; Pwd: HGJ766GR767FKJU0 ; Org: angenalZ ; Bucket: default  # 结束安装与初始化设置
+  # #初始化Bucket -> 设置数据源Collector + 监听跟踪数据Dashboard + 分析数据使用Flux -> 管理Tasks
 ~~~
 
 > `消息平台` nsq、kafka、gotify、centrifugo、botpress

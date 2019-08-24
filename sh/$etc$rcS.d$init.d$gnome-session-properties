@@ -1,0 +1,24 @@
+##[服务]描述####
+##执行的命令脚本#
+
+[cronsun] cron local server
+/home/yangzhou/go/bin/cronsun/cronsun.sh
+
+[etcd] etcd server
+/home/yangzhou/doc/sh/etcd.sh
+
+[gotify] gotify local server
+/home/yangzhou/go/bin/gotify/server/gotify.sh
+
+[influxdb v2] influxdb v2 local server
+/home/yangzhou/doc/sh/influxdbv2.sh
+
+[minio] minio server
+/home/yangzhou/doc/sh/minio.sh
+
+[nsq] nsq server
+/home/yangzhou/doc/sh/nsq.sh
+
+[pilosa] pilosa server
+/home/yangzhou/doc/sh/pilosa.sh
+

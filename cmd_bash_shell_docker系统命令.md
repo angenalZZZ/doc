@@ -157,7 +157,7 @@
   # 网络地址 - inet&inet6
   > ipconfig /?
   $ ifconfig |grep inet
-  # 科学上网 - 代理设置 (解决网络问题)
+  # 科学上网 - 代理设置 (解决网络问题)  蓝灯: https://github.com/getlantern/lantern
   $ sudo vim /etc/profile [全局|用户配置：~/.profile]# 填写如下VPN转发PORT
   export FTP_PROXY=http://<proxy hostname:port>        # 临时使用
   export HTTP_PROXY=http://<proxy hostname:port>
@@ -607,7 +607,7 @@ $ source ~/.zshrc # 使配置生效
 
 >  [下载](https://download.docker.com)、[安装](https://docs.docker.com/install)　[docker-desktop](https://www.docker.com/products/docker-desktop)：Build构建&Compose组织&Kubernetes集群<br>
   `环境 & 版本` : `Linux x64, Kernel^3.10 cgroups & namespaces.`, `docker-ce`社区版 + `docker-ee`企业版 <br>
-  `加速器`      : [`阿里云`](https://cr.console.aliyun.com/#/accelerator)、[`DaoCloud道客`](https://dashboard.daocloud.io/packages/explore)   [..](http://8fe1b42e.m.daocloud.io)
+  `加速器`      : [`阿里云`](https://cr.console.aliyun.com/#/accelerator)、[`DaoCloud道客`](https://dashboard.daocloud.io/packages/explore)   [..](http://8fe1b42e.m.daocloud.io)、[`网易`](https://hub-mirror.c.163.com)
 ~~~
 curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io  # for Linux
 sudo systemctl daemon-reload && sudo systemctl restart docker.service
@@ -618,10 +618,12 @@ sudo systemctl daemon-reload && sudo systemctl restart docker.service
   `Data`       : `docker container run Image` - `--volumes-from Data-Container` - `-v from-Disk:Data-Dir`
 
 ~~~shell
-# 安装Docker，先切换用户root ~ su
-$ curl -sSL https://get.daocloud.io/docker | sh  
+# 安装Docker，先切换用户root ~ su   (一般用国内镜像daocloud)
+$ curl -sSL https://get.daocloud.io/docker | sh 
+$ curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh -  #阿里云
+$ sudo systemctl status docker #运行状态检查
 # 卸载Docker，最后清理 ~ rm -fr /var/lib/docker/
-$ apt-get remove docker docker-engine  
+$ apt-get remove docker docker-engine
 # 安装 Docker Compose
 $ curl -L https://get.daocloud.io/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose 
 $ chmod +x /usr/local/bin/docker-compose
@@ -642,7 +644,7 @@ export DOCKER_HOST="tcp://192.168.99.102:2376"          #对应> docker-machine 
 export DOCKER_CERT_PATH="/home/yangzhou/.docker/machine/machines/default"
 export DOCKER_MACHINE_NAME="default"
 $ sudo chmod 777 -R ~/.docker && docker info
-$ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/containerd/containerd.sock # 监听tcp&TLS:允许cli远程访问
+$ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/containerd/containerd.sock #监听tcp&TLS:允许cli远程访问
 ~~~
 
 > **Shell** [samples](https://docs.docker.com/samples)、[labs/tutorials](https://github.com/angenal/labs)、[小结](https://github.com/AlexWoo/doc/blob/master/devops/docker小结.md)
@@ -991,7 +993,7 @@ $ kubectl exec $pods_name -it -n test -- /bin/sh #执行Pods -pods/service descr
 
 ## [**Minikube**](https://github.com/kubernetes/minikube)
 
-> `Minikube`用于搭建本地`k8s`集群<br>
+> [`Minikube`搭建本地`k8s`集群](https://minikube.sigs.k8s.io/docs/start/linux/)<br>
   　[nuclio](https://nuclio.io)：高性能(serverless)事件微服务和数据处理平台(结合MQ,Kafka,DB)
 ~~~bash
 # 安装 minikube
@@ -1009,7 +1011,10 @@ $ rmmod kvm && modprobe -a kvm #ERROR: Module kvm is in use by: kvmgt kvm_intel
 $ sudo apt-get install virt-manager    #Optional: Install virt-manager UI
 $ sudo install docker-machine-driver-kvm2 /usr/local/bin/ # 最后,安装kvm2
 # 启动 minikube 集群,  参数: 虚拟机 --vm-driver=virtualbox|kvm2|none; 镜像 --registry-mirror=https://registry.docker-cn.com
-$ minikube start --vm-driver=kvm2 --registry-mirror=http://f1361db2.m.daocloud.io  #Downloading VM boot image ...
+$ sudo minikube start --vm-driver=kvm2 --registry-mirror=http://f1361db2.m.daocloud.io
+# 开始下载~/.minikube/cache/iso/minikube-v1.3.0.iso < https://storage.googleapis.com/minikube/iso/minikube-v1.3.0.iso
+$ sudo minikube config set memory 4096  #设置内存限制4G(default:2GB)
+$ sudo minikube config set vm-driver virtualbox #设置默认虚拟机
 $ sudo minikube start --registry-mirror=http://f1361db2.m.daocloud.io  #Starting local Kubernetes cluster...Starting VM...Downloading
 # #启动第n个集群,  参数: -p
 $ sudo minikube start -p <Multi-cluster-name>

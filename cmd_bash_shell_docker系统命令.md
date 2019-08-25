@@ -1024,7 +1024,8 @@ $ sudo minikube start #Starting local Kubernetes cluster...Starting VM...Downloa
 #下载~/.minikube/cache/iso/minikube-v1.3.0.iso < https://storage.googleapis.com/minikube/iso/minikube-v1.3.0.iso
 
 # #启动，第n个集群
-$ sudo minikube start -p <Multi-cluster-name>
+$ sudo minikube start -p <name> --vm-driver=kvm2  #创建1个新的VM<name>
+$ sudo minikube delete -p minikube          #删除已存在的VM<name=minikube>
 # #然后，在集群中运行一个容器服务<hello-minikube>
 $ sudo kubectl run hello-minikube --image=k8s.gcr.io/echoserver:1.4 --port=8080
 $ #然后，使该服务节点为外部提供服务，并支持浏览器访问。

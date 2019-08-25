@@ -34,7 +34,7 @@
   > unixdate "+%Y/%m/%d %X" # 当前本地时间 yyyy/MM/dd HH:mm:ss
   $ date -u "+%Y/%m/%d %X"  # 当前UTC时间 yyyy/MM/dd HH:mm:ss
   $ /usr/share/zoneinfo/localtime -> /etc/localtime  # 本地时间文件
-  $ export TZ='Asia/Shanghai' # 设置本地时区 | 帮助选择时区的命令 tzselect | 配置文件 vi ~/.profile < TZ='Asia/Shanghai'
+  $ export TZ='Asia/Shanghai' # 设置本地时区 | 帮助选择时区的命令tzselect |配置文件vi ~/.profile<TZ='Asia/Shanghai'
   $ date "+%Y/%m/%d %X"     # 打印当前本地时间 | 本地日期 date +%Y%m%d | $(Hardware-Clock) hwclock
   $ date --date='TZ="Europe/Paris" 2004-10-31 06:30:00' # 修改时区&时间
   $ echo $(date +%Y%m%d)   # 打印当前本地时间-变量
@@ -63,7 +63,7 @@
   $ mkdir -p /home/admin & chmod 777 /home/admin & useradd -d /home/admin -G root,adm,users admin
   $ passwd admin    # 修改密码
   
-  $ sudo su -       # 切换用户至root (并切换到用户主目录/root；超级用户提示符结尾 # 普通用户$ 主目录/home/*) [或执行: sudo bash || sh]
+  $ sudo su -       # 切换用户至root (并切换到用户主目录/root；超级用户提示符结尾 # 普通用户$ 主目录/home/*)
   $ su admin        # 切换用户至admin
   $ exit            # 退出
   
@@ -80,9 +80,9 @@
   > netstat -anT                              # tcp端口(本地地址,外部地址,状态)
   > netstat -anp tcp | findstr -i "listening" # 查找本机tcp端口监听列表
   $ netstat -anp |grep 3306                   # 1.通过端口查看进程; 2.通过进程id查看占用端口; [p显示进程]
-  $ netstat -atW |grep -i "listen"            # tcp端口-centos $ yum install -y net-tools & yum install -y traceroute
-  $ netstat -tulnp | grep -i "time_wait" # tcp超时-ubuntu $ apt-get update & apt-get install -y net-tools
-  $ ss -t4 state time-wait                    # tcp超时-ubuntu $ apt-get install -y iproute2 iproute2-doc
+  $ netstat -atW |grep -i "listen"            # tcp端口-centos $ yum install -y net-tools traceroute
+  $ netstat -tulnp | grep -i "time_wait" # tcp超时-ubuntu $ apt-get update & apt install -y net-tools
+  $ ss -t4 state time-wait                    # tcp超时-ubuntu $ apt install -y iproute2 iproute2-doc
   $ ss -at '( dport = :ssh or sport = :ssh )' # 端口为 ssh 的套接字
   $ ss -lntp '( dst :443 or dst :80 )'        # 目的端口为 80,443 的套接字
   $ ss -lntp  # tcp端口+users进程name-pid-fd   # 常用ss(iproute工具)比netstat(net-tools工具)更强大
@@ -104,9 +104,9 @@
   $ dotnet-dump collect -p [进程id] ; dotnet-dump analyze core_***  # 查找.NET Core 占用CPU 100% 的原因
     > clrthreads ; setthread [线程DBG] ; clrstack ; clrstack -a ; dumpobj 0x00*** # 分析线程/堆栈/内存数据
   $ ps aux | head -1; ps aux | sort -rn -k3 | head -10 # 占用CPU最高的前10个进程
-  $ ps -e -o stat,ppid,pid,cmd | grep -e '^[Zz]' | awk '{print $2}' | xargs kill -9 # 批量删除僵尸(Z开头的)进程
-  $ kill -l            # 查看软件中断SIG [Linux标准信号1~31] (实时信号:32~64)
+  $ ps -e -o stat,ppid,pid,cmd | grep -e '^[Zz]' | awk '{print $2}' | xargs kill -9 # 批量删除(Z开头)僵尸进程
   $ killall            # 杀死进程使用, 杀死单个进程: kill -9 [ProcessId] (-9=KILL)
+  $ kill -l            # 查看软件中断SIG [Linux标准信号1~31] (实时信号:32~64)
   $ lsof -i @localhost:3000 && kill -9 <<PID>> # 杀死进程使用, 指定占用的端口号
   $ lsof -i:22         # 查看22端口连接情况(默认为sshd端口) lsof 列出当前系统打开的文件(list open files)
   $ smem -k -s USS     # 进程的内存使用情况
@@ -115,7 +115,7 @@
   
   # 文件系统
   > dir [目录]           # 默认当前目录(命令pwd)
-  $ ls -al [目录]        # 查看目录及文件读写权限  alias ll='ls -alF'  ;   alias la='ls -A'   ;   alias l='ls -CF'
+  $ ls -al [目录]        # 查看目录及文件读写权限 alias ll='ls -alF' ; alias la='ls -A' ; alias l='ls -CF'
   $ touch main.js        # 新建文件
   $ mv main.js main.cs   # 重命名文件,移动文件位置
   $ cat main.cs          # 输出文件内容
@@ -188,26 +188,26 @@
   
   # 系统硬件驱动
   > devmgmt.msc
-  # Linux硬件设备文件名称
+  # linux硬件设备-文件名
   /dev/char
-  /dev/cdrom                                                        # 光驱
+  /dev/cdrom   # 光驱
   /dev/console
   /dev/core -> /proc/kcore
   /dev/cpu
   /dev/disk
-  /dev/fd -> /proc/self/fd                                  # 软驱 /dev/fd[0-1] 
+  /dev/fd -> /proc/self/fd  # 软驱 /dev/fd[0-1] | dockerd -H fd://
   /dev/initctl -> /run/systemd/initctl/fifo
   /dev/input
   /dev/log -> /run/systemd/journal/dev-log
-  /dev/lp                                                                  # 打印机 /dev/lp[0-15] 
+  /dev/lp  # 打印机 /dev/lp[0-15] 
   /dev/mem
   /dev/memory_bandwidth
-  /dev/mouse                                                        # 鼠标
+  /dev/mouse   # 鼠标
   /dev/mqueue
   /dev/net
   /dev/null
   /dev/port
-  /dev/sda{sda1-3,sdb,sdc,$sdd~sdp}      # 硬盘 (a~p 代表 16 块不同的硬盘; 数字代表分区数)
+  /dev/sda{sda1-3,sdb,sdc,$sdd~sdp} # 硬盘 (a~p 代表 16 块不同的硬盘; 数字代表分区数)
   /dev/
   /dev/snapshot
   /dev/stdin -> /proc/self/fd/0
@@ -286,7 +286,7 @@ $ sudo apt-get -y install zsh
 $ chsh -s `which zsh`    # 安装完毕
 # 安装 antigen 设置主题
 $ curl -L https://raw.githubusercontent.com/skywind3000/vim/30b702725847bac4708de34664bb68454b54e0c0/etc/zshrc.zsh > ~/.zshrc
-# 修改配置 ~/.zshrc ; 添加[主题ys] antigen theme ys 至文件`# antigen theme`处; 参考 github.com/robbyrussell/oh-my-zsh/wiki/themes
+# 修改配置 ~/.zshrc ; 添加[主题ys] antigen theme ys 至文件`#antigen theme`处;参考 github.com/robbyrussell/oh-my-zsh/wiki/themes
 # 最后再执行 zsh ; 如果出现 compinit 权限问题, 解决如下:
 $ sudo chmod -R 755 /usr/local/share/zsh/site-functions
 $ source ~/.zshrc # 使配置生效
@@ -635,16 +635,16 @@ $ docker-machine version                   # 安装完毕
 # 设置 Docker, 不使用sudo执行docker命令，先切换当前用户-user(root~exit)
 $ sudo gpasswd -a ${USER} docker           # 将当前用户加入docker组
 $ sudo service docker restart              # 重启docker
-$ newgrp - docker                           # 刷新docker组
+$ newgrp - docker                          # 刷新docker组
 # 本机启动 Docker daemon
 $ sudo docker-machine create -d virtualbox default  # 1.下载安装服务 ~/.docker/machine/cache/boot2docker.iso
-$ sudo docker-machine env default                                   # 2.设置客户端docker-cli的环境变量
+$ sudo docker-machine env default                   # 2.设置客户端docker-cli的环境变量
 export DOCKER_TLS_VERIFY="1"
-export DOCKER_HOST="tcp://192.168.99.102:2376"          #对应> docker-machine ip
+export DOCKER_HOST="tcp://192.168.99.102:2376"      # 对应> docker-machine ip
 export DOCKER_CERT_PATH="/home/yangzhou/.docker/machine/machines/default"
 export DOCKER_MACHINE_NAME="default"
-$ sudo chmod 777 -R ~/.docker && docker info
-$ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/containerd/containerd.sock #监听tcp&TLS:允许cli远程访问
+$ sudo chmod 777 -R ~/.docker && docker info        # 监听> tcp & TLS 允许cli远程访问
+$ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/containerd/containerd.sock
 ~~~
 
 > **Shell** [samples](https://docs.docker.com/samples)、[labs/tutorials](https://github.com/angenal/labs)、[小结](https://github.com/AlexWoo/doc/blob/master/devops/docker小结.md)
@@ -658,7 +658,7 @@ $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/contain
   # 网络
   docker network ls                                 # 查看网络列表
   docker network create -d bridge [network-name]    # 创建自定义网络[-d bridge 网络驱动=桥接模式]
-  docker network create -o "com.docker.network.bridge.name"="***-net" --subnet 172.18.0.0/16 ***-net # 指定子网172.18/255
+  docker network create -o "com.docker.network.bridge.name"="***-net" --subnet 172.18.0.0/16 ***-net #指定子网172.18/255
   docker network connect [network-name] [container] # 1.加入自定义网络(参数2,3,4可一起写)
   docker network connect --alias db [network-name] [container-db] # 2.入网,提供别名访问
   docker network connect --link other_container:alias_name [network-name] [container] # 3.入网,其它容器连接别名
@@ -669,9 +669,9 @@ $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/contain
   docker network connect workgroup redis5 && docker network connect workgroup centos.netcore # 加入自定义网络workgroup
   docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" [container] # 查询IP地址
   docker inspect -f "Name:{{.Name}}, Hostname:{{.Config.Hostname}}, IP:{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" [container]
-  docker inspect -f "{{.Config.Hostname}} {{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" $(docker ps -aq) #Shell
+  docker inspect -f "{{.Config.Hostname}} {{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" $(docker ps -aq)
   docker run --name myweb --network=workgroup --link -d -P redis5:redis5 nginx # 容器之间安全互联 myweb连接redis5:redis5别名
-  docker run --name myweb --network bridge --ip 172.18.0.2 --network=***-net ... ...  # 指定子网172.18/255 +bridge
+  docker run --name myweb --network bridge --ip 172.18.0.2 --network=***-net ... ...  # 指定子网172.18/255+bridge
 
   # 基础
   docker [COMMAND] --help
@@ -949,7 +949,7 @@ $ curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.
 $ sudo chmod +x kubectl && sudo mv kubectl /usr/local/bin/
 # 部署 kubernetes
 $ docker-compose build && kubectl apply -f /path/to/kube-deployment.yml  # 1 deploy of apply config
-$ docker stack deploy -c /path/to/docker-compose.yml mystack               # 2 deploy stack with compose
+$ docker stack deploy -c /path/to/docker-compose.yml mystack             # 2 deploy stack with compose
 
 # 查看集群情况
 $ kubectl cluster-info
@@ -999,7 +999,10 @@ $ kubectl exec $pods_name -it -n test -- /bin/sh #执行Pods -pods/service descr
 # 安装 minikube
 $ sudo apt install socat cpu-checker -y
 $ curl -LO https://github.com/kubernetes/minikube/releases/download/v1.3.1/minikube-linux-amd64
-$ sudo install minikube-linux-amd64 /usr/local/bin/minikube # install 2> curl -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v1.3.0/minikube-linux-amd64 && sudo chmod +x minikube && sudo mv minikube /usr/local/bin/
+$ sudo install minikube-linux-amd64 /usr/local/bin/minikube 
+# #可选,方式2
+$ curl -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v1.3.0/minikube-linux-amd64
+$ sudo chmod +x minikube && sudo mv minikube /usr/local/bin/
 
 # 安装虚拟机kvm | https://help.ubuntu.com/community/KVM/Installation
 $ kvm-ok && uname -m  #INFO: /dev/kvm exists; x86_64;Ubuntu需升级^18.10 > sudo do-release-upgrade -d
@@ -1007,18 +1010,18 @@ $ sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients bridge-uti
 $ curl -LO https://github.com/kubernetes/minikube/releases/download/v1.3.1/docker-machine-driver-kvm2
 $ sudo adduser `id -un` libvirt        #添加当前用户到组libvirt
 $ virsh list --all                     #可选,验证安装的virsh
-$ sudo chown root:libvirt /dev/kvm  #改变目录kvm的属主 (如果> ll /dev/kvm ;返回root属主)
-$ rmmod kvm && modprobe -a kvm #跳过,ERROR: Module kvm is in use by: kvmgt kvm_intel
+$ sudo chown root:libvirt /dev/kvm     #改变目录kvm的属主 (如果> ll /dev/kvm ;返回root属主)
+$ rmmod kvm && modprobe -a kvm         #跳过ERR: Module kvm is in use by: kvmgt kvm_intel
 $ sudo apt-get install virt-manager    #可选,安装virt管理应用程序
 $ sudo install docker-machine-driver-kvm2 /usr/local/bin/ #最后,安装kvm2
 
 # 启动 minikube 集群
 $ sudo minikube config set vm-driver virtualbox #设置默认虚拟机(virtualbox|kvm2|none)
-$ sudo minikube config set memory 4096  #默认内存限制4G(default:2GB)
+$ sudo minikube config set memory 4096          #默认内存限制4G(default:2GB-RAM)
 $ sudo minikube config set registry-mirror http://f1361db2.m.daocloud.io #默认镜像https://registry.docker-cn.com
 $ sudo minikube start --vm-driver=kvm2 --registry-mirror=http://f1361db2.m.daocloud.io
 $ sudo minikube start #Starting local Kubernetes cluster...Starting VM...Downloading
-# #下载~/.minikube/cache/iso/minikube-v1.3.0.iso < https://storage.googleapis.com/minikube/iso/minikube-v1.3.0.iso
+#下载~/.minikube/cache/iso/minikube-v1.3.0.iso < https://storage.googleapis.com/minikube/iso/minikube-v1.3.0.iso
 
 # #启动，第n个集群
 $ sudo minikube start -p <Multi-cluster-name>

@@ -1000,66 +1000,72 @@ $ kubectl exec $pods_name -it -n test -- /bin/sh #执行Pods -pods/service descr
 $ sudo apt install socat cpu-checker -y
 $ curl -LO https://github.com/kubernetes/minikube/releases/download/v1.3.1/minikube-linux-amd64
 $ sudo install minikube-linux-amd64 /usr/local/bin/minikube # install 2> curl -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v1.3.0/minikube-linux-amd64 && sudo chmod +x minikube && sudo mv minikube /usr/local/bin/
-# 安装虚拟机驱动kvm | https://help.ubuntu.com/community/KVM/Installation
-$ kvm-ok  && uname -m  # INFO: /dev/kvm exists; x86_64
-$ sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils  # Ubuntu 18.04需升级到18.10 > sudo do-release-upgrade -d
+
+# 安装虚拟机kvm | https://help.ubuntu.com/community/KVM/Installation
+$ kvm-ok && uname -m  #INFO: /dev/kvm exists; x86_64;Ubuntu需升级^18.10 > sudo do-release-upgrade -d
+$ sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils #安装依赖
 $ curl -LO https://github.com/kubernetes/minikube/releases/download/v1.3.1/docker-machine-driver-kvm2
-$ sudo adduser `id -un` libvirt          #添加当前用户到组libvirt
-$ virsh list --all                                            #Verify Installation
+$ sudo adduser `id -un` libvirt        #添加当前用户到组libvirt
+$ virsh list --all                     #可选,验证安装的virsh
 $ sudo chown root:libvirt /dev/kvm  #改变目录kvm的属主 (如果> ll /dev/kvm ;返回root属主)
-$ rmmod kvm && modprobe -a kvm #ERROR: Module kvm is in use by: kvmgt kvm_intel
-$ sudo apt-get install virt-manager    #Optional: Install virt-manager UI
-$ sudo install docker-machine-driver-kvm2 /usr/local/bin/ # 最后,安装kvm2
-# 启动 minikube 集群,  参数: 虚拟机 --vm-driver=virtualbox|kvm2|none; 镜像 --registry-mirror=https://registry.docker-cn.com
+$ rmmod kvm && modprobe -a kvm #跳过,ERROR: Module kvm is in use by: kvmgt kvm_intel
+$ sudo apt-get install virt-manager    #可选,安装virt管理应用程序
+$ sudo install docker-machine-driver-kvm2 /usr/local/bin/ #最后,安装kvm2
+
+# 启动 minikube 集群
+$ sudo minikube config set vm-driver virtualbox #设置默认虚拟机(virtualbox|kvm2|none)
+$ sudo minikube config set memory 4096  #默认内存限制4G(default:2GB)
+$ sudo minikube config set registry-mirror http://f1361db2.m.daocloud.io #默认镜像https://registry.docker-cn.com
 $ sudo minikube start --vm-driver=kvm2 --registry-mirror=http://f1361db2.m.daocloud.io
-# 开始下载~/.minikube/cache/iso/minikube-v1.3.0.iso < https://storage.googleapis.com/minikube/iso/minikube-v1.3.0.iso
-$ sudo minikube config set memory 4096  #设置内存限制4G(default:2GB)
-$ sudo minikube config set vm-driver virtualbox #设置默认虚拟机
-$ sudo minikube start --registry-mirror=http://f1361db2.m.daocloud.io  #Starting local Kubernetes cluster...Starting VM...Downloading
-# #启动第n个集群,  参数: -p
+$ sudo minikube start #Starting local Kubernetes cluster...Starting VM...Downloading
+# #下载~/.minikube/cache/iso/minikube-v1.3.0.iso < https://storage.googleapis.com/minikube/iso/minikube-v1.3.0.iso
+
+# #启动，第n个集群
 $ sudo minikube start -p <Multi-cluster-name>
 # #然后，在集群中运行一个容器服务<hello-minikube>
 $ sudo kubectl run hello-minikube --image=k8s.gcr.io/echoserver:1.4 --port=8080
 $ #然后，使该服务节点为外部提供服务，并支持浏览器访问。
 $ sudo kubectl expose deployment hello-minikube --type=NodePort
 $ sudo minikube service hello-minikube
-# 访问 Kubernetes 仪表盘
+# 打开 Kubernetes 仪表盘
 $ sudo minikube dashboard
 # 执行 Kubernetes 命令
 $ sudo minikube ssh -- [+执行的命令+]
-# 停止本地集群
+# 停止本地集群服务
 $ sudo minikube stop|delete
 ~~~
 ~~~bash
 # 下载 Nuclio 源码
 $ mkdir -p $GOPATH/src/github.com/nuclio/nuclio
 $ git clone --depth=1 https://github.com/nuclio/nuclio.git $GOPATH/src/github.com/nuclio/nuclio
+$ cd $GOPATH/src/github.com/nuclio/nuclio/hack
 # 添加 RBAC (Role-Based Access Control, 基于角色的访问控制) (下面的 *.yaml 可设为下载的源码中的对应文件)
-$ sudo kubectl apply -f https://raw.githubusercontent.com/nuclio/nuclio/master/hack/minikube/resources/kubedns-rbac.yaml
+$ sudo kubectl apply -f minikube/resources/kubedns-rbac.yaml
 # 在Minikube中引入一个Docker注册表(运行容器registry:2)
 $ sudo minikube ssh -- docker run -d -p 5000:5000 registry:2
 # 创建 Nuclio 命名空间
 $ sudo kubectl create namespace nuclio
 # 创建 RBAC Nuclio Role
-$ sudo kubectl apply -f https://raw.githubusercontent.com/nuclio/nuclio/master/hack/k8s/resources/nuclio-rbac.yaml
+$ sudo kubectl apply -f k8s/resources/nuclio-rbac.yaml
 # 部署 Nuclio 到集群(运行容器quay.io/nuclio/{controller,dashboard};即部署nuclio控制器和仪表板以及其他资源)
-$ docker pull quay.io/nuclio/controller:1.1.10-amd64
+$ sudo kubectl delete --all pods --namespace nuclio   #可选,用于重建nuclio(当部署失败时)
+$ docker pull quay.io/nuclio/controller:1.1.10-amd64  #可选,拉取镜像nuclio.yaml(controller&dashboard)
 $ docker pull quay.io/nuclio/dashboard:1.1.10-amd64
-$ sudo kubectl delete --all pods --namespace nuclio       #用于重建nuclio(当部署失败时)
-$ sudo kubectl apply -f https://raw.githubusercontent.com/nuclio/nuclio/master/hack/k8s/resources/nuclio.yaml
-# 验证控制器和仪表板正在运行
+$ sudo kubectl apply -f k8s/resources/nuclio.yaml
+# 验证 控制器(controller)和仪表板(dashboard)正在运行
 $ sudo kubectl get pods -n nuclio
 $ sudo kubectl describe pods -n nuclio
-# 转发 Nuclio 仪表板端口（nuclio仪表板在端口8070上发布服务；要使用仪表板，首先需要将此端口转发到本地IP地址）
+# 转发 Nuclio 仪表板的端口至本机（要使用仪表板，首先要将其服务端口8070转发到本地IP地址）
 $ sudo kubectl port-forward -n nuclio $(sudo kubectl get pods -n nuclio -l nuclio.io/app=dashboard -o jsonpath='{.items[0].metadata.name}') 8070:8070
-# 启动一个 Nuclio QuickStart Docker 容器 (可选nuclio/dashboard:1.1.10-amd64)
-$ sudo docker run --name nucliodm -itd -p 8070:8070 -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp quay.io/nuclio/dashboard:1.1.10-amd64
+# 启动一个 Nuclio QuickStart Docker 容器 (可选镜像源nuclio/dashboard:1.1.10-amd64)
+$ sudo docker run --name nucliodm -itd -p 8070:8070 
+  -v /var/run/docker.sock:/var/run/docker.sock -v /tmp:/tmp quay.io/nuclio/dashboard:1.1.10-amd64
 # 进入 Nuclio Container
-$ sudo docker exec -it nucliodm /bin/sh  # docker attach ---容器---
+$ sudo docker exec -it nucliodm /bin/sh  # docker attach [容器]
 # 查看minikube集群中的容器列表
 $ sudo minikube ssh -- docker ps
-# ?处理端口占用问题 [preflight] Some fatal errors occurred: [ERROR Port-10250]: Port 10250 is in use
-$ sudo kubeadm reset
+# 处理端口占用问题? [preflight] Some fatal errors occurred: [ERROR Port-10250]: Port 10250 is in use
+$ sudo kubeadm reset #[重置]
 ~~~
 
 ## [**Consul**](https://hub.docker.com/_/consul)

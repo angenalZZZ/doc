@@ -1000,7 +1000,7 @@ $ kubectl exec $pods_name -it -n test -- /bin/sh #执行Pods -pods/service descr
 $ sudo apt install socat cpu-checker -y
 $ curl -LO https://github.com/kubernetes/minikube/releases/download/v1.3.1/minikube-linux-amd64
 $ sudo install minikube-linux-amd64 /usr/local/bin/minikube 
-# #可选,方式2
+# #安装<推荐,方式2> 使用阿里kubernetes
 $ curl -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v1.3.0/minikube-linux-amd64
 $ sudo chmod +x minikube && sudo mv minikube /usr/local/bin/
 
@@ -1020,7 +1020,9 @@ $ sudo minikube config set vm-driver virtualbox #设置默认虚拟机(virtualbo
 $ sudo minikube config set memory 4096          #默认内存限制4G(default:2GB-RAM)
 $ sudo minikube config set registry-mirror http://f1361db2.m.daocloud.io #默认镜像https://registry.docker-cn.com
 $ sudo minikube start --vm-driver=kvm2 --registry-mirror=http://f1361db2.m.daocloud.io
-$ sudo minikube start #Starting local Kubernetes cluster...Starting VM...Downloading
+# #启动<推荐,方式2> 使用阿里镜像registry.cn-hangzhou.aliyuncs.com
+$ sudo minikube start --vm-driver=kvm2          #推荐kvm2 driver
+$ sudo minikube start --vm-driver=virtualbox #Starting local Kubernetes cluster...Starting VM...Downloading
 #下载~/.minikube/cache/iso/minikube-v1.3.0.iso < https://storage.googleapis.com/minikube/iso/minikube-v1.3.0.iso
 
 # #启动，第n个集群

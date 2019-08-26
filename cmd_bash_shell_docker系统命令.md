@@ -1017,8 +1017,7 @@ $ sudo install docker-machine-driver-kvm2 /usr/local/bin/ #最后,安装kvm2
 
 # 启动 minikube 集群
 $ sudo minikube config set vm-driver virtualbox #设置默认虚拟机(virtualbox|kvm2|none)
-$ sudo minikube config set memory 4096          #默认内存限制4G(default:2GB-RAM)
-$ sudo minikube config set registry-mirror http://f1361db2.m.daocloud.io #默认镜像https://registry.docker-cn.com
+$ sudo minikube config set memory 4096          #默认内存限制4G(default:2GB-RAM) 可选镜像https://registry.docker-cn.com
 $ sudo minikube start --vm-driver=kvm2 --registry-mirror=http://f1361db2.m.daocloud.io
 # #启动<推荐,方式2> 使用阿里镜像registry.cn-hangzhou.aliyuncs.com
 $ sudo minikube start --vm-driver=kvm2          #推荐kvm2 driver

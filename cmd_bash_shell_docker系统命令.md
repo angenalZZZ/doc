@@ -9,7 +9,7 @@
  * [Windows10安装Linux子系统(WSL)](https://www.cnblogs.com/xiaoliangge/p/9124089.html)
  * [Linux开发环境及常用安装zsh-git-redis-mysql-mongodb-pilosa-influxdb-nsq.kafka.gotify.botpress-ssh-airflow-fio](#linux开发环境及常用安装)
  * [Linux常用命令](#Linux常用命令)
- * [docker](#docker) | [k8s](#Kubernetes) | [Minikube](#Minikube) | [consul](#Consul) | [etcd](#Etcd) | [Nginx](#Nginx)
+ * [docker](#docker) | [k8s](#Kubernetes) | [Minikube](#Minikube) | [Consul](#Consul) | [etcd](#Etcd) | [Nginx](#Nginx)
 
 ~~~shell
   # 清屏
@@ -540,6 +540,23 @@ $ source ~/.zshrc # 使配置生效
   > sc create gitea start= auto binPath= "D:\Program\Git\Server\gitea\gitea.exe web --config \"D:\Program\Git\Server\gitea\custom\conf\app.ini\""
   # 删除Windows服务
   > sc delete gitea
+~~~
+
+> `Serf` 去中心化集群(Hashicorp开源), 基于Serf实现的网络管理和服务发现, 如[`docker`](#docker),[`consul`](#Consul)等
+~~~shell
+  #1.启动serf agent节点，并提供UserEvent和Query等接口 (处理一些用户层的事件，如服务发现、自动化部署等)
+  $ serf agent -node=node1 -bind=127.0.0.1:5001 -rpc-addr=127.0.0.1:7473 
+    -event-handler=user:log='echo node1 >> node1.log' -event-handler=query:greet='echo hello,node1' -tag role=api1
+  $ serf agent -node=node2 -bind=127.0.0.1:5002 -rpc-addr=127.0.0.1:7474 
+    -event-handler=user:log='echo node2 >> node2.log' -event-handler=query:greet='echo hello,node2' -tag role=api2
+  $ serf agent -node=node3 -bind=127.0.0.1:5003 -rpc-addr=127.0.0.1:7475 
+    -event-handler=user:log='echo node3 >> node3.log' -event-handler=query:greet='echo hello,node3' -tag role=api3
+  #2.节点之间建立连接，形成去中性化集群。
+  $ serf join -rpc-addr=127.0.0.1:7474 127.0.0.1:5001  # node2 join node1
+  $ serf join -rpc-addr=127.0.0.1:7473 127.0.0.1:5003  # node1 join node3
+  #3.发送一个`log` Event，所有节点都会处理该Event
+  $ serf event -rpc-addr=127.0.0.1:7473 log play  #会向对应的日志文件写入文本
+  $ serf query -rpc-addr=127.0.0.1:7473 -tag role=api2 greet play #向node1发Query,但通过-tag设置实际的处理节点为node2
 ~~~
 
 > `Docker` 客户端 (连接到 Docker for Windows10)

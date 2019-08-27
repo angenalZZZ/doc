@@ -1017,7 +1017,7 @@ $ kubectl exec $pods_name -it -n test -- /bin/sh #执行Pods -pods/service descr
 $ sudo apt install socat cpu-checker -y
 $ curl -LO https://github.com/kubernetes/minikube/releases/download/v1.3.1/minikube-linux-amd64
 $ sudo install minikube-linux-amd64 /usr/local/bin/minikube 
-# #安装<推荐,方式2> 使用阿里kubernetes
+# #安装<推荐,方式2> 使用阿里下载kubernetes
 $ curl -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v1.3.0/minikube-linux-amd64
 $ sudo chmod +x minikube && sudo mv minikube /usr/local/bin/
 
@@ -1034,9 +1034,10 @@ $ sudo install docker-machine-driver-kvm2 /usr/local/bin/ #最后,安装kvm2
 
 # 启动 minikube 集群
 $ sudo minikube config set vm-driver virtualbox #设置默认虚拟机(virtualbox|kvm2|none)
-$ sudo minikube config set memory 4096          #默认内存限制4G(default:2GB-RAM) 可选镜像https://registry.docker-cn.com
-$ sudo minikube start --vm-driver=kvm2 --registry-mirror=http://f1361db2.m.daocloud.io
-# #启动<推荐,方式2> 使用阿里镜像registry.cn-hangzhou.aliyuncs.com
+$ sudo minikube config set memory 4096          #默认内存限制4G(default:2GB-RAM)
+$ sudo minikube start --vm-driver=kvm2          #启动+代理;可选--registry-mirror=https://registry.docker-cn.com
+  --docker-env HTTP_PROXY=http://f1361db2.m.daocloud.io --docker-env HTTPS_PROXY=http://f1361db2.m.daocloud.io
+# #启动<推荐,方式2> 使用阿里的镜像https://registry.cn-hangzhou.aliyuncs.com
 $ sudo minikube start --vm-driver=kvm2          #推荐kvm2 driver
 $ sudo minikube start --vm-driver=virtualbox #Starting local Kubernetes cluster...Starting VM...Downloading
 #下载~/.minikube/cache/iso/minikube-v1.3.0.iso < https://storage.googleapis.com/minikube/iso/minikube-v1.3.0.iso

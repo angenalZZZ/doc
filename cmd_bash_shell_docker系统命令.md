@@ -1010,7 +1010,7 @@ $ kubectl exec $pods_name -it -n test -- /bin/sh #执行Pods -pods/service descr
 
 ## [**Minikube**](https://github.com/kubernetes/minikube)
 
-> [`Minikube`搭建本地`k8s`集群](https://minikube.sigs.k8s.io/docs/start/linux/)<br>
+> [`Minikube`搭建本地`k8s`集群](https://minikube.sigs.k8s.io/docs/start/linux/)、[中文文档](http://docs.kubernetes.org.cn/109.html)<br>
   　[nuclio](https://nuclio.io)：高性能(serverless)事件微服务和数据处理平台(结合MQ,Kafka,DB)
 ~~~bash
 # 安装 minikube

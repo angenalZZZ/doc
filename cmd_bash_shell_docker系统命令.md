@@ -542,16 +542,18 @@ $ source ~/.zshrc # 使配置生效
   > sc delete gitea
 ~~~
 
-> `Serf` 去中心化集群(Hashicorp开源), 基于Serf实现的网络管理和服务发现, 如[`docker`](#docker),[`consul`](#Consul)等
+> `Serf` [`去中心化集群`Hashicorp开源](https://www.serf.io) 基于Serf实现的网络管理和服务发现, 如[`docker`](#docker),[`consul`](#Consul)等
 ~~~shell
+  $ serf agent  # a single Serf agent
+  $ serf members
   #1.启动serf agent节点，并提供UserEvent和Query等接口 (处理一些用户层的事件，如服务发现、自动化部署等)
-  $ serf agent -node=node1 -bind=127.0.0.1:5001 -rpc-addr=127.0.0.1:7473 
+  $ serf agent -node=node1 -bind=127.0.0.1:5001 -rpc-addr=127.0.0.1:7473 # custom user event, query event!
     -event-handler=user:log='echo node1 >> node1.log' -event-handler=query:greet='echo hello,node1' -tag role=api1
   $ serf agent -node=node2 -bind=127.0.0.1:5002 -rpc-addr=127.0.0.1:7474 
     -event-handler=user:log='echo node2 >> node2.log' -event-handler=query:greet='echo hello,node2' -tag role=api2
   $ serf agent -node=node3 -bind=127.0.0.1:5003 -rpc-addr=127.0.0.1:7475 
     -event-handler=user:log='echo node3 >> node3.log' -event-handler=query:greet='echo hello,node3' -tag role=api3
-  #2.节点之间建立连接，形成去中性化集群。
+  #2.节点之间建立连接，形成去中性化集群。 Serf invokes events: member-{join,leave,update,failed,reap}
   $ serf join -rpc-addr=127.0.0.1:7474 127.0.0.1:5001  # node2 join node1
   $ serf join -rpc-addr=127.0.0.1:7473 127.0.0.1:5003  # node1 join node3
   #3.发送一个`log` Event，所有节点都会处理该Event

@@ -1129,13 +1129,14 @@ $ sudo kubeadm reset #[重置]
   $ consul intention delete api postgresql      # 删除微服务api
   
   # 在服务器模式下运行Consul Agent
-  > docker run -d --net=host consul agent -server -bind=172.17.0.1 # 将代理暴露给容器的网络（桥接网络）
+  > docker run -d --net=host consul agent -server -bind=172.17.0.1 # 将代理暴露给容器的网络(桥接网络)
       -retry-join=<root agent ip> # 指定群集中用于在启动时加入的另一个代理的外部IP
-      -bootstrap-expect=<number of server agents> # 其他数据中心数目，或者只指定为当前数据中心-bootstrap
+      -bootstrap-expect=<number of server agents> # 指定一个数据中心需要的节点数(与实际的服务节点数匹配)
+      -bootstrap  # 或者，只指定当前数据中心(bootstrap mode)
   # 在客户端模式下运行Consul Agent
   > docker run -d --net=host consul agent 
-      -client=<bridge ip> # 客户端(默认127.0.0.1)通过（桥接网络）将接口公开给其他容器，可用选项-client=0.0.0.0绑定所有接口
-      -bind=<external ip> # 当主机上其他容器也使用--net=host将代理暴露给容器外主机上运行的其他应用程序进程
+      -client=<bridge ip> # 客户端访问(默认127.0.0.1)通过(桥接网络)将接口暴露给其他容器(-client=0.0.0.0绑定所有ip)
+      -bind=<external ip> # 将代理暴露给宿主机上运行的其它应用程序(当主机上其他容器在使用 --net=host 时)
       -retry-join=<root agent ip> # 参考下：
         # Using a DNS entry > consul agent -retry-join "consul.domain.internal"
         # Using IPv4 > consul agent -retry-join "10.0.4.67"

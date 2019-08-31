@@ -1098,13 +1098,15 @@ $ sudo kubeadm reset #[重置]
 > [`Consul`](https://www.consul.io) 是google开源的一个使用go语言开发的服务发现、配置管理中心服务。<br>
   　[`Docker`+`Consul`+`Nginx`](https://www.jianshu.com/p/9976e874c099)基于nginx和consul构建高可用及自动发现的docker服务架构。Consul集群中的每个主机都运行Consul代理，与Docker守护程序一起运行。每个群集在服务器模式下至少有一个代理，通常为3到5个以实现高可用性。在给定主机上运行的应用程序仅使用其HTTP-API或DNS-API与其本地Consul代理进行通信。主机上的服务也要向本地Consul代理进行注册，该代理将信息与Consul服务器同步。多个HTTP应用程序与Consul的服务发现功能深入集成，并允许应用程序在没有任何中间代理的情况下定位服务并平衡负载 [`查看安装说明`](https://hub.docker.com/_/consul)、[`参数`/`开发模式`](https://www.consul.io/docs/agent/options.html#_dev)、[`API`](https://www.consul.io/docs/agent/http/agent.html)
 ~~~
-  # /consul/data   容器暴露VOLUME
-    # 对于客户端代理，存储有关群集的一些信息以及客户端的运行状况检查，以防重新启动容器。
-    # 对于服务器代理，存储客户端信息以及与一致性算法相关的快照和数据以及Consul的键/值存储和目录等。
-  # /consul/config 配置目录
-    # Consul总是--net=host在Docker中运行，因此在配置Consul的IP地址时需要注意。Consul具有其集群地址的概念以及其客户端地址。
-    # Consul群集地址是其他Consul代理可以联系给定代理的地址。客户端地址是主机上的其他进程联系Consul以发出HTTP或DNS请求的地址。
-    # -bind=<external ip> 告诉Consul启动时其群集地址？
+  # /consul/data   容器暴露VOLUME(用于持久化存储集群的数据的目录)
+    # 对于客户端代理，存储有关集群的一些信息以及客户端的运行状况检查，以防重新启动容器。
+    # 对于服务器代理，存储客户端信息以及与一致性算法相关的快照和数据以及Consul的KV存储和目录等。
+    # 对于开发模式无用 (非生产环境模式下不会持久化任何状态)
+  # /consul/config 配置目录(数据中心的服务配置文件*.json)
+    # Consul总是--net=host在Docker中运行，因此在配置Consul的IP地址时需要注意。Consul具有其集群地址的概念+其客户端地址。
+    # Consul群集地址是其他代理可以联系给定代理的地址。
+    # -bind=<external ip> 告诉Consul启动时其群集地址。
+    # -client{客户端地址}是其它程序联系Consul以发出HTTP或DNS请求的地址。
   # Consul包括一个小实用程序，用于查找客户端或按接口名称绑定地址
     # -e CONSUL_CLIENT_INTERFACE或CONSUL_BIND_INTERFACE 用于设置接口名称
     # -bind=<interface ip> & -client=<interface ip> 用于查找客户端

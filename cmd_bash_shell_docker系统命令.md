@@ -1095,67 +1095,84 @@ $ sudo kubeadm reset #[重置]
 
 ## [**Consul**](https://hub.docker.com/_/consul)
 
-> [`Consul`](https://www.consul.io) 是google开源的一个使用go语言开发的服务发现、配置管理中心服务。<br>
+> [`Consul`](https://www.consul.io) 是[HashiCorp](https://www.hashicorp.com)开源的一个使用go语言开发的服务发现、配置管理中心服务。<br>
   　[`Docker`+`Consul`+`Nginx`](https://www.jianshu.com/p/9976e874c099)基于nginx和consul构建高可用及自动发现的docker服务架构。Consul集群中的每个主机都运行Consul代理，与Docker守护程序一起运行。每个群集在服务器模式下至少有一个代理，通常为3到5个以实现高可用性。在给定主机上运行的应用程序仅使用其HTTP-API或DNS-API与其本地Consul代理进行通信。主机上的服务也要向本地Consul代理进行注册，该代理将信息与Consul服务器同步。多个HTTP应用程序与Consul的服务发现功能深入集成，并允许应用程序在没有任何中间代理的情况下定位服务并平衡负载 [`查看安装说明`](https://hub.docker.com/_/consul)、[`参数`/`开发模式`](https://www.consul.io/docs/agent/options.html#_dev)、[`API`](https://www.consul.io/docs/agent/http/agent.html)
 ~~~
+  ######Docker容器######
   # /consul/data   容器暴露VOLUME(用于持久化存储集群的数据的目录)
     # 对于客户端代理，存储有关集群的一些信息以及客户端的运行状况检查，以防重新启动容器。
     # 对于服务器代理，存储客户端信息以及与一致性算法相关的快照和数据以及Consul的KV存储和目录等。
-    # 对于开发模式无用 (非生产环境模式下不会持久化任何状态)
+    # 对于开发模式无用 ( -dev 非生产环境模式下，不会持久化任何状态)
   # /consul/config 配置目录(数据中心的服务配置文件*.json)
-    # Consul总是--net=host在Docker中运行，因此在配置Consul的IP地址时需要注意。Consul具有其集群地址的概念+其客户端地址。
-    # Consul群集地址是其他代理可以联系给定代理的地址。
-    # -bind=<external ip> 告诉Consul启动时其群集地址。
-    # -client{客户端地址}是其它程序联系Consul以发出HTTP或DNS请求的地址。
-  # Consul包括一个小实用程序，用于查找客户端或按接口名称绑定地址
-    # -e CONSUL_CLIENT_INTERFACE或CONSUL_BIND_INTERFACE 用于设置接口名称
-    # -bind=<interface ip> & -client=<interface ip> 用于查找客户端
+    # Consul在Docker中(--net=host)运行，因此在配置Consul的IP地址时需要注意：Consul具有集群地址+客户端地址的概念。
+    # Consul群集地址是其他代理可以联系给定代理的地址：
+      # -bind{Server群集地址}=<external-ip> 告诉Consul启动时其群集通讯地址
+      # -client{客户端地址}=<external-ip> 告诉其它应用程序联系Consul以发出HTTP或DNS请求的地址
+      # -e CONSUL_CLIENT_INTERFACE 或 CONSUL_BIND_INTERFACE 用于设置接口名称(一个群集通讯实用程序)
+
+  # 试用 Consul 不指定任何参数
+  > docker run -d --name dev-consul-n0 -p 8500:8500 -e CONSUL_BIND_INTERFACE=eth0 consul
+  > docker exec -t dev-consul-n0 consul info    # 查看Consul集群的基本信息 www.consul.io/docs/commands/info.html
+  > docker exec -t dev-consul-n0 consul members # 查询Consul集群中的所有成员
+  > docker exec -it dev-consul-0 sh  # 进入集群Docker主机中执行Shell命令
   
-  # 在开发模式下运行Consul 不带参数的Consul容器将为您提供处于开发模式的Consul服务器，使用开发服务器在桥接网络上运行，
-      对于在单个机器上测试Consul的多个实例非常有用。开发模式还在端口8500上启动Consul的Web UI版本。
-      通过-ui在命令行上向Consul 提供选项，可以将其添加到其他Consul配置中。
-  > docker run -d --name dev-consul-node0 -p 8500:8500 -e CONSUL_BIND_INTERFACE=eth0 consul # 不指定任何参数给consul
-      # 查找IP-join: docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" dev-consul-node0
-  > docker run -d --name dev-consul-node1 -e CONSUL_BIND_INTERFACE=eth0 consul agent -dev -join=172.17.0. #可运行多个
-  > docker exec -t dev-consul-node0 consul info    # 查看Consul集群的基本信息 https://www.consul.io/docs/commands/info.html
-  > docker exec -t dev-consul-node0 consul members # 查询Consul集群中的所有成员
-  > curl http://localhost:8500/v1/health/service/consul?pretty # 查询Consul集群的健康状况
-  > docker exec -it dev-consul-node0 sh # 进入集群主机中执行shell
-  $ consul --help                               # 操作帮助
-  $ consul catalog nodes                        # 节点列表
-  $ consul kv put config/api/request_limit 2000 # 添加数据
-  $ consul kv get config/api/request_limit      # 查询数据
-  $ consul kv delete config/api/request_limit   # 删除数据
-  $ consul intention check api postgresql       # 检查微服务api
-  $ consul intention create api postgresql      # 创建微服务api
-  $ consul intention delete api postgresql      # 删除微服务api
-  
-  # 在服务器模式下运行Consul Agent
-  > docker run -d --net=host consul agent -server -bind=172.17.0.1 # 将代理暴露给容器的网络(桥接网络)
-      -retry-join=<root agent ip> # 指定群集中用于在启动时加入的另一个代理的外部IP
-      -bootstrap-expect=<number of server agents> # 指定一个数据中心需要的节点数(与实际的服务节点数匹配)
-      -bootstrap  # 或者，只指定当前数据中心(bootstrap mode)
-  # 在客户端模式下运行Consul Agent
+  # 在[开发模式]下运行 Consul Agent 容器将为您提供处于开发模式的Consul服务器，开发服务器在桥接网络上运行多个实例很有用
+  > consul agent -dev -datacenter dc1 -node n1 # 单机测试Consul+非Docker运行+启动WebUI服务 http://127.0.0.1:8500/ui
+  > docker run -d --name dev-consul-n1 -p 8500:8500 -e CONSUL_BIND_INTERFACE=eth0 consul agent -dev -ui -join=172.17.0.*
+      # 查找IP用于参数-join: docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" <docker-name>
+
+  # 在[服务器模式]下运行 Consul Agent
+  > docker run -d --net=host consul agent -server -bind=172.17.0.* # 将代理暴露给宿主机(桥接网络)
+      -retry-join=<root agent ip> # 指定集群中用于在启动时加入的另一个代理的外部IP(搭建集群数据中心网络)
+      -bootstrap-expect=<number of server agents> # 指定集群启动时需要的节点数(多个Server节点选举raft-leader)
+      -bootstrap  # 或者指定当前数据中心(单个Server节点为raft-leader)的模式(bootstrap mode)不能与上面参数同时使用。
+  # 在[客户端模式]下运行 Consul Agent
   > docker run -d --net=host consul agent 
-      -client=<bridge ip> # 客户端访问(默认127.0.0.1)通过(桥接网络)将接口暴露给其他容器(-client=0.0.0.0绑定所有ip)
-      -bind=<external ip> # 将代理暴露给宿主机上运行的其它应用程序(当主机上其他容器在使用 --net=host 时)
-      -retry-join=<root agent ip> # 参考下：
-        # Using a DNS entry > consul agent -retry-join "consul.domain.internal"
+      -client=<bridge ip> # 客户端访问(默认127.0.0.1)通过(桥接网络)将接口暴露给其他容器(指定0.0.0.0绑定所有ip)
+      -bind=<external ip> # 将代理暴露给宿主机上运行的其它应用程序(当主机上其他容器在使用 --net=host 时可用)
+      -retry-join=<root agent ip> # 参考如下：
+        # Using DNS > consul agent -retry-join "consul.domain.internal"
         # Using IPv4 > consul agent -retry-join "10.0.4.67"
         # Using IPv6 > consul agent -retry-join "[::1]:8301"
         # Using Cloud Auto-Joining > consul agent -retry-join "provider=aws tag_key=..."
   
   # 在端口53上公开Consul的DNS服务器 https://www.consul.io/docs/agent/services.html
-  > docker run -d --net=host -e 'CONSUL_ALLOW_PRIVILEGED_PORTS=' consul -dns-port=53 -recursor=8.8.8.8 -bind=<bridge ip>
-  > docker run -i --dns=<bridge ip> -t ubuntu sh -c "apt-get update && apt-get install -y dnsutils && dig consul.service.consul"
-  # 使用容器进行服务发现，有关详细信息，请参阅[代理API] https://www.consul.io/docs/agent/http/agent.html
-  # 在Docker容器中运行运行状况检查
-      # 如果Docker守护程序暴露给Consul代理并且DOCKER_HOST设置了环境变量，则可以使用Docker容器ID配置检查以执行。
+  > docker run -d --net=host -e "CONSUL_ALLOW_PRIVILEGED_PORTS=" consul -dns-port=53 -recursor=8.8.8.8 -bind=<bridge-ip>
+  > docker run -it --dns=<bridge-ip> ubuntu sh -c "apt-get update && apt-get install -y dnsutils && dig consul.service.consul"
+  # 使用容器进行服务发现，有关详细信息，请参阅API  www.consul.io/docs/agent/http/agent.html
+  # 在Docker容器中运行Consul检查(如果Docker守护程序暴露给Consul代理+环境变量DOCKER_HOST，则可以使用容器ID配置检查)
+~~~
+![](https://github.com/angenalZZZ/nodejs/raw/master/screenshots/a107560a.png)
+~~~
+  ######Consul命令行######
+  $ consul catalog nodes   # 节点列表+Node+ID+Address+DC... (DC: 数据中心,即节点归属)
+  $ consul members            # 节点列表+Status +Type+Protocol+Segment+更多... (Status: alive表示节点健康)
+  $ consul kv put config/api/request_limit 2000  # 添加数据
+  $ consul kv get config/api/request_limit             # 查询数据
+  $ consul kv delete config/api/request_limit      # 删除数据
+  $ consul intention check|create|delete api postgresql   # 检查|创建|删除-微服务api
+  > curl http://localhost:8500/v1/health/service/consul?pretty  # 集群Node+Service+Checks健康状况 (Status: passing正常,warning,fail...)
+  $ consul leave -http-addr=127.0.0.1:8500           # 使节点优雅的移除所在集群dc1
+  ######单机运行Consul######
+  $ consul agent -dev -ui -datacenter=dc1 -node=n1 -http-port=8500  # 启动WebUI服务 http://127.0.0.1:8500/ui
+  ######虚拟机搭建Consul集群######
+  $ consul agent -data-dir /tmp/node0 -node=node0 -bind=192.168.11.143  # node0机器
+      -datacenter=dc1 -ui -client=192.168.11.143 -server -bootstrap-expect 1
+  $ consul agent -data-dir /tmp/node1 -node=node1 -bind=192.168.11.144  # node1机器，不开启远程访问-client
+      -datacenter=dc1 -ui
+  $ consul agent -data-dir /tmp/node2 -node=node2 -bind=192.168.11.145  # node2机器
+      -datacenter=dc1 -ui -client=192.168.11.145
+  $ consul join 192.168.11.143                                                                    # 将node1节点加入到node0上  (node1上执行)
+  $ consul join -rpc-addr=192.168.11.145:8400  192.168.11.143  # 将node2节点加入到node0上  (node2上执行)
+  $ consul members -rpc-addr=192.168.11.143:8400                       # 查看当前集群节点  (在node1上执行, node0上运行该命令)
+      # 需要加-rpc-addr 选项，原因是-client 指定了客户端接口的绑定地址，包括：HTTP、DNS、RPC，
+      # 而 consul join 、consul members 都是通过RPC与Consul交互 (即指定了 -client 绑定`RPC`的, 需要加 -rpc-addr 才可执行)
+  $ consul [command] --help
 ~~~
 
 ## [**Etcd**](https://github.com/etcd-io/etcd)
 
-> [`etcd`](https://coreos.com/etcd/docs/latest/demo.html) 分布式、可靠的键值存储，用于分布式系统中共享配置和服务发现。 [`install`](https://www.jianshu.com/p/e892997b387b)  [`download`](https://github.com/etcd-io/etcd/releases)  [`play...`](http://play.etcd.io/install)
+> [`etcd`](https://coreos.com/etcd/docs/latest/demo.html) 分布式、可靠的KV存储，用于分布式系统中共享配置和服务发现。 [`install`](https://www.jianshu.com/p/e892997b387b)  [`download`](https://github.com/etcd-io/etcd/releases)  [`play...`](http://play.etcd.io/install)
  * 简单: 良好定义的HTTP接口，面向用户的API(gRPC)，易理解；支持消息发布与订阅；
  * 安全: 支持SSL客户端安全认证；数据持久化(默认数据更新就进行持久化)；
  * 快速: 每秒1w/qps；版本高速迭代和开发中，这既是一个优点，也是一个缺点；

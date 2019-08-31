@@ -1142,9 +1142,10 @@ $ sudo kubeadm reset #[重置]
   # 使用容器进行服务发现，有关详细信息，请参阅API  www.consul.io/docs/agent/http/agent.html
   # 在Docker容器中运行Consul检查(如果Docker守护程序暴露给Consul代理+环境变量DOCKER_HOST，则可以使用容器ID配置检查)
 ~~~
-![](https://github.com/angenalZZZ/nodejs/raw/master/screenshots/a107560a.png)
+![](https://github.com/angenalZZZ/doc/blob/master/screenshots/a107560a.png)
 ~~~
   ######Consul命令行######
+  $ consul [command] --help
   $ consul catalog nodes   # 节点列表+Node+ID+Address+DC... (DC: 数据中心,即节点归属)
   $ consul members            # 节点列表+Status +Type+Protocol+Segment+更多... (Status: alive表示节点健康)
   $ consul kv put config/api/request_limit 2000  # 添加数据
@@ -1167,7 +1168,7 @@ $ sudo kubeadm reset #[重置]
   $ consul members -rpc-addr=192.168.11.143:8400                       # 查看当前集群节点  (在node1上执行, node0上运行该命令)
       # 需要加-rpc-addr 选项，原因是-client 指定了客户端接口的绑定地址，包括：HTTP、DNS、RPC，
       # 而 consul join 、consul members 都是通过RPC与Consul交互 (即指定了 -client 绑定`RPC`的, 需要加 -rpc-addr 才可执行)
-  $ consul [command] --help
+  
 ~~~
 
 ## [**Etcd**](https://github.com/etcd-io/etcd)

@@ -149,6 +149,17 @@
   $ cp -if /mnt/d/Docker/App/ubuntu/usr/local/bin/* /usr/local/bin # [i覆盖文件时,询问?]
   $ cp -fr /usr/local/bin/* /mnt/d/Docker/App/ubuntu/usr/local/bin # [r复制文件目录!]
   
+  # 系统备份和还原
+  $ tar -czpvf /media/yangzhou/Software/Software/ubuntu/backup@`date +%Y`.tar.gz 
+      --exclude=/proc --exclude=/tmp --exclude=/boot --exclude=/home --exclude=/lost+found 
+      --exclude=/media --exclude=/mnt --exclude=/run /  # -c备份文档 -z用gzip压缩 -p保存权限 -v显示详细 -f指定输出文件
+  $ tar -xzpvf /media/yangzhou/Software/Software/ubuntu/backup@`date +%Y`.tar.gz -C /
+  # linux-live-U盘启动盘
+  $ df -h              # 查找U盘位置<假如为sdb>
+  $ sudo umount /dev/sdb*  # 手动卸载 U盘
+  $ sudo mkfs.vfat /dev/sdb -I  # 格式化 U盘
+  $ sudo dd if=~/ubuntu.iso of=/dev/sdb  # 制作 U盘启动盘
+  
   # 文件删除
   > del /f /s /q [目录|文件]
   > rd /s /q %windir%\temp & md %windir%\temp [删除临时文件]
@@ -188,7 +199,9 @@
   
   # 系统硬件驱动
   > devmgmt.msc
-  # linux硬件设备-文件名
+  $ df -h      # 文件系统   容量  挂载点
+  $ sudo fdisk -l
+  # linux硬件设备-挂载点
   /dev/char
   /dev/cdrom   # 光驱
   /dev/console
@@ -208,7 +221,6 @@
   /dev/null
   /dev/port
   /dev/sda{sda1-3,sdb,sdc,$sdd~sdp} # 硬盘 (a~p 代表 16 块不同的硬盘; 数字代表分区数)
-  /dev/
   /dev/snapshot
   /dev/stdin -> /proc/self/fd/0
   /dev/stdout -> /proc/self/fd/1

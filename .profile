@@ -29,11 +29,11 @@ export MINIO_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE
 export MINIO_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 
 # vitess
-export VTROOT=$HOME/vt
-export VTTOP=$VTROOT
-export MYSQL_FLAVOR=MySQL57
-export VTDATAROOT=$HOME/vtdataroot
-export PATH=$VTROOT/bin:$PATH
+# export VTROOT=$HOME/vt
+# export VTTOP=$VTROOT
+# export MYSQL_FLAVOR=MySQL57
+# export VTDATAROOT=$HOME/vtdataroot
+# export PATH=$VTROOT/bin:$PATH
 
 
 # docker

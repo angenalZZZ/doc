@@ -1466,7 +1466,36 @@ find . -type f -mtime +10 -name "*.txt" -exec cp {} OLD # 将找到的文件全�
 find . -type f -name "*.json" -exec ./commands.sh {} # 将找到的文件全都调用可执行脚本
 
 # 文本搜索grep----------------------------------------------------------------------
-
+# grep文本搜索 -o 只输出匹配的文本行 VS -v 只输出没有匹配的文本行
+grep -c "keywords" file.txt  # 统计文件中包含文本的次数
+# grep文本搜索 -n 打印匹配的行号 -i 搜索时忽略大小写 -l 只打印文件名
+grep "class" . -R -n  # 在多级目录中对文本递归搜索(程序员搜代码的最爱)
+grep -e "class" -e "vitural" file.java  # 匹配多个模式
+grep "temp" filename* -lZ | xargs -0 rm # 输出以temp作为结尾-Z的文件名-l
+cat file.txt | xargs  # 将多行输出转化为单行输出
+echo "hello world" | xargs -n 1 # 将单行转化为多行输出 -n多行的字段数(-d默认空格拆分)
+find . -type f -name "*.java" -print0 | xargs -0 wc -l # 统计代码行数
+# sort排序 -n 按数字进行排序 VS -d 按字典序进行排序 -r 逆序排序 -k N 指定按第N列排序
+sort -nrk 1 file.txt # 按第1列逆序排序
+sort -bd file.txt    # 忽略像空格之类的前导空白字符
+# uniq消除重复行
+sort -bd file.txt | uniq
+sort -bd file.txt | uniq -c  # 统计各行在文件中出现的次数
+sort -bd file.txt | uniq -d  # 找出重复行 -s 开始位置 -w 比较字符数
+# tr转换
+echo 123450 | tr '0-9' '9876543210' # 替换对应数字 # 876549
+echo abc | tr 'a' '0'       # 0bc
+echo i123450 | tr -d '0-9'  # 删除所有数字 # i
+echo i123450 | tr -dc '0-9' # 删除所有非数字 -c 求补集
+echo file.txt | tr -c '0-9' # 获取文件中所有数字
+echo 'as   i' | tr -s ' '   # 压缩字符 -s # as i
+cat file.txt | tr [:lower:] [:upper:]  # 小写转大写
+# cut按列切分文本
+# paste按列拼接文本
+# wc统计行和字符
+# sed文本替换利器
+echo 'ABC' | sed 's/[[:upper:]]*/\L&/' # 大写转小写 echo 'ABC' | tr A-Z a-z
+# awk数据流处理
 ~~~
 
 #### 一、Linux下常用命令：文件与目录操作

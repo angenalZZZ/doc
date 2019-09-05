@@ -1439,6 +1439,36 @@ http {
       && <中间> 连接两条命令并按顺序执行;
       &  <结尾> 使命令程序脱离终端进程在后台执行;
 
+#### 最常用的工具：find、grep、xargs、sort、uniq、tr、cut、paste、wc、sed、awk...
+ - https://mp.weixin.qq.com/s/3LI8yHZpgbvyfU1XoEnyXQ
+~~~bash
+# 文件搜索find----------------------------------------------------------------------
+
+# 查找txt和pdf文件
+find . ( -name "*.txt" -o -name "*.pdf" ) -print # -print0 使用''作为文件的定界符，就能搜索含空格的文件
+# 正则方式查找.txt和pdf
+find . -regex ".*(.txt|.pdf)$" # -iregex忽略大小写
+# 查找所有非txt文本
+find . ! -name "*.txt" -print  # ! 非+条件
+# 指定搜索深度
+find . -maxdepth 1 -type f     # -type [ d 只列出目录 l 符号链接 ]
+# 最近7天被访问过的所有文件
+find . -atime 7 -type f -print # -atime 访问时间(天) -mtime 修改时间 -ctime 变化时间
+# 查找大于2k的文件
+find . -type f -size + 2k
+# 按权限查找
+find . -type f -perm 644 -print   # 具有可执行权限的所有文件
+find . -type f -user weber -print # 找用户 weber 所拥有的文件
+# 找到文件后的后续动作
+find . -type f -name "*.tmp" -delete # 删除当前目录下所有的tmp文件
+find . -type f -user root -exec chown weber {} # 将目录下的所有权变更为用户weber [-exec执行动作{}相应文件名]
+find . -type f -mtime +10 -name "*.txt" -exec cp {} OLD # 将找到的文件全都copy到另一个目录OLD
+find . -type f -name "*.json" -exec ./commands.sh {} # 将找到的文件全都调用可执行脚本
+
+# 文本搜索grep----------------------------------------------------------------------
+
+~~~
+
 #### 一、Linux下常用命令：文件与目录操作
 ~~~
 basename：从文件名中去掉路径和扩展名

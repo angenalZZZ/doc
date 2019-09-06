@@ -494,8 +494,8 @@ $ source ~/.zshrc # 使配置生效
   # #初始化Bucket -> 设置数据源Collector + 监听跟踪数据Dashboard + 分析数据使用Flux -> 管理Tasks
 ~~~
 
-> `grafana` 一个开源的度量分析与可视化套件 grafana.com/get
-    漂亮的监测、报警、指标分析、图表工具 & 时序数据库[InfluxDB](https://portal.influxdata.com) & [Prometheus](https://github.com/prometheus/prometheus)
+> [`grafana`](https://grafana.com/docs/) 一个开源的度量分析与可视化套件 grafana.com 
+    漂亮的监测、报警、指标分析、图表工具 & 时序数据库 [InfluxDB](https://grafana.com/docs/features/datasources/influxdb/),[Prometheus](https://grafana.com/docs/features/datasources/prometheus/),[Graphite](https://grafana.com/docs/features/datasources/graphite/),[OpenTSDB](https://grafana.com/docs/features/datasources/opentsdb/); 文档数据库 [Elasticsearch](https://grafana.com/docs/features/datasources/elasticsearch/),[Loki](https://grafana.com/docs/features/datasources/loki/)...
 ~~~shell
   $ wget https://dl.grafana.com/oss/release/grafana_6.3.5_amd64.deb
   $ sudo dpkg -i grafana_6.3.5_amd64.deb

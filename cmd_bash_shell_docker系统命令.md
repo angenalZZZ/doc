@@ -7,7 +7,7 @@
 　[`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)<br>
 
  * [Windows10安装Linux子系统(WSL)](https://www.cnblogs.com/xiaoliangge/p/9124089.html)
- * [Linux开发环境及常用安装zsh-git-redis-mysql-mongodb-pilosa-influxdb-nsq.kafka.gotify.botpress-ssh-airflow-fio](#linux开发环境及常用安装)
+ * [Linux开发环境及常用安装zsh-git-redis-mysql-mongodb-pilosa-influxdb-grafana-nsq.kafka.gotify.botpress-airflow-fio](#linux开发环境及常用安装)
  * [Linux常用命令](#Linux常用命令)
  * [docker](#docker) | [k8s](#Kubernetes) | [Minikube](#Minikube) | [Consul](#Consul) | [etcd](#Etcd) | [Nginx](#Nginx)
 
@@ -482,7 +482,7 @@ $ source ~/.zshrc # 使配置生效
   $ go get github.com/pilosa/console && cd $GOPATH/src/github.com/pilosa/console && make install && pilosa-console -bind :10102
 ~~~
 
-> `Influxdb` 时间序列数据库 portal.influxdata.com
+> `InfluxDB` 时间序列数据库 portal.influxdata.com
 ~~~shell
   $ curl -LO https://dl.influxdata.com/influxdb/releases/influxdb_2.0.0-alpha.17_linux_amd64.tar.gz
   $ tar xfz influxdb_2.0.0-alpha.17_linux_amd64.tar.gz
@@ -492,6 +492,14 @@ $ source ~/.zshrc # 使配置生效
   # 安装 http://localhost:9999   <打开website或者cli> influx setup
   # 配置 Usr: default ; Pwd: HGJ766GR767FKJU0 ; Org: angenalZ ; Bucket: default  # 结束安装与初始化设置
   # #初始化Bucket -> 设置数据源Collector + 监听跟踪数据Dashboard + 分析数据使用Flux -> 管理Tasks
+~~~
+
+> `grafana` 一个开源的度量分析与可视化套件 grafana.com/get
+    漂亮的监测、报警、指标分析、图表工具 & 时序数据库[InfluxDB](https://portal.influxdata.com) & [Prometheus](https://github.com/prometheus/prometheus)
+~~~shell
+  $ wget https://dl.grafana.com/oss/release/grafana_6.3.5_amd64.deb
+  $ sudo dpkg -i grafana_6.3.5_amd64.deb
+  > docker run -d --name=grafana -p 3000:3000 grafana/grafana
 ~~~
 
 > `消息平台` nsq、kafka、gotify、centrifugo、botpress

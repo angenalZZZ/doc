@@ -498,8 +498,10 @@ $ source ~/.zshrc # 使配置生效
     漂亮的监测、报警、指标分析、图表工具 & 时序数据库 [InfluxDB](https://grafana.com/docs/features/datasources/influxdb/),[Prometheus](https://grafana.com/docs/features/datasources/prometheus/),[Graphite](https://grafana.com/docs/features/datasources/graphite/),[OpenTSDB](https://grafana.com/docs/features/datasources/opentsdb/); 文档数据库 [Elasticsearch](https://grafana.com/docs/features/datasources/elasticsearch/),[Loki](https://grafana.com/docs/features/datasources/loki/)...
 ~~~shell
   $ wget https://dl.grafana.com/oss/release/grafana_6.3.5_amd64.deb
-  $ sudo dpkg -i grafana_6.3.5_amd64.deb
-  > docker run -d --name=grafana -p 3000:3000 grafana/grafana
+  $ sudo dpkg -i grafana_6.3.5_amd64.deb  #安装服务&自动启动  > /usr/sbin/grafana-server --config=/etc/grafana/grafana.ini --pidfile=/var/run/grafana/grafana-server.pid --packaging=deb cfg:default.paths.logs=/var/log/grafana cfg:default.paths.data=/var/lib/grafana cfg:default.paths.plugins=/var/lib/grafana/plugins cfg:default.paths.provisioning=/etc/grafana/provisioning
+  $ sudo vi /etc/grafana/grafana.ini        #修改配置( default HTTP port 3000 )
+  $ sudo service grafana-server restart  #重启服务( http://localhost:8030 : admin )
+  > docker run -d --name=grafana -p 3000:3000 grafana/grafana  #另外,可直接安装Docker服务grafana-server.
 ~~~
 
 > `消息平台` nsq、kafka、gotify、centrifugo、botpress

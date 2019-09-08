@@ -7,7 +7,7 @@
 　[`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)<br>
 
  * [Windows10安装Linux子系统(WSL)](https://www.cnblogs.com/xiaoliangge/p/9124089.html)
- * [Linux开发环境及常用安装zsh-git-redis-mysql-mongodb-pilosa-influxdb-grafana-nsq.kafka.gotify.botpress-airflow-fio](#linux开发环境及常用安装)
+ * [Linux开发环境及常用安装zsh-git-redis-mysql-mongodb-pilosa-influxdb-grafana-nsq.kafka.gotify.botpress](#linux开发环境及常用安装)
  * [Linux常用命令](#Linux常用命令)
  * [docker](#docker) | [k8s](#Kubernetes) | [Minikube](#Minikube) | [Consul](#Consul) | [etcd](#Etcd) | [Nginx](#Nginx)
 
@@ -80,6 +80,7 @@
   > netstat -anT                              # tcp端口(本地地址,外部地址,状态)
   > netstat -anp tcp | findstr -i "listening" # 查找本机tcp端口监听列表
   $ netstat -anp |grep 3306                   # 1.通过端口查看进程; 2.通过进程id查看占用端口; [p显示进程]
+  $ sudo netstat -anpW |grep -i "grafana-server" # 搜索进程使用的网络端口资源列表; [端口tcp+udp]
   $ netstat -atW |grep -i "listen"            # tcp端口-centos $ yum install -y net-tools traceroute
   $ netstat -tulnp | grep -i "time_wait" # tcp超时-ubuntu $ apt-get update & apt install -y net-tools
   $ ss -t4 state time-wait                    # tcp超时-ubuntu $ apt install -y iproute2 iproute2-doc
@@ -494,14 +495,15 @@ $ source ~/.zshrc # 使配置生效
   # #初始化Bucket -> 设置数据源Collector + 监听跟踪数据Dashboard + 分析数据使用Flux -> 管理Tasks
 ~~~
 
-> [`grafana`](https://grafana.com/docs/) 一个开源的度量分析与可视化套件 grafana.com 
+> [`grafana`](https://grafana.com/docs/) 一个开源的度量分析与可视化套件  
     漂亮的监测、报警、指标分析、图表工具 & 时序数据库 [InfluxDB](https://grafana.com/docs/features/datasources/influxdb/),[Prometheus](https://grafana.com/docs/features/datasources/prometheus/),[Graphite](https://grafana.com/docs/features/datasources/graphite/),[OpenTSDB](https://grafana.com/docs/features/datasources/opentsdb/); 文档数据库 [Elasticsearch](https://grafana.com/docs/features/datasources/elasticsearch/),[Loki](https://grafana.com/docs/features/datasources/loki/)...
 ~~~shell
   $ wget https://dl.grafana.com/oss/release/grafana_6.3.5_amd64.deb
   $ sudo dpkg -i grafana_6.3.5_amd64.deb  #安装服务&自动启动  > /usr/sbin/grafana-server --config=/etc/grafana/grafana.ini --pidfile=/var/run/grafana/grafana-server.pid --packaging=deb cfg:default.paths.logs=/var/log/grafana cfg:default.paths.data=/var/lib/grafana cfg:default.paths.plugins=/var/lib/grafana/plugins cfg:default.paths.provisioning=/etc/grafana/provisioning
+  $ sudo netstat -anpW |grep -i "grafana-server" #确认安装&启动成功!
   $ sudo vi /etc/grafana/grafana.ini        #修改配置( default HTTP port 3000 )
   $ sudo service grafana-server restart  #重启服务( http://localhost:8030 : admin )
-  > docker run -d --name=grafana -p 3000:3000 grafana/grafana  #另外,可直接安装Docker服务grafana-server.
+  > docker run -d --name=grafana -p 3000:3000 grafana/grafana  #另外,可直接安装其Docker服务
 ~~~
 
 > `消息平台` nsq、kafka、gotify、centrifugo、botpress

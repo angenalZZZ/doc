@@ -8,7 +8,7 @@
 
  * [Windows10安装Linux子系统(WSL)](https://www.cnblogs.com/xiaoliangge/p/9124089.html)
  * [Linux开发环境及常用安装zsh-git-redis-mysql-mongodb-pilosa-influxdb-grafana-nsq.kafka.gotify.botpress](#linux开发环境及常用安装)
- * [Linux常用命令](#Linux常用命令)
+ * [Linux常用命令ls、find、grep、xargs、sort、uniq、tr、cut、paste、wc、sed、awk...](#Linux常用命令)
  * [docker](#docker) | [k8s](#Kubernetes) | [Minikube](#Minikube) | [Consul](#Consul) | [etcd](#Etcd) | [Nginx](#Nginx)
 
 ~~~shell

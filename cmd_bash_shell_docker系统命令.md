@@ -1454,17 +1454,15 @@ http {
 #### 最常用的工具：find、grep、xargs、sort、uniq、tr、cut、paste、wc、sed、awk...
  - https://mp.weixin.qq.com/s/3LI8yHZpgbvyfU1XoEnyXQ
 ~~~bash
-# 文件搜索find----------------------------------------------------------------------
+# 文件搜索ls&find----------------------------------------------------------------------
 ls -lhR . |grep -i .key$  # 递归查找文件[后缀名为 .key ; 文件名称排序] --time={atime,ctime} 访问时间, 权限属性改变时间
 ls -lhRt . |grep -i .key$  # 递归查找文件[后缀名为 .key ; 文件时间排序] --full-time 输出完整时间ms(默认为内容变更时间)
 ls -lhRS . |grep -i .key$  # 递归查找文件[后缀名为 .key ; 文件大小排序] 
 ls -lF # 在文件或目录后加上文件类型的指示符号，例如：* 代表可运行文件，/ 为目录，= 为socket文件，| 为FIFO文件等
-# 查找txt和pdf文件
-find . ( -name "*.txt" -o -name "*.pdf" ) -print # -print0 使用''作为文件的定界符，就能搜索含空格的文件
-# 正则方式查找.txt和pdf
-find . -regex ".*(.txt|.pdf)$" # -iregex忽略大小写
+# 正则查找*.conf              #  ls -lF ./*.conf
+find . -regex ".*\.conf$"  # -iregex忽略大小写 -print0 使用''作为文件的定界符，就能搜索含空格的文件
 # 查找所有非txt文本
-find . ! -name "*.txt" -print  # ! 非+条件
+find . ! -name "*.conf" -print  # ! 非+条件 ;排除*.conf
 # 指定搜索深度
 find . -maxdepth 1 -type f     # -type [ d 只列出目录 l 符号链接 ]
 # 最近7天被访问过的所有文件

@@ -1003,7 +1003,9 @@ $ kubectl get events
 # 查看已创建的pods
 $ kubectl get pods
 $ kubectl get pods -l app=nginx #根据label筛选pods
-$ kubectl get pods -n nuclio         #根据namespace筛选pods
+$ kubectl get pods -n nuclio    #根据namespace筛选pods
+# 查看deployments
+$ kubectl get deployments  &&  kubectl get deployment -n test
 # 查看pod详情
 $ kubectl get pods nginx -o yaml
 $ kubectl describe pods redis
@@ -1013,18 +1015,17 @@ $ kubectl get secret
 $ kubectl get services
 # 查看namespace
 $ kubectl get namespace
-# 查看deployment
-$ kubectl get deployments
 
 # 创建service或pods    [~ su #]
-$ kubectl create -f development.yaml #创建Pods[使用yaml创建]
+$ kubectl create -f development.yaml  #创建Pods[使用yaml创建]
 $ kubectl run nginx --image=nginx --port=8080
-$ kubectl replace -f development     #更新Pods
+$ kubectl replace -f development      #更新Pods
 $ kubectl replace --force -f development #[--force强制更新]
-$ kubectl delete deploy/nginx -n test #删除Pods [-n代表namespace]
-$ kubectl delete -f development
-$ kubectl delete pods nginx
-$ kubectl delete --all pods --namespace nginx
+$ kubectl delete deploy/nginx -n test #删除Pods [-n代表namespace] 删除副本deployment.yaml
+$ kubectl get deployment -n test  &&  kubectl delete deployment nginx2 -n test
+$ kubectl delete -f development       # a pod --force
+$ kubectl delete pods nginx           # a pod name
+$ kubectl delete --all pods -n nginx  # all pods in a namespace
 $ kubectl logs $pods_name -n test      #查看日志[-n代表namespace]
 $ kubectl exec $pods_name -it -n test -- /bin/sh #执行Pods -pods/service describe
 # kubectl describe pod/$pods_name -n test

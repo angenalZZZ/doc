@@ -1452,18 +1452,17 @@ http {
       && <中间> 连接两条命令并按顺序执行;
       &  <结尾> 使命令程序脱离终端进程在后台执行;
 
-#### 最常用的工具：find、grep、xargs、sort、uniq、tr、cut、paste、wc、sed、awk...
- - https://mp.weixin.qq.com/s/3LI8yHZpgbvyfU1XoEnyXQ
+#### 最常用的工具：find、grep、xargs、sort、uniq、tr、cut、paste、wc、sed、awk、head、tail...
 ~~~bash
 # 文件搜索ls&find----------------------------------------------------------------------
 ls -lhR . |grep -i .key$  # 递归查找文件[后缀名为 .key ; 文件名称排序] --time={atime,ctime} 访问时间, 权限属性改变时间
 ls -lhRt . |grep -i .key$  # 递归查找文件[后缀名为 .key ; 文件时间排序] --full-time 输出完整时间ms(默认为内容变更时间)
 ls -lhRS . |grep -i .key$  # 递归查找文件[后缀名为 .key ; 文件大小排序] 
 ls -lF # 在文件或目录后加上文件类型的指示符号，例如：* 代表可运行文件，/ 为目录，= 为socket文件，| 为FIFO文件等
-# 正则查找*.conf              #  ls -lF ./*.conf
-find . -regex ".*\.conf$"  # -iregex忽略大小写 -print0 使用''作为文件的定界符，就能搜索含空格的文件
-# 查找所有非txt文本
-find . ! -name "*.conf" -print  # ! 非+条件 ;排除*.conf
+# 正则查找*.conf              #  ls -lhFRS *.zip  #常用文件查找并按文件大小排序
+find . -regex ".*\.conf$" -print0   # -iregex忽略大小写 -print0 使用''作为文件的定界符，就能搜索含空格的文件
+# 查找所有非txt文本,  另外还有: -and -or -readable -writable -executable
+find . ! -name "*.conf" -print   # ! 非条件 ;排除*.conf ; -print为可选断言
 # 指定搜索深度
 find . -maxdepth 1 -type f     # -type [ d 只列出目录 l 符号链接 ]
 # 最近7天被访问过的所有文件
@@ -1474,42 +1473,58 @@ find . -type f -size + 2k
 find . -type f -perm 644 -print   # 具有可执行权限的所有文件
 find . -type f -user weber -print # 找用户 weber 所拥有的文件
 # 找到文件后的后续动作
-find . -type f -name "*.tmp" -delete # 删除当前目录下所有的tmp文件
+find . -type f -name "*.tmp" -delete # 删除当前目录下所有的tmp文件; 断言-delete -print0 -printf -prune -quit ...
 find . -type f -user root -exec chown weber {} # 将目录下的所有权变更为用户weber [-exec执行动作{}相应文件名]
 find . -type f -mtime +10 -name "*.txt" -exec cp {} OLD # 将找到的文件全都copy到另一个目录OLD
 find . -type f -name "*.json" -exec ./commands.sh {} # 将找到的文件全都调用可执行脚本
 
 # 文本搜索grep----------------------------------------------------------------------
-# grep文本搜索 -o 只输出匹配的文本行 VS -v 只输出没有匹配的文本行
+# grep文本搜索 ( -o 只输出匹配的文本行  -v 只输出没有匹配的文本行 )
 grep -c "keywords" file.txt  # 统计文件中包含文本的次数
-# grep文本搜索 -n 打印匹配的行号 -i 搜索时忽略大小写 -l 只打印文件名
+# grep文本搜索 ( -n 打印匹配的行号 -i 搜索时忽略大小写 -l 只打印文件名 )
 grep "class" . -R -n  # 在多级目录中对文本递归搜索(程序员搜代码的最爱)
 grep -e "class" -e "vitural" file.java  # 匹配多个模式
-grep "temp" filename* -lZ | xargs -0 rm # 输出以temp作为结尾-Z的文件名-l
-cat file.txt | xargs  # 将多行输出转化为单行输出
-echo "hello world" | xargs -n 1 # 将单行转化为多行输出 -n多行的字段数(-d默认空格拆分)
-find . -type f -name "*.java" -print0 | xargs -0 wc -l # 统计代码行数
-# sort排序 -n 按数字进行排序 VS -d 按字典序进行排序 -r 逆序排序 -k N 指定按第N列排序
+grep "temp" *file_name* -lZ | xargs -0 rm # 输出以"temp"作为结尾-Z的文件名-l
+cat file.txt |xargs   # 将多行输出转化为单行输出(|xargs行转列)
+echo "hello world" |xargs -n 1 # 将单行转化为多行输出 -n多行的字段数(-d默认空格拆分)
+
+# 排序sort----------------------------------------------------------------------
+# -n 按数字进行排序 VS -d 按字典序进行排序 -r 逆序排序 -k 指定按第N列排序
 sort -nrk 1 file.txt # 按第1列逆序排序
 sort -bd file.txt    # 忽略像空格之类的前导空白字符
-# uniq消除重复行
+# 消除重复行uniq----------------------------------------------------------------------
 sort -bd file.txt | uniq
 sort -bd file.txt | uniq -c  # 统计各行在文件中出现的次数
 sort -bd file.txt | uniq -d  # 找出重复行 -s 开始位置 -w 比较字符数
-# tr转换
+# 转换tr----------------------------------------------------------------------
 echo 123450 | tr '0-9' '9876543210' # 替换对应数字 # 876549
-echo abc | tr 'a' '0'       # 0bc
+echo abc | tr 'a' '0'            # 0bc
 echo i123450 | tr -d '0-9'  # 删除所有数字 # i
 echo i123450 | tr -dc '0-9' # 删除所有非数字 -c 求补集
 echo file.txt | tr -c '0-9' # 获取文件中所有数字
 echo 'as   i' | tr -s ' '   # 压缩字符 -s # as i
 cat file.txt | tr [:lower:] [:upper:]  # 小写转大写
-# cut按列切分文本
-# paste按列拼接文本
-# wc统计行和字符
-# sed文本替换利器
+# 按列切分文本cut
+# 按列拼接文本paste
+# 统计行和字符wc----------------------------------------------------------------------
+find . -type f -name "*.java" -print0 |xargs -0 wc -l # 统计代码行数, wc -w file单词数, wc -c file字符数
+# 文本替换利器sed----------------------------------------------------------------------
 echo 'ABC' | sed 's/[[:upper:]]*/\L&/' # 大写转小写 echo 'ABC' | tr A-Z a-z
-# awk数据流处理
+seg 's/text/replace_text/' file   # 替换每一行的第一处匹配的 text
+seg 's/text/replace_text/g' file # 全局替换
+seg - i 's/text/repalce_text/g' file # -i直接替换原文件
+p=patten && r=replaced && echo "a patten" | sed "s/$p/$r/g" #双引号会对表达式求值
+sed '/^$/d' file      # 移除空白行
+# 数据流处理awk----------------------------------------------------------------------
+# NR:表示记录数量 NF:表示字段数量 $0:当前行的文本 $1:第一个字段的文本 ...
+echo -e "line1 line2" |awk 'BEGIN{print "start"} {print NR" ["NF"]: "$0} END{print "end"}'
+echo -e "line1 line2" |awk 'BEGIN{print "start"} {print NR":"$1} END{print "end"}'
+echo -e "line1 line2" |awk 'BEGIN{print "start"} {print NR":"$2} END{print "end"}'
+awk ' END {print NR}' file  # 统计代码行数 ; 加判断条件[ 行号NR==1,NR==2 ]或 [ /正则表达式/ ]
+echo -e "1 2 3 4" |awk 'BEGIN{num=0} NR==1{num+=$1+$2+$3+$4} END {print num}' 
+sudo awk -F : '{print $NF}' /etc/passwd   # -F来设置定界符（默认为空格）
+awk 'NR<=10 {print}' filename  # 开头10行
+awk '{buffer[NR%10]=$0} END {for(i=0;i<11;i++){ print buffer[i %10]} } ' filename # 结尾10行
 ~~~
 
 #### 一、Linux下常用命令：文件与目录操作

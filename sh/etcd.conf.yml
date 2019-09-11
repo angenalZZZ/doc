@@ -4,7 +4,7 @@
 name: 'default'
 
 # Path to the data directory.
-data-dir: '/home/yangzhou/.etcd'
+data-dir: '/4g/go/.etcd'
 
 # Path to the dedicated wal directory.
 wal-dir:

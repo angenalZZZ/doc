@@ -1,4 +1,4 @@
 #!/bin/sh
 
-cd /home/yangzhou/go/bin/gotify/server
+cd /4g/go/gotify/server
 ./gotify &

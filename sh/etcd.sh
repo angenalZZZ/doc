@@ -1,3 +1,4 @@
 #!/bin/sh
 
-etcd --config-file /home/yangzhou/doc/sh/etcd.conf.yml
+cd /4g/go/.etcd
+./etcd --config-file /4g/git/doc/sh/etcd.conf.yml

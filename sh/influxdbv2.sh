@@ -1,3 +1,4 @@
 #!/bin/sh
 
-influxd --reporting-disabled
+cd /4g/go/influxdb
+./influxd --reporting-disabled

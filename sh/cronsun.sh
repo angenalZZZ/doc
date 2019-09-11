@@ -1,5 +1,5 @@
 #!/bin/sh
 
-cd /home/yangzhou/go/bin/cronsun
+cd /4g/go/cronsun
 ./cronnode -conf conf/base.json &
 ./cronweb -conf conf/base.json &

@@ -596,12 +596,12 @@ $ source ~/.zshrc # 使配置生效
   $ sysctl -w vm.max_map_count=262144       # 操作无效时, 使用 vi /etc/sysctl.conf 修改
   $ grep vm.max_map_count /etc/sysctl.conf  # 检查设置
 
-  # 安装 Ansible 配置管理和IT自动化工具-(系统运维)(Ubuntu)一个由Python编写的强大的配置管理解决方案
-  $ sudo apt update
+  # 安装 Ansible 配置管理和IT自动化工具-(系统运维)一个强大的配置管理解决方案(由Python编写)
+  $ sudo apt update  # in ubuntu
   $ sudo apt install software-properties-common
   $ sudo apt-add-repository --yes --update ppa:ansible/ansible
-  $ sudo apt install ansible
-  # 安装 Airflow 任务调度  由Python编写  https://www.jianshu.com/p/9bed1e3ab93b
+  $ sudo apt install ansible        # https://www.jianshu.com/c/67d13df667ba
+  # 安装 Airflow 任务调度(由Python编写) https://www.jianshu.com/p/9bed1e3ab93b
   $ sudo apt install libkrb5-dev libsasl2-dev libmysqlclient-dev  # 安装airflow[all]依赖包
   $ mkdir airflow && cd airflow
   $ pip install setuptools_git

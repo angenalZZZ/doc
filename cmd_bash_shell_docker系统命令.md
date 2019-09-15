@@ -649,9 +649,36 @@ $ source ~/.zshrc # 使配置生效
     --filename=/dev/sda --name=init_seq --output=init_seq1.log \
     --rw=write --bs=128k --numjobs=1 --iodepth=32 --loops=1 # blog.csdn.net/dinglisong/article/details/83111515
   $ gfio   # 桌面应用→分析(>1h)→ 顺序读、顺序写、随机读、随机写等存储性能
-  
 ~~~
 
+> `glances`[系统实时监控](https://www.tecmint.com/command-line-tools-to-monitor-linux-performance/)
+~~~shell
+  $ sudo apt-add-repository ppa:arnaud-hartmann/glances-stable
+  $ sudo apt-get update
+  $ sudo apt-get install glances  #直接安装
+  $ glances -t 2  # 本机运行, 刷新频率(默认是 1秒) 本机配置 /etc/glances/glances.conf
+  $ glances -s     # 服务器/客户端模式 > glances -c -P 172.16.27.56 (-P设置密码; -p设置端口)
+  # 快捷键：
+  # a  对进程自动排序
+  # c  按 CPU 百分比对进程排序
+  # m 按内存百分比对进程排序
+  # p  按进程名字母顺序对进程排序
+  # i 按读写频率 I/O 对进程排序
+  # d 显示/隐藏磁盘 I/O 统计信息
+  # f 显示/隐藏文件系统统计信息
+  # n 显示/隐藏网络接口统计信息
+  # s 显示/隐藏传感器统计信息
+  # y 显示/隐藏硬盘温度统计信息
+  # l 显示/隐藏日志
+  # b 切换网络 I/O 单位(Bytes/bits)
+  # w 删除警告日志
+  # x 删除警告和严重日志
+  # 1 切换全局 CPU 使用情况和每个 CPU 的使用情况
+  # h 显示/隐藏这个帮助画面
+  # t 以组合形式浏览网络 I/O
+  # u 以累计形式浏览网络 I/O
+  # q 退出(ESC或Ctrl+C)
+~~~
 ----
 
 # [**docker**](https://docs.docker.com)

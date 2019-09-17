@@ -8,7 +8,7 @@ export TZ='Asia/Shanghai'
 
 # go
 export GOROOT=/usr/local/go
-export GOPATH=$HOME/go
+export GOPATH=/20g/go
 export GOPROXY=https://goproxy.io
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
@@ -23,18 +23,6 @@ export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
 export PATH=/usr/local/node/bin:$PATH
 
 ##应用服务设置
-
-# minio
-export MINIO_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE
-export MINIO_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-
-# vitess
-export VTTOP=/4g/database/vt
-export VTROOT=/4g/database/vt
-export VTDATAROOT=/4g/database/vt/data
-# export MYSQL_FLAVOR=MySQL56
-# export PATH=$VTROOT/bin:$GOROOT/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin:$JAVA_HOME/bin:$JRE_HOME/bin
-
 
 # docker
 # export DOCKER_HOST=tcp://127.0.0.1:2375

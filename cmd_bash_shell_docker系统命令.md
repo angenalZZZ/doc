@@ -893,6 +893,14 @@ $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/contain
     # 设置安全密钥: using Docker secrets
     # echo "AKIAIOSFODNN7EXAMPLE" | docker secret create access_key -
     # echo "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" | docker secret create secret_key -
+  # 分布式存储文件系统 godfs 参考 github.com/hetianyi/godfs
+  docker pull hehety/godfs
+  docker run -d --name godfs-tracker -p 1022:1022 --restart always -v /godfs/data:/godfs/data --privileged -e log_level="info" 
+    hehety/godfs tracker  #1.start tracker
+  docker run -d --name godfs-storage -p 1024:1024 -p 80:9024 -v /godfs/data:/godfs/data --privileged 
+    -e trackers=192.168.1.172:1022 -e advertise_addr=192.168.1.187 -e port=1024  -e instance_id="01" 
+    hehety/godfs storage  #2.start storage
+  docker run -d --name godfs-dashboard -p 8080:9080 --restart always hehety/godfs-dashboard #3.godfs monitoring
   
   # 基于 Jenkins 快速搭建持续集成环境
   git clone https://github.com/AliyunContainerService/docker-jenkins 

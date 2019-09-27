@@ -545,18 +545,17 @@ $ source ~/.zshrc # 使配置生效
   $ curl -s https://packagecloud.io/install/repositories/FZambia/centrifugo/script.deb.sh | sudo bash
 
 # 消息平台5 rabbitmq 服务: www.rabbitmq.com
-  $ sudo apt install -f libncurses5-dev libwxgtk2.8-dev libssl-dev freeglut3-dev # 安装erlang环境
+  $ sudo apt install -f libncurses5-dev libwxgtk2.8-dev libssl-dev freeglut3-dev #安装erlang环境
   $ sudo apt install -f fop m4 tk8.5 unixodbc unixodbc-dev xsltproc
   $ wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_22.1-1~ubuntu~xenial_amd64.deb
   $ dpkg -i esl-erlang_22.1-1~ubuntu~xenial_amd64.deb # 安装erlang
   $ wget https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.7.18/rabbitmq-server_3.7.18-1_all.deb
   $ sudo apt install socat
-  $ dpkg -i rabbitmq-server_3.7.18-1_all.deb # 安装rabbitmq
-  $ rabbitmqctl -q status  # 检查运行状态
-  $ rabbitmq-plugins enable rabbitmq_management # 开启web访问的plugins
-  $ rabbitmqctl add_user guest1 123456   # 创建用户+密码
-  $ rabbitmqctl set_user_tags management # 权限:超级管理员(administrator),监控者(monitoring),策略制定者(policymaker),普通管理者(management)
-  # 安全策略加上15672端口,开启HTTP访问 http://*:15672
+  $ dpkg -i rabbitmq-server_3.7.18-1_all.deb #安装rabbitmq
+  $ rabbitmqctl -q status                    #检查运行状态
+  $ rabbitmq-plugins enable rabbitmq_management #开启web访问plugins;安全策略加15672端口,开启HTTP访问 http://*:15672
+  $ rabbitmqctl add_user user 123456        #创建用户密码[内置超管:guest:guest]
+  $ rabbitmqctl set_user_tags administrator #权限:超管administrator,普通管理员management,监控monitoring,决策policymaker
 
 # 安装 Chat Bots 聊天机器人 (Windows服务)
   > nssm install Botpress D:\Program\botpress\bp.exe serve

@@ -7,7 +7,7 @@
 　[`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)<br>
 
  * [Windows10安装Linux子系统(WSL)](https://www.cnblogs.com/xiaoliangge/p/9124089.html)
- * [Linux开发环境及常用安装zsh-git-redis-mysql-mongodb-pilosa-influxdb-grafana-nsq.kafka.gotify.botpress...](#linux开发环境及常用安装)
+ * [Linux开发环境及常用安装zsh-git-redis-mysql-mongodb-pilosa-influxdb-grafana-nsq.kafka.rabbitmq...](#linux开发环境及常用安装)
  * [Linux常用命令ls、find、grep、xargs、sort、uniq、tr、cut、paste、wc、sed、awk...](#Linux常用命令)
  * [docker](#docker) | [k8s](#Kubernetes) | [Minikube](#Minikube) | [Consul](#Consul) | [etcd](#Etcd)
 
@@ -514,7 +514,7 @@ $ source ~/.zshrc # 使配置生效
   > docker run -d --name=grafana -p 3000:3000 grafana/grafana  #另外,可直接安装其Docker服务
 ~~~
 
-> `消息平台` nsq、kafka、gotify、centrifugo、botpress
+> `消息平台` nsq、kafka、gotify、centrifugo、rabbitmq、botpress..
 ~~~shell
 # 消息平台1 nsq 服务: nsq.io  开源的分布式消息平台(每天处理数十亿的消息，容错和高可用，可靠的消息交付保证)
   > nsqlookupd    # 先启动消息服务 (提供近乎实时的分析系统，被Docker、Stripe和BuzzFeed在内的一系列公司使用)

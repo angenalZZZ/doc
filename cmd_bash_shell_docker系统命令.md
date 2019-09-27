@@ -544,18 +544,19 @@ $ source ~/.zshrc # 使配置生效
 # 消息平台4 centrifugo 服务: github.com/centrifugal/centrifugo
   $ curl -s https://packagecloud.io/install/repositories/FZambia/centrifugo/script.deb.sh | sudo bash
 
-# 消息平台5 rabbitmq 服务: www.rabbitmq.com
+# 消息平台5 rabbitmq 服务: www.rabbitmq.com  参考: blog.csdn.net/vrg000/article/details/81165030
   $ sudo apt install -f libncurses5-dev libwxgtk2.8-dev libssl-dev freeglut3-dev #安装erlang环境
   $ sudo apt install -f fop m4 tk8.5 unixodbc unixodbc-dev xsltproc
   $ wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_22.1-1~ubuntu~xenial_amd64.deb
   $ dpkg -i esl-erlang_22.1-1~ubuntu~xenial_amd64.deb # 安装erlang
   $ wget https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.7.18/rabbitmq-server_3.7.18-1_all.deb
   $ sudo apt install socat
-  $ dpkg -i rabbitmq-server_3.7.18-1_all.deb #安装rabbitmq
+  $ dpkg -i rabbitmq-server_3.7.18-1_all.deb #安装rabbitmq; amqp：一种消息中间件协议,RMQ是amqp协议的一个具体实现.
   $ rabbitmqctl -q status                    #检查运行状态
   $ rabbitmq-plugins enable rabbitmq_management #开启web访问plugins;安全策略加15672端口,开启HTTP访问http://*:15672
   $ rabbitmqctl add_user user 123456        #账号密码[内置默认超管:guest:guest]
   $ rabbitmqctl set_user_tags administrator #角色权限[administrator,management,monitoring,policymaker,impersonator]
+  # 连接生产者与消费者的端口5672, WEB管理页面的端口15672, 分布式集群的端口25672
 
 # 安装 Chat Bots 聊天机器人 (Windows服务)
   > nssm install Botpress D:\Program\botpress\bp.exe serve

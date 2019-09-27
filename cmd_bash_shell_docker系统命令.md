@@ -553,9 +553,9 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt install socat
   $ dpkg -i rabbitmq-server_3.7.18-1_all.deb #安装rabbitmq
   $ rabbitmqctl -q status                    #检查运行状态
-  $ rabbitmq-plugins enable rabbitmq_management #开启web访问plugins;安全策略加15672端口,开启HTTP访问 http://*:15672
-  $ rabbitmqctl add_user user 123456        #创建用户密码[内置超管:guest:guest]
-  $ rabbitmqctl set_user_tags administrator #权限:超管administrator,普通管理员management,监控monitoring,决策policymaker
+  $ rabbitmq-plugins enable rabbitmq_management #开启web访问plugins;安全策略加15672端口,开启HTTP访问http://*:15672
+  $ rabbitmqctl add_user user 123456        #账号密码[内置默认超管:guest:guest]
+  $ rabbitmqctl set_user_tags administrator #角色权限[administrator,management,monitoring,policymaker,impersonator]
 
 # 安装 Chat Bots 聊天机器人 (Windows服务)
   > nssm install Botpress D:\Program\botpress\bp.exe serve

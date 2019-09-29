@@ -1,5 +1,5 @@
 #!/bin/bash
-# ./certs1.sh test@test.com 123456 127.0.0.1 [certs]
+# ./cert.sh test@test.com 123456 127.0.0.1 [certs] !please check: cert-openssl.conf
 # Found: https://gist.github.com/ncw/9253562#file-makecert-sh
 
 if [ "$1" == "" ]; then
@@ -28,7 +28,7 @@ cd tmp
 
 echo "make CA"
 openssl req -new -x509 -days 3650 -keyout ca.key -out ca.pem \
-    -config ../openssl.conf -extensions ca \
+    -config ../cert-openssl.conf -extensions ca \
     -subj "/CN=ca" \
     -passout pass:$PRIVKEY
 

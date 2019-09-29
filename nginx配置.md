@@ -21,7 +21,8 @@ worker_processes  1;
 #工作模式及连接数上限
 events {
     use  epoll; # 多路复用IO(I/O-Multiplexing)的一种方式epoll,仅用于linux2.6以上内核;用于提高nginx性能
-    worker_connections  8000; # 单个进程(worker_process)最大并发链接数
+    
+    worker_connections  4096; # 单个进程(worker_process)最大并发链接数
 
     #1.Nginx并发总数(max_clients) = 进程数量(worker_processes) * 进程最大并发链接数(worker_connections)
     #2.在设置了反向代理的情况下，max_clients = worker_processes * worker_connections / 4
@@ -29,11 +30,11 @@ events {
     #  设置worker_connections与物理内存有关：因为并发受IO约束，max_clients须小于系统能打开的最大文件数
     #  系统能打开的最大文件句柄数和内存大小成正比：一般`1GB内存`的机器上能打开的文件数大约是`10万`左右；
     #  系统能打开的最大文件句柄数为：
-    #  > cat /proc/sys/fs/file-max  # 输出 34336 ( ?文件不存在> ll /proc/sys/fs )
+    #  > cat /proc/sys/fs/file-max # 输出 34336 ( ?文件不存在> ll /proc/sys/fs )
     #  32000 < 34336 即并发连接总数小于系统可以打开的文件句柄总数，这样就在操作系统可以承受的范围之内；
     #  所以，worker_connections需根据(worker_processes)进程数和系统能打开的最大文件数进行适当地调整；
+    #  > ulimit -SHn 65535  # 临时修改限制提高连接数上限?永久修改限制> cat /etc/security/limits.conf
     #  当然，理论上的并发总数(max_clients)会与实际有所偏差，因为主机还有其它工作进程需要消耗系统资源。
-    #  > ulimit -SHn 65535  #临时修改限制提高连接数上限?永久修改限制> cat /etc/security/limits.conf
 }
 
 http {

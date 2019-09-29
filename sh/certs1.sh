@@ -1,20 +1,26 @@
 #!/bin/bash
-# ./cert.sh foo@foo.com 127.0.0.1
+# ./certs1.sh test@test.com 123456 127.0.0.1 [certs]
 # Found: https://gist.github.com/ncw/9253562#file-makecert-sh
 
 if [ "$1" == "" ]; then
-    echo "Need email as argument"
+    echo "Need EMAIL as argument"
     exit 1
 fi
 
 if [ "$2" == "" ]; then
+    echo "Need PRIVKEY as argument"
+    exit 1
+fi
+
+if [ "$3" == "" ]; then
     echo "Need CN as argument"
     exit 1
 fi
 
-PRIVKEY="test"
 EMAIL=$1
-CN=$2
+PRIVKEY=$2
+CN=$3
+ROOT=${4:-certs}
 
 rm -rf tmp
 mkdir tmp
@@ -32,7 +38,6 @@ openssl req -new -sha256 -key server.key -out server.req \
     -subj "/emailAddress=${EMAIL}/C=DE/ST=NRW/L=Earth/O=Random Company/OU=IT/CN=${CN}"
 openssl x509 -req -days 3650 -sha256 -in server.req -CA ca.pem -CAkey ca.key -CAcreateserial -passin pass:$PRIVKEY -out server.pem \
     -extfile ../cert-openssl.conf -extensions server
-    
 
 echo "make client cert"
 openssl genrsa -out client.key 2048
@@ -42,5 +47,5 @@ openssl x509 -req -days 3650 -sha256 -in client.req -CA ca.pem -CAkey ca.key -CA
     -extfile ../cert-openssl.conf -extensions client
 
 cd ..
-mv tmp/* certs
+mv tmp/* $ROOT
 rm -rf tmp

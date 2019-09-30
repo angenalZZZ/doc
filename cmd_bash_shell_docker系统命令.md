@@ -545,18 +545,39 @@ $ source ~/.zshrc # 使配置生效
   $ curl -s https://packagecloud.io/install/repositories/FZambia/centrifugo/script.deb.sh | sudo bash
 
 # 消息平台5 rabbitmq 服务: www.rabbitmq.com  参考: blog.csdn.net/vrg000/article/details/81165030
-  $ sudo apt install -f libncurses5-dev libwxgtk2.8-dev libssl-dev freeglut3-dev #安装erlang环境
+  $ sudo apt install -f libncurses5-dev libwxgtk2.8-dev libssl-dev freeglut3-dev #安装erlang运行环境
   $ sudo apt install -f fop m4 tk8.5 unixodbc unixodbc-dev xsltproc
   $ wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_22.1-1~ubuntu~xenial_amd64.deb
   $ dpkg -i esl-erlang_22.1-1~ubuntu~xenial_amd64.deb # 安装erlang
   $ wget https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.7.18/rabbitmq-server_3.7.18-1_all.deb
   $ sudo apt install socat
-  $ dpkg -i rabbitmq-server_3.7.18-1_all.deb #安装rabbitmq; amqp：一种消息中间件协议,RMQ是amqp协议的一个具体实现.
-  $ rabbitmqctl -q status                    #检查运行状态
-  $ rabbitmq-plugins enable rabbitmq_management #开启web访问plugins;安全策略加15672端口,开启HTTP访问http://*:15672
-  $ rabbitmqctl add_user user 123456        #账号密码[内置默认超管:guest:guest]
+  $ dpkg -i rabbitmq-server_3.7.18-1_all.deb #安装RMQ(amqp:一种消息中间件协议,RMQ为amqp的一个具体实现)
+  $ rabbitmqctl -q status                    #检查RMQ状态
+  $ rabbitmq-plugins enable rabbitmq_management #开启web访问功能; 安全策略加15672端口 http://192.168.*.*:15672
+  $ rabbitmqctl add_user user 123456        #账号密码[默认超管guest:guest]
   $ rabbitmqctl set_user_tags administrator #角色权限[administrator,management,monitoring,policymaker,impersonator]
   # 连接生产者与消费者的端口5672, WEB管理页面的端口15672, 分布式集群的端口25672
+  # 1.简单队列
+  #   send: Dial.Channel{ QueueDeclare[q.Name], Publish[q.Name,amqp.Publishing{ContentType:"text/plain",}] }
+  #   receive: Dial.Channel{ QueueDeclare[q.Name], range(<-chan)msgs = Consume[q.Name,Ack?自动] }
+  # 2.工作队列
+  #   task: Dial.Channel{ QueueDeclare[q.Name,Durable?持久存储], Publish[q.Name,amqp.Publishing{DeliveryMode:amqp.Persistent,}] }
+  #   worker: Dial.Channel{ QueueDeclare[q.Name,Durable?持久存储], Qos(1,0,false), msg.Ack(false) = Consume[q.Name,Ack?手动] }
+  # 3.发布订阅  (+Exchange交换机+QueueBind队列绑定)
+  #   publish: Dial.Channel{ ExchangeDeclare[x.Name,Type:"fanout"], Publish[x.Name,amqp.Publishing{ContentType:"text/plain",}] }
+  #   subscribe: Dial.Channel{ ExchangeDeclare[x.Name,Type:"fanout"], QueueDeclare[q.Name:"",Exclusive:true只有自己可见?排他性队列], 
+  #     QueueBind[q.Name,routing-key:"",x.Name], Consume[q.Name,Ack?自动]]... }
+  # 4.发布订阅+Routing路由分发
+  #   publish: Dial.Channel{ ExchangeDeclare[x.Name,Type:"direct"], Publish[x.Name,routing-key:"login",amqp.Publishing] }
+  #   subscribe: Dial.Channel{ ExchangeDeclare[x.Name,Type:"direct"], QueueDeclare[q.Name:"",Exclusive:true只有自己可见?排他性队列], 
+  #     QueueBind[q.Name,routing-key:"login",x.Name], Consume[q.Name,Ack?自动]]... }
+  # 5.发布订阅+Topics主题分发
+  #   publish: Dial.Channel{ ExchangeDeclare[x.Name,Type:"topic"], Publish[x.Name,routing-key:"admin.login",amqp.Publishing] }
+  #   subscribe: Dial.Channel{ ExchangeDeclare[x.Name,Type:"topic"], QueueDeclare[q.Name:"",Exclusive:true只有自己可见?排他性队列], 
+  #     QueueBind[q.Name,routing-key:"#login",x.Name], Consume[q.Name,Ack?自动]]... }
+  # 6.远程调用-RPC
+  #   server:
+  #   client:
 
 # 安装 Chat Bots 聊天机器人 (Windows服务)
   > nssm install Botpress D:\Program\botpress\bp.exe serve

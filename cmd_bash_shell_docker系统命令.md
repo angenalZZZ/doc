@@ -558,26 +558,29 @@ $ source ~/.zshrc # 使配置生效
   $ rabbitmqctl set_user_tags administrator #角色权限[administrator,management,monitoring,policymaker,impersonator]
   # 连接生产者与消费者的端口5672, WEB管理页面的端口15672, 分布式集群的端口25672
   # 1.简单队列
-  #   send: Dial.Channel{ QueueDeclare[q.Name], Publish[q.Name,amqp.Publishing{ContentType:"text/plain",}] }
-  #   receive: Dial.Channel{ QueueDeclare[q.Name], range(<-chan)msgs = Consume[q.Name,Ack?自动] }
+  #   send: Dial.Channel{ QueueDeclare[q.Name], Publish[q.Name,amqp.Publishing{ContentType:"text/plain",Body}] }
+  #   receive: Dial.Channel{ QueueDeclare[q.Name], Consume[q.Name,Ack?自动:true] > range(<-chan)msgs }
   # 2.工作队列
-  #   task: Dial.Channel{ QueueDeclare[q.Name,Durable?持久存储], Publish[q.Name,amqp.Publishing{DeliveryMode:amqp.Persistent,}] }
-  #   worker: Dial.Channel{ QueueDeclare[q.Name,Durable?持久存储], Qos(1,0,false), msg.Ack(false) = Consume[q.Name,Ack?手动] }
-  # 3.发布订阅  (+Exchange交换机+QueueBind队列绑定)
-  #   publish: Dial.Channel{ ExchangeDeclare[x.Name,Type:"fanout"], Publish[x.Name,amqp.Publishing{ContentType:"text/plain",}] }
+  #   task: Dial.Channel{ QueueDeclare[q.Name,Durable?持久存储], Publish[q.Name,amqp.Publishing{DeliveryMode:amqp.Persistent,Body}] }
+  #   worker: Dial.Channel{ QueueDeclare[q.Name,Durable?持久存储], Qos(1,0,false), Consume[q.Name,Ack?手动] > msg.Ack(false) }
+  # 3.发布订阅     (+Exchange交换机+QueueBind队列绑定)
+  #   publish: Dial.Channel{ ExchangeDeclare[x.Name,Type:"fanout"], Publish[x.Name,amqp.Publishing{ContentType:"text/plain",Body}] }
   #   subscribe: Dial.Channel{ ExchangeDeclare[x.Name,Type:"fanout"], QueueDeclare[q.Name:"",Exclusive:true只有自己可见?排他性队列], 
-  #     QueueBind[q.Name,routing-key:"",x.Name], Consume[q.Name,Ack?自动]]... }
-  # 4.发布订阅+Routing路由分发
+  #     QueueBind[q.Name,routing-key:"",x.Name]..., Consume[q.Name,Ack?自动] }
+  # 4.发布订阅+Routing-路由分发
   #   publish: Dial.Channel{ ExchangeDeclare[x.Name,Type:"direct"], Publish[x.Name,routing-key:"login",amqp.Publishing] }
   #   subscribe: Dial.Channel{ ExchangeDeclare[x.Name,Type:"direct"], QueueDeclare[q.Name:"",Exclusive:true只有自己可见?排他性队列], 
-  #     QueueBind[q.Name,routing-key:"login",x.Name], Consume[q.Name,Ack?自动]]... }
-  # 5.发布订阅+Topics主题分发
+  #     QueueBind[q.Name,routing-key:"login",x.Name]..., Consume[q.Name,Ack?自动] }
+  # 5.发布订阅+Topics-主题分发
   #   publish: Dial.Channel{ ExchangeDeclare[x.Name,Type:"topic"], Publish[x.Name,routing-key:"admin.login",amqp.Publishing] }
   #   subscribe: Dial.Channel{ ExchangeDeclare[x.Name,Type:"topic"], QueueDeclare[q.Name:"",Exclusive:true只有自己可见?排他性队列], 
-  #     QueueBind[q.Name,routing-key:"#login",x.Name], Consume[q.Name,Ack?自动]]... }
+  #     QueueBind[q.Name,routing-key:"#login",x.Name]..., Consume[q.Name,Ack?自动] }
   # 6.远程调用-RPC
-  #   server:
-  #   client:
+  #   server: Dial.Channel{ QueueDeclare[q.Name,], Qos(1,0,false), Consume[q.Name,Ack?手动] > 
+  #     Publish[q.Name:"",routing-key:msg.ReplyTo,amqp.Publishing{CorrelationId:msg.CorrelationId,Body}], msg.Ack(false) }
+  #   client: Dial.Channel{ QueueDeclare[q.Name:"",Exclusive:true], 
+  #     Publish[q.Name:"",routing-key:"rpc_queue",amqp.Publishing{ContentType:"text/plain",CorrelationId:1,ReplyTo:q.Name,Body}], 
+  #     Consume[q.Name,Ack?自动] }
 
 # 安装 Chat Bots 聊天机器人 (Windows服务)
   > nssm install Botpress D:\Program\botpress\bp.exe serve

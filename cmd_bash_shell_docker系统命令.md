@@ -748,9 +748,8 @@ $ curl -L https://github.com/docker/machine/releases/download/v0.16.1/docker-mac
 $ chmod +x /tmp/docker-machine && sudo cp /tmp/docker-machine /usr/local/bin/docker-machine  # install /tmp/docker-machine /usr/local/bin/docker-machine
 $ docker-machine version                   # 安装完毕
 # 设置 Docker, 不使用sudo执行docker命令，先切换当前用户-user(root~exit)
-$ sudo gpasswd -a ${USER} docker           # 将当前用户加入docker组
+$ sudo gpasswd -M ${USER} docker  && newgrp - docker  # 将当前用户加入docker组
 $ sudo service docker restart              # 重启docker
-$ newgrp - docker                          # 刷新docker组
 # 本机启动 Docker daemon
 $ sudo docker-machine create -d virtualbox default  # 1.下载安装服务 ~/.docker/machine/cache/boot2docker.iso
 $ sudo docker-machine env default                   # 2.设置客户端docker-cli的环境变量

@@ -545,14 +545,12 @@ $ source ~/.zshrc # 使配置生效
   $ curl -s https://packagecloud.io/install/repositories/FZambia/centrifugo/script.deb.sh | sudo bash
 
 # 消息平台5 rabbitmq 服务: www.rabbitmq.com  参考: blog.csdn.net/vrg000/article/details/81165030
-  $ sudo apt install -f libncurses5-dev libwxgtk2.8-dev libssl-dev freeglut3-dev #安装erlang运行环境
-  $ sudo apt install -f fop m4 tk8.5 unixodbc unixodbc-dev xsltproc
+  $ sudo apt install -f libncurses5-dev freeglut3-dev fop m4 tk unixodbc unixodbc-dev xsltproc socat #安装依赖
   $ wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_22.1-1~ubuntu~xenial_amd64.deb
-  $ dpkg -i esl-erlang_22.1-1~ubuntu~xenial_amd64.deb # 安装erlang
+  $ sudo dpkg -i esl-erlang_22.1-1~ubuntu~xenial_amd64.deb # 安装erlang语言
   $ wget https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.7.18/rabbitmq-server_3.7.18-1_all.deb
-  $ sudo apt install socat
-  $ dpkg -i rabbitmq-server_3.7.18-1_all.deb #安装RMQ(amqp:一种消息中间件协议,RMQ为amqp的一个具体实现)
-  $ rabbitmqctl -q status                    #检查RMQ状态
+  $ sudo dpkg -i rabbitmq-server_3.7.18-1_all.deb #安装RMQ(amqp:一种消息中间件协议,RMQ为amqp的一个具体实现)
+  $ rabbitmqctl -q status                          #检查RMQ状态
   $ rabbitmq-plugins enable rabbitmq_management #开启web访问功能; 安全策略加15672端口 http://192.168.*.*:15672
   $ rabbitmqctl add_user user 123456        #账号密码[默认超管guest:guest]
   $ rabbitmqctl set_user_tags administrator #角色权限[administrator,management,monitoring,policymaker,impersonator]

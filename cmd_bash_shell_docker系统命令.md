@@ -283,7 +283,7 @@
 
 ## linux开发环境及常用安装
 
-> `更新软件源` 镜像下载-提高速度 (推荐-阿里源ubuntu`18.04``bionic`)
+> [`更新软件源`](https://www.cnblogs.com/xudalin/p/9071902.html) 镜像下载-提高速度 (推荐-阿里源ubuntu`18.04``bionic`)
 ~~~bash
 $ sudo vi /etc/apt/sources.list  # 更新软件源-修改配置文件-内容如下:
 deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
@@ -318,7 +318,7 @@ $ source ~/.zshrc # 使配置生效
   # < Windows Subsystem for Linux | WSL >---------------------------
   $ sudo do-release-upgrade -d        # 升级至18.04LTS ( 如果是16.04? > cat /etc/issue )
   $ lsb_release -c                    # 获取系统代号,更新软件源sources.list
-  $ sudo vim /etc/apt/sources.list    # 更新软件源 https://www.cnblogs.com/xudalin/p/9071902.html
+  $ sudo vim /etc/apt/sources.list    # 更新软件源
   $ sudo apt-get update && sudo apt-get upgrade # 更新升级apt
   $ sudo apt-get install language-pack-zh-hans  # 中文语言包
   $ sudo apt install gcc              # 安装gcc编译工具(可选)
@@ -370,17 +370,16 @@ $ source ~/.zshrc # 使配置生效
   $ sudo add-apt-repository ppa:git-core/ppa
   $ sudo apt-get update
   $ sudo apt install git
-  $ git --version                                        # git config --local -l
+  $ git --version                                        # git config --local -l #查看本地配置
   $ git config --global user.name "yangzhou"             # git config --local user.name "用户名"
   $ git config --global user.email "angenal@hotmail.com" # git config --local user.email "用户邮箱地址"
   $ git config --global http.postBuffer 524288000        # set more buffer
   $ git config --global http.sslVerify "false"           # set cancel ssl of https
   $ git init [Git项目所在目录-默认当前目录]                # git init app && ls app/.git/
-  $ git status && git stash list
-  $ git diff
-  $ git add [filename]                            # 新增file
-  $ git commit -m "添加文件"                      # 新增commit
-  $ git reset --soft HEAD^ && git reset HEAD *   # 取消本次提交
+  $ git status ; git stash list ; git diff
+  $ git add [filename]                          # 新增file
+  $ git commit -m "添加文件"                     # 新增commit
+  $ git reset --soft HEAD^ && git reset HEAD *  # 取消本次提交
   $ git checkout -- [filename]    # 签出，放弃工作区最新的更改，适用于还未提交的情况
   $ git stash && git stash drop   # 加入了暂存区后再清除暂存区，适用于还未提交的情况
   $ git reset HEAD [filename]     # 放弃最新提交[取消git.add]，不改变工作区和库区，只改变了暂存区
@@ -388,11 +387,10 @@ $ source ~/.zshrc # 使配置生效
   $ rm [filename] && git rm [filename] && git commit -m "删除文件"
   $ git remote add origin https://github.com/dragonFly12345/ubuntuGitTest.git # 使用远程HTTPS
   $ git remote remove origin                                                  # 删除后用于重新绑定远程
-  $ git remote add origin git@github.com:dragonFly12345/ubuntuGitTest.git     # 使用远程SSH
-  $ ssh-keygen -t rsa -C "angenal@hotmail.com"                                # 使用远程SSH要创建SSH认证
+  $ ssh-keygen -t rsa -C "angenal@hotmail.com"                                # 使用远程SSH请先创建SSH认证
+  $ git remote add origin git@github.com:dragonFly12345/ubuntuGitTest.git     # 使用远程SSH地址
   $ git push origin master -u                                                 # [u用在第一次推送时]
-  # 安装lazyGit，方便管理。
-  $ wget https://github.com/jesseduffield/lazygit/releases/download/v0.8.1/lazygit_0.8.1_Linux_x86_64.tar.gz
+  # https://github.com/jesseduffield/lazygit/releases/                        # 安装lazyGit管理更方便
 ~~~
 
 > `Redis` 内存数据库 (Key-Value数据库) www.redis.cn

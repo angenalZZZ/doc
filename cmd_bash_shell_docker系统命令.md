@@ -542,7 +542,7 @@ $ source ~/.zshrc # 使配置生效
 # 消息平台4 centrifugo 服务: github.com/centrifugal/centrifugo
   $ curl -s https://packagecloud.io/install/repositories/FZambia/centrifugo/script.deb.sh | sudo bash
 
-# 消息平台5 rabbitmq 服务: www.rabbitmq.com  参考: blog.csdn.net/vrg000/article/details/81165030
+# 消息平台5 rabbitmq 服务: www.rabbitmq.com  参考: blog.csdn.net/vrg000/article/details/81165030 yq.aliyun.com/articles/175876
   $ sudo apt install -f libncurses5-dev freeglut3-dev fop m4 tk unixodbc unixodbc-dev xsltproc socat #安装依赖
   $ wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_22.1-1~ubuntu~xenial_amd64.deb
   $ sudo dpkg -i esl-erlang_22.1-1~ubuntu~xenial_amd64.deb # 安装erlang语言
@@ -554,21 +554,23 @@ $ source ~/.zshrc # 使配置生效
   $ rabbitmqctl add_user user 123456        #账号密码[默认超管guest:guest]
   $ rabbitmqctl set_user_tags administrator #角色权限[administrator,management,monitoring,policymaker,impersonator]
   # 连接生产者与消费者的端口5672, WEB管理页面的端口15672, 分布式集群的端口25672
+  #**Dial.Channel.ExchangeDeclare{Name,Type[fanout|direct|topic|headers],Durability[Durable|Transient],AutoDelete,Internal,Arguments{...}}
+  #**Dial.Channel.QueueDeclare{Name,Durability[Durable|Transient],AutoDelete,Arguments{x-message-ttl(ms),x-expires(ms),x-max-length...}}
   # 1.简单队列
   #   send: Dial.Channel{ QueueDeclare[q.Name], Publish[q.Name,amqp.Publishing{ContentType:"text/plain",Body}] }
   #   receive: Dial.Channel{ QueueDeclare[q.Name], Consume[q.Name,Ack?自动:true] > range(<-chan)msgs }
   # 2.工作队列
   #   task: Dial.Channel{ QueueDeclare[q.Name,Durable?持久存储], Publish[q.Name,amqp.Publishing{DeliveryMode:amqp.Persistent,Body}] }
   #   worker: Dial.Channel{ QueueDeclare[q.Name,Durable?持久存储], Qos(1,0,false), Consume[q.Name,Ack?手动] > msg.Ack(false) }
-  # 3.发布订阅     (+Exchange交换机+QueueBind队列绑定)
+  # 3.发布订阅:订阅模式+Exchange交换机+QueueBind队列绑定交换机
   #   publish: Dial.Channel{ ExchangeDeclare[x.Name,Type:"fanout"], Publish[x.Name,amqp.Publishing{ContentType:"text/plain",Body}] }
   #   subscribe: Dial.Channel{ ExchangeDeclare[x.Name,Type:"fanout"], QueueDeclare[q.Name:"",Exclusive:true只有自己可见?排他性队列], 
   #     QueueBind[q.Name,routing-key:"",x.Name]..., Consume[q.Name,Ack?自动] }
-  # 4.发布订阅+Routing-路由分发
+  # 4.发布订阅:路由模式+Routing-路由分发..
   #   publish: Dial.Channel{ ExchangeDeclare[x.Name,Type:"direct"], Publish[x.Name,routing-key:"login",amqp.Publishing] }
   #   subscribe: Dial.Channel{ ExchangeDeclare[x.Name,Type:"direct"], QueueDeclare[q.Name:"",Exclusive:true只有自己可见?排他性队列], 
   #     QueueBind[q.Name,routing-key:"login",x.Name]..., Consume[q.Name,Ack?自动] }
-  # 5.发布订阅+Topics-主题分发
+  # 5.发布订阅:通配符模式+Topics-主题分发..
   #   publish: Dial.Channel{ ExchangeDeclare[x.Name,Type:"topic"], Publish[x.Name,routing-key:"admin.login",amqp.Publishing] }
   #   subscribe: Dial.Channel{ ExchangeDeclare[x.Name,Type:"topic"], QueueDeclare[q.Name:"",Exclusive:true只有自己可见?排他性队列], 
   #     QueueBind[q.Name,routing-key:"#login",x.Name]..., Consume[q.Name,Ack?自动] }

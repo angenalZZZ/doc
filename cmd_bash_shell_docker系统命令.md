@@ -331,13 +331,16 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt-get install oracle-java8-installer    # 在线安装, 离线下载 download.oracle.com/otn/java/jdk
   $ sudo apt-get install oracle-java8-set-default  # 使用默认版本jdk1.8
   $ sudo update-alternatives –config java  # 多版本JDK之间切换
+  $ sudo apt install -f libncurses5-dev freeglut3-dev fop m4 tk unixodbc unixodbc-dev xsltproc socat #安装erlang依赖
+  $ wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_22.1-1~ubuntu~xenial_amd64.deb
+  $ sudo dpkg -i esl-erlang_22.1-1~ubuntu~xenial_amd64.deb # 安装erlang语言
   $ sudo apt install openssh-server   # 安装SSH
   $ sudo apt install python3          # 安装Python3
-  $ sudo apt install python3-pip      # 安装pip3           #将Python3设为默认?参考如下
+  $ sudo apt install python3-pip      # 安装pip3          #将Python3设为默认?参考如下
   $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 100
   $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 150
   $ sudo update-alternatives --config python  # 手动配置/切换版本: python --version
-  $ sudo ln -sf /usr/bin/python2.7 /usr/bin/python #将Python2设为默认(恢复)
+  $ sudo ln -sf /usr/bin/python2.7 /usr/bin/python #将Python2(恢复)默认
   $ sudo add-apt-repository ppa:ondrej/php  && sudo apt-get update   # 安装php (PPA源)
   $ sudo apt install php7.2-fpm php7.2-mysql php7.2-curl php7.2-gd php7.2-mbstring php7.2-xml php7.2-xmlrpc php7.2-zip php7.2-opcache -y
   $ sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/' /etc/php/7.2/fpm/php.ini # 设置php 替换 ;cgi.fix_pathinfo=1 为 cgi.fix_pathinfo=0
@@ -363,6 +366,14 @@ $ source ~/.zshrc # 使配置生效
   $ vi ~/.bashrc  # 配置 export PATH=/usr/local/node/bin:$PATH # bash生效 source ~/.bashrc ; zsh需修改~/.zshrc
   # (选项)设置软链接: ln -s /usr/local/node/bin/node /usr/local/bin/node ; ln -s /usr/local/node/bin/npm /usr/local/bin/npm
   $ npm install -g npm # 更新安装npm
+  
+  # 环境变量
+  export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin #系统(内置)
+  export PATH=$PATH:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin
+  export JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk/jre
+  export JAVA_VERSION=8u212
+  export SCALA_VERSION=2.12
+  export GLIBC_VERSION=2.29-r0
 ~~~
 
 > `Git` 代码版本管理
@@ -522,12 +533,16 @@ $ source ~/.zshrc # 使配置生效
   
 # 消息平台2 kafka 服务: kafka.apache.org/quickstart
   $ wget http://mirrors.tuna.tsinghua.edu.cn/apache/kafka/2.3.0/kafka_2.12-2.3.0.tgz
-  $ tar -xzf kafka_2.12-2.3.0.tgz && cd kafka_2.12-2.3.0
+  $ tar -xzf kafka_2.12-2.3.0.tgz -C /opt/
+  $ mv /opt/kafka_2.12-2.3.0 /opt/kafka && cd /opt/kafka
+  export KAFKA_VERSION=2.3.0
+  export KAFKA_HOME=/opt/kafka
+  export PATH=$PATH:/opt/kafka/bin
   $ bin/zookeeper-server-start.sh config/zookeeper.properties     # start a ZooKeeper server
   $ bin/kafka-server-start.sh config/server.properties            # start the Kafka server
   $ bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic test
-  $ bin/kafka-topics.sh --list --bootstrap-server localhost:9092  #_ create a topic and list topic
-  $ bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test #_ send some messages
+  $ bin/kafka-topics.sh --list --bootstrap-server localhost:9092  ## create a topic and list topic
+  $ bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test ## send some messages
   $ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning ## start a consumer
   $ cp config/server.properties config/server-1.properties        # setting up a multi-broker cluster
   $ cp config/server.properties config/server-2.properties        # setting up a multi-broker cluster
@@ -543,7 +558,7 @@ $ source ~/.zshrc # 使配置生效
   $ curl -s https://packagecloud.io/install/repositories/FZambia/centrifugo/script.deb.sh | sudo bash
 
 # 消息平台5 rabbitmq 服务: www.rabbitmq.com  参考: blog.csdn.net/vrg000/article/details/81165030 yq.aliyun.com/articles/175876
-  $ sudo apt install -f libncurses5-dev freeglut3-dev fop m4 tk unixodbc unixodbc-dev xsltproc socat #安装依赖
+  $ sudo apt install -f libncurses5-dev freeglut3-dev fop m4 tk unixodbc unixodbc-dev xsltproc socat #安装erlang依赖
   $ wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_22.1-1~ubuntu~xenial_amd64.deb
   $ sudo dpkg -i esl-erlang_22.1-1~ubuntu~xenial_amd64.deb # 安装erlang语言
   $ wget https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.7.18/rabbitmq-server_3.7.18-1_all.deb

@@ -532,9 +532,25 @@ $ source ~/.zshrc # 使配置生效
   > nsqadmin --lookupd-http-address=127.0.0.1:4161 #--tcp-address=0.0.0.0:4171 # 最后启动 nqsadmin Web管理
   
 # 消息平台2 kafka 服务: kafka.apache.org/quickstart
+  # 开始安装kafka
+  $ sudo apt-get install apache2     # Install Apache web server
+  $ sudo /etc/init.d/apache2 status  # Verify it is running, 检查web server root: /var/www/html/
+  $ sudo add-apt-repository ppa:webupd8team/java  # Install Java 8
+  $ sudo apt-get update
+  $ sudo apt-get install oracle-java8-installer
+  # Download Apache Kafka binary to ~/kafka : https://kafka.apache.org/downloads
+  # >> ~/kafka/config/server.properties 
+  # << advertised.listeners=PLAINTEXT://[KAFKA_VM_IP]:9092
+  # << log.dirs=/tmp/kafka-logs
+  # Run Kafka
+  $ cd ~/kafka
+  $ bin/zookeeper-server-start.sh config/zookeeper.properties &
+  $ bin/kafka-server-start.sh config/server.properties &
+  # 参考... https://developer.ibm.com/tutorials/realtime-visitor-analysis-with-kafka/
+  # 下载安装kafka
   $ wget http://mirrors.tuna.tsinghua.edu.cn/apache/kafka/2.3.0/kafka_2.12-2.3.0.tgz
   $ tar -xzf kafka_2.12-2.3.0.tgz -C /opt/
-  $ mv /opt/kafka_2.12-2.3.0 /opt/kafka && cd /opt/kafka
+  $ mv /opt/kafka_2.12-2.3.0 /opt/kafka && cd /opt/kafka          # 或者 ~/kafka
   export KAFKA_VERSION=2.3.0
   export KAFKA_HOME=/opt/kafka
   export PATH=$PATH:/opt/kafka/bin

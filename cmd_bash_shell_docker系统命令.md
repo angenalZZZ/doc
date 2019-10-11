@@ -320,7 +320,9 @@ $ source ~/.zshrc # 使配置生效
   $ lsb_release -c                    # 获取系统代号,更新软件源sources.list
   $ sudo vim /etc/apt/sources.list    # 更新软件源
   $ sudo apt-get update && sudo apt-get upgrade # 更新升级apt
-  $ sudo apt-get install language-pack-zh-hans  # 中文语言包
+  $ sudo apt-get -y install language-pack-zh-hans # 中文语言包
+  $ sudo apt-get -y install --no-install-recommends wget gnupg ca-certificates
+  $ sudo apt install openssh-server   # 安装SSH
   $ sudo apt install gcc              # 安装gcc编译工具(可选)
   $ sudo apt install make             # 安装构建工具make(可选)
   $ sudo apt install build-essential  # 安装gcc/g++/gdb/make等工具链
@@ -331,35 +333,46 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt-get install oracle-java8-installer    # 在线安装, 离线下载 download.oracle.com/otn/java/jdk
   $ sudo apt-get install oracle-java8-set-default  # 使用默认版本jdk1.8
   $ sudo update-alternatives –config java  # 多版本JDK之间切换
+  
   $ sudo apt install -f libncurses5-dev freeglut3-dev fop m4 tk unixodbc unixodbc-dev xsltproc socat #安装erlang依赖
   $ wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_22.1-1~ubuntu~xenial_amd64.deb
   $ sudo dpkg -i esl-erlang_22.1-1~ubuntu~xenial_amd64.deb # 安装erlang语言
-  $ sudo apt install openssh-server   # 安装SSH
+  
   $ sudo apt install python3          # 安装Python3
   $ sudo apt install python3-pip      # 安装pip3          #将Python3设为默认?参考如下
   $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 100
   $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 150
   $ sudo update-alternatives --config python  # 手动配置/切换版本: python --version
   $ sudo ln -sf /usr/bin/python2.7 /usr/bin/python #将Python2(恢复)默认
-  $ sudo add-apt-repository ppa:ondrej/php  && sudo apt-get update   # 安装php (PPA源)
-  $ sudo apt install php7.2-fpm php7.2-mysql php7.2-curl php7.2-gd php7.2-mbstring php7.2-xml php7.2-xmlrpc php7.2-zip php7.2-opcache -y
+  
+  $ sudo add-apt-repository ppa:ondrej/php  && sudo apt-get update # 安装php (PPA源)
+  $ sudo apt install -y php7.2-fpm php7.2-mysql php7.2-curl php7.2-gd php7.2-mbstring php7.2-xml php7.2-xmlrpc php7.2-zip php7.2-opcache
   $ sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/' /etc/php/7.2/fpm/php.ini # 设置php 替换 ;cgi.fix_pathinfo=1 为 cgi.fix_pathinfo=0
   $ sudo systemctl restart php7.2-fpm  # 重启php
   $ sudo systemctl status php7.2-fpm   # 检查状态
-  $ sudo apt-get update
-  $ sudo apt install apache2  -y        # 安装apache
-  $ sudo apt-get install libapache2-mod-php7.2  # 让apache能识别php文件
+  $ sudo apt install -y apache2        # 安装apache
+  $ sudo apt install -y libapache2-mod-php7.2  # 让apache识别php文件
+  
   $ sudo apt install nginx        # 安装Nginx
-  $ sudo systemctl status nginx      # 检查状态
-  $ sudo nginx -v 
+  $ sudo systemctl status nginx   # 检查状态
   $ sudo ufw allow 'Nginx Full'   # 配置防火墙
   $ sudo ufw status      # 验证更改
   $ sudo systemctl restart nginx  # 重启Nginx服务
-  $ sudo systemctl disable nginx # 禁止开机启动
+  $ sudo systemctl disable nginx  # 禁止开机启动
   $ sudo systemctl reload nginx   # 修改配置后，需要重新加载Nginx服务
-  $ ls /etc/nginx/sites-available # 设置Nginx服务器模块(类似于Apache虚拟主机)  www.linuxidc.com/Linux/2018-05/152258.htm
-  $ sudo apt install certbot          # 使用Let's Encrypt保护Nginx  www.linuxidc.com/Linux/2018-05/152259.htm
-  $ sudo apt install nodejs                   # 安装Nodejs(此安装的版本太低; 推荐wget安装方式)
+  $ ls /etc/nginx/sites-available # 设置Nginx服务器模块(类似Apache虚拟主机) www.linuxidc.com/Linux/2018-05/152258.htm
+  $ sudo apt install certbot      # 使用Let's Encrypt保护Nginx  www.linuxidc.com/Linux/2018-05/152259.htm
+  
+  $ sudo systemctl disable nginx && sudo systemctl stop nginx # 准备安装openresty
+  $ sudo apt-get -y install --no-install-recommends wget gnupg ca-certificates
+  $ wget -O - https://openresty.org/package/pubkey.gpg | sudo apt-key add -
+  $ sudo apt-get -y install --no-install-recommends software-properties-common
+  $ sudo add-apt-repository -y "deb http://openresty.org/package/ubuntu $(lsb_release -sc) main"
+  $ sudo apt-get update               # 参考 https://openresty.org/en/linux-packages.html
+  $ sudo apt-get -y install openresty # 安装openresty
+  $ sudo apt-get -y install --no-install-recommends openresty
+  
+  $ sudo apt install nodejs # 安装Nodejs(此安装方式版本太低; 推荐wget安装方式-如下)
   $ wget https://npm.taobao.org/mirrors/node/v10.16.0/node-v10.16.0-linux-x64.tar.xz
   $ sudo tar -zxf node-v10.16.0-linux-x64.tar.xz -C /usr/local/
   $ sudo mv /usr/local/node-v10.16.0-linux-x64 /usr/local/node

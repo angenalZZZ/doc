@@ -523,15 +523,16 @@ $ source ~/.zshrc # 使配置生效
   > docker run -d --name=grafana -p 3000:3000 grafana/grafana  #另外,可直接安装其Docker服务
 ~~~
 
-> `消息平台` nsq、kafka、gotify、centrifugo、rabbitmq、botpress..
+> `消息平台` nsq、kafka、centrifugo、rabbitmq、gotify、botpress..
+    解耦、冗余、扩展、峰值处理能力、可恢复性、异步通信。
 ~~~shell
-# 消息平台1 nsq 服务: nsq.io  开源的分布式消息平台(每天处理数十亿的消息，容错和高可用，可靠的消息交付保证)
+# 消息平台1 nsq (go)服务: nsq.io 开源的分布式消息平台(每天处理数十亿的消息，容错和高可用，可靠的消息交付保证)
   > nsqlookupd    # 先启动消息服务 (提供近乎实时的分析系统，被Docker、Stripe和BuzzFeed在内的一系列公司使用)
   > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4150       # 再启动几个 nsqd 存储数据
   > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4152 --http-address=0.0.0.0:4153
   > nsqadmin --lookupd-http-address=127.0.0.1:4161 #--tcp-address=0.0.0.0:4171 # 最后启动 nqsadmin Web管理
   
-# 消息平台2 kafka 服务: kafka.apache.org/quickstart
+# 消息平台2 kafka (erlang)服务: kafka.apache.org/quickstart
   # 开始安装kafka
   $ sudo apt-get install apache2     # Install Apache web server
   $ sudo /etc/init.d/apache2 status  # Verify it is running, 检查web server root: /var/www/html/
@@ -562,18 +563,11 @@ $ source ~/.zshrc # 使配置生效
   $ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning ## start a consumer
   $ cp config/server.properties config/server-1.properties        # setting up a multi-broker cluster
   $ cp config/server.properties config/server-2.properties        # setting up a multi-broker cluster
-  
-# 消息平台3 gotify 服务: github.com/gotify/server
-  $ wget https://github.com/gotify/server/releases/download/v2.0.5/gotify-linux-amd64.zip
-  $ wget -O config.yml https://raw.githubusercontent.com/gotify/server/master/config.example.yml
-  $ unzip gotify-linux-amd64.zip && chmod +x gotify-linux-amd64
-  $ sudo ./gotify-linux-amd64  # 配置文件config.yml: gotify.net/docs/config
-  > nssm install Gotify %gopath%\bin\gotify\server\gotify.exe
-  
-# 消息平台4 centrifugo 服务: github.com/centrifugal/centrifugo
+
+# 消息平台3 centrifugo (go)服务: github.com/centrifugal/centrifugo
   $ curl -s https://packagecloud.io/install/repositories/FZambia/centrifugo/script.deb.sh | sudo bash
 
-# 消息平台5 rabbitmq 服务: www.rabbitmq.com  参考: blog.csdn.net/vrg000/article/details/81165030 yq.aliyun.com/articles/175876
+# 消息平台4 rabbitmq (erlang)服务: www.rabbitmq.com  参考: blog.csdn.net/vrg000/article/details/81165030 yq.aliyun.com/articles/175876
   $ sudo apt install -f libncurses5-dev freeglut3-dev fop m4 tk unixodbc unixodbc-dev xsltproc socat #安装erlang依赖
   $ wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_22.1-1~ubuntu~xenial_amd64.deb
   $ sudo dpkg -i esl-erlang_22.1-1~ubuntu~xenial_amd64.deb # 安装erlang语言
@@ -611,9 +605,16 @@ $ source ~/.zshrc # 使配置生效
   #   client: Dial.Channel{ QueueDeclare[q.Name:"",Exclusive:true], 
   #     Publish[q.Name:"",routing-key:"rpc_queue",amqp.Publishing{ContentType:"text/plain",CorrelationId:1,ReplyTo:q.Name,Body}], 
   #     Consume[q.Name,Ack?自动] }
-
-# 安装 Chat Bots 聊天机器人 (Windows服务)
-  > nssm install Botpress D:\Program\botpress\bp.exe serve
+  
+# 消息平台5 gotify (go)服务: github.com/gotify/server
+  $ wget https://github.com/gotify/server/releases/download/v2.0.5/gotify-linux-amd64.zip
+  $ wget -O config.yml https://raw.githubusercontent.com/gotify/server/master/config.example.yml
+  $ unzip gotify-linux-amd64.zip && chmod +x gotify-linux-amd64
+  $ sudo ./gotify-linux-amd64  # 配置文件config.yml: gotify.net/docs/config
+  > nssm install Gotify %gopath%\bin\gotify\server\gotify.exe
+  
+# 聊天机器人 Chat Bots (typescript)服务: github.com/botpress/botpress
+  > nssm install Botpress D:\Program\botpress\bp.exe serve  #Windows Service
 
 ~~~
 

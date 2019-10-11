@@ -415,6 +415,10 @@ $ source ~/.zshrc # 使配置生效
   $ git remote add origin git@github.com:dragonFly12345/ubuntuGitTest.git     # 使用远程SSH地址
   $ git push origin master -u                                                 # [u用在第一次推送时]
   # https://github.com/jesseduffield/lazygit/releases/                        # 安装lazyGit管理更方便
+  > Gitea 版本管理 docs.gitea.io/zh-cn 下载 dl.gitea.io/gitea/master
+  > Gitea API 使用指南 docs.gitea.io/zh-cn/api-usage  github.com/go-gitea/gitea
+  # Gitea 注册Windows服务
+  > sc create gitea start= auto binPath= "D:\Program\Git\Server\gitea\gitea.exe web --config \"D:\Program\Git\Server\gitea\custom\conf\app.ini\""
 ~~~
 
 > `Redis` 内存数据库 (KeyValue,) www.redis.cn
@@ -526,8 +530,8 @@ $ source ~/.zshrc # 使配置生效
   # #初始化Bucket -> 设置数据源Collector + 监听跟踪数据Dashboard + 分析数据使用Flux -> 管理Tasks
 ~~~
 
-> [`grafana`](https://grafana.com/docs/) 一个开源的度量分析与可视化套件  
-    漂亮的监测、报警、指标分析、图表工具 & 时序数据库 [InfluxDB](https://grafana.com/docs/features/datasources/influxdb/),[Prometheus](https://grafana.com/docs/features/datasources/prometheus/),[Graphite](https://grafana.com/docs/features/datasources/graphite/),[OpenTSDB](https://grafana.com/docs/features/datasources/opentsdb/); 文档数据库 [Elasticsearch](https://grafana.com/docs/features/datasources/elasticsearch/),[Loki](https://grafana.com/docs/features/datasources/loki/)...
+> [`grafana`](https://grafana.com/docs/) 一个开源的度量分析与可视化套件  漂亮的监测、报警、指标分析、图表工具<br>
+    时序数据库 [InfluxDB](https://grafana.com/docs/features/datasources/influxdb/),[Prometheus](https://grafana.com/docs/features/datasources/prometheus/),[Graphite](https://grafana.com/docs/features/datasources/graphite/),[OpenTSDB](https://grafana.com/docs/features/datasources/opentsdb/); 文档数据库 [Elasticsearch](https://grafana.com/docs/features/datasources/elasticsearch/),[Loki](https://grafana.com/docs/features/datasources/loki/)...
 ~~~shell
   $ wget https://dl.grafana.com/oss/release/grafana_6.3.5_amd64.deb
   $ sudo dpkg -i grafana_6.3.5_amd64.deb  #安装服务&自动启动  > /usr/sbin/grafana-server --config=/etc/grafana/grafana.ini --pidfile=/var/run/grafana/grafana-server.pid --packaging=deb cfg:default.paths.logs=/var/log/grafana cfg:default.paths.data=/var/lib/grafana cfg:default.paths.plugins=/var/lib/grafana/plugins cfg:default.paths.provisioning=/etc/grafana/provisioning
@@ -629,33 +633,20 @@ $ source ~/.zshrc # 使配置生效
   > nssm install Gotify %gopath%\bin\gotify\server\gotify.exe
   
 # 聊天机器人 Chat Bots (typescript)服务: github.com/botpress/botpress
-  > nssm install Botpress D:\Program\botpress\bp.exe serve  #Windows Service
-
+  > nssm install Botpress D:\Program\botpress\bp.exe serve  # Windows Service
 ~~~
 
-> `SSH` 建立安全的加密连接：一个密码对应一个SSH-key
+> `SSH` 建立安全的加密连接：一个密码对应一个SSH-key  https://www.chiark.greenend.org.uk  https://www.netsarang.com/zh/
 ~~~shell
+  $ sudo apt install openssh-server       # 安装SSH <ubuntu> 192.168.1.100:22
   > ssh-keygen -t rsa -C "angenal.2008@yahoo.com.cn"
-  > dir "C:\Users\Administrator/.ssh"     # 存储的本地公钥位置
+  > dir "C:\Users\Administrator/.ssh"     # 存储的本地公钥目录
   > clip < %USERPROFILE%/.ssh/id_rsa.pub  # 拷贝公钥到粘贴板中
   $ cat ~/.ssh/id_rsa.pub                 # https://code.aliyun.com/help/ssh/README
   $ xclip -sel clip < ~/.ssh/id_rsa.pub   # GNU/Linux (requires xclip)
-  $ pbcopy < ~/.ssh/id_rsa.pub            # Mac-OS
-  # 提供 SSH Web管理后台 + RESTful Api接口<ssh+gin+GORM> | 源码 github.com/dejavuzhou/felix
-  > felix sshw -a :8022 -x 1440 -u admin -p admin -s @Ubr)Vrp~Zoo6Rvrk1PP1*ZXPYby_Z)s  # felix -h
-
-  # 安装 构建工具|代码仓库|版本管理 < make、curl、git、gitea >
-  > ftp://ftp.equation.com/make/64/make.exe # 下载构建工具make < Windows >
-  $ sudo apt install make  # 安装<Ubuntu/Debian> | <CentOS/Fedora/RHEL> sudo yum install make
-  $ sudo apt install curl  # 安装curl < ubuntu >
-  $ sudo apt install git   # 安装git  < ubuntu >
-  $ mkdir -p /git & cd /git & sudo chmod 777 . # 创建git仓储根目录:可读写
-  > Gitea 文档 https://docs.gitea.io/zh-cn | 下载 https://dl.gitea.io/gitea/master | 源码 github.com/go-gitea/gitea
-  > Gitea API 使用指南 https://docs.gitea.io/zh-cn/api-usage
-  # 注册Windows服务
-  > sc create gitea start= auto binPath= "D:\Program\Git\Server\gitea\gitea.exe web --config \"D:\Program\Git\Server\gitea\custom\conf\app.ini\""
-  # 删除Windows服务
-  > sc delete gitea
+  $ pbcopy < ~/.ssh/id_rsa.pub            # <MacOS>
+  # felix 提供 SSH Web管理后台 + RESTful Api接口<ssh+gin+GORM> | 源码 github.com/dejavuzhou/felix
+  > felix sshw -a :8022 -x 1440 -u admin -p admin -s @Ubr)Vrp~Zoo6Rvrk1PP1*ZXPYby_Z)s # felix -h
 ~~~
 
 > `Serf` [`去中心化集群`Hashicorp开源](https://www.serf.io) 基于Serf实现的网络管理和服务发现, 如[`docker`](#docker),[`consul`](#Consul)等
@@ -677,7 +668,7 @@ $ source ~/.zshrc # 使配置生效
   $ serf query -rpc-addr=127.0.0.1:7473 -tag role=api2 greet play #向node1发Query,但通过-tag设置实际的处理节点为node2
 ~~~
 
-> `Docker` 客户端 (连接到 Docker for Windows10)
+> `Docker` 客户端 (连接到 Docker for Windows10)[可选]
 ~~~shell
   # < Windows Subsystem for Linux | WSL >---------------------------
   $ sudo apt install docker.io              # 安装Docker客户端 | docker.io get client connection.

@@ -523,32 +523,33 @@ $ source ~/.zshrc # 使配置生效
   > docker run -d --name=grafana -p 3000:3000 grafana/grafana  #另外,可直接安装其Docker服务
 ~~~
 
-> `消息平台` nsq、kafka、centrifugo、rabbitmq、gotify、botpress..
+> `消息平台` nsq、kafka、centrifugo、rabbitmq、gotify、botpress <br>
     解耦、冗余、扩展、峰值处理能力、可恢复性、异步通信。
 ~~~shell
 # 消息平台1 nsq (go)服务: nsq.io 开源的分布式消息平台(每天处理数十亿的消息，容错和高可用，可靠的消息交付保证)
-  > nsqlookupd    # 先启动消息服务 (提供近乎实时的分析系统，被Docker、Stripe和BuzzFeed在内的一系列公司使用)
-  > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4150       # 再启动几个 nsqd 存储数据
+  > nsqlookupd    #1.先启动消息服务 (提供近乎实时的分析系统，被Docker、Stripe和BuzzFeed在内的一系列公司使用)
+  > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4150  #2.再启动几个 nsqd 存储数据
   > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4152 --http-address=0.0.0.0:4153
-  > nsqadmin --lookupd-http-address=127.0.0.1:4161 #--tcp-address=0.0.0.0:4171 # 最后启动 nqsadmin Web管理
+  > nsqadmin --lookupd-http-address=127.0.0.1:4161 #--tcp-address=0.0.0.0:4171 #3.最后启动Web管理
   
 # 消息平台2 kafka (erlang)服务: kafka.apache.org/quickstart
-  # 开始安装kafka
+  ##安装kafka 参考: https://developer.ibm.com/tutorials/realtime-visitor-analysis-with-kafka/
   $ sudo apt-get install apache2     # Install Apache web server
-  $ sudo /etc/init.d/apache2 status  # Verify it is running, 检查web server root: /var/www/html/
-  $ sudo add-apt-repository ppa:webupd8team/java  # Install Java 8
-  $ sudo apt-get update
-  $ sudo apt-get install oracle-java8-installer
-  # Download Apache Kafka binary to ~/kafka : https://kafka.apache.org/downloads
-  # >> ~/kafka/config/server.properties 
+  $ sudo /etc/init.d/apache2 status  # Verify it is running, 检查 web root: /var/www/html/
+  $ sudo add-apt-repository ppa:webupd8team/java  # Install Java
+  $ sudo apt-get update && sudo apt-get install oracle-java8-installer
+  #-download Apache Kafka binary to ~/kafka : https://kafka.apache.org/downloads
+  #-config>> ~/kafka/config/server.properties
   # << advertised.listeners=PLAINTEXT://[KAFKA_VM_IP]:9092
   # << log.dirs=/tmp/kafka-logs
-  # Run Kafka
+  #-run>>
   $ cd ~/kafka
-  $ bin/zookeeper-server-start.sh config/zookeeper.properties &
-  $ bin/kafka-server-start.sh config/server.properties &
-  # 参考... https://developer.ibm.com/tutorials/realtime-visitor-analysis-with-kafka/
-  # 下载安装kafka
+  $ bin/zookeeper-server-start.sh config/zookeeper.properties &   # run zookeeper
+  $ bin/kafka-server-start.sh config/server.properties &          # run kafka
+  #-create an `access-log` topic in another console
+  $ bin/kafka-topics.sh --zookeeper localhost:2181 --create --topic access-log --partitions 1 --replication-factor 1
+  #----
+  ##直接下载安装kafka
   $ wget http://mirrors.tuna.tsinghua.edu.cn/apache/kafka/2.3.0/kafka_2.12-2.3.0.tgz
   $ tar -xzf kafka_2.12-2.3.0.tgz -C /opt/
   $ mv /opt/kafka_2.12-2.3.0 /opt/kafka && cd /opt/kafka          # 或者 ~/kafka
@@ -556,11 +557,11 @@ $ source ~/.zshrc # 使配置生效
   export KAFKA_HOME=/opt/kafka
   export PATH=$PATH:/opt/kafka/bin
   $ bin/zookeeper-server-start.sh config/zookeeper.properties     # start a ZooKeeper server
-  $ bin/kafka-server-start.sh config/server.properties            # start the Kafka server
-  $ bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic test
-  $ bin/kafka-topics.sh --list --bootstrap-server localhost:9092  ## create a topic and list topic
-  $ bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test ## send some messages
-  $ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning ## start a consumer
+  $ bin/kafka-server-start.sh config/server.properties            # start a Kafka server
+  $ bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --topic test --partitions 1 --replication-factor 1
+  $ bin/kafka-topics.sh --bootstrap-server localhost:9092 --list  #↑↑ create a topic and list topic
+  $ bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test #→send→messages
+  $ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning #←get←messages
   $ cp config/server.properties config/server-1.properties        # setting up a multi-broker cluster
   $ cp config/server.properties config/server-2.properties        # setting up a multi-broker cluster
 

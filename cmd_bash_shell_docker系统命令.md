@@ -417,20 +417,21 @@ $ source ~/.zshrc # 使配置生效
   # https://github.com/jesseduffield/lazygit/releases/                        # 安装lazyGit管理更方便
 ~~~
 
-> `Redis` 内存数据库 (Key-Value数据库) www.redis.cn
+> `Redis` 内存数据库 (KeyValue,) www.redis.cn
 ~~~shell
-  $ wget http://download.redis.io/releases/redis-stable.tar.gz # 下载源码
+  $ wget http://download.redis.io/releases/redis-stable.tar.gz # 下载源码 # cd ~
   $ tar xzf redis-stable.tar.gz                                # 解压源码
   $ cd redis-stable && sudo make install                       # 编译Redis
   $ cd utils && sudo ./install_server.sh                       # 安装Redis
-  $ rm -f -r ~/redis-stable && rm -f ~/redis-stable.tar.gz     # 删除源码
-  $ ps aux |grep redis                   # 查看进程: /usr/local/bin/redis-server 127.0.0.1:6379
-  $ redis-server                         # 启动服务(独立模式|常规启动), 可通过 ps aux 查看进程
-  ~ bind 0.0.0.0                         # 允许远程连接> sudo vi /etc/redis/6379.conf
-  ~ requirepass 123456                   # 设置访问密码
-  ~ protected-mode no                    # 关闭保护模式
+  $ rm -rf ~/redis-stable && rm -f ~/redis-stable.tar.gz       # 删除源码
+  #-config>>  /etc/redis/6379.conf       # 修改配置文件
+  # << bind 0.0.0.0                      # 允许远程连接
+  # << requirepass 123456                # 设置访问密码
+  # << protected-mode no                 # 关闭保护模式
+  $ ps aux|grep redis                    # 查看进程: /usr/local/bin/redis-server 127.0.0.1:6379
+  $ redis-server                         # (可选)启动服务(独立模式|常规启动), 可通过 ps aux 查看进程
   $ sudo service redis_6379 start        # (可选)启动服务(非独立模式|后台启动服务) start|stop|restart
-  $ sudo update-rc.d redis_6379 defaults # (可选)开机启动Redis init脚本添加到所有默认运行级别(stop后处理)
+  $ sudo update-rc.d redis_6379 defaults # (推荐)开机启动Redis将init脚本添加到所有默认运行级别(需stop后处理)
   > nssm install RedisWSLubuntu1804 bash.exe -c redis-server # 启动前设置Windows服务登录账户为Administrator
   # 客户端命令Redis
   $ redis-cli -h 127.0.0.1 -p 6379 -a "123456" -n 0 # [p端口],[a密码],[n数据库]
@@ -448,18 +449,18 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt-get update
   $ sudo apt-get install mysql-server  # 默认版本 > sudo yum install mysql-server
   $ sudo mysql_secure_installation     # 安装配置
-  $ systemctl status mysql.service      # 检查服务状态
+  $ systemctl status mysql.service     # 检查服务状态
   $ ps aux |grep mysqld　　　　　       # 查看进程: /usr/sbin/mysqld --daemonize --pid-file=/run/mysqld/mysqld.pid
   $ sudo mysql -uroot -p
   $ mysql --help
-  $ cat /etc/mysql/debian.cnf              # 查看系统密码
+  $ cat /etc/mysql/debian.cnf            # 查看系统密码
   $ mysql -P3306 -u debian-sys-maint -p  # 准备修改密码
   > use mysql;
   > update mysql.user set authentication_string=password('123456') where user='root' and Host ='localhost';
   > update user set plugin="mysql_native_password"; 
   > flush privileges;
   > quit;
-  $ sudo service mysql restart  # 重启
+  $ sudo service mysql restart      # 重启
   $ mysql -P3306 -u root -p         # 以root身份登录
   # 配置远程访问 (@localhost本机访问; @"%"所有主机都可连接)
   > CREATE USER 'newusername'@'host***' IDENTIFIED BY 'password';
@@ -468,7 +469,7 @@ $ source ~/.zshrc # 使配置生效
   > GRANT ALL PRIVILEGES ON dbname.* TO newusername@"%" IDENTIFIED BY "123456"; 
   > GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY "123456";
   > SET PASSWORD FOR 'root'@'host***' = PASSWORD('password');
-  > mysqladmin -u root -h host*** password "password"       # 连接mysql
+  > mysqladmin -u root -h host*** password "password"     # 连接mysql
   > mysqladmin -u root -p '123456' password 'newpassword' # 修改密码
   > mysqladmin -u root -p shutdown                        # 关闭mysql
   
@@ -486,7 +487,7 @@ $ source ~/.zshrc # 使配置生效
   
   # 推荐 MySQL 的一个数据库集群系统 Vitess 用于水平弹性扩展MySQL: vitess.io/docs/tutorials
   $ sudo service apparmor stop               # 1. Disable AppArmor
-  $ sudo service apparmor teardown           # safe to ignore if this errors
+  $ sudo service apparmor teardown           #    safe to ignore if this errors
   $ sudo update-rc.d -f apparmor remove
   $ export VTROOT=/path/to/extracted-tarball # 2. Configure Environment >> .bashrc ...
 ~~~
@@ -552,7 +553,7 @@ $ source ~/.zshrc # 使配置生效
   $ sudo add-apt-repository ppa:webupd8team/java  # Install Java
   $ sudo apt-get update && sudo apt-get install oracle-java8-installer
   #-download Apache Kafka binary to ~/kafka : https://kafka.apache.org/downloads
-  #-config>> ~/kafka/config/server.properties
+  #-config>>  ~/kafka/config/server.properties
   # << advertised.listeners=PLAINTEXT://[KAFKA_VM_IP]:9092
   # << log.dirs=/tmp/kafka-logs
   #-run>>
@@ -561,7 +562,7 @@ $ source ~/.zshrc # 使配置生效
   $ bin/kafka-server-start.sh config/server.properties &          # run kafka
   #-create an `access-log` topic in another console
   $ bin/kafka-topics.sh --zookeeper localhost:2181 --create --topic access-log --partitions 1 --replication-factor 1
-  #----
+  #------
   ##直接下载安装kafka
   $ wget http://mirrors.tuna.tsinghua.edu.cn/apache/kafka/2.3.0/kafka_2.12-2.3.0.tgz
   $ tar -xzf kafka_2.12-2.3.0.tgz -C /opt/

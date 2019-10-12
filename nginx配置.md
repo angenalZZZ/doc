@@ -14,7 +14,7 @@ worker_processes  1;
 #pid        logs/nginx.pid;
 
 #错误日志
-#error_log  logs/error.log;
+error_log  logs/error.log;
 #error_log  logs/error.log  notice;
 #error_log  logs/error.log  info;
 
@@ -42,11 +42,11 @@ http {
     include    mime.types;
     default_type  application/octet-stream;
     #设定日志格式
-    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-                      '$status $body_bytes_sent "$http_referer" '
-                      '"$http_user_agent" "$http_x_forwarded_for"';
+    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    #                  '$status $body_bytes_sent "$http_referer" '
+    #                  '"$http_user_agent" "$http_x_forwarded_for"';
 
-    access_log  logs/access.log  main;
+    access_log  logs/access.log;
 
     #sendfile 指令指定 nginx 是否调用 sendfile 函数（zero copy 方式）来输出文件，
     #对于普通应用，必须设为 on,
@@ -58,31 +58,32 @@ http {
     #连接超时时间
     #keepalive_timeout  0;
     keepalive_timeout  65;
-    tcp_nodelay     on;
+    tcp_nodelay   on;
 
     #开启gzip压缩
     gzip  on;
     gzip_disable "MSIE [1-6].";
 
     #设定请求缓冲
-    client_header_buffer_size    128k;
-    large_client_header_buffers  4 128k;
+    #client_header_buffer_size    128k;
+    #large_client_header_buffers  4128k;
 
     #设定虚拟主机配置
     server {
-        #侦听80端口
+        #设定端口 (注意检查:  sudo netstat -anptW|grep -i "listen"  避免端口被占用)
         listen    80;
-        #定义使用 www.nginx.cn访问
+        #访问网址 www.nginx.cn
+        #server_name  localhost;
         server_name  www.nginx.cn;
 
         #定义服务器的默认网站根目录位置
         root html;
 
         #设定本虚拟主机的访问日志
-        access_log  logs/nginx.access.log  main;
+        access_log  logs/access.80.log;
         
         #添加请求头
-        #1.CSP安全:避免`XSS`攻击,`iframe`漏洞
+        # CSP安全: 避免`XSS`攻击,`iframe`漏洞
         add_header Content-Security-Policy "default-src 'self'";
         add_header X-Frame-Options DENY;
 
@@ -113,7 +114,7 @@ http {
           alias /var/www/app/public;
         }
         
-        #静态文件，nginx自己处理
+        #静态文件访问优化
         location ~ ^/(images|javascript|js|css|flash|media|static)/ {
             #过期30天，静态文件不怎么更新，过期可以设大一点，如果频繁更新，则可以设置得小一点。
             expires 30d;
@@ -131,7 +132,6 @@ http {
         location ~ /.ht {
             deny all;
         }
-
     }
 }
 ~~~
@@ -147,7 +147,7 @@ http {
     server 0.0.0.0:3000;
  }
  server { 
-    listen       443;
+    listen    443;
     server_name  localhost;
     ssl          on;
     ssl_certificate     /cert/cert.crt;  # 配置证书
@@ -157,9 +157,6 @@ http {
     ssl_protocols TLSv1 TLSv1.1 TLSv1.2 SSLv2 SSLv3;
     ssl_ciphers  HIGH:!aNULL:!MD5;
     ssl_prefer_server_ciphers  on;
-
-    #charset koi8-r;
-    #access_log  logs/host.access.log  main;
 
   #wss 反向代理  
   location /wss {

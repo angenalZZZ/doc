@@ -84,7 +84,8 @@
   > netstat -anT                              # tcp端口(本地地址,外部地址,状态)
   > netstat -anp tcp | findstr -i "listening" # 查找本机tcp端口监听列表
   $ netstat -anp |grep 3306                   # 1.通过端口查看进程; 2.通过进程id查看占用端口; [p显示进程]
-  $ sudo netstat -anpW |grep -i "grafana-server" # 搜索进程使用的网络端口资源列表; [端口tcp+udp]
+  $ sudo netstat -anpW |grep -i "grafana-server" # 网络端口资源列表; [端口tcp+udp]
+  $ sudo netstat -anptW|grep -i "listen" # 网络端口资源列表; [端口tcp] 检查本机所有tcp网络应用程序列表
   $ netstat -atW |grep -i "listen"            # tcp端口-centos $ yum install -y net-tools traceroute
   $ netstat -tulnp | grep -i "time_wait" # tcp超时-ubuntu $ apt-get update & apt install -y net-tools
   $ ss -t4 state time-wait                    # tcp超时-ubuntu $ apt install -y iproute2 iproute2-doc
@@ -370,14 +371,14 @@ $ source ~/.zshrc # 使配置生效
   $ ls /etc/nginx/sites-available # 设置Nginx服务器模块(类似Apache虚拟主机) www.linuxidc.com/Linux/2018-05/152258.htm
   $ sudo apt install certbot      # 使用Let's Encrypt保护Nginx  www.linuxidc.com/Linux/2018-05/152259.htm
   
-  $ sudo systemctl disable nginx && sudo systemctl stop nginx # 准备安装openresty
-  $ sudo apt-get -y install --no-install-recommends wget gnupg ca-certificates
+  $ sudo systemctl disable nginx && sudo systemctl stop nginx # 准备安装openresty > cd /tmp
+  $ sudo apt-get -y install --no-install-recommends wget gnupg ca-certificates software-properties-common
   $ wget -O - https://openresty.org/package/pubkey.gpg | sudo apt-key add -
-  $ sudo apt-get -y install --no-install-recommends software-properties-common
   $ sudo add-apt-repository -y "deb http://openresty.org/package/ubuntu $(lsb_release -sc) main"
-  $ sudo apt-get update               # 参考 https://openresty.org/en/linux-packages.html
-  $ sudo apt-get -y install openresty # 安装openresty
-  $ sudo apt-get -y install --no-install-recommends openresty
+  $ sudo apt-get -y install openresty # 安装openresty  参考 https://openresty.org/en/linux-packages.html
+  $ sudo apt-get -y install --no-install-recommends openresty #最小化安装
+  #-config>>  /usr/local/openresty/nginx/conf/nginx.conf
+  $ sudo systemctl restart openresty  # 重启
   
   $ sudo apt install nodejs # 安装Nodejs(此安装方式版本太低; 推荐wget安装方式-如下)
   $ wget https://npm.taobao.org/mirrors/node/v10.16.0/node-v10.16.0-linux-x64.tar.xz

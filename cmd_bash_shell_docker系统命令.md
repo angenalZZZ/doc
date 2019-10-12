@@ -53,19 +53,23 @@
   
   # 用户登陆
   > mkdir -p %USERPROFILE% # 用户目录
-  > mkdir.\to\path         # 创建目录 $ mkdir -p to/path
-  $ mkdir -p $HOME         # 用户目录 > cd ~ ; cd /home/$(whoami) # root用户为 / = cd ~
+  > mkdir.\to\path            # 创建目录 $ mkdir -p to/path
+  $ mkdir -p $HOME         # 用户目录 > cd ~ ; cd /home/$(whoami) # root用户为 cd ~  =  /root 
   > quser                  # 当前用户状态
-  $ whoami && w && id      # 当前用户信息
+  $ whoami && w && id   # 当前用户信息
   $ echo $USER
-  $ id              # 返回 uid=0(root) gid=0(root) groups=0(root)
-  $ id -u           # 返回 uid                     添加用户(-d=$home)      (G=选择用户组)(用户名admin)
-  $ mkdir -p /home/admin & chmod 777 /home/admin & useradd -d /home/admin -G root,adm,users admin
-  $ passwd admin    # 修改密码
+  $ id              # 返回 uid=0(root) gid=0(root) groups=0(root)  ; root登录:  su -
+  $ id -u         # 返回 uid                     添加用户(-d=$home)      (G=选择用户组)(用户名=admin)
+  $ mkdir -p /home/admin & chmod 777 /home/admin 
+  $ useradd -d /home/admin -G adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare,libvirt admin
+  # 修改密码
+  $ passwd admin 
+  # 修改用户的组-G=groups
+  $ usermod -G [用户${id -g 用户名}],adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare,libvirt ,docker,rabbitmq... 用户名
   
   $ sudo su -       # 切换用户至root (并切换到用户主目录/root；超级用户提示符结尾 # 普通用户$ 主目录/home/*)
-  $ su admin        # 切换用户至admin
-  $ exit            # 退出
+  $ su admin       # 切换用户至admin
+  $ exit                   # 退出登录
   
   $ cat /etc/passwd # 查看所有用户
   $ cat /etc/passwd |grep `id -un` # 查看当前登录用户

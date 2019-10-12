@@ -353,14 +353,17 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt install -y php7.2-fpm php7.2-mysql php7.2-curl php7.2-gd php7.2-mbstring php7.2-xml php7.2-xmlrpc php7.2-zip php7.2-opcache
   $ sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/' /etc/php/7.2/fpm/php.ini # 设置php 替换 ;cgi.fix_pathinfo=1 为 cgi.fix_pathinfo=0
   $ sudo systemctl restart php7.2-fpm  # 重启php
-  $ sudo systemctl status php7.2-fpm   # 检查状态
-  $ sudo apt install -y apache2        # 安装apache
-  $ sudo apt install -y libapache2-mod-php7.2  # 让apache识别php文件
+  $ sudo systemctl status php7.2-fpm   # 检查php状态
+  $ sudo apt-get -y install apache2         # 安装apache2
+  $ sudo apt-get -y install libapache2-mod-php7.2  # 让apache识别php
+  #-config>>  /etc/apache2/apache2.conf, ports.conf, sites-enabled/000-default.conf 等配置文件处理
+  $ sudo systemctl [status|restart] apache2  # 然后检查|重启apache2
+  $ sudo /etc/init.d/apache2 [status|restart] 
   
   $ sudo apt install nginx        # 安装Nginx
-  $ sudo systemctl status nginx   # 检查状态
+  $ sudo systemctl status nginx  # 检查状态
   $ sudo ufw allow 'Nginx Full'   # 配置防火墙
-  $ sudo ufw status      # 验证更改
+  $ sudo ufw status                         # 验证更改
   $ sudo systemctl restart nginx  # 重启Nginx服务
   $ sudo systemctl disable nginx  # 禁止开机启动
   $ sudo systemctl reload nginx   # 修改配置后，需要重新加载Nginx服务
@@ -553,19 +556,18 @@ $ source ~/.zshrc # 使配置生效
   > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4150  #2.再启动几个 nsqd 存储数据
   > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4152 --http-address=0.0.0.0:4153
   > nsqadmin --lookupd-http-address=127.0.0.1:4161 #--tcp-address=0.0.0.0:4171 #3.最后启动Web管理
-  
+
 # 消息平台2 kafka (erlang)服务: kafka.apache.org/quickstart
   ##安装kafka 参考: https://developer.ibm.com/tutorials/realtime-visitor-analysis-with-kafka/
-  $ sudo apt-get install apache2     # Install Apache web server
-  $ sudo /etc/init.d/apache2 status  # Verify it is running, 检查 web root: /var/www/html/
+  $ sudo apt-get -y install apache2      # Install Apache web server
+  $ systemctl status apache2.service  # Verify it is running, 检查 web root: /var/www/html/
   $ sudo add-apt-repository ppa:webupd8team/java  # Install Java
   $ sudo apt-get update && sudo apt-get install oracle-java8-installer
   #-download Apache Kafka binary to ~/kafka : https://kafka.apache.org/downloads
   #-config>>  ~/kafka/config/server.properties
   # << advertised.listeners=PLAINTEXT://[KAFKA_VM_IP]:9092
   # << log.dirs=/tmp/kafka-logs
-  #-run>>
-  $ cd ~/kafka
+  #-run>>  cd ~/kafka
   $ bin/zookeeper-server-start.sh config/zookeeper.properties &   # run zookeeper
   $ bin/kafka-server-start.sh config/server.properties &          # run kafka
   #-create an `access-log` topic in another console

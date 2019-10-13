@@ -59,14 +59,14 @@
   $ whoami && w && id   # 当前用户信息
   $ echo $USER
   $ id              # 返回 uid=0(root) gid=0(root) groups=0(root)  ; root登录:  su -
-  $ id -u         # 返回 uid                     添加用户(-d=$home)      (G=选择用户组)(用户名=admin)
+  $ id -u         # 返回 uid          添加用户(-d=$home)      (-G=多选用户组)       例如(用户名=admin)
   $ mkdir -p /home/admin & chmod 777 /home/admin 
-  # 新建用户的默认值: useradd -D  |  cat /etc/default/useradd ;修改默认shell: useradd -D -s /bin/zsh
+  # 新建用户 - 默认值: useradd -D  |  cat /etc/default/useradd ;修改默认shell: useradd -D -s /bin/zsh
   $ useradd -d /home/admin -G adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare,libvirt admin
   # 修改密码
   $ passwd admin 
-  # 修改用户的组-G=groups
-  $ usermod -G [用户${id -g 用户名}],adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare,libvirt ,docker,rabbitmq... 用户名
+  # 修改用户多选组-G=groups   ;查用户组${id -g 用户名}
+  $ usermod -G 用户名,adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare,libvirt ,docker,rabbitmq... 用户名
   # 查询用户信息
   $ sudo grep $USER /etc/passwd /etc/shadow /etc/group /etc/gshadow
   

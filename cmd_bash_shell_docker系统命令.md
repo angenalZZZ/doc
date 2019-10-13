@@ -592,6 +592,11 @@ $ source ~/.zshrc # 使配置生效
 
 # 消息平台3 centrifugo (go)服务: github.com/centrifugal/centrifugo
   $ curl -s https://packagecloud.io/install/repositories/FZambia/centrifugo/script.deb.sh | sudo bash
+  #-config>> /lib/systemd/system/centrifugo.service替换$CENTRIFUGO_OPTS=--port "8116" --engine "memory" --grpc_api
+  $ systemctl stop centrifugo && systemctl daemon-reload # 修改配置后
+  $ systemctl start centrifugo  #重启 # sudo bash /4g/git/doc/sh/centrifugo.script.deb.sh #↑完成安装
+  $ centrifugo genconfig  #-> config.json  #→ centrifugo -h
+  $ /usr/bin/centrifugo -c /etc/centrifugo/config.json --port "8116" --engine "memory" --grpc_api #--tls --tls_cert ? --tls_key ?
 
 # 消息平台4 rabbitmq (erlang)服务: www.rabbitmq.com  参考: blog.csdn.net/vrg000/article/details/81165030 yq.aliyun.com/articles/175876
   $ sudo apt install -f libncurses5-dev freeglut3-dev fop m4 tk unixodbc unixodbc-dev xsltproc socat #安装erlang依赖

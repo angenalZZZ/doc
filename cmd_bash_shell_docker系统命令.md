@@ -61,11 +61,14 @@
   $ id              # 返回 uid=0(root) gid=0(root) groups=0(root)  ; root登录:  su -
   $ id -u         # 返回 uid                     添加用户(-d=$home)      (G=选择用户组)(用户名=admin)
   $ mkdir -p /home/admin & chmod 777 /home/admin 
+  # 新建用户的默认值: useradd -D  |  cat /etc/default/useradd ;修改默认shell: useradd -D -s /bin/zsh
   $ useradd -d /home/admin -G adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare,libvirt admin
   # 修改密码
   $ passwd admin 
   # 修改用户的组-G=groups
   $ usermod -G [用户${id -g 用户名}],adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare,libvirt ,docker,rabbitmq... 用户名
+  # 查询用户信息
+  $ sudo grep $USER /etc/passwd /etc/shadow /etc/group /etc/gshadow
   
   $ sudo su -       # 切换用户至root (并切换到用户主目录/root；超级用户提示符结尾 # 普通用户$ 主目录/home/*)
   $ su admin       # 切换用户至admin
@@ -604,21 +607,21 @@ $ source ~/.zshrc # 使配置生效
   $ sudo dpkg -i esl-erlang_22.1-1~ubuntu~xenial_amd64.deb # 安装erlang语言
   $ wget https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.7.18/rabbitmq-server_3.7.18-1_all.deb
   $ sudo dpkg -i rabbitmq-server_3.7.18-1_all.deb #安装RMQ(amqp:一种消息中间件协议,RMQ为amqp的一个具体实现)
-  $ sudo usermod -G rabbitmq ${USER}  # 将当前用户加入rabbitmq组
-  $ rabbitmqctl -q status     #检查RMQ状态
+  $ systemctl status rabbitmq-server  |  rabbitmqctl -q status     # 检查RMQ状态
+  $ sudo usermod -G ...rabbitmq ${USER}  # 将当前用户加入rabbitmq组 ;先查USER已拥有组> id [用户名]..
   $ rabbitmq-plugins enable rabbitmq_management #开启web访问功能; 安全策略加15672端口 http://192.168.*.*:15672
   $ rabbitmqctl add_user user 123456        #账号密码[默认超管guest:guest]
   $ rabbitmqctl set_user_tags administrator #角色权限[administrator,management,monitoring,policymaker,impersonator]
   # 连接生产者与消费者的端口5672, WEB管理页面的端口15672, 分布式集群的端口25672
   #**Dial.Channel.ExchangeDeclare{Name,Type[fanout|direct|topic|headers],Durability[Durable|Transient],AutoDelete,Internal,Arguments{...}}
   #**Dial.Channel.QueueDeclare{Name,Durability[Durable|Transient],AutoDelete,Arguments{x-message-ttl(ms),x-expires(ms),x-max-length...}}
-  # 1.简单队列
+  # 1.简单队列:一对一  [ 消息Publish事务模式: 1.Channel.txSelect+txSubmit+txRollback 2.ch.comfirmSelect+wait.. 3.ch异步handle..]
   #   send: Dial.Channel{ QueueDeclare[q.Name], Publish[q.Name,amqp.Publishing{ContentType:"text/plain",Body}] }
   #   receive: Dial.Channel{ QueueDeclare[q.Name], Consume[q.Name,Ack?自动:true] > range(<-chan)msgs }
-  # 2.工作队列
+  # 2.工作队列:一对多  [ 1.轮训模式workers+Ack(true) 2.公平模式workers+Qos+Ack(false)?手动=提高性能]
   #   task: Dial.Channel{ QueueDeclare[q.Name,Durable?持久存储], Publish[q.Name,amqp.Publishing{DeliveryMode:amqp.Persistent,Body}] }
   #   worker: Dial.Channel{ QueueDeclare[q.Name,Durable?持久存储], Qos(1,0,false), Consume[q.Name,Ack?手动] > msg.Ack(false) }
-  # 3.发布订阅:订阅模式+Exchange交换机+QueueBind队列绑定交换机
+  # 3.发布订阅:订阅模式+Exchange交换机+QueueBind队列绑定交换机[消息分发器]
   #   publish: Dial.Channel{ ExchangeDeclare[x.Name,Type:"fanout"], Publish[x.Name,amqp.Publishing{ContentType:"text/plain",Body}] }
   #   subscribe: Dial.Channel{ ExchangeDeclare[x.Name,Type:"fanout"], QueueDeclare[q.Name:"",Exclusive:true只有自己可见?排他性队列], 
   #     QueueBind[q.Name,routing-key:"",x.Name]..., Consume[q.Name,Ack?自动] }
@@ -629,7 +632,7 @@ $ source ~/.zshrc # 使配置生效
   # 5.发布订阅:通配符模式+Topics-主题分发..
   #   publish: Dial.Channel{ ExchangeDeclare[x.Name,Type:"topic"], Publish[x.Name,routing-key:"admin.login",amqp.Publishing] }
   #   subscribe: Dial.Channel{ ExchangeDeclare[x.Name,Type:"topic"], QueueDeclare[q.Name:"",Exclusive:true只有自己可见?排他性队列], 
-  #     QueueBind[q.Name,routing-key:"#login",x.Name]..., Consume[q.Name,Ack?自动] }
+  #     QueueBind[q.Name,routing-key:"#login",x.Name]..., Consume[q.Name,Ack?自动] } ;匹配所有为#
   # 6.远程调用-RPC
   #   server: Dial.Channel{ QueueDeclare[q.Name,], Qos(1,0,false), Consume[q.Name,Ack?手动] > 
   #     Publish[q.Name:"",routing-key:msg.ReplyTo,amqp.Publishing{CorrelationId:msg.CorrelationId,Body}], msg.Ack(false) }

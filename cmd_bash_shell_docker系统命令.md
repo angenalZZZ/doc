@@ -652,9 +652,9 @@ $ source ~/.zshrc # 使配置生效
 ~~~
 
 > `系统服务` 计划任务管理 <br>
-    1.[uber/cadence](https://cadenceworkflow.io) [分布式的、可扩展的、高可用的任务编排引擎，异步执行长时间运行的业务逻辑](https://github.com/uber/cadence)
+    Ⅰ.[uber/cadence](https://cadenceworkflow.io) [分布式的、可扩展的、高可用的任务编排引擎，异步执行长时间运行的业务逻辑](https://github.com/uber/cadence)
 ~~~shell
-#1.uber/cadence
+#Ⅰ.uber/cadence
   #-1: Quickstart for localhost development
   $ wget https://github.com/uber/cadence/releases/download/v0.9.3/docker.tar.gz
   $ tar -xzf docker.tar.gz
@@ -664,19 +664,18 @@ $ source ~/.zshrc # 使配置生效
   $ docker-compose -f docker-compose-mysql.yml up | down # service with MySQL
   $ docker-compose -f docker-compose-es.yml up | down    # service with ElasticSearch
   #-2: Quickstart for production
-  $ docker run -e CASSANDRA_CONSISTENCY=Quorum \        -- Default cassandra consistency level
-    -e CASSANDRA_SEEDS=10.x.x.x                         -- csv of cassandra server ipaddrs
-    -e KEYSPACE=<keyspace>                              -- Cassandra keyspace
-    -e VISIBILITY_KEYSPACE=<visibility_keyspace>        -- Cassandra visibility keyspace
-    -e SKIP_SCHEMA_SETUP=true                           -- do not setup cassandra schema during startup
-    -e RINGPOP_SEEDS=10.x.x.x,10.x.x.x  \               -- csv of ipaddrs for gossip bootstrap
-    -e STATSD_ENDPOINT=10.x.x.x:8125                    -- statsd server endpoint
-    -e NUM_HISTORY_SHARDS=1024  \                       -- Number of history shards
-    -e SERVICES=history,matching \                      -- Spinup only the provided services
-    -e LOG_LEVEL=debug,info \                           -- Logging level
-    -e DYNAMIC_CONFIG_FILE_PATH=config/foo.yaml         -- Dynamic config file to be watched
-    ubercadence/server:<tag>
-    
+  $ docker run -e CASSANDRA_CONSISTENCY=Quorum \         # Default cassandra consistency level
+    -e CASSANDRA_SEEDS=10.x.x.x                          # csv of ipaddrs cassandra server
+    -e KEYSPACE=<keyspace>                               # Cassandra keyspace
+    -e VISIBILITY_KEYSPACE=<visibility_keyspace>         # Cassandra visibility keyspace
+    -e SKIP_SCHEMA_SETUP=true                            # do not setup cassandra schema during startup
+    -e RINGPOP_SEEDS=10.x.x.x,10.x.x.x  \                # csv of ipaddrs for gossip bootstrap
+    -e STATSD_ENDPOINT=10.x.x.x:8125                     # statsd server endpoint
+    -e NUM_HISTORY_SHARDS=1024  \                        # Number of history shards
+    -e SERVICES=history,matching \                       # Spinup only the provided services
+    -e LOG_LEVEL=debug,info \                            # Logging level
+    -e DYNAMIC_CONFIG_FILE_PATH=config/foo.yaml          # Dynamic config file to be watched
+    ubercadence/server:<tag>    
 ~~~
 
 > `SSH` 建立安全的加密连接：一个密码对应一个SSH-key  https://www.chiark.greenend.org.uk  https://www.netsarang.com/zh/

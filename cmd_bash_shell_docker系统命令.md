@@ -651,6 +651,33 @@ $ source ~/.zshrc # 使配置生效
   > nssm install Botpress D:\Program\botpress\bp.exe serve  # Windows Service
 ~~~
 
+> `系统服务` 计划任务管理 <br>
+    [uber/cadence](https://cadenceworkflow.io)[分布式的、可扩展的、持久的和高可用的编排引擎，以可扩展和弹性的方式执行异步长时间运行的业务逻辑；](https://github.com/uber/cadence)
+~~~shell
+  #1: Quickstart for localhost development
+  $ wget https://github.com/uber/cadence/releases/download/v0.9.3/docker.tar.gz
+  $ tar -xzf docker.tar.gz
+  $ cd docker
+  $ docker-compose up | down
+  # Running cadence service
+  $ docker-compose -f docker-compose-mysql.yml up | down # service with MySQL
+  $ docker-compose -f docker-compose-es.yml up | down    # service with ElasticSearch
+  #2: Quickstart for production
+  $ docker run -e CASSANDRA_CONSISTENCY=Quorum \        -- Default cassandra consistency level
+    -e CASSANDRA_SEEDS=10.x.x.x                         -- csv of cassandra server ipaddrs
+    -e KEYSPACE=<keyspace>                              -- Cassandra keyspace
+    -e VISIBILITY_KEYSPACE=<visibility_keyspace>        -- Cassandra visibility keyspace
+    -e SKIP_SCHEMA_SETUP=true                           -- do not setup cassandra schema during startup
+    -e RINGPOP_SEEDS=10.x.x.x,10.x.x.x  \               -- csv of ipaddrs for gossip bootstrap
+    -e STATSD_ENDPOINT=10.x.x.x:8125                    -- statsd server endpoint
+    -e NUM_HISTORY_SHARDS=1024  \                       -- Number of history shards
+    -e SERVICES=history,matching \                      -- Spinup only the provided services
+    -e LOG_LEVEL=debug,info \                           -- Logging level
+    -e DYNAMIC_CONFIG_FILE_PATH=config/foo.yaml         -- Dynamic config file to be watched
+    ubercadence/server:<tag>
+    
+~~~
+
 > `SSH` 建立安全的加密连接：一个密码对应一个SSH-key  https://www.chiark.greenend.org.uk  https://www.netsarang.com/zh/
 ~~~shell
   $ sudo apt install openssh-server       # 安装SSH <ubuntu> 192.168.1.100:22

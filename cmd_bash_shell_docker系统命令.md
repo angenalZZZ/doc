@@ -652,9 +652,10 @@ $ source ~/.zshrc # 使配置生效
 ~~~
 
 > `系统服务` 计划任务管理 <br>
-    [uber/cadence](https://cadenceworkflow.io)[分布式的、可扩展的、持久的和高可用的编排引擎，以可扩展和弹性的方式执行异步长时间运行的业务逻辑；](https://github.com/uber/cadence)
+    1.[uber/cadence](https://cadenceworkflow.io) [分布式的、可扩展的、高可用的任务编排引擎，异步执行长时间运行的业务逻辑](https://github.com/uber/cadence)
 ~~~shell
-  #1: Quickstart for localhost development
+#1.uber/cadence
+  #-1: Quickstart for localhost development
   $ wget https://github.com/uber/cadence/releases/download/v0.9.3/docker.tar.gz
   $ tar -xzf docker.tar.gz
   $ cd docker
@@ -662,7 +663,7 @@ $ source ~/.zshrc # 使配置生效
   # Running cadence service
   $ docker-compose -f docker-compose-mysql.yml up | down # service with MySQL
   $ docker-compose -f docker-compose-es.yml up | down    # service with ElasticSearch
-  #2: Quickstart for production
+  #-2: Quickstart for production
   $ docker run -e CASSANDRA_CONSISTENCY=Quorum \        -- Default cassandra consistency level
     -e CASSANDRA_SEEDS=10.x.x.x                         -- csv of cassandra server ipaddrs
     -e KEYSPACE=<keyspace>                              -- Cassandra keyspace

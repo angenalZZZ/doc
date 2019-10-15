@@ -656,13 +656,12 @@ $ source ~/.zshrc # 使配置生效
 ~~~shell
 #Ⅰ.uber/cadence
   #-1: Quickstart for localhost development
-  $ wget https://github.com/uber/cadence/releases/download/v0.9.3/docker.tar.gz
-  $ tar -xzf docker.tar.gz
-  $ cd docker
+  $ wget https://github.com/uber/cadence/releases/download/v0.9.4/docker.tar.gz
+  $ tar -xzf docker.tar.gz && cd docker
   $ docker-compose up | down
   # Running cadence service
-  $ docker-compose -f docker-compose-mysql.yml up | down # service with MySQL
-  $ docker-compose -f docker-compose-es.yml up | down    # service with ElasticSearch
+  $ docker-compose -f docker-compose-mysql.yml up | down # service with MySQL: 先配置 MYSQL_PWD
+  $ docker-compose -f docker-compose-es.yml up | down    # service with ElasticSearch: 先配置 es
   #-2: Quickstart for production
   $ docker run -e CASSANDRA_CONSISTENCY=Quorum \         # Default cassandra consistency level
     -e CASSANDRA_SEEDS=10.x.x.x                          # csv of ipaddrs cassandra server
@@ -675,7 +674,7 @@ $ source ~/.zshrc # 使配置生效
     -e SERVICES=history,matching \                       # Spinup only the provided services
     -e LOG_LEVEL=debug,info \                            # Logging level
     -e DYNAMIC_CONFIG_FILE_PATH=config/foo.yaml          # Dynamic config file to be watched
-    ubercadence/server:<tag>    
+    ubercadence/server:<tag>                             # <tag> 0.9.4-auto-setup
 ~~~
 
 > `SSH` 建立安全的加密连接：一个密码对应一个SSH-key  https://www.chiark.greenend.org.uk  https://www.netsarang.com/zh/

@@ -654,12 +654,12 @@ $ source ~/.zshrc # 使配置生效
 > `系统服务` 计划任务管理 <br>
     Ⅰ.[uber/cadence](https://cadenceworkflow.io) [分布式的、可扩展的、高可用的任务编排引擎，异步执行长时间运行的业务逻辑](https://github.com/uber/cadence)
 ~~~shell
-#Ⅰ.uber/cadence
+#Ⅰ.uber/cadence  https://github.com/uber/cadence/blob/master/docker/README.md
   #-1: Quickstart for localhost development
-  $ wget https://github.com/uber/cadence/releases/download/v0.9.4/docker.tar.gz
+  $ wget https://github.com/uber/cadence/releases/...
   $ tar -xzf docker.tar.gz && cd docker
-  $ docker-compose up | down
-  # Running cadence service
+  # -run cadence service
+  $ docker-compose up | down                             # service with Cadence
   $ docker-compose -f docker-compose-mysql.yml up | down # service with MySQL: 先配置 MYSQL_PWD
   $ docker-compose -f docker-compose-es.yml up | down    # service with ElasticSearch: 先配置 es
   #-2: Quickstart for production

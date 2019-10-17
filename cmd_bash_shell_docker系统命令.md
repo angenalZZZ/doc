@@ -347,18 +347,18 @@ $ source ~/.zshrc # 使配置生效
   $ sudo dpkg -i esl-erlang_22.1-1~ubuntu~xenial_amd64.deb # 安装erlang语言
   
   $ sudo apt install python3          # 安装Python3
-  $ sudo apt install python3-pip      # 安装pip3          #将Python3设为默认?参考如下
+  $ sudo apt install python3-pip      # 安装pip3         #将Python3设为默认?参考如下
   $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 100
   $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 150
-  $ sudo update-alternatives --config python  # 手动配置/切换版本: python --version
+  $ sudo update-alternatives --config python  # 手动配置/切换版本: python --version ; pip --version
   $ sudo ln -sf /usr/bin/python2.7 /usr/bin/python #将Python2(恢复)默认
   
   $ sudo add-apt-repository ppa:ondrej/php  && sudo apt-get update # 安装php (PPA源)
-  $ sudo apt install -y php7.2-fpm php7.2-mysql php7.2-curl php7.2-gd php7.2-mbstring php7.2-xml php7.2-xmlrpc php7.2-zip php7.2-opcache
+  $ sudo apt-get -y install php7.2-fpm php7.2-mysql php7.2-curl php7.2-gd php7.2-mbstring php7.2-xml php7.2-xmlrpc php7.2-zip php7.2-opcache
   $ sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/' /etc/php/7.2/fpm/php.ini # 设置php 替换 ;cgi.fix_pathinfo=1 为 cgi.fix_pathinfo=0
   $ sudo systemctl restart php7.2-fpm  # 重启php
   $ sudo systemctl status php7.2-fpm   # 检查php状态
-  $ sudo apt-get -y install apache2         # 安装apache2
+  $ sudo apt-get -y install apache2    # 安装apache2
   $ sudo apt-get -y install libapache2-mod-php7.2  # 让apache识别php
   #-config>>  /etc/apache2/apache2.conf, ports.conf, sites-enabled/000-default.conf 等配置文件处理
   $ sudo systemctl [status|restart] apache2  # 然后检查|重启apache2
@@ -398,6 +398,9 @@ $ source ~/.zshrc # 使配置生效
   export JAVA_VERSION=8u212
   export SCALA_VERSION=2.12
   export GLIBC_VERSION=2.29-r0
+  # .profile 文件设置 Aliases
+  alias start-pg='sudo service postgresql start'
+  alias run-pg='sudo -u postgres psql'
 ~~~
 
 > `Git` 代码版本管理
@@ -507,17 +510,28 @@ $ source ~/.zshrc # 使配置生效
   $ export VTROOT=/path/to/extracted-tarball # 2. Configure Environment >> .bashrc ...
 ~~~
 
+> `PostgreSQL` 关系型数据库 - 文档 www.postgresql.org
+~~~shell
+  $ sudo apt-get update
+  $ sudo apt-get -y install postgresql postgresql-contrib # 安装 psql --version
+  $ sudo systemctl enable postgresql.service              # 开机启动,WSL将为 sudo /etc/inid.d/postgresql enable
+  $ sudo service postgresql status,start,stop             # 状态,启动,停止
+  $ sudo passwd postgres                                  # 分配密码后连接到数据库
+  $ sudo -u postgres psql -c "\du"                        # 执行psql命令(以用户postgres身份)
+  $ sudo apt-get purge postgre*                           # 卸载
+~~~
+
 > `mongodb` NoSql数据库 - 文档 docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu
 ~~~shell
   $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
   $ echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
   $ sudo apt-get update
-  $ sudo apt-get install -y mongodb-org                   # 安装/下面是指定版本
-  $ sudo apt-get install -y mongodb-org=4.0.10 mongodb-org-server=4.0.10 mongodb-org-shell=4.0.10 mongodb-org-mongos=4.0.10 mongodb-org-tools=4.0.10
-  $ sudo service mongod start,stop,restart                # 启动,停止,重启
-  $ sudo systemctl enable mongod.service                  # 开机启动
-  $ sudo apt-get purge mongodb-org*                       # 卸载
-  $ sudo rm -r /var/log/mongodb  /var/lib/mongodb
+  $ sudo apt-get -y install mongodb-org                   # 安装/下面是指定版本
+  $ sudo apt-get -y install mongodb-org=4.0.10 mongodb-org-server=4.0.10 mongodb-org-shell=4.0.10 mongodb-org-mongos=4.0.10 mongodb-org-tools=4.0.10
+  $ sudo systemctl enable mongodb.service                 # 开机启动,WSL将为 sudo /etc/inid.d/mongodb enable
+  $ sudo service mongodb status,start,stop                # 状态,启动,停止
+  > mongo --eval 'db.runCommand({ connectionStatus: 1 })' # 诊断服务器正在运行
+  $ sudo apt-get purge mongodb-org*                       # 卸载 rm -rf /var/log/mongodb /var/lib/mongodb
 ~~~
 
 > `Pilosa` 分布式位图索引数据库 www.pilosa.com

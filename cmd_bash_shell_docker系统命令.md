@@ -14,7 +14,7 @@
 ~~~shell
   # 清屏
   > cls
-  $ clear
+  $ clear          # alias cls="clear"
   
   # 系统
   > ver              # 系统  修复 > sfc/scannow
@@ -173,6 +173,9 @@
   $ tar -xzpvf /media/yangzhou/Software/Software/ubuntu/backup@`date +%Y`.tar.gz -C /
   # linux-live-U盘启动盘
   $ df -h              # 查找U盘位置<假如为sdb>
+  $ sudo ntfs-3g /dev/sda1 /mnt/windows  # 挂载硬盘分区<假如为sda1:第1块硬盘分区1>
+  $ sudo /sbin/mount.ntfs /dev/sdc2 /40g -o rw,nosuid,nodev
+  $ sudo /sbin/mount.ntfs /dev/sdc3 /20g -o rw,nosuid,nodev
   $ sudo umount /dev/sdb*  # 手动卸载 U盘
   $ sudo mkfs.vfat /dev/sdb -I  # 格式化 U盘
   $ sudo dd if=~/ubuntu.iso of=/dev/sdb  # 制作 U盘启动盘

@@ -53,11 +53,11 @@
   
   # 用户登陆
   > mkdir -p %USERPROFILE% # 用户目录
-  > mkdir.\to\path            # 创建目录 $ mkdir -p to/path
-  $ mkdir -p $HOME         # 用户目录 > cd ~ ; cd /home/$(whoami) # root用户为 cd ~  =  /root 
-  > quser                  # 当前用户状态
-  $ whoami && w && id   # 当前用户信息
-  $ echo $USER
+  > mkdir to/path             # 创建目录 $ mkdir -p to/path  [-p递归创建目录]
+  $ cd -                                   # 上次访问目录; 用户$HOME目录 > cd ~ ; cd /home/$(whoami) # root 用户为 cd ~  =  /root 
+  > quser                               # 当前用户状态
+  $ whoami && w && id  # 当前用户信息
+  $ echo $USER  $HOME  $PATH 
   $ id              # 返回 uid=0(root) gid=0(root) groups=0(root)  ; root登录:  su -
   $ id -u         # 返回 uid          添加用户(-d=$home)      (-G=多选用户组)       例如(用户名=admin)
   $ mkdir -p /home/admin & chmod 777 /home/admin 
@@ -143,12 +143,12 @@
   $ sudo chown -R 1000 [目录]  # 改变[目录](-R递归修改文件和目录)的"拥有者"为uid:1000 = $(id -u)
   $ sudo chgrp –R users [目录] # 改变[目录]的"所属用户组"为G:users = $(id -g)
   $ sudo chmod 744 [目录]        # 修改当前目录(.)权限为可读写及执行(-R递归修改文件和目录)
-  $ sudo chmod 777 to/path   # 每个人都有读和写以及执行的权限(约定的三个数字owner=7;group=7;others=7)
+  $ sudo chmod 777 to/path    # 每个人都有读和写以及执行的权限(约定的三个数字owner=7;group=7;others=7)
   $ sudo chmod 666 to/path    # 每个人都有读和写的权限(常用于文件上传下载)
   $ sudo chmod 700 to/path    # 只有所有者有读和写以及执行的权限
   $ sudo chmod 600 to/path    # 只有所有者有读和写的权限
   $ sudo chmod 644 to/path    # 所有者有读和写的权限，组用户只有读的权限
-  $ [ -d /temp ] ||  sudo mkdir /temp && sudo chmod -vR 1776 /temp # 创建共享目录 drwxrwxrwT
+  $ [ -d /temp ] ||  sudo mkdir /temp && sudo chmod -vR 1777 /temp # 创建共享临时目录 drwxrwxrwt
   $ sudo chmod -vR +t /temp   # 添加目录[文件删除+重命名]的权限 ...rwt
   #0 : None  #1 : Execute Only  #2 : Write Only  #3 : Write & Execute  #4 : Read Only  #5 : Read & Execute  
   #6 : Read & Write  #7 : Read, Write & Execute

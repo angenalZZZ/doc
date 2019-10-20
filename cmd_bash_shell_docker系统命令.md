@@ -473,31 +473,31 @@ $ source ~/.zshrc # 使配置生效
 ~~~shell
   # 安装
   $ sudo apt-get update
-  $ sudo apt-get install mysql-server  # 默认版本 > sudo yum install mysql-server
+  $ sudo apt-get install mysql-server   # 默认版本 > sudo yum install mysql-server
   $ sudo mysql_secure_installation     # 安装配置
-  $ systemctl status mysql.service     # 检查服务状态
+  $ systemctl status mysql.service        # 检查服务状态
   $ ps aux |grep mysqld　　　　　       # 查看进程: /usr/sbin/mysqld --daemonize --pid-file=/run/mysqld/mysqld.pid
   $ sudo mysql -uroot -p
   $ mysql --help
-  $ cat /etc/mysql/debian.cnf            # 查看系统密码
-  $ mysql -P3306 -u debian-sys-maint -p  # 准备修改密码
+  $ cat /etc/mysql/debian.cnf                       # 查看系统密码
+  $ mysql -P3306 -u debian-sys-maint -p # 准备修改密码
   > use mysql;
-  > update mysql.user set authentication_string=password('123456') where user='root' and Host ='localhost';
+  > update mysql.user set authentication_string=password('root') where user='root' and Host ='localhost';
   > update user set plugin="mysql_native_password"; 
   > flush privileges;
   > quit;
-  $ sudo service mysql restart      # 重启
-  $ mysql -P3306 -u root -p         # 以root身份登录
+  $ sudo service mysql restart      # 重启: sudo systemctl restart mysql
+  $ mysql -P3306 -u root -p            # 以root身份登录
   # 配置远程访问 (@localhost本机访问; @"%"所有主机都可连接)
   > CREATE USER 'newusername'@'host***' IDENTIFIED BY 'password';
   > select host,user,password from user;  # 当前用户: SELECT USER();
-  > grant select,insert,update,delete,create,drop,index,alter on dbname.* to newusername@192.168.1.10 identified by '123456';
-  > GRANT ALL PRIVILEGES ON dbname.* TO newusername@"%" IDENTIFIED BY "123456"; 
-  > GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY "123456";
-  > SET PASSWORD FOR 'root'@'host***' = PASSWORD('password');
-  > mysqladmin -u root -h host*** password "password"     # 连接mysql
+  > grant select,insert,update,delete,create,drop,index,alter on dbname.* to newusername@192.168.1.10 identified by 'root';
+  > GRANT ALL PRIVILEGES ON dbname.* TO newusername@"%" IDENTIFIED BY "root"; 
+  > GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY "root";
+  > SET PASSWORD FOR 'root'@'host***' = PASSWORD('root');
+  > mysqladmin -u root -h host*** password "123456"               # 连接mysql
   > mysqladmin -u root -p '123456' password 'newpassword' # 修改密码
-  > mysqladmin -u root -p shutdown                        # 关闭mysql
+  > mysqladmin -u root -p shutdown                                                   # 关闭mysql
   
   # GitHub在线使用的数据库迁移工具 github.com/github/gh-ost
   $ gh-ost help

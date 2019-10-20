@@ -148,16 +148,10 @@
   $ sudo chmod 700 to/path    # 只有所有者有读和写以及执行的权限
   $ sudo chmod 600 to/path    # 只有所有者有读和写的权限
   $ sudo chmod 644 to/path    # 所有者有读和写的权限，组用户只有读的权限
-  $ sudo mkdir /temp && sudo chmod -vR 1766 /temp # 创建共享目录 drwxrw-rw-
-  $ sudo chmod -vR +t /temp   # 添加目录[文件的删除+文件重命名]的权限
-  #7 : Read, Write & Execute
-  #6 : Read & Write
-  #5 : Read & Execute
-  #4 : Read Only
-  #3 : Write & Execute
-  #2 : Write Only
-  #1 : Execute Only
-  #0 : None
+  $ [ -d /temp ] ||  sudo mkdir /temp && sudo chmod -vR 1776 /temp # 创建共享目录 drwxrwxrwT
+  $ sudo chmod -vR +t /temp   # 添加目录[文件删除+重命名]的权限 ...rwt
+  #0 : None  #1 : Execute Only  #2 : Write Only  #3 : Write & Execute  #4 : Read Only  #5 : Read & Execute  
+  #6 : Read & Write  #7 : Read, Write & Execute
   
   # 文件复制
   > xcopy /isy C:\...\bin\Release\netcoreapp2.1\* F:\app\dotnetcore\centos\a

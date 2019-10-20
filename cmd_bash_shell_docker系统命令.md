@@ -14,7 +14,7 @@
 ~~~shell
   # 清屏
   > cls
-  $ clear          # alias cls="clear"
+  $ clear          # 快捷命令: alias cls='clear'
   
   # 系统
   > ver              # 系统  修复 > sfc/scannow

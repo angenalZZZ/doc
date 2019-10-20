@@ -290,6 +290,11 @@
   # 打开PowerShell查询数字签名证书
   > ls Cert:\CurrentUser\Root | where {$_.Subject -eq "CN=Power Shell Local Certificate Root"}
   
+  # 字体
+  $ sudo apt-get install fontconfig                                      # yum install fontconfig     #<CentOS>
+  $ sudo apt-get install ttf-mscorefonts-installer         # yum install mkfontscale #安装(中文)字体
+  $ sudo fc-cache -f -v   # 更新字体缓存
+  
 ~~~
 
 ## linux开发环境及常用安装

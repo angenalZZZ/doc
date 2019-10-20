@@ -344,6 +344,11 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt-get install oracle-java8-set-default  # 使用默认版本jdk1.8
   $ sudo update-alternatives –config java  # 多版本JDK之间切换
   
+  $ wget -q https://packages.microsoft.com/config/ubuntu/19.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+  $ sudo dpkg -i packages-microsoft-prod.deb
+  $ sudo apt-get update
+  $ sudo apt-get install dotnet-sdk-3.0        # 安装 .NET Core SDK  > dotnet -h
+  
   $ sudo apt install -f libncurses5-dev freeglut3-dev fop m4 tk unixodbc unixodbc-dev xsltproc socat #安装erlang依赖
   $ wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_22.1-1~ubuntu~xenial_amd64.deb
   $ sudo dpkg -i esl-erlang_22.1-1~ubuntu~xenial_amd64.deb # 安装erlang语言

@@ -14,7 +14,7 @@
 ~~~shell
   # 清屏
   > cls
-  $ clear  # 快捷命令: alias cls='clear'
+  $ clear         # 快捷命令: alias cls='clear'
   
   # 系统
   > ver              # 系统  修复 > sfc/scannow
@@ -45,7 +45,7 @@
   # 帮助
   > help cmd
   $ info       # 系统菜单信息: Basics,Compression,Editors,Screen.…… 菜单导航&帮助文档;
-    #系统菜单信息: GNU Utilities,Individual utilities,Libraries,Math,Network applications,Text manipulation.
+   #系统菜单信息: GNU Utilities,Individual utilities,Libraries,Math,Network applications,Text manipulation
   $ man        # 在线帮助说明
   $ whatis id  # 查找命令id的帮助说明 print real and effective user and group IDs
   $ history    # 历史命令列表
@@ -53,11 +53,11 @@
   
   # 用户登陆
   > mkdir -p %USERPROFILE% # 用户目录
-  > mkdir to/path             # 创建目录 $ mkdir -p to/path  [-p递归创建目录]
-  $ cd -                      # 上次访问目录; 用户$HOME目录 > cd ~ ; cd /home/$(whoami) # root 用户为 cd ~  =  /root 
-  > quser                     # 当前用户状态
-  $ whoami && w && id # 当前用户信息
-  $ echo $USER  $HOME  $PATH 
+  > mkdir to/path # 创建目录 $ mkdir -p to/path  [-p递归创建目录]
+  $ cd -          # 上次访问目录; 用户$HOME目录 > cd ~ ; cd /home/$(whoami) # root 用户为 cd ~  = /root 
+  > quser         # 当前用户状态
+  $ whoami && w && id        # 当前用户信息
+  $ echo $USER  $HOME  $PATH # 当前用户环境
   $ id            # 返回 uid=0(root) gid=0(root) groups=0(root)  ; root登录:  su -
   $ id -u         # 返回 uid          添加用户(-d=$home)      (-G=多选用户组)       例如(用户名=admin)
   $ mkdir -p /home/admin & chmod 777 /home/admin 
@@ -130,7 +130,7 @@
   $ cat main.cs          # 输出文件内容
   $ namo|vi main.cs      # 编辑文件内容
   $ file main.js && ls -an main.js # 查看文件类型-信息 & 查看文件读写权限&更新时间
-  $ for n in {1..10000}; do echo content > "__${n}.tmp"; done  # 创建 10000 个临时文件
+  $ for n in {1..10000}; do echo content > "__${n}.tmp"; done # 创建 10000 个临时文件
   
   # 文件查找
   > for /r C:\windows\addins\ %i in (explorer.exe) do @echo %i # 在指定目录下查找匹配文件
@@ -142,7 +142,7 @@
   > cd [目录]
   $ sudo chown -R 1000 [目录]  # 改变[目录](-R递归修改文件和目录)的"拥有者"为uid:1000 = $(id -u)
   $ sudo chgrp –R users [目录] # 改变[目录]的"所属用户组"为G:users = $(id -g)
-  $ sudo chmod 744 [目录]        # 修改当前目录(.)权限为可读写及执行(-R递归修改文件和目录)
+  $ sudo chmod 744 [目录]      # 修改当前目录(.)权限为可读写及执行(-R递归修改文件和目录)
   $ sudo chmod 777 to/path    # 每个人都有读和写以及执行的权限(约定的三个数字owner=7;group=7;others=7)
   $ sudo chmod 666 to/path    # 每个人都有读和写的权限(常用于文件上传下载)
   $ sudo chmod 700 to/path    # 只有所有者有读和写以及执行的权限
@@ -163,10 +163,10 @@
   # 系统备份和还原
   $ tar -czpvf /media/yangzhou/Software/Software/ubuntu/backup@`date +%Y`.tar.gz 
       --exclude=/proc --exclude=/tmp --exclude=/boot --exclude=/home --exclude=/lost+found 
-      --exclude=/media --exclude=/mnt --exclude=/run /  # -c备份文档 -z用gzip压缩 -p保存权限 -v显示详细 -f指定输出文件
+      --exclude=/media --exclude=/mnt --exclude=/run / #-c备份文档 -z用gzip压缩 -p保存权限 -v显示详细 -f输出文件
   $ tar -xzpvf /media/yangzhou/Software/Software/ubuntu/backup@`date +%Y`.tar.gz -C /
-  # linux-live-U盘启动盘
-  $ df -h              # 查找U盘位置<假如为sdb>
+  # linux-live-U盘+启动盘制作
+  $ df -h                  # 查找U盘位置<假如为sdb>
   $ sudo ntfs-3g /dev/sda1 /mnt/windows  # 挂载硬盘分区<假如为sda1:第1块硬盘分区1>
   $ sudo /sbin/mount.ntfs /dev/sdc2 /40g -o rw,nosuid,nodev
   $ sudo /sbin/mount.ntfs /dev/sdc3 /20g -o rw,nosuid,nodev
@@ -184,7 +184,7 @@
   $ ifconfig |grep inet
   # 科学上网 - 代理设置 (解决网络问题)  蓝灯: https://github.com/getlantern/lantern
   $ sudo vim /etc/profile [全局|用户配置：~/.profile]# 填写如下VPN转发PORT
-  export FTP_PROXY=http://<proxy hostname:port>        # 临时使用
+  export FTP_PROXY=http://<proxy hostname:port>     # 临时使用
   export HTTP_PROXY=http://<proxy hostname:port>
   export HTTPS_PROXY=https://<proxy hostname:port>
   export NO_PROXY=localhost,127.0.0.1,10.96.0.0/12,192.168.99.0/24,192.168.39.0/24
@@ -226,7 +226,7 @@
   /dev/initctl -> /run/systemd/initctl/fifo
   /dev/input
   /dev/log -> /run/systemd/journal/dev-log
-  /dev/lp  # 打印机 /dev/lp[0-15] 
+  /dev/lp      # 打印机 /dev/lp[0-15] 
   /dev/mem
   /dev/memory_bandwidth
   /dev/mouse   # 鼠标
@@ -285,8 +285,8 @@
   > ls Cert:\CurrentUser\Root | where {$_.Subject -eq "CN=Power Shell Local Certificate Root"}
   
   # 字体
-  $ sudo apt-get install fontconfig                                      # yum install fontconfig     #<CentOS>
-  $ sudo apt-get install ttf-mscorefonts-installer         # yum install mkfontscale #安装(中文)字体
+  $ sudo apt-get install fontconfig                # yum install fontconfig  #<CentOS>
+  $ sudo apt-get install ttf-mscorefonts-installer # yum install mkfontscale #安装(中文)字体
   $ sudo fc-cache -f -v   # 更新字体缓存
   
 ~~~
@@ -340,14 +340,14 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt install default-jre      # 安装jre > java -version
   $ sudo apt install openjdk-8-jdk    # 安装OpenJDK
   $ sudo add-apt-repository ppa:webupd8team/java && sudo apt-get update
-  $ sudo apt-get install oracle-java8-installer    # 在线安装, 离线下载 download.oracle.com/otn/java/jdk
-  $ sudo apt-get install oracle-java8-set-default  # 使用默认版本jdk1.8
-  $ sudo update-alternatives –config java  # 多版本JDK之间切换
+  $ sudo apt-get install oracle-java8-installer   # 在线安装, 离线下载 download.oracle.com/otn/java/jdk
+  $ sudo apt-get install oracle-java8-set-default # 使用默认版本jdk1.8
+  $ sudo update-alternatives –config java         # 多版本JDK之间切换
   
   $ wget -q https://packages.microsoft.com/config/ubuntu/19.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
   $ sudo dpkg -i packages-microsoft-prod.deb
   $ sudo apt-get update
-  $ sudo apt-get install dotnet-sdk-3.0        # 安装 .NET Core SDK  > dotnet -h
+  $ sudo apt-get install dotnet-sdk-3.0           # 安装 .NET Core SDK  > dotnet -h
   
   $ sudo apt install -f libncurses5-dev freeglut3-dev fop m4 tk unixodbc unixodbc-dev xsltproc socat #安装erlang依赖
   $ wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_22.1-1~ubuntu~xenial_amd64.deb
@@ -358,7 +358,7 @@ $ source ~/.zshrc # 使配置生效
   $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 100
   $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 150
   $ sudo update-alternatives --config python  # 手动配置/切换版本: python --version ; pip --version
-  $ sudo ln -sf /usr/bin/python2.7 /usr/bin/python #将Python2(恢复)默认
+  $ sudo ln -sf /usr/bin/python2.7 /usr/bin/python # 将Python2(恢复)默认
   
   $ sudo add-apt-repository ppa:ondrej/php  && sudo apt-get update # 安装php (PPA源)
   $ sudo apt-get -y install php7.2-fpm php7.2-mysql php7.2-curl php7.2-gd php7.2-mbstring php7.2-xml php7.2-xmlrpc php7.2-zip php7.2-opcache
@@ -372,9 +372,9 @@ $ source ~/.zshrc # 使配置生效
   $ sudo /etc/init.d/apache2 [status|restart] 
   
   $ sudo apt install nginx        # 安装Nginx
-  $ sudo systemctl status nginx  # 检查状态
+  $ sudo systemctl status nginx   # 检查状态
   $ sudo ufw allow 'Nginx Full'   # 配置防火墙
-  $ sudo ufw status                         # 验证更改
+  $ sudo ufw status               # 验证更改
   $ sudo systemctl restart nginx  # 重启Nginx服务
   $ sudo systemctl disable nginx  # 禁止开机启动
   $ sudo systemctl reload nginx   # 修改配置后，需要重新加载Nginx服务
@@ -386,7 +386,7 @@ $ source ~/.zshrc # 使配置生效
   $ wget -O - https://openresty.org/package/pubkey.gpg | sudo apt-key add -
   $ sudo add-apt-repository -y "deb http://openresty.org/package/ubuntu $(lsb_release -sc) main"
   $ sudo apt-get -y install openresty # 安装openresty  参考 https://openresty.org/en/linux-packages.html
-  $ sudo apt-get -y install --no-install-recommends openresty #最小化安装
+  $ sudo apt-get -y install --no-install-recommends openresty # 最小化安装
   #-config>>  /usr/local/openresty/nginx/conf/nginx.conf
   $ sudo systemctl restart openresty  # 重启
   
@@ -472,13 +472,13 @@ $ source ~/.zshrc # 使配置生效
 ~~~shell
   # 安装
   $ sudo apt-get update
-  $ sudo apt-get install mysql-server   # 默认版本 > sudo yum install mysql-server
+  $ sudo apt-get install mysql-server  # 默认版本 > sudo yum install mysql-server
   $ sudo mysql_secure_installation     # 安装配置
-  $ systemctl status mysql.service        # 检查服务状态
+  $ systemctl status mysql.service     # 检查服务状态
   $ ps aux |grep mysqld　　　　　       # 查看进程: /usr/sbin/mysqld --daemonize --pid-file=/run/mysqld/mysqld.pid
   $ sudo mysql -uroot -p
   $ mysql --help
-  $ cat /etc/mysql/debian.cnf                       # 查看系统密码
+  $ cat /etc/mysql/debian.cnf           # 查看系统密码
   $ mysql -P3306 -u debian-sys-maint -p # 准备修改密码
   > use mysql;
   > update mysql.user set authentication_string=password('root') where user='root' and Host ='localhost';
@@ -486,7 +486,7 @@ $ source ~/.zshrc # 使配置生效
   > flush privileges;
   > quit;
   $ sudo service mysql restart      # 重启: sudo systemctl restart mysql
-  $ mysql -P3306 -u root -p            # 以root身份登录
+  $ mysql -P3306 -u root -p         # 以root身份登录
   # 配置远程访问 (@localhost本机访问; @"%"所有主机都可连接)
   > CREATE USER 'newusername'@'host***' IDENTIFIED BY 'password';
   > select host,user,password from user;  # 当前用户: SELECT USER();
@@ -494,9 +494,9 @@ $ source ~/.zshrc # 使配置生效
   > GRANT ALL PRIVILEGES ON dbname.* TO newusername@"%" IDENTIFIED BY "root"; 
   > GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY "root";
   > SET PASSWORD FOR 'root'@'host***' = PASSWORD('root');
-  > mysqladmin -u root -h host*** password "123456"               # 连接mysql
+  > mysqladmin -u root -h host*** password "123456"       # 连接mysql
   > mysqladmin -u root -p '123456' password 'newpassword' # 修改密码
-  > mysqladmin -u root -p shutdown                                                   # 关闭mysql
+  > mysqladmin -u root -p shutdown                        # 关闭mysql
   
   # GitHub在线使用的数据库迁移工具 github.com/github/gh-ost
   $ gh-ost help

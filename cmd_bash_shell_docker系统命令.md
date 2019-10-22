@@ -14,7 +14,7 @@
 ~~~shell
   # 清屏
   > cls
-  $ clear          # 快捷命令: alias cls='clear'
+  $ clear  # 快捷命令: alias cls='clear'
   
   # 系统
   > ver              # 系统  修复 > sfc/scannow
@@ -54,11 +54,11 @@
   # 用户登陆
   > mkdir -p %USERPROFILE% # 用户目录
   > mkdir to/path             # 创建目录 $ mkdir -p to/path  [-p递归创建目录]
-  $ cd -                                   # 上次访问目录; 用户$HOME目录 > cd ~ ; cd /home/$(whoami) # root 用户为 cd ~  =  /root 
-  > quser                               # 当前用户状态
-  $ whoami && w && id  # 当前用户信息
+  $ cd -                      # 上次访问目录; 用户$HOME目录 > cd ~ ; cd /home/$(whoami) # root 用户为 cd ~  =  /root 
+  > quser                     # 当前用户状态
+  $ whoami && w && id # 当前用户信息
   $ echo $USER  $HOME  $PATH 
-  $ id              # 返回 uid=0(root) gid=0(root) groups=0(root)  ; root登录:  su -
+  $ id            # 返回 uid=0(root) gid=0(root) groups=0(root)  ; root登录:  su -
   $ id -u         # 返回 uid          添加用户(-d=$home)      (-G=多选用户组)       例如(用户名=admin)
   $ mkdir -p /home/admin & chmod 777 /home/admin 
   # 新建用户 - 默认值: useradd -D  |  cat /etc/default/useradd ;修改默认shell: useradd -D -s /bin/zsh
@@ -70,9 +70,9 @@
   # 查询用户信息
   $ sudo grep $USER /etc/passwd /etc/shadow /etc/group /etc/gshadow
   
-  $ sudo su -       # 切换用户至root (并切换到用户主目录/root；超级用户提示符结尾 # 普通用户$ 主目录/home/*)
+  $ sudo su -      # 切换用户至root (并切换到用户主目录/root；超级用户提示符结尾 # 普通用户$ 主目录/home/*)
   $ su admin       # 切换用户至admin
-  $ exit                   # 退出登录
+  $ exit           # 退出登录
   
   $ cat /etc/passwd # 查看所有用户
   $ cat /etc/passwd |grep `id -un` # 查看当前登录用户
@@ -85,16 +85,16 @@
   
   # 网络端口
   > netstat -anT                              # tcp端口(本地地址,外部地址,状态)
-  > netstat -anp tcp | findstr -i "listening" # 查找本机tcp端口监听列表
-  $ netstat -anp |grep 3306                   # 1.通过端口查看进程; 2.通过进程id查看占用端口; [p显示进程]
-  $ sudo netstat -anpW |grep -i "grafana-server" # 网络端口资源列表; [端口tcp+udp]
-  $ sudo netstat -anptW|grep -i "listen" # 网络端口资源列表; [端口tcp] 检查本机所有tcp网络应用程序列表
+  > netstat -anp tcp|findstr -i "listening"   # tcp端口-监听列表; [p传输协议]
+  $ netstat -anp|grep 3306                    # 1.通过端口查看进程; 2.通过进程id查看占用端口; [p显示进程]
+  $ sudo netstat -anpW |grep -i "grafana-server" # 网络端口资源查找; [端口tcp+udp]
+  $ sudo netstat -anptW|grep -i "listen"         # 网络端口资源列表; [端口tcp] 本机所有tcp网络应用程序列表
   $ netstat -atW |grep -i "listen"            # tcp端口-centos $ yum install -y net-tools traceroute
-  $ netstat -tulnp | grep -i "time_wait" # tcp超时-ubuntu $ apt-get update & apt install -y net-tools
+  $ netstat -tulnp | grep -i "time_wait"      # tcp超时-ubuntu $ apt-get update & apt install -y net-tools
   $ ss -t4 state time-wait                    # tcp超时-ubuntu $ apt install -y iproute2 iproute2-doc
   $ ss -at '( dport = :ssh or sport = :ssh )' # 端口为 ssh 的套接字
   $ ss -lntp '( dst :443 or dst :80 )'        # 目的端口为 80,443 的套接字
-  $ ss -lntp  # tcp端口+users进程name-pid-fd   # 常用ss(iproute工具)比netstat(net-tools工具)更强大
+  $ ss -lntp  # tcp端口+users进程name-pid-fd  # 常用ss(iproute工具)比netstat(net-tools工具)更强大
   $ ss -nt state connected dport = :80
   $ ss -nt dport lt :100  # 端口小于100
   $ ss -nt dport gt :1024 # 端口大于1024

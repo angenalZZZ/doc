@@ -474,15 +474,15 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt-get update
   $ sudo apt-get install mysql-server  # 默认版本 > sudo yum install mysql-server
   $ sudo mysql_secure_installation     # 安装配置
-  $ systemctl status mysql.service     # 检查服务状态
-  $ ps aux |grep mysqld　　　　　       # 查看进程: /usr/sbin/mysqld --daemonize --pid-file=/run/mysqld/mysqld.pid
-  $ cat /etc/mysql/debian.cnf           # 查看系统密码
-  $ mysql -P3306 -u debian-sys-maint -p # 准备修改密码
+  $ systemctl status mysql.service     # 检查状态
+  $ ps aux |grep mysqld　　　　　       # 查看进程 /usr/sbin/mysqld --daemonize --pid-file=/run/mysqld/mysqld.pid
+  $ cat /etc/mysql/debian.cnf          # 查看系统密码
+  $ mysql -u debian-sys-maint -p       # 准备修改密码
   > use mysql;
   > update mysql.user set authentication_string=password('root') where user='root' and Host ='localhost';
-  > update user set plugin="mysql_native_password"; 
+  > update user set plugin="mysql_native_password";
   > flush privileges; quit;
-  $ sudo service mysql restart            # 重启: sudo systemctl restart mysql
+  $ sudo service mysql restart            # 重启 systemctl restart mysql
   $ mysql -P3306 -uroot -p                # 以root身份登录
   # 配置远程访问 (@'localhost'本机访问; @'%'所有主机都可连接)
   > CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';
@@ -490,8 +490,8 @@ $ source ~/.zshrc # 使配置生效
   > grant select,insert,update,delete,create,drop,index,alter on dbname.* to newuser@192.168.1.* identified by 'root';
   > GRANT ALL PRIVILEGES ON dbname.* TO 'newuser'@'%' IDENTIFIED BY 'root'; # 授权newuser
   > GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY 'root'; # 默认授权
-  > SET PASSWORD FOR 'root'@'%' = PASSWORD('root');    # 设置密码
-  > mysqladmin -u root -h localhost password '123456'  # 连接mysql
+  > SET PASSWORD FOR 'root'@'%' = PASSWORD('root');    # 设置密码为root
+  > mysqladmin -u root -h localhost password '123456'  # 连接mysql使用`明文密码`
   > mysqladmin -u root -p '123456' password 'HGJ766GR767FKJU0' # 修改密码
   > mysqladmin -u root -p shutdown                     # 关闭mysql
   
@@ -503,17 +503,17 @@ $ source ~/.zshrc # 使配置生效
   $ octosql help
   # 推荐一个对SQL进行优化和改写的自动化工具SOAR(SQL Optimizer And Rewriter)
   $ wget https://github.com/XiaoMi/soar/releases/download/0.11.0/soar.linux-amd64 -O soar && chmod a+x soar
-  $ soar 'select * from film'
+  $ soar 'select * from film' # 显示优化说明
   
-  # 推荐 TiDB, PingCAP公司设计的开源分布式HTAP'混合事务处理和分析'NewSQL-兼容MySQL: pingcap.com/docs-cn
+  # 推荐 TiDB, PingCAP公司设计的开源分布式HTAP`混合事务处理和分析`NewSQL兼容MySQL: pingcap.com/docs-cn
   
-  # 推荐 MySQL 的一个数据库集群系统 Vitess 用于水平弹性扩展MySQL: vitess.io/docs/tutorials
+  # 推荐 Vitess, 一个数据库集群系统, 用于水平弹性扩展MySQL
   $ sudo service apparmor stop               # 1. Disable AppArmor of MySQL,
   $ sudo service apparmor teardown           #    safe to ignore if this errors,
   $ sudo update-rc.d -f apparmor remove      #    remove the apparmor, download vitess-release-*.tar.gz
   $ export VTROOT=/4g/database/vt            # 2. Configure Environment >> .profile
   $ export VTTOP=/4g/database/vt, VTDATAROOT=/4g/database/vt/data, MYSQL_FLAVOR=MySQL57, PATH=$VTROOT/bin:$PATH
-  $ cd examples/local && ./101_initial_cluster.sh # 3. Initial install in local host
+  $ cd examples/local && ./101_initial_cluster.sh # 3. Initial install vitess.io/docs/get-started/local
   # Run Vitess on Kubernetes vitess.io/docs/get-started/kubernetes
 ~~~
 

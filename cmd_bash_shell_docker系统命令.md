@@ -1176,10 +1176,11 @@ obj\
 # 安装 kubectl - client
 $ curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubectl 
 $ sudo chmod +x kubectl && sudo mv kubectl /usr/local/bin/
-# 部署 kubernetes
+# 部署 kubernetes-deployment
 $ docker-compose build && kubectl apply -f /path/to/kube-deployment.yml  # 1 deploy of apply config
 $ docker stack deploy -c /path/to/docker-compose.yml mystack             # 2 deploy stack with compose
-
+# 部署 kubernetes-dashboard
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
 # 查看集群情况
 $ kubectl cluster-info
 # 查看nodes节点[IP和状态]
@@ -1201,7 +1202,6 @@ $ kubectl get secret
 $ kubectl get services
 # 查看namespace
 $ kubectl get namespace
-
 # 创建service或pods    [~ su #]
 $ kubectl create -f development.yaml  #创建Pods[使用yaml创建]
 $ kubectl run nginx --image=nginx --port=8080

@@ -65,8 +65,8 @@
   $ useradd -d /home/admin -G adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare,libvirt admin
   # 修改密码
   $ passwd admin 
-  # 修改用户多选组-G=groups   ;查用户组${id -g 用户名}
-  $ usermod -G 用户名,adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare,libvirt ,docker,rabbitmq... 用户名
+  # 修改用户多选组-G=groups   ;查用户组${id -g 用户名} $ groups yangzhou
+  $ usermod -G yangzhou,adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare,docker,mysql,mongodb,libvirt,rabbitmq yangzhou
   # 查询用户信息
   $ sudo grep $USER /etc/passwd /etc/shadow /etc/group /etc/gshadow
   

@@ -1240,7 +1240,6 @@ $ kvm-ok && uname -m  #INFO: /dev/kvm exists; x86_64;Ubuntu需升级^18.10 > sud
 $ sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients libvirt-bin bridge-utils #依赖<ubuntu>
 $ curl -LO https://github.com/kubernetes/minikube/releases/download/v1.3.1/docker-machine-driver-kvm2
 $ sudo adduser `id -un` libvirt        #添加当前用户到组libvirt
-$ virsh list --all                     #可选,验证安装的virsh
 $ sudo chown root:libvirt /dev/kvm     #改变目录kvm的属主 (如果> ll /dev/kvm ;返回root属主)
 $ rmmod kvm && modprobe -a kvm         #跳过ERR: Module kvm is in use by: kvmgt kvm_intel
 $ sudo apt-get install virt-manager    #可选,安装virt管理应用程序
@@ -1248,10 +1247,11 @@ $ sudo install docker-machine-driver-kvm2 /usr/local/bin/ #安装kvm2
 $ libvirtd -d && sudo systemctl start virtlogd.socket #启动kvm2相关服务
 # #常用kvm命令
 $ cat /var/lib/libvirt/dnsmasq/virbr1.status #通过kvm创建虚拟机的minikube文件记录对应的ip信息等
-$ virsh edit xxx   #修改虚拟机xxx的配置
-$ virsh setmem xxx 2097152 #设置虚拟机内存2G
-$ virsh start xxx  #启动已创建的虚拟机
-$ virsh suspend|resume xxx #暂停|恢复
+$ virsh list --all                 #查询安装的虚拟机
+$ virsh edit minikube   #配置虚拟机minikube 配置文件
+$ virsh setmem minikube 1048576 #设置虚拟机内存限制1G
+$ virsh start minikube  #启动已创建的虚拟机
+$ virsh suspend|resume minikube #暂停|恢复
 
 # 启动 minikube 集群
 $ sudo minikube config set vm-driver virtualbox #默认虚拟机(virtualbox|kvm2)

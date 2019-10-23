@@ -1230,20 +1230,27 @@ $ kubectl exec $pods_name -it -n test -- /bin/sh #执行Pods -pods/service descr
 $ sudo apt install socat cpu-checker -y
 $ curl -LO https://github.com/kubernetes/minikube/releases/download/v1.3.1/minikube-linux-amd64
 $ sudo install minikube-linux-amd64 /usr/local/bin/minikube 
-# #安装<推荐,方式2> 使用阿里下载kubernetes
+# #安装<推荐方式>使用阿里下载
 $ curl -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v1.3.0/minikube-linux-amd64
 $ sudo chmod +x minikube && sudo mv minikube /usr/local/bin/
 
 # 安装虚拟机kvm | https://help.ubuntu.com/community/KVM/Installation
 $ kvm-ok && uname -m  #INFO: /dev/kvm exists; x86_64;Ubuntu需升级^18.10 > sudo do-release-upgrade -d
-$ sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils #安装依赖
+$ sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients libvirt-bin bridge-utils #依赖<ubuntu>
 $ curl -LO https://github.com/kubernetes/minikube/releases/download/v1.3.1/docker-machine-driver-kvm2
 $ sudo adduser `id -un` libvirt        #添加当前用户到组libvirt
 $ virsh list --all                     #可选,验证安装的virsh
 $ sudo chown root:libvirt /dev/kvm     #改变目录kvm的属主 (如果> ll /dev/kvm ;返回root属主)
 $ rmmod kvm && modprobe -a kvm         #跳过ERR: Module kvm is in use by: kvmgt kvm_intel
 $ sudo apt-get install virt-manager    #可选,安装virt管理应用程序
-$ sudo install docker-machine-driver-kvm2 /usr/local/bin/ #最后,安装kvm2
+$ sudo install docker-machine-driver-kvm2 /usr/local/bin/ #安装kvm2
+$ libvirtd -d && sudo systemctl start virtlogd.socket #启动kvm2相关服务
+# #常用kvm命令
+$ cat /var/lib/libvirt/dnsmasq/virbr1.status #通过kvm创建虚拟机的minikube文件记录对应的ip信息等
+$ virsh edit xxx   #修改虚拟机xxx的配置
+$ virsh setmem xxx 2097152 #设置虚拟机内存2G
+$ virsh start xxx  #启动已创建的虚拟机
+$ virsh suspend|resume xxx #暂停|恢复
 
 # 启动 minikube 集群
 $ sudo minikube config set vm-driver virtualbox #默认虚拟机(virtualbox|kvm2)
@@ -1251,11 +1258,11 @@ $ sudo minikube config set memory 4096          #默认内存限制4G(default:2G
 $ sudo minikube start --vm-driver=kvm2          #启动+代理;可选--registry-mirror=https://registry.docker-cn.com
   --docker-env HTTP_PROXY=http://f1361db2.m.daocloud.io --docker-env HTTPS_PROXY=http://f1361db2.m.daocloud.io
 # #启动<推荐,方式2> 使用阿里的镜像https://registry.cn-hangzhou.aliyuncs.com
-$ sudo minikube start --vm-driver=kvm2 --cpus=4 --memory=4096 #推荐kvm2 driver + 限制cpu&memory
+$ sudo minikube start --vm-driver=kvm2 --cpus=4 --memory=4096 #推荐kvm2 +限制cpu&memory +日志级别--v=7|3|2|1|0
 $ sudo minikube start --vm-driver=virtualbox #Starting local Kubernetes cluster...Starting VM...Downloading
 #下载~/.minikube/cache/iso/minikube-v1.3.0.iso < https://storage.googleapis.com/minikube/iso/minikube-v1.3.0.iso
 
-# #启动，第n个集群
+# #启动 第n个集群
 $ sudo minikube start -p <name> --vm-driver=kvm2  #创建1个新的VM<name>
 $ sudo minikube delete -p minikube          #删除已存在的VM<name=minikube>
 # #然后，在集群中运行一个容器服务<hello-minikube>

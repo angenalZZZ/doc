@@ -472,10 +472,10 @@ $ source ~/.zshrc # 使配置生效
 ~~~shell
   # 安装
   $ sudo apt-get update
-  $ sudo apt-get install mysql-server  # 默认版本 > sudo yum install mariadb mariadb-server
+  $ sudo apt-get install mysql-server  # 默认版本 <CentOS7> sudo yum install mariadb mariadb-server
   $ sudo mysql_secure_installation     # 安装配置
-  $ sudo systemctl status mysql.service   # 检查状态
-  $ sudo systemctl enable mysql.service  # 开机启动
+  $ sudo systemctl status mysql   # 检查状态
+  $ sudo systemctl enable mysql  # 开机启动
   $ ps aux |grep mysqld　　　　　       # 查看进程 /usr/sbin/mysqld --daemonize --pid-file=/run/mysqld/mysqld.pid
   $ cat /etc/mysql/debian.cnf          # 查看系统密码
   $ mysql -u debian-sys-maint -p       # 准备修改密码

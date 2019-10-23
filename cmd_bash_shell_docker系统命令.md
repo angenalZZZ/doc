@@ -511,10 +511,13 @@ $ source ~/.zshrc # 使配置生效
   # 推荐 TiDB, PingCAP公司设计的开源分布式HTAP'混合事务处理和分析'NewSQL-兼容MySQL: pingcap.com/docs-cn
   
   # 推荐 MySQL 的一个数据库集群系统 Vitess 用于水平弹性扩展MySQL: vitess.io/docs/tutorials
-  $ sudo service apparmor stop               # 1. Disable AppArmor
-  $ sudo service apparmor teardown           #    safe to ignore if this errors
-  $ sudo update-rc.d -f apparmor remove
-  $ export VTROOT=/path/to/extracted-tarball # 2. Configure Environment >> .bashrc ...
+  $ sudo service apparmor stop               # 1. Disable AppArmor of MySQL,
+  $ sudo service apparmor teardown           #    safe to ignore if this errors,
+  $ sudo update-rc.d -f apparmor remove      #    remove the apparmor, download vitess-release-*.tar.gz
+  $ export VTROOT=/4g/database/vt            # 2. Configure Environment >> .profile
+  $ export VTTOP=/4g/database/vt, VTDATAROOT=/4g/database/vt/data, MYSQL_FLAVOR=MySQL57, PATH=$VTROOT/bin:$PATH
+  $ cd examples/local && ./101_initial_cluster.sh # 3. Initial install in local host
+  # Run Vitess on Kubernetes vitess.io/docs/get-started/kubernetes
 ~~~
 
 > `PostgreSQL` 关系型数据库 - 文档 www.postgresql.org
@@ -1246,12 +1249,12 @@ $ sudo apt-get install virt-manager    #可选,安装virt管理应用程序
 $ sudo install docker-machine-driver-kvm2 /usr/local/bin/ #最后,安装kvm2
 
 # 启动 minikube 集群
-$ sudo minikube config set vm-driver virtualbox #设置默认虚拟机(virtualbox|kvm2|none)
+$ sudo minikube config set vm-driver virtualbox #默认虚拟机(virtualbox|kvm2)
 $ sudo minikube config set memory 4096          #默认内存限制4G(default:2GB-RAM)
 $ sudo minikube start --vm-driver=kvm2          #启动+代理;可选--registry-mirror=https://registry.docker-cn.com
   --docker-env HTTP_PROXY=http://f1361db2.m.daocloud.io --docker-env HTTPS_PROXY=http://f1361db2.m.daocloud.io
 # #启动<推荐,方式2> 使用阿里的镜像https://registry.cn-hangzhou.aliyuncs.com
-$ sudo minikube start --vm-driver=kvm2          #推荐kvm2 driver
+$ sudo minikube start --vm-driver=kvm2 --cpus=4 --memory=4096 #推荐kvm2 driver + 限制cpu&memory
 $ sudo minikube start --vm-driver=virtualbox #Starting local Kubernetes cluster...Starting VM...Downloading
 #下载~/.minikube/cache/iso/minikube-v1.3.0.iso < https://storage.googleapis.com/minikube/iso/minikube-v1.3.0.iso
 

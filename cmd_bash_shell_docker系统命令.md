@@ -838,7 +838,8 @@ sudo systemctl daemon-reload && sudo systemctl restart docker.service
 > `Dockerfile` : `docker build Image(tag=name+version)` > `push Registry` <br>
   `Registry & Disk` : `Repository` > `Image-Url` | `Image save .tar to-Disk`, `Container export .tar(snapshot)` <br>
   `Docker`     : `pull Image from-Registry` | `load Image .tar from-Disk` <br>
-  `Data`       : `docker container run Image` - `--volumes-from Data-Container` - `-v from-Disk:Data-Dir`
+  `Data`       : `docker container run Image` - `--volumes-from Data-Container` - `-v from-Disk:Data-Dir` <br>
+  `Cert`       : `C:/ProgramData/DockerDesktop/pki/` ...
 
 ~~~shell
 # 安装Docker，先切换用户root ~ su   (一般用国内镜像daocloud)

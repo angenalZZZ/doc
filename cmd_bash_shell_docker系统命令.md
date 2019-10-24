@@ -266,28 +266,28 @@
   > wmic printer where default='TRUE' get name                              # 获取默认打印机
   > wmic printer where name='Microsoft Print to PDF' call setdefaultprinter # 设置默认打印机
   
-  # 证书：           CA根证书(服务器身份验证)                                apiserver.crt <=> apiserver.key
+  # 证书：           CA根证书(服务器身份验证)                                # apiserver.crt <=> apiserver.key
     *版本            V1
-    *颁发者          acme                                                  CN = acme
-    *使用者          acme-apiserver                                        CN = acme-apiserver
+    *颁发者          acme                                                   # CN = acme
+    *使用者          acme-apiserver                                         # CN = acme-apiserver
     *公钥            RSA (2048 Bits)
     *公钥参数         05 00
     *增强型密钥用法   服务器身份验证 (1.3.6.1.5.5.7.3.1)
     *使用者可选名称   DNS Name=localhost \ DNS Name=host.acme.internal \
                      IP Address=0.0.0.0 \ IP Address=10.96.0.1 \ IP Address=192.168.65.3 \ IP Address=127.0.0.1
-    *密钥用法         Digital Signature, Key Encipherment, Certificate Signing (a4) #CA已认证
-                     #self.sign-> Digital Signature, Key Encipherment (a0) #自签名,未经CA认证
-    *基本约束         Subject Type=CA  \  Path Length Constraint=None
+    *密钥用法         Digital Signature, Key Encipherment, Certificate Signing (a4) #CA已认证$
+                     #self.sign-> Digital Signature, Key Encipherment (a0) #自签名,未经CA认证$
+    *基本约束         Subject Type=CA \ Path Length Constraint=None
     *指纹             a79be724538b668fa817e8578d6a8078337fd3ad
     
   # 修改PowerShell脚本执行策略 windows 10
   > Get-ExecutionPolicy
-  > Set-ExecutionPolicy RemoteSigned [RemoteSigned,AllSigned,Bypass,Restricted...]
+  > Set-ExecutionPolicy RemoteSigned [RemoteSigned,AllSigned,Bypass,Restricted]
   # 创建PowerShell脚本数字签名认证 windows 10
-  > cd "C:\Program Files (x86)\Windows Kits\10\bin\10.0.17763.0\x64" # 签名工具makecert [eku指定为代码签名]
-  > makecert -n "CN=Power Shell Local Certificate Root" -a sha1 -eku 1.3.6.1.5.5.7.3.3 -r -sv root.pvk root.cer -ss Root -sr LocalMachine
+  > cd "C:\Program Files (x86)\Windows Kits\10\bin\10.0.17763.0\x64" # 签名工具makecert [-eku设为代码签名]
+  > makecert -n "CN=Api Cert" -a sha1 -eku 1.3.6.1.5.5.7.3.1 -r -sv api-root.pvk api-root.cer -ss Root -sr LocalMachine
   # 打开PowerShell查询数字签名证书
-  > ls Cert:\CurrentUser\Root | where {$_.Subject -eq "CN=Power Shell Local Certificate Root"}
+  > ls Cert:\CurrentUser\Root | where {$_.Subject -eq "CN=Api Cert"}
   
   # 字体
   $ sudo apt-get install fontconfig                # yum install fontconfig  #<CentOS>

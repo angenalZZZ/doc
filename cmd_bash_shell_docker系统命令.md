@@ -67,6 +67,7 @@
   $ passwd admin 
   # 修改用户多选组-G=groups   ;查用户组${id -g 用户名} $ groups yangzhou
   $ usermod -G yangzhou,adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare,docker,mysql,mongodb,libvirt,rabbitmq yangzhou
+  $ usermod -aG rabbitmq yangzhou # 直接添加组给用户
   # 查询用户信息
   $ sudo grep $USER /etc/passwd /etc/shadow /etc/group /etc/gshadow
   

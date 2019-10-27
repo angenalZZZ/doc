@@ -155,11 +155,18 @@
   #6 : Read & Write  #7 : Read, Write & Execute
   
   # 文件复制
+  > xcopy "来源目录" "目标目录" /E /H /K /X /Y
   > xcopy /isy C:\...\bin\Release\netcoreapp2.1\* F:\app\dotnetcore\centos\a
   > robocopy /e source destination [file [file]...] # Windows的可靠文件复制/备份  帮助: robocopy /?
   $ cp -if /mnt/floppy/* ~/floppy                   # [~/floppy 指向 /root/floppy 或 /home/floppy]
   $ cp -if /mnt/d/Docker/App/ubuntu/usr/local/bin/* /usr/local/bin # [i覆盖文件时,询问?]
   $ cp -fr /usr/local/bin/* /mnt/d/Docker/App/ubuntu/usr/local/bin # [r复制文件目录!]
+  # 创建目录的`符号链接(软链接)`
+  > mklink /d "来源目录" "目标目录"
+  $ ln -s '来源目录' '目标目录'
+  # 创建目录的`目录联接(硬链接)`
+  > mklink /j "来源目录" "目标目录"
+  $ ln -f '来源文件' '目标文件'  #-f强制(可选参数)
   
   # 系统备份和还原
   $ tar -czpvf /media/yangzhou/Software/Software/ubuntu/backup@`date +%Y`.tar.gz 

@@ -719,10 +719,10 @@ $ source ~/.zshrc # 使配置生效
     ubercadence/server:<tag>                             # <tag> 0.9.4-auto-setup
 ~~~
 
-> `SSH` 建立安全的加密连接：一个密码对应一个SSH-key  https://www.chiark.greenend.org.uk  https://www.netsarang.com/zh/
+> `SSH` [建立安全的加密连接：一个密码对应一个SSH-key](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04)  https://www.chiark.greenend.org.uk  https://www.netsarang.com/zh/
 ~~~shell
   $ sudo apt install openssh-server       # 安装SSH <ubuntu> 192.168.1.100:22
-  > ssh-keygen -t rsa -C "angenal.2008@yahoo.com.cn"
+  > ssh-keygen -t rsa -C "angenal.2008@yahoo.com.cn" # 生成密钥对(~/.ssh/ id_rsa + id_rsa.pub )
   > dir "C:\Users\Administrator/.ssh"     # 存储的本地公钥目录
   > clip < %USERPROFILE%/.ssh/id_rsa.pub  # 拷贝公钥到粘贴板中
   $ cat ~/.ssh/id_rsa.pub                 # https://code.aliyun.com/help/ssh/README

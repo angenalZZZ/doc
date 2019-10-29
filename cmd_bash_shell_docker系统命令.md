@@ -56,9 +56,9 @@
   > mkdir to/path # 创建目录 $ mkdir -p to/path  [-p递归创建目录]
   $ cd -          # 上次访问目录; 用户$HOME目录 > cd ~ ; cd /home/$(whoami) # root 用户为 cd ~  = /root 
   > quser         # 当前用户状态
-  $ whoami && w && id        # 当前用户信息
-  $ echo $USER  $HOME  $PATH # 当前用户环境
-  $ id            # 返回 uid=0(root) gid=0(root) groups=0(root)  ; root登录:  su -
+  $ whoami && w && id  # 当前用户信息
+  $ echo -e "$USER\n$HOME\n$SHELL\n$PATH\n$LOGNAME\n$MAIL" # 当前用户环境 [-e允许反斜杠转义字符]
+  $ id            # 返回 uid=0(root) gid=0(root) groups=0(root)  ; root登录:  su - ; su root
   $ id -u         # 返回 uid          添加用户(-d=$home)      (-G=多选用户组)       例如(用户名=admin)
   $ mkdir -p /home/admin & chmod 777 /home/admin 
   # 新建用户 - 默认值: useradd -D  |  cat /etc/default/useradd ;修改默认shell: useradd -D -s /bin/zsh

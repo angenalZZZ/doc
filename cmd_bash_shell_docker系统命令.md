@@ -22,8 +22,8 @@
   > shell:startup    # [开始]菜单/启动/添加*.vbs
   $ uname -a         # 系统信息: $(uname -s)=系统'Linux'; $(uname -m)=CPU架构'x86_64';
   $ egrep -c ' lm ' /proc/cpuinfo  &&  egrep -c '(vmx|svm)' /proc/cpuinfo
-  # 系统版本号'发行版本名称'*** Linux-redhat > cat /etc/redhat-release
-  $ cat /etc/issue && lsb_release -cs
+  # 系统版本号'发行版本'*** Linux-redhat > cat /etc/redhat-release
+  $ cat /etc/issue && lsb_release -cs ; lsb_release -a #Linux发行版本信息
   $ echo "Linux-x86_64" && echo $(uname -s)-$(uname -m) && echo `uname -s`-`uname -m`
   
   # 时间

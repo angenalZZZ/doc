@@ -13,9 +13,10 @@ docker > docker pull redis;docker run --name redis-server -d -p6379:6379 redis;d
 
 ####  1.查询服务信息
 > [try redis-cli](http://try.redis.io)
-
+> redis://user:pass@host:port/db
 ~~~
-redis-cli -h 127.0.0.1 -p 6379 -a 123456 -n 0 # redis连接参数 [p端口],[a密码],[n数据库*默认0]
+redis-cli -h 127.0.0.1 -p 6379 -a 123456 -n 0 # redis连接参数 [p端口],[a密码一般不填],[n数据库*默认0]
+redis-cli -r 10000 RPUSH queue:myqueue '{"class":"MyClass","args":["hello","world"]}' #-<插入1万条记录进队列中>
 > info [all]                    # 获取所有信息
   # 1. Server 服务器运行的环境参数
   # 2. Clients 客户端相关信息

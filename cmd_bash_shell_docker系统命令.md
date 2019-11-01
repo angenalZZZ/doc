@@ -1191,12 +1191,14 @@ obj\
 
 > [`k8s`](https://www.kubernetes.org.cn) 是一个流行的容器管理编排平台，集中式管理数个服务的容器集群；<br>
   　[docker-desktop](https://www.docker.com/products/docker-desktop)已添加Docker-Compose与Kubernetes进行完整的集成。<br>
-  　`Pod`：最小单元、一组容器的集合、同一个Pod内的容器共享网络命名空间、短暂的；<br>
-  　`Controllers`：`ReplicaSet`确保预期的Pod副本数量，`ReplicaSet`确保预期的Pod副本数量，`Deployment`无状态应用部署，`StatefulSet`有状态应用部署，`DaemonSet`确保所有节点运行同一个Pod，`Job`一次性任务，`CronJob`定时任务；其它...<br>
-  　`Service`：最小单元、一组容器的集合、同一个Pod内的容器共享网络命名空间、短暂的；<br>
-  　`Pod`：防止Pod失联、定义一组Pod的访问策略；<br>
+  　`Pod`：最小单元、一组容器的集合、同一个Pod内的容器共享网络命名空间、短暂的(重新发布后会丢失+没有存储Id)；<br>
+  　`Controllers`： `ReplicaSet`确保预期的Pod副本数量(由以下部署产生)，<br>
+  　  　`Deployment`无状态应用(`website`..)部署，`StatefulSet`有状态应用(网络Id+存储`zk`|`mq`..)部署，<br>
+  　  　`DaemonSet`确保所有节点运行同一个Pod(监控`monitoring system`..)，<br>
+  　  　`Job`一次性任务，`CronJob`定时任务，其它... ；<br>
+  　`Service`：防止Pod失联、定义一组Pod的访问策略`对外提供服务`；<br>
   　`Label`：标签，附加到某个资源上，用于关联对象、查询和筛选；<br>
-  　`Namespace`：命名空间，将对象逻辑上隔离；<br>
+  　`Namespace`：命名空间，将对象逻辑上隔离。<br>
 ~~~
 # 安装 kubectl - client
 $ curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubectl 

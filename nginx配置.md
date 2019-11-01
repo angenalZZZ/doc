@@ -2,7 +2,7 @@
 
 * [配置文件检查与分析工具gixy](https://github.com/yandex/gixy)
 
-* [配置参数说明与在线工具config](https://nginxconfig.io/) https://github.com/digitalocean/nginxconfig.io
+* [配置参数说明与在线工具](https://nginxconfig.io/)  <<  https://github.com/digitalocean/nginxconfig.io
 ~~~
 #进程用户
 user nobody;

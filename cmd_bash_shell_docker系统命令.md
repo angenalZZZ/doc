@@ -33,6 +33,10 @@
   > unixdate +%s            # 当前时间戳 (unix timestamp)
   > unixdate "+%Y/%m/%d %X" # 当前本地时间 yyyy/MM/dd HH:mm:ss
   $ date -u "+%Y/%m/%d %X"  # 当前UTC时间 yyyy/MM/dd HH:mm:ss
+  $ TIMESTAMP="$(date --utc +%s)" # 时间戳+签名认证
+  $ SECRET=123456 && TOKEN="$(cat /dev/urandom|tr -d -c '[:alnum:]'|head -c $(( 32 - ${#TIMESTAMP} )))"
+  $ SIGNATURE="$(printf "${TIMESTAMP}${TOKEN}"|openssl dgst -sha256 -hmac "${SECRET}" -binary|openssl enc -base64)"
+  $ echo "Authorization: signature=${SIGNATURE},secret=${SECRET},token=${TOKEN},timestamp=${TIMESTAMP}"
   $ /usr/share/zoneinfo/localtime -> /etc/localtime  # 本地时间文件
   $ export TZ='Asia/Shanghai' # 设置本地时区 | 帮助选择时区的命令tzselect |配置文件vi ~/.profile<TZ='Asia/Shanghai'
   $ date "+%Y/%m/%d %X"     # 打印当前本地时间 | 本地日期 date +%Y%m%d | $(Hardware-Clock) hwclock
@@ -725,14 +729,41 @@ $ source ~/.zshrc # 使配置生效
 
 > `SSH` [建立安全的加密连接：一个密码对应一个SSH-key](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04)  https://www.chiark.greenend.org.uk  https://www.netsarang.com/zh/
 ~~~shell
-  $ sudo apt install openssh-server       # 安装SSH <ubuntu> 192.168.1.100:22
-  > ssh-keygen -t rsa -C "angenal.2008@yahoo.com.cn" # 生成密钥对(~/.ssh/ id_rsa + id_rsa.pub )
+  # 安装服务sshd ：OpenSSH守护进程
+  # < centos >---------------------------
+  $ rpm -qa | grep ssh  # 检查服务ssh是否已安装: netstat -antp | grep sshd [端口:22]
+  $ yum install -y initscripts # 安装服务netstat [/sbin/service]
+  $ yum install -y openssh-server # 安装服务ssh
+  $ service sshd start | service sshd stop # 启动sshd|停止
+  $ chkconfig sshd on # 开机启动
+  # < ubuntu >---------------------------
+  $ sudo apt-get remove --purge openssh-server # 先删ssh(可忽略此操作)
+  $ sudo apt-get -y install openssh-server     # 再安装ssh
+  $ sudo rm /etc/ssh/ssh_config                # 先删配置文件, 让ssh服务自己想办法链接-(可忽略此操作)
+  $ sudo ssh-keygen -A                         # 先生成主机keys-(当提示Could not load host key)
+  $ sudo service ssh --full-restart            # 再启动ssh +(设置登录后)
+  # < sshd service >---------------------
+  $ systemctl start sshd   # systemctl启动sshd
+  $ systemctl status sshd  # systemctl查看状态
+  $ systemctl enable sshd  # systemctl开机启动生效
+    ln -s '/usr/lib/systemd/system/sshd.service' '/etc/systemd/system/multi-user.target.wants/sshd.service'
+  $ systemctl disable sshd # systemctl关闭开机启动
+    rm '/etc/systemd/system/multi-user.target.wants/sshd.service'
+  # < ssh root login >-------------------
+  $ sudo passwd root              # 修改root密码，用于root登录ssh
+  $ sudo vim /etc/ssh/sshd_config # 修改配置文件 > # Authentication: (全部启用,去除#)
+    # vim命令（:w 编辑模式, :i 插入模式, :x 回车保存, :qa! 退出不保存, gg dG 清空文件）
+    > PermitRootLogin yes         # 启用root登录  #PermitRootLogin prohibit-password
+    > sudo service ssh restart    # 重启ssh
+  # < user login >-----------------------
+  > ssh-keygen -t rsa -C "angenal@hotmail.com" #+生成密钥对( ~/.ssh/ id_rsa + id_rsa.pub )
   > dir "C:\Users\Administrator/.ssh"     # 存储的本地公钥目录
   > clip < %USERPROFILE%/.ssh/id_rsa.pub  # 拷贝公钥到粘贴板中
   $ cat ~/.ssh/id_rsa.pub                 # https://code.aliyun.com/help/ssh/README
   $ xclip -sel clip < ~/.ssh/id_rsa.pub   # GNU/Linux (requires xclip)
   $ pbcopy < ~/.ssh/id_rsa.pub            # <MacOS>
-  # felix 提供 SSH Web管理后台 + RESTful Api接口<ssh+gin+GORM> | 源码 github.com/dejavuzhou/felix
+  
+  # felix 提供 SSH Web管理后台 + RESTful Api接口<ssh+gin+GORM> github.com/dejavuzhou/felix
   > felix sshw -a :8022 -x 1440 -u admin -p admin -s @Ubr)Vrp~Zoo6Rvrk1PP1*ZXPYby_Z)s # felix -h
 ~~~
 
@@ -753,34 +784,6 @@ $ source ~/.zshrc # 使配置生效
   #3.发送一个`log` Event，所有节点都会处理该Event
   $ serf event -rpc-addr=127.0.0.1:7473 log play  #会向对应的日志文件写入文本
   $ serf query -rpc-addr=127.0.0.1:7473 -tag role=api2 greet play #向node1发Query,但通过-tag设置实际的处理节点为node2
-~~~
-
-> `Docker` 客户端 (连接到 Docker for Windows10)[可选]
-~~~shell
-  # < Windows Subsystem for Linux | WSL >---------------------------
-  $ sudo apt install docker.io              # 安装Docker客户端 | docker.io get client connection.
-  $ export DOCKER_HOST=tcp://127.0.0.1:2375 # 设置环境, 使用 vi ~/.bashrc [~/.bash_profile](在文件结尾添加)
-  $ docker [COMMAND] --help                 # 执行Docker命令
-
-  # Docker正式环境: 修改Linux内核参数 https://blog.csdn.net/guanheng68/article/details/81710406
-  $ sysctl -w vm.max_map_count=262144       # 操作无效时, 使用 vi /etc/sysctl.conf 修改
-  $ grep vm.max_map_count /etc/sysctl.conf  # 检查设置
-
-  # 安装 Ansible 配置管理和IT自动化工具-(系统运维)一个强大的配置管理解决方案(由Python编写)
-  $ sudo apt update  # in ubuntu
-  $ sudo apt install software-properties-common
-  $ sudo apt-add-repository --yes --update ppa:ansible/ansible
-  $ sudo apt install ansible        # https://www.jianshu.com/c/67d13df667ba
-  # 安装 Airflow 任务调度(由Python编写) https://www.jianshu.com/p/9bed1e3ab93b
-  $ sudo apt install libkrb5-dev libsasl2-dev libmysqlclient-dev  # 安装airflow[all]依赖包
-  $ mkdir airflow && cd airflow
-  $ pip install setuptools_git
-  $ pip download pymssql
-  $ pip download apache-airflow[all]                       # 1.离线: tar -zcf airflow.tar.gz *
-  $ cd airflow                                             # 2.解压: tar -zxf airflow.tar.gz
-  $ pip install apache-airflow[all] --no-index -f ./       # 3.安装airflow[all]
-  $ echo "export AIRFLOW_HOME=~/app/airflow" >> ~/.bashrc  # 4.配置
-  $ source ~/.bashrc && airflow initdb                     # 5.部署
 ~~~
 
 > `图片压缩`
@@ -841,6 +844,35 @@ $ source ~/.zshrc # 使配置生效
   # u 以累计形式浏览网络 I/O
   # q 退出(ESC或Ctrl+C)
 ~~~
+
+> `Docker` 客户端 (连接到 Docker for Windows10)
+~~~shell
+  # < Windows Subsystem for Linux | WSL >---------------------------
+  $ sudo apt install docker.io              # 安装Docker客户端 | docker.io get client connection.
+  $ export DOCKER_HOST=tcp://127.0.0.1:2375 # 设置环境, 使用 vi ~/.bashrc [~/.bash_profile](在文件结尾添加)
+  $ docker [COMMAND] --help                 # 执行Docker命令
+
+  # Docker正式环境: 修改Linux内核参数 https://blog.csdn.net/guanheng68/article/details/81710406
+  $ sysctl -w vm.max_map_count=262144       # 操作无效时, 使用 vi /etc/sysctl.conf 修改
+  $ grep vm.max_map_count /etc/sysctl.conf  # 检查设置
+
+  # 安装 Ansible 配置管理和IT自动化工具-(系统运维)一个强大的配置管理解决方案(由Python编写)
+  $ sudo apt update  # < ubuntu >
+  $ sudo apt install software-properties-common
+  $ sudo apt-add-repository --yes --update ppa:ansible/ansible
+  $ sudo apt install ansible        # https://www.jianshu.com/c/67d13df667ba
+  # 安装 Airflow 任务调度(由Python编写) https://www.jianshu.com/p/9bed1e3ab93b
+  $ sudo apt install libkrb5-dev libsasl2-dev libmysqlclient-dev  # 安装airflow[all]依赖包
+  $ mkdir airflow && cd airflow
+  $ pip install setuptools_git
+  $ pip download pymssql
+  $ pip download apache-airflow[all]                       # 1.离线: tar -zcf airflow.tar.gz *
+  $ cd airflow                                             # 2.解压: tar -zxf airflow.tar.gz
+  $ pip install apache-airflow[all] --no-index -f ./       # 3.安装airflow[all]
+  $ echo "export AIRFLOW_HOME=~/app/airflow" >> ~/.bashrc  # 4.配置
+  $ source ~/.bashrc && airflow initdb                     # 5.部署
+~~~
+
 ----
 
 # [**docker**](https://docs.docker.com)
@@ -1991,33 +2023,6 @@ smbclient：samba服务器客户端工具
 smbmount：加载samba文件系统
 smbpasswd：改变samba用户的密码
 squid：HTTP代理服务器程序
-sshd：OpenSSH守护进程
-# 安装服务sshd
-  # < centos >--------------------------- 
-  $ rpm -qa | grep ssh  # 检查服务ssh是否已安装: netstat -antp | grep sshd [端口:22]
-  $ yum install -y initscripts # 安装服务netstat [/sbin/service]
-  $ yum install -y openssh-server # 安装服务ssh
-  $ service sshd start | service sshd stop # 启动sshd|停止
-  $ chkconfig sshd on # 开机启动
-  # < ubuntu >--------------------------- Ubuntu 18.04 LTS on Windows 10
-  $ sudo apt-get remove --purge openssh-server   # 先删ssh -(可忽略此操作)
-  $ sudo apt-get install openssh-server          # 再安装ssh
-  $ sudo rm /etc/ssh/ssh_config                  # 先删配置文件, 让ssh服务自己想办法链接-(可忽略此操作)
-  $ sudo ssh-keygen -A                           # 先生成主机keys-(当提示Could not load host key)
-  $ sudo service ssh --full-restart              # 再启动ssh +(设置登录后)
-  # systemctl------------------------------------
-  $ systemctl start sshd   # systemctl启动sshd
-  $ systemctl status sshd  # systemctl查看状态
-  $ systemctl enable sshd  # systemctl开机启动生效
-    ln -s '/usr/lib/systemd/system/sshd.service' '/etc/systemd/system/multi-user.target.wants/sshd.service'
-  $ systemctl disable sshd # systemctl关闭开机启动
-    rm '/etc/systemd/system/multi-user.target.wants/sshd.service'
-  # root-login------------------------------------
-  $ sudo passwd root              # 修改root密码，用于root登录ssh
-  $ sudo vim /etc/ssh/sshd_config # 修改配置文件 > # Authentication: (全部启用,去除#)
-    # vim命令（:w 编辑模式, :i 插入模式, :x 回车保存, :qa! 退出不保存, gg dG 清空文件）
-    > PermitRootLogin yes         # 启用root登录  #PermitRootLogin prohibit-password
-    > sudo service ssh restart    # 重启ssh
 ~~~
 
 #### 上传文件

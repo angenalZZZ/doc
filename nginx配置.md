@@ -1,8 +1,8 @@
 # [Nginx](http://www.nginx.cn/doc/)
 
-* [配置文件的检查与分析工具gixy](https://github.com/yandex/gixy)
+* [配置文件检查与分析工具gixy](https://github.com/yandex/gixy)
 
-* 基本配置与参数说明
+* [配置参数说明与在线工具config](https://nginxconfig.io/) https://github.com/digitalocean/nginxconfig.io
 ~~~
 #进程用户
 user nobody;

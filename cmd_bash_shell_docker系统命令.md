@@ -727,7 +727,7 @@ $ source ~/.zshrc # 使配置生效
     ubercadence/server:<tag>                             # <tag> 0.9.4-auto-setup
 ~~~
 
-> `SSH` [建立安全的加密连接：一个密码对应一个SSH-key](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04)  https://www.chiark.greenend.org.uk  https://www.netsarang.com/zh/
+> [`SSH`](https://www.netsarang.com/zh/) [建立安全的加密连接：一个密码对应一个SSH-key](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-16-04)  https://www.chiark.greenend.org.uk
 ~~~shell
   # 安装服务sshd ：OpenSSH守护进程
   # < centos >---------------------------

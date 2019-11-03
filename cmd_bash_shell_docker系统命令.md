@@ -7,7 +7,7 @@
 
  * [Windows10安装Linux子系统(WSL)](https://www.cnblogs.com/xiaoliangge/p/9124089.html)
  * [Linux开发环境及常用安装zsh-ssh-git-redis-mysql-mongodb-pilosa-influxdb-grafana-nsq.kafka.rabbitmq...](#linux开发环境及常用安装)
- * [Linux常用命令ls、find、grep、xargs、sort、uniq、tr、cut、paste、wc、sed、awk...](#Linux常用命令)
+ * [Linux常用命令ls-find-grep-xargs-sort-uniq-tr-wc-sed-awk-head-tail...](#Linux常用命令)
  * [docker](#docker) | [k8s](#Kubernetes) | [Minikube](#Minikube) | [Consul](#Consul) | [etcd](#Etcd) 
 　[`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)
 
@@ -1535,7 +1535,7 @@ $ sudo kubeadm reset #[重置]
       && <中间> 连接两条命令并按顺序执行;
       &  <结尾> 使命令程序脱离终端进程在后台执行;
 
-#### 最常用的工具：find、grep、xargs、sort、uniq、tr、cut、paste、wc、sed、awk、head、tail...
+#### 最常用的工具：find、grep、xargs、sort、uniq、tr、wc、sed、awk、head、tail...
 ~~~bash
 # 文件搜索ls&find----------------------------------------------------------
 ls -lhR . |grep -i .key$  # 递归查找文件[后缀名为 .key ; 文件名称排序] --time={atime,ctime} 访问时间, 权限属性改变时间
@@ -1609,6 +1609,9 @@ echo -e "1 2 3 4" |awk 'BEGIN{num=0} NR==1{num+=$1+$2+$3+$4} END {print num}'
 sudo awk -F : '{print $NF}' /etc/passwd   # -F来设置定界符（默认为空格）
 awk 'NR<=10 {print}' filename  # 开头10行
 awk '{buffer[NR%10]=$0} END {for(i=0;i<11;i++){ print buffer[i %10]} } ' filename # 结尾10行
+# 显示文件内容行head&tail------------------------------------------------------
+head -n 10 filename # 前10行[默认为10行] head -5 前5行; head -n -10 除最后10行外,显示前面所有内容;
+tail -n 10 filename # 后10行[-n默认10] tail -n +10 从开头第10行开始输出; tail -n 2 filename |head -n 1 倒数第2行
 ~~~
 
 #### 一、Linux下常用命令：文件与目录操作

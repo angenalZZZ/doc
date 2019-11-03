@@ -1224,16 +1224,17 @@ obj\
 > [`k8s`](https://www.kubernetes.org.cn) 是一个流行的容器管理编排平台，集中式管理数个服务的容器集群；<br>
   　[docker-desktop](https://www.docker.com/products/docker-desktop)已添加Docker-Compose与Kubernetes进行完整的集成。<br>
   　`Pod`：最小单元、一组容器的集合、同一个Pod内的容器共享网络命名空间、短暂的(重新发布后会丢失+未存储)；<br>
-  　`Controllers`： `ReplicaSet`确保预期的Pod副本数量(由以下部署产生)，<br>
-  　  　`Deployment`无状态应用(`website`..)部署，`StatefulSet`有状态应用(网络Id+存储`zk`|`mq`..)部署，<br>
-  　  　`DaemonSet`确保所有节点运行同一个Pod(监控`monitoring & schedule system`..)，<br>
-  　  　`Job`一次性任务，`CronJob`定时任务，其它... ；<br>
-  　`Service`：防止Pod失联、定义一组Pod的访问策略`对外提供服务`；<br>
-  　`Label`：标签，附加到某个资源上，用于关联对象、查询和筛选；<br>
-  　`Namespace`：命名空间，将对象逻辑上隔离。<br>
-  　`搭建6台IP`：负载均衡`虚拟IP`高可用的`集群` (4核8G;IP1+IP2>>`VIP*`) load-balancer-master,load-balancer-backup<br>
-  　  　前后端`高IO型`的`Web`应用程序 (8核16G;IP3+IP4) k8s-master1,k8s-master2<br>
-  　  　长时间`可水平扩展`的`分布式计算型`任务 (16核64G;IP5+IP6) k8s-node1,k8s-node2 <br>
+  　`Controllers`： `ReplicaSet`确保预期的Pod副本数量(一般由以下部署产生)，<br>
+  　  　`Deployment`无状态的(`website`...)应用部署，<br>
+  　  　`StatefulSet`有状态的(网络Id+存储`zk`,`mq`...)应用部署，<br>
+  　  　`DaemonSet`确保所有节点运行同一个Pod的(监控`monitor`,计划`schedule`system...)服务部署，<br>
+  　  　`Job`一次性任务部署，`CronJob`定时任务部署，其它服务部署... ；<br>
+  　`Service`：防止Pod失联、定义一组Pod的访问策略`对外提供访问服务`；<br>
+  　`Label`：`标签`，附加到某个资源上，用于关联对象、查询和筛选对象；<br>
+  　`Namespace`：`命名空间`，将对象逻辑上隔离。<br>
+  　`搭建6台IP`：负载均衡*`虚拟IP`高可用的`集群` (4核8G;IP1+IP2>>`VIP*`) load-balancer-master,load-balancer-backup<br>
+  　  　前后端*`高IO型`的`Web`应用程序 (8核16G;IP3+IP4) k8s-master1,k8s-master2<br>
+  　  　长时间*`可水平扩展`的`分布式计算型`任务 (16核64G;IP5+IP6) k8s-node1,k8s-node2 <br>
 ~~~
 # 安装 kubectl - client
 $ curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubectl 

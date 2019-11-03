@@ -1454,10 +1454,10 @@ $ sudo kubeadm reset #[重置]
 ## [**Etcd**](https://github.com/etcd-io/etcd)
 
 > [`etcd`](https://coreos.com/etcd/docs/latest/demo.html) 分布式、可靠的KV存储，用于分布式系统中共享配置和服务发现。 [`install`](https://www.jianshu.com/p/e892997b387b)  [`download`](https://github.com/etcd-io/etcd/releases)  [`play...`](http://play.etcd.io/install)
- * 简单: 良好定义的HTTP接口，面向用户的API(gRPC)，易理解；支持消息发布与订阅；
+ * 简单: 良好定义的HTTP接口，面向用户的API(gRPC)，易理解；👍支持消息发布与订阅；
  * 安全: 支持SSL客户端安全认证；数据持久化(默认数据更新就进行持久化)；
  * 快速: 每秒1w/qps；版本高速迭代和开发中，这既是一个优点，也是一个缺点；
- * 可靠: 使用Raft一致性算法来管理高可用复制(分布式存储)👍
+ * 可靠: 使用Raft一致性算法来管理高可用复制(分布式存储)
 ~~~
 # 版本: 默认API版本为2(修改参数ETCDCTL_API=3)；
 # 端口: 默认2379为客户端通讯，2380进行服务器间通讯；
@@ -1471,7 +1471,7 @@ $ sudo kubeadm reset #[重置]
 # <搭建本地集群>----------------------------------------------------
  $ go get github.com/mattn/goreman  # 提前安装Go,或下载可执行文件goreman
  $ goreman -f Procfile start        # 用到gitub项目根目录下的Procfile文件(需要修改)
- $ etcdctl-w="table" --endpoints=localhost:12379 member list  # 查询集群信息
+ $ etcdctl -w="table" --endpoints=localhost:12379 member list # 查询集群信息
 # <搭建docker运行>--------------------------------------------------
  $ sudo mkdir -p /etcd/data && sudo mkdir -p /etcd/ssl-certs-dir
  $ docker run --name etcd --network=bridge --network-alias=etcd --restart=always -p 2379:2379 -p 2380:2380 -e ETCDCTL_API=3 
@@ -1501,7 +1501,7 @@ $ sudo kubeadm reset #[重置]
 ~~~
   3. 将镜像推送到Registry
 ~~~
-  # [ImageId]和[镜像版本号]参数(用 docker images 查询)
+  # [ImageId]和[镜像版本号]参数(docker images 查询)
   # 　公网地址：registry.cn　经典内网：registry-internal.cn　专有网络：registry-vpc.cn
   $ sudo docker tag [ImageId] registry.cn-hangzhou.aliyuncs.com/fp-api/front:[镜像版本号]
   $ sudo docker push registry.cn-hangzhou.aliyuncs.com/fp-api/front:[镜像版本号]

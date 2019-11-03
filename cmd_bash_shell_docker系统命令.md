@@ -1219,9 +1219,9 @@ obj\
       driver: bridge
 ~~~
 
-# [**Kubernetes**](https://www.kubernetes.org.cn)
+# [**Kubernetes**](https://kubernetes.io)
 
-> [`k8s`](https://www.kubernetes.org.cn) 是一个流行的容器管理编排平台，集中式管理数个服务的容器集群；[docker-desktop](https://www.docker.com/products/docker-desktop)已集成Compose和Kubernetes<br>
+> [`k8s`](https://www.kubernetes.org.cn) 是一个流行的容器管理编排平台，集中式管理数个服务的容器集群；[docker-desktop](https://www.docker.com/products/docker-desktop)已集成compose和k8s<br>
   　`Pod`：最小单元、一组容器的集合、同一个Pod内的容器共享网络命名空间、短暂的未存储的(重新发布后会丢失)；<br>
   　`Controllers`： `ReplicaSet`确保预期的Pod副本数量(一般由以下部署产生)，<br>
   　  　`Deployment`无状态的(`website`...)应用部署，<br>

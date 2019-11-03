@@ -6,7 +6,7 @@
   [`《Linux基础课程》video`](https://www.linuxprobe.com/chapter-01.html)<br>
 
  * [Windows10安装Linux子系统(WSL)](https://www.cnblogs.com/xiaoliangge/p/9124089.html)
- * [Linux开发环境及常用安装zsh-git-redis-mysql-mongodb-pilosa-influxdb-grafana-nsq.kafka.rabbitmq...](#linux开发环境及常用安装)
+ * [Linux开发环境及常用安装zsh-ssh-git-redis-mysql-mongodb-pilosa-influxdb-grafana-nsq.kafka.rabbitmq...](#linux开发环境及常用安装)
  * [Linux常用命令ls、find、grep、xargs、sort、uniq、tr、cut、paste、wc、sed、awk...](#Linux常用命令)
  * [docker](#docker) | [k8s](#Kubernetes) | [Minikube](#Minikube) | [Consul](#Consul) | [etcd](#Etcd) 
 　[`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)
@@ -1223,7 +1223,7 @@ obj\
 
 > [`k8s`](https://www.kubernetes.org.cn) 是一个流行的容器管理编排平台，集中式管理数个服务的容器集群；<br>
   　[docker-desktop](https://www.docker.com/products/docker-desktop)已添加Docker-Compose与Kubernetes进行完整的集成。<br>
-  　`Pod`：最小单元、一组容器的集合、同一个Pod内的容器共享网络命名空间、短暂的(重新发布后会丢失+未存储)；<br>
+  　`Pod`：最小单元、一组容器的集合、同一个Pod内的容器共享网络命名空间、短暂的未存储的(重新发布后会丢失)；<br>
   　`Controllers`： `ReplicaSet`确保预期的Pod副本数量(一般由以下部署产生)，<br>
   　  　`Deployment`无状态的(`website`...)应用部署，<br>
   　  　`StatefulSet`有状态的(网络Id+存储`zk`,`mq`...)应用部署，<br>
@@ -1232,40 +1232,40 @@ obj\
   　`Service`：防止Pod失联、定义一组Pod的访问策略`对外提供访问服务`；<br>
   　`Label`：`标签`，附加到某个资源上，用于关联对象、查询和筛选对象；<br>
   　`Namespace`：`命名空间`，将对象逻辑上隔离。<br>
-  　`搭建6台IP`：负载均衡*`虚拟IP`高可用的`集群` (4核8G;IP1+IP2>>`VIP*`) load-balancer-master,load-balancer-backup<br>
+  　`搭建^6台`：负载均衡`1虚拟IP`高可用`集群` (4核8G;IP1+IP2>>`VIP*`) load-balancer-master,load-balancer-backup<br>
   　  　前后端*`高IO型`的`Web`应用程序 (8核16G;IP3+IP4) k8s-master1,k8s-master2<br>
   　  　长时间*`可水平扩展`的`分布式计算型`任务 (16核64G;IP5+IP6) k8s-node1,k8s-node2 <br>
 ~~~
-# 安装 kubectl - client
+# 安装 kubectl client
 $ curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubectl 
 $ sudo chmod +x kubectl && sudo mv kubectl /usr/local/bin/
-# 部署 kubernetes-deployment
+# 部署管理程序 kubernetes dashboard
+$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
+# 编排web应用 kubernetes deployment
 $ docker-compose build && kubectl apply -f /path/to/kube-deployment.yml  # 1 deploy of apply config
 $ docker stack deploy -c /path/to/docker-compose.yml mystack             # 2 deploy stack with compose
-# 部署 kubernetes-dashboard
-$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
-# 查看集群情况
+# 查看集群
 $ kubectl cluster-info
-# 查看nodes节点[IP和状态]
+# 查看节点[IP&状态等]
 $ kubectl get nodes
 # 查看事件
 $ kubectl get events
-# 查看已创建的pods
+# 查看已创建pod
 $ kubectl get pods
 $ kubectl get pods -l app=nginx #根据label筛选pods
 $ kubectl get pods -n nuclio    #根据namespace筛选pods
-# 查看deployments
+# 查看应用部署详情
 $ kubectl get deployments  &&  kubectl get deployment -n test
 # 查看pod详情
-$ kubectl get pods nginx -o yaml
 $ kubectl describe pods redis
+$ kubectl get pods nginx -o yaml
 # 查看secret
 $ kubectl get secret
 # 查看services
 $ kubectl get services
 # 查看namespace
 $ kubectl get namespace
-# 创建service或pods    [~ su #]
+# 创建service,pod...
 $ kubectl create -f development.yaml  #创建Pods[使用yaml创建]
 $ kubectl run nginx --image=nginx --port=8080
 $ kubectl replace -f development      #更新Pods

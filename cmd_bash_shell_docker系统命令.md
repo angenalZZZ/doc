@@ -764,7 +764,10 @@ $ source ~/.zshrc # 使配置生效
   $ pbcopy < ~/.ssh/id_rsa.pub            # <MacOS>
   
   # felix 提供 SSH Web管理后台 + RESTful Api接口<ssh+gin+GORM> github.com/dejavuzhou/felix
-  > felix sshw -a :8022 -x 1440 -u admin -p admin -s @Ubr)Vrp~Zoo6Rvrk1PP1*ZXPYby_Z)s # felix -h
+  > felix sshw -a :8022 -x 1440 -u admin -p admin -s @Ubr)Vrp~Zoo6Rvrk1PP1*ZXPYby_Z)s  # felix -h
+  # WebSsh终端 堡垒机  github.com/huashengdun/webssh
+  $ pip install webssh  # 安装webssh
+  $ wssh --port=8022 --logging=debug
 ~~~
 
 > `Serf` [`去中心化集群`Hashicorp开源](https://www.serf.io) 基于Serf实现的网络管理和服务发现, 如[`docker`](#docker),[`consul`](#Consul)等

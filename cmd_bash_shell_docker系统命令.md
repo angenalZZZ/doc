@@ -1231,8 +1231,9 @@ obj\
   　`Service`：防止Pod失联、定义一组Pod的访问策略`对外提供服务`；<br>
   　`Label`：标签，附加到某个资源上，用于关联对象、查询和筛选；<br>
   　`Namespace`：命名空间，将对象逻辑上隔离。<br>
-  　`搭建6台IP`：负载均衡12.load-balancer-master,load-balancer-backup；前后端应用34.k8s-master1,k8s-master2；<br>
-  　  　跑长任务56.k8s-node1,k8s-node2 <br>
+  　`搭建6台IP`：负载均衡`高可用`(4核8G;IP1+IP2=>虚拟IP[VIP`0`])load-balancer-master,load-balancer-backup<br>
+  　  　前后端应用`水平扩展`(8核16G;IP3+IP4)k8s-master1,k8s-master2<br>
+  　  　长时间的`分布式``计算型`任务(16核64G;IP5+IP6)k8s-node1,k8s-node2 <br>
 ~~~
 # 安装 kubectl - client
 $ curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubectl 

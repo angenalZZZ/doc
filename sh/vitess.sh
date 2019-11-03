@@ -13,7 +13,7 @@ export VTROOT=/4g/database/vt
 export VTDATAROOT=/4g/database/vt/data
 export MYSQL_FLAVOR=MySQL56
 export PATH=$VTROOT/bin:$PATH
-# export PATH=$VTROOT/bin:$GOROOT/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
+# export PATH=$VTROOT/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # https://vitess.io/docs/get-started/local
 cd $VTROOT/examples/local

@@ -305,7 +305,10 @@
   $ sudo apt-get install fontconfig                # yum install fontconfig  #<CentOS>
   $ sudo apt-get install ttf-mscorefonts-installer # yum install mkfontscale #安装(中文)字体
   $ sudo fc-cache -f -v   # 更新字体缓存
-  
+  #输入法
+  $ sudo add-apt-repository ppa:fcitx-team/nightly
+  $ sudo apt-get install fcitx-pinyin fcitx-sogoupinyin fcitx-googlepinyin # 拼音
+  $ sudo apt-get install fcitx-table fcitx-table-wubi fcitx-table-wbpy          # 五笔
 ~~~
 
 ## linux开发环境及常用安装

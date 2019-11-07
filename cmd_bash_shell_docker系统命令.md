@@ -41,7 +41,7 @@
   $ export TZ='Asia/Shanghai' # 设置本地时区 | 帮助选择时区的命令tzselect |配置文件vi ~/.profile<TZ='Asia/Shanghai'
   $ date "+%Y/%m/%d %X"     # 打印当前本地时间 | 本地日期 date +%Y%m%d | $(Hardware-Clock) hwclock
   $ date --date='TZ="Europe/Paris" 2004-10-31 06:30:00' # 修改时区&时间
-  $ echo $(date +%Y%m%d)   # 打印当前本地时间-变量
+  $ echo $(date +%Y%m%d)    # 打印当前本地时间-变量
   # <Windows+Ubuntu>双系统时间同步问题  | www.jianshu.com/p/cf445a2c55e8
   $ sudo timedatectl set-local-rtc 1   # Ubuntu先将RTC硬件时间由UTC改为CST(中国标准时间);然后设置"日期和时间";
   $ sudo hwclock --localtime --systohc # 然后,同步机器时间(将CST本地时间更新到RTC硬件时间;Windows使用的RTC为CST)
@@ -899,21 +899,21 @@ sudo systemctl daemon-reload && sudo systemctl restart docker.service
 ~~~shell
 # 安装Docker，先切换用户root ~ su   (一般用国内镜像daocloud)
 $ curl -sSL https://get.daocloud.io/docker | sh 
-$ curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh -  #阿里云
+$ curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh - #阿里云
 $ sudo systemctl status docker #运行状态检查
 # 卸载Docker，最后清理 ~ rm -fr /var/lib/docker/
 $ apt-get remove docker docker-engine
 # 安装 Docker Compose
 $ curl -L https://get.daocloud.io/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose 
-$ chmod +x /usr/local/bin/docker-compose
+$ chmod +x /usr/local/bin/docker-compose   #设置文件为可执行
 # 安装 Docker Machine基于virtualBox github.com/docker/machine/releases/download/v0.16.1/docker-machine-Linux-x86_64
 $ sudo dpkg -i virtualbox-6.0_6.0.8-130520_Ubuntu_bionic_amd64.deb --fix-missing  # www.virtualbox.org/wiki/Linux_Downloads
 $ curl -L https://github.com/docker/machine/releases/download/v0.16.1/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine
 $ chmod +x /tmp/docker-machine && sudo cp /tmp/docker-machine /usr/local/bin/docker-machine  # install /tmp/docker-machine /usr/local/bin/docker-machine
-$ docker-machine version                   # 安装完毕
+$ docker-machine version                   #安装完毕
 # 设置 Docker, 不使用sudo执行docker命令，先切换当前用户-user(root~exit)
-$ sudo gpasswd -M ${USER} docker  && newgrp - docker  # 将当前用户加入docker组
-$ sudo service docker restart              # 重启docker
+$ sudo gpasswd -M ${USER} docker && newgrp - docker # 将当前用户加入docker组> sudo usermod -aG docker ${USER}
+$ sudo service docker restart              #重启服务
 # 本机启动 Docker daemon
 $ sudo docker-machine create -d virtualbox default  # 1.下载安装服务 ~/.docker/machine/cache/boot2docker.iso
 $ sudo docker-machine env default                   # 2.设置客户端docker-cli的环境变量

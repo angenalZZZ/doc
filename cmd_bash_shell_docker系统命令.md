@@ -883,8 +883,8 @@ $ source ~/.zshrc # 使配置生效
 
 # [**docker**](https://docs.docker.com)
 
->  [下载](https://download.docker.com)、[安装](https://docs.docker.com/install)　[docker-desktop](https://www.docker.com/products/docker-desktop)：Build构建&Compose组织&Kubernetes集群<br>
-  `环境 & 版本` : `Linux x64, Kernel^3.10 cgroups & namespaces.`, [`docker-ce`社区版](https://hub.docker.com) + `docker-ee`企业版 <br>
+>  [安装](https://docs.docker.com/install)　[docker-hub](https://hub.docker.com/repositories)　[docker-desktop](https://hub.docker.com/?overlay=onboarding)：Build构建&Compose组织&Kubernetes集群<br>
+  `环境 & 版本` : [`Linux x64, Kernel^3.10 cgroups & namespaces`](https://docs.docker.com/install), [`docker-ce`社区版](https://hub.docker.com/?overlay=onboarding) + `docker-ee`企业版 <br>
   `加速器`..   : [`阿里云`](https://cr.console.aliyun.com/#/accelerator)[..](https://4txtc8r4.mirror.aliyuncs.com)、[`DaoCloud道客`](https://dashboard.daocloud.io/packages/explore)[..](http://8fe1b42e.m.daocloud.io)、[`网易`](https://hub-mirror.c.163.com)
 ~~~
 curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io # for Linux

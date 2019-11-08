@@ -128,12 +128,16 @@ npm i rxdb      # 实时数据库|实时应用 https://github.com/pubkey/rxdb
 # algorithm 算法 https://github.com/jedisct1/siphash-js
 npm i siphash # 随机性好、输出均匀、性能突出(可用于字典的高效查找)、偏向性小(防hash攻击)
 
-# thread 多线程
+# thread 多线程 | node^V11提供支持: require('worker_threads') (可提供密集型计算能力)
 npm i napajs # 多线程运行时 https://github.com/Microsoft/napajs
 
 # chat, bots 聊天,机器人
 npm i socket.io  # 聊天服务 https://github.com/socketio/socket.io
 npm i botkit     # 聊天机器人 https://github.com/howdyai/botkit
+
+# Google Chrome 开源项目 https://github.com/GoogleChrome
+npm i puppeteer  # 提供了一个高级 API 来通过 DevTools 协议控制 Chromium 或 Chrome (抓取|调试|截图|Pdf|)
+npm i puppeteer-core # 同上项目+中文文档 https://zhaoqize.github.io/puppeteer-api-zh_CN/#/
 
 # utility 实用
 npm i rxjs       # 响应式编程的库 https://cn.rx.js.org

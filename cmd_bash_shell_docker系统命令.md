@@ -291,7 +291,11 @@
                      #self.sign-> Digital Signature, Key Encipherment (a0) #自签名,未经CA认证$
     *基本约束         Subject Type=CA \ Path Length Constraint=None
     *指纹             a79be724538b668fa817e8578d6a8078337fd3ad
-    
+  
+  # 安装mkcert
+  $ sudo apt install libnss3-tools  #or: sudo yum install nss-tools #or: sudo pacman -S nss
+  $ git clone github.com/FiloSottile/mkcert && go build -ldflags "-X main.Version=$(git describe --tags)" #or: brew install mkcert
+  $ mkcert -help
   # 修改PowerShell脚本执行策略 windows 10
   > Get-ExecutionPolicy
   > Set-ExecutionPolicy RemoteSigned [RemoteSigned,AllSigned,Bypass,Restricted]

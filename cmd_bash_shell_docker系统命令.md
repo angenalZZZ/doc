@@ -292,17 +292,22 @@
     *基本约束         Subject Type=CA \ Path Length Constraint=None
     *指纹             a79be724538b668fa817e8578d6a8078337fd3ad
   
-  # 安装mkcert
+  #1.创建openssl数字签名认证
+  $ openssl req -new -nodes -x509 -out conf/server.crt -keyout conf/server.key \
+    -days 3650 -subj "/C=DE/ST=NRW/L=Earth/O=Random Company/OU=IT/CN=127.0.0.1/emailAddress=***@example.com"
+  #2.安装mkcert数字签名工具 *21k
   $ sudo apt install libnss3-tools  #or: sudo yum install nss-tools #or: sudo pacman -S nss
-  $ git clone github.com/FiloSottile/mkcert && go build -ldflags "-X main.Version=$(git describe --tags)" #or: brew install mkcert
-  $ mkcert -help
-  # 修改PowerShell脚本执行策略 windows 10
+  $ git clone github.com/FiloSottile/mkcert && go build -ldflags "-X main.Version=$(git describe --tags)"
+  $ mkcert ***@example.com           #? mkcert -help
+  $ mkcert -CAROOT && mkcert -install # local CA is installed in the system trust store!
+  $ mkcert example.com "*.example.com" example.cn localhost 127.0.0.1 ::1 #make trusted development certs!
+  #3.1修改PowerShell脚本执行策略 windows 10
   > Get-ExecutionPolicy
   > Set-ExecutionPolicy RemoteSigned [RemoteSigned,AllSigned,Bypass,Restricted]
-  # 创建PowerShell脚本数字签名认证 windows 10
+  #3.2创建PowerShell数字签名认证 windows 10
   > cd "C:\Program Files (x86)\Windows Kits\10\bin\10.0.17763.0\x64" # 签名工具makecert [-eku设为代码签名]
   > makecert -n "CN=Api Cert" -a sha1 -eku 1.3.6.1.5.5.7.3.1 -r -sv api-root.pvk api-root.cer -ss Root -sr LocalMachine
-  # 打开PowerShell查询数字签名证书
+  #3.3打开PowerShell查询数字签名证书
   > ls Cert:\CurrentUser\Root | where {$_.Subject -eq "CN=Api Cert"}
   
   # 字体

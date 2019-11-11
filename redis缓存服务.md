@@ -293,8 +293,8 @@ struct zslnode {
 
 ~~~
 
-####  3.配置Redis
-
+####  3.配置Redis 
+  * > 非集群 普通模式
 ~~~
 # 配置文件路径: /etc/redis/redis.conf
 --------------------------------------------------------------------
@@ -316,4 +316,12 @@ struct zslnode {
   appendfilename "appendonly.aof"
 
 ~~~
+  * > 集群 普通主从模式
+    提供了复制（replication）功能，能较好地避免单独故障问题，以及提出了读写分离，降低了Master节点的压力。
+    数据库分为两类，一类是主数据库（master），另一类是从数据库（slave）。
+    主数据库可以进行读写操作，当写操作导致数据变化时会自动将数据同步给从数据库。
+~~~
+redis-server --port 6379 --slaveof masterIp masterPort
+~~~
+  * > 集群 
 

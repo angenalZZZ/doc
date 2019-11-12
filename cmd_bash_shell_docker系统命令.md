@@ -53,7 +53,6 @@
   $ man        # 在线帮助说明
   $ whatis id  # 查找命令id的帮助说明 print real and effective user and group IDs
   $ history    # 历史命令列表
-  $ curl https://www.baidu.com/ |tee b.txt # 下载保存html
   
   # 用户登陆
   > mkdir -p %USERPROFILE% # 用户目录
@@ -309,6 +308,12 @@
   > makecert -n "CN=Api Cert" -a sha1 -eku 1.3.6.1.5.5.7.3.1 -r -sv api-root.pvk api-root.cer -ss Root -sr LocalMachine
   #3.3打开PowerShell查询数字签名证书
   > ls Cert:\CurrentUser\Root | where {$_.Subject -eq "CN=Api Cert"}
+  
+  # 请求Http资源的工具curl
+  $ curl https://www.baidu.com/ |tee baidu.index.html  # 下载并保存html
+  $ curl -XGET https://127.0.0.1:8081/v1/user -H "Content-Type: application/json" \
+    -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MjgwMTY5MjIsImlkIjowLCJuYmYiOjE1MjgwMTY5MjIsInVzZXJuYW1lIjoiYWRtaW4ifQ.LjxrK9DuAwAzUD8-9v43NzWBN7HXsSLfebw92DKd1JQ" \
+    --cacert conf/server.crt --cert conf/server.crt --key conf/server.key  # 开发环境 自签名证书
   
   # 字体
   $ sudo apt-get install fontconfig                # yum install fontconfig  #<CentOS>

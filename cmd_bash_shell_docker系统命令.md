@@ -311,9 +311,9 @@
   
   # 请求Http资源的工具curl
   $ curl https://www.baidu.com/ |tee baidu.index.html  # 下载并保存html
-  $ curl -XGET https://127.0.0.1:8081/v1/user -H "Content-Type: application/json" \
+  $ curl -XGET https://127.0.0.1:8080/v1/user -H "Content-Type: application/json" \
     -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MjgwMTY5MjIsImlkIjowLCJuYmYiOjE1MjgwMTY5MjIsInVzZXJuYW1lIjoiYWRtaW4ifQ.LjxrK9DuAwAzUD8-9v43NzWBN7HXsSLfebw92DKd1JQ" \
-    --cacert conf/server.crt --cert conf/server.crt --key conf/server.key  # 开发环境 自签名证书
+    --cacert server.crt --cert server.crt --key server.key  # 开发环境 自签名证书(结合#1.openssl)
   
   # 字体
   $ sudo apt-get install fontconfig                # yum install fontconfig  #<CentOS>

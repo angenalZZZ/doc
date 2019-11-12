@@ -33,6 +33,7 @@
   > unixdate +%s            # 当前时间戳 (unix timestamp)
   > unixdate "+%Y/%m/%d %X" # 当前本地时间 yyyy/MM/dd HH:mm:ss
   $ date -u "+%Y/%m/%d %X"  # 当前UTC时间 yyyy/MM/dd HH:mm:ss
+  $ TZ=Asia/Shanghai date +%FT%T%z # 当前时间2019-11-11T11:11:11+0800
   $ TIMESTAMP="$(date --utc +%s)" # 时间戳+签名认证
   $ SECRET=123456 && TOKEN="$(cat /dev/urandom|tr -d -c '[:alnum:]'|head -c $(( 32 - ${#TIMESTAMP} )))"
   $ SIGNATURE="$(printf "${TIMESTAMP}${TOKEN}"|openssl dgst -sha256 -hmac "${SECRET}" -binary|openssl enc -base64)"

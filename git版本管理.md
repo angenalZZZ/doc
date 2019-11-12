@@ -84,6 +84,7 @@ git reset HEAD <file>...  # 把文件从暂存区移除
 
 ~~~bash
 git status 或 git stash & git checkout [现有分支] ... 或 git checkout master & git checkout -b [新建分支] ...
+if git status|grep -q 'clean';then echo clean; else echo dirty; fi ## 获取 git status: clean || dirty
 ~~~
 
 ####  6.提交到本地git仓库(添加了文件版本 -m备注, -am添加变更文件和备注)
@@ -106,6 +107,10 @@ git commit --amend           # 修改最后一次提交
 git log -3                                # 显示最新的3次提交
 git log master --not --remotes=*/master   # 只显示本地提交master分支
 git log --branches --not --remotes=origin # 只显示本地提交的所有分支，用于与master分支比较
+git log --pretty=format:'%H' -n 1         # git latest commit Id
+git log --pretty=format:'%h' -n 1         # git latest commit shortId
+if [ "`git describe --tags --abbrev=0 2>/dev/null`" != "" ];then \
+git describe --tags --abbrev=0; else git log --pretty=format:'%h' -n 1; fi ## 获取 git tag id
 ~~~
 
 ####  9.准备远程git仓库(##代表git账号: ***@mail.com)

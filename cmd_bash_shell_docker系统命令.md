@@ -758,8 +758,12 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt-get remove --purge openssh-server # 先删ssh(可忽略此操作)
   $ sudo apt-get -y install openssh-server     # 再安装ssh
   $ sudo rm /etc/ssh/ssh_config                # 先删配置文件, 让ssh服务自己想办法链接-(可忽略此操作)
-  $ sudo ssh-keygen -A                         # 先生成主机keys-(当提示Could not load host key)
-  $ sudo service ssh --full-restart            # 再启动ssh +(设置登录后)
+  $ cd ~/.ssh && ssh-keygen -A                 # SSH生成主机密钥对-(设置登录)
+  $ sudo service ssh --full-restart            # 重启ssh service +(设置登录后)
+  $ ssh-keygen -f id_rsa2 -N '' -t rsa         #2.1 SSH生成\主机$host2的密钥对\用户$user2
+  $ cp -r id_rsa2.pub ~/.ssh/authorized_keys   #2.2 复制公钥至客户端主机~目录\当前用户$USER
+  $ ssh -i id_rsa2 -l $user2 $host2            #2.3 登录远程主机$host2\$user2的$HOME目录(id_rsa2权限400)
+  $ ssh-keygen -t rsa -C "angenal@hotmail.com" #Git使用远程SSH请先创建SSH认证
   # < sshd service >---------------------
   $ systemctl start sshd   # systemctl启动sshd
   $ systemctl status sshd  # systemctl查看状态

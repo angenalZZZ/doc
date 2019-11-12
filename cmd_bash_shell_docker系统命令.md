@@ -297,7 +297,7 @@
   #2.安装mkcert数字签名工具 *21k
   $ sudo apt install libnss3-tools  #or: sudo yum install nss-tools #or: sudo pacman -S nss
   $ git clone github.com/FiloSottile/mkcert && go build -ldflags "-X main.Version=$(git describe --tags)"
-  $ mkcert -help    #.用于开发环境 自签名证书.
+  $ mkcert -help    #.用于搭建本地CA数字签名认证: CA, Digital Signature, Key Encipherment, Certificate Signing.
   $ mkcert -CAROOT  #1.Print the CA certificate and key storage location: rootCA.pem,rootCA-key.pem
   $ mkcert -install #2.The local CA is installed in the system trust store! #安装本地证书CA服务环境↑↑
   $ mkcert example.com "*.example.com" localhost 127.0.0.1 ::1 #3.创建证书: ./example.com+4.pem,example.com+4-key.pem

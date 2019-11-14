@@ -1,14 +1,15 @@
-# [Nginx](http://www.nginx.cn/doc/)
+# [Nginx](http://nginx.org/en/docs/)  [中文](http://www.nginx.cn/doc/)
 
-* [配置文件检查与分析工具gixy](https://github.com/yandex/gixy)
+* [配置文件检查与分析工具gixy](https://github.com/yandex/gixy) > nginx -t ; gixy --help
 
-* [配置参数说明与在线工具](https://nginxconfig.io/)  <<  https://github.com/digitalocean/nginxconfig.io
+* [配置参数说明与在线编辑器](https://nginxconfig.io/)  -  https://github.com/digitalocean/nginxconfig.io
 ~~~
 #进程用户
-user nobody;
+user nginx;
 
-#进程数量(通常设置成与cpu数量相等)
-worker_processes  1;
+#进程数量(通常设置成与cpu数量相等) #auto: nginx -v > ^1.9.10
+worker_processes auto;
+worker_cpu_affinity auto;
 
 #进程pid
 #pid        logs/nginx.pid;
@@ -22,7 +23,7 @@ error_log  logs/error.log;
 events {
     use  epoll; # 多路复用IO(I/O-Multiplexing)的一种方式epoll,仅用于linux2.6以上内核;用于提高nginx性能
     
-    worker_connections  4096; # 单个进程(worker_process)最大并发链接数
+    worker_connections  4096; # 单个进程(worker_process)中最大并发链接数(线程数)
 
     #1.Nginx并发总数(max_clients) = 进程数量(worker_processes) * 进程最大并发链接数(worker_connections)
     #2.在设置了反向代理的情况下，max_clients = worker_processes * worker_connections / 4

@@ -35,7 +35,7 @@ nginx -t
 pip install gixy
 gixy nginx.conf
 ~~~
-* [配置参数说明](https://github.com/digitalocean/nginxconfig.io)与[✨在线编辑器✨](https://nginxconfig.io/)
+* [配置参数说明](https://github.com/digitalocean/nginxconfig.io)与[✨在线编辑器](https://nginxconfig.io/)
 ~~~
 # 进程用户
 user nginx; # <linux>
@@ -226,7 +226,7 @@ http {
 ~~~
 
  * 配置（HA）高可用 Keepalived & Nginx
-        Keepalived 以 VRRP 协议为基础来实现高可用性。VRRP（Virtual Router Redundancy Protocol，虚拟路由冗余协议）是用于实现路由器冗余的协议，它将两台或多台路由器设备虚拟成一个设备，对外提供虚拟路由器 IP（一个或多个VIP）
+        <br>Keepalived 以 VRRP 协议为基础来实现高可用性。VRRP（Virtual Router Redundancy Protocol，虚拟路由冗余协议）是用于实现路由器冗余的协议，它将两台或多台路由器设备虚拟成一个设备，对外提供虚拟路由器 IP（一个或多个VIP）<br>
         参考[Keepalived+Nginx实现高可用（HA）](https://blog.csdn.net/xyang81/article/details/52556886)
 
 

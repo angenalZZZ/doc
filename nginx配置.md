@@ -1,4 +1,4 @@
-# [Nginx](http://nginx.org/en/docs/)  [中文](http://www.nginx.cn/doc/)
+# [Nginx](http://nginx.org/en/docs/)  [✨中文](http://www.nginx.cn/doc/)
 
 * 安装
 ~~~
@@ -35,7 +35,7 @@ nginx -t
 pip install gixy
 gixy nginx.conf
 ~~~
-* [配置参数说明](https://github.com/digitalocean/nginxconfig.io)与[在线编辑器](https://nginxconfig.io/)
+* [配置参数说明](https://github.com/digitalocean/nginxconfig.io)与[✨在线编辑器✨](https://nginxconfig.io/)
 ~~~
 # 进程用户
 user nginx; # <linux>
@@ -119,7 +119,7 @@ http {
         client_max_body_size 1024M;
 
         # 定义服务器默认网站根目录
-        # root html; # <windows>
+        # root html; # <windows> wwwroot
 
         # 设定本主机的访问日志
         # access_log  logs/access.80.log; # <windows>
@@ -181,12 +181,12 @@ http {
 ~~~
  # 负载均衡 http web
  upstream web {
-    server 127.0.0.1:8080; # 默认轮询转发策略
+    server 127.0.0.1:8080; # 转发策略(默认:轮询)
     server 127.0.0.1:8081;
  }
  # 负载均衡 websocket
  upstream websocket {
-    server 0.0.0.0:3001; # 默认轮询转发策略
+    server 0.0.0.0:3001;
     server 0.0.0.0:3002;
  }
  
@@ -224,3 +224,9 @@ http {
     }
 }
 ~~~
+
+ * 配置（HA）高可用 Keepalived & Nginx
+        Keepalived 以 VRRP 协议为基础来实现高可用性。VRRP（Virtual Router Redundancy Protocol，虚拟路由冗余协议）是用于实现路由器冗余的协议，它将两台或多台路由器设备虚拟成一个设备，对外提供虚拟路由器 IP（一个或多个VIP）
+        参考[Keepalived+Nginx实现高可用（HA）](https://blog.csdn.net/xyang81/article/details/52556886)
+
+

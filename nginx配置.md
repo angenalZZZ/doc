@@ -94,7 +94,7 @@ http {
 
     # 设定KA连接超时
     keepalive_timeout  65;
-    tcp_nodelay   on;
+    # tcp_nodelay   on;
 
     # 开启gzip压缩
     gzip  on;
@@ -112,7 +112,7 @@ http {
         # 主机端口 检查: sudo netstat -anptW|grep -i "listen" # <windows> netstat -anp tcp|findstr -i "listening"
         listen  80;
         # 主机域名
-        # server_name  localhost;
+        server_name  localhost;
         # server_name  apiserver.com;
         # server_name  www.nginx.cn;
         # 主机http请求限制
@@ -191,6 +191,7 @@ http {
  }
  
  server { 
+    #listen       80;
     listen       443;
     server_name  localhost;
     ssl          on;
@@ -205,22 +206,28 @@ http {
     # wss 反向代理  
     location /ws {
         proxy_pass       http://websocket/;  # 代理到上面的地址 upstream websocket
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header Connection Upgrade;
         proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'Upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Real-IP $remote_addr;
         proxy_read_timeout 60s;
     }
     # http web 反向代理
     location / {
         proxy_pass       http://web/;  # 代理到上面的地址 upstream web
+        proxy_http_version 1.1;
+        proxy_set_header Connection keep-alive;
+        proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Host $http_host;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Host $http_host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Real-IP $remote_addr;
-        client_max_body_size 5m;
+        proxy_set_header REMOTE-HOST $remote_addr;
+        proxy_cache_bypass $http_upgrade;
+        proxy_read_timeout 600s; # 下载超时-限制
+        client_max_body_size 5m; # 上传文件-限制
     }
 }
 ~~~
@@ -228,6 +235,6 @@ http {
  * 配置（HA）高可用 Nginx + Keepalived
         <br>Keepalived 以 VRRP 协议为基础来实现高可用性。VRRP（Virtual Router Redundancy Protocol 虚拟路由冗余协议）是用于实现路由器冗余的协议，它将两台或多台路由器设备虚拟成一个设备，对外提供虚拟路由器 IP（一个或多个VIP）<br>
         ![](https://github.com/angenalZZZ/doc/raw/master/screenshots/1115091513.png)
-        在上图中，将 Nginx + Keepalived 部署在两台服务器上，拥有两个真实的 IP（IP1 和 IP2），通过一定的技术（如 LVS）虚拟出一个虚拟 IP（VIP），外界请求通过访问 VIP 来访问服务。在两台 Nginx + Keepalived 的服务器上，同一时间只有一台会接管 VIP（叫做 Master）提供服务，另一台（叫做 Slave）会检测 Master 的心跳，当发现 Master 停止心跳后，Slave 会自动接管 VIP 以提供服务（此时，Slave 变成 Master）。通过这种方式来实现 Nginx 的高可用，通过第 19 节可以知道，Nginx 可以对后台 API 服务器做高可用，这样通过 Nginx + Keepalived 的组合方案就实现了整个 API 集群的高可用。  部署参考[Keepalived+Nginx实现高可用（HA）](https://blog.csdn.net/xyang81/article/details/52556886)
+        在上图中，将 Nginx + Keepalived 部署在两台服务器上，拥有两个真实的 IP（IP1 和 IP2），通过一定的技术（如 LVS）虚拟出一个虚拟 IP（VIP），外界请求通过访问 VIP 来访问服务。在两台 Nginx + Keepalived 的服务器上，同一时间只有一台会接管 VIP（叫做 Master）提供服务，另一台（叫做 Slave）会检测 Master 的心跳，当发现 Master 停止心跳后，Slave 会自动接管 VIP 以提供服务（此时，Slave 变成 Master）。通过这种方式来实现 Nginx 的高可用，通过第 19 节可以知道，Nginx 可以对后台 API 服务器做高可用，这样通过 Nginx + Keepalived 的组合方案就实现了整个 API 集群的高可用。 部署参考[Keepalived+Nginx实现高可用（HA）](https://blog.csdn.net/xyang81/article/details/52556886)
 
 

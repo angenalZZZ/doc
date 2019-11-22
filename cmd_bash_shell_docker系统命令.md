@@ -764,7 +764,11 @@ $ source ~/.zshrc # 使配置生效
   $ ssh-keygen -f id_rsa2 -N '' -t rsa         #2.1 SSH生成\主机$host2的密钥对\用户$user2
   $ cp -r id_rsa2.pub ~/.ssh/authorized_keys   #2.2 复制公钥至客户端主机~目录\当前用户$USER
   $ ssh -i id_rsa2 -l $user2 $host2            #2.3 登录远程主机$host2\$user2的$HOME目录(id_rsa2权限400)
-  $ ssh-keygen -t rsa -C "angenal@hotmail.com" #Git使用远程SSH请先创建SSH认证
+  # <生成/添加SSH公钥>Git使用远程SSH请先创建SSH认证
+  $ ssh-keygen -t rsa -C "angenal@hotmail.com" #1.生成sshkey密钥对
+  $ cat ~/.ssh/id_rsa.pub                      #2.获取你的public-key公钥
+  $ ssh -T git@gitee.com                       #3.首次使用时确认并添加主机到本机SSH可信列表；成功后，就可以对仓库进行操作了。
+  # Git配置多个SSH-Key  https://gitee.com/help/articles/4229#article-header0
   # < sshd service >---------------------
   $ systemctl start sshd   # systemctl启动sshd
   $ systemctl status sshd  # systemctl查看状态

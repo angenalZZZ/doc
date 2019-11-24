@@ -77,6 +77,7 @@ npm i -g lite-server
 npm i -g express         # express项目构建 https://github.com/expressjs/express  http://www.expressjs.com.cn
 npm i -g think-cli       # think基于koa2构建 https://github.com/thinkjs/thinkjs  https://thinkjs.org
 npm i -S hapi            # hapi基于express构建 https://github.com/hapijs/hapi    https://hapijs.com
+    > npm install @hapi/hapi
     # Bell 第三方登录插件
     # Good 监控日志相关插件
     # Boom 友好的 HTTP 错误返回插件

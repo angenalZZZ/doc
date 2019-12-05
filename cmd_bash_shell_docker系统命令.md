@@ -390,11 +390,11 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt-get install dotnet-sdk-3.0           # 安装 .NET Core SDK  > dotnet -h
   
   $ sudo apt-get update
-  $ sudo apt-get -y install r-recommended --fix-broken # 安装 R > /usr/bin/R --help ; R --version #大写R
+  $ sudo apt-get -y install r-recommended --fix-broken # 安装 R 语言(统计计算) > /usr/bin/R --help ; R --version #大写
   
-  $ sudo apt install -f libncurses5-dev freeglut3-dev fop m4 tk unixodbc unixodbc-dev xsltproc socat #安装erlang依赖
+  $ sudo apt install -f libncurses5-dev freeglut3-dev fop m4 tk unixodbc unixodbc-dev xsltproc socat # erlang依赖
   $ wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_22.1-1~ubuntu~xenial_amd64.deb
-  $ sudo dpkg -i esl-erlang_22.1-1~ubuntu~xenial_amd64.deb # 安装erlang语言
+  $ sudo dpkg -i esl-erlang_22.1-1~ubuntu~xenial_amd64.deb # 安装 erlang 语言(支持CSP消息模型的并发编程语言)
   
   $ sudo apt install python3          # 安装Python3
   $ sudo apt install python3-pip      # 安装pip3         #将Python3设为默认?参考如下

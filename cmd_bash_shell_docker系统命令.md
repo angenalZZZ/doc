@@ -363,7 +363,7 @@ $ sudo chmod -R 755 /usr/local/share/zsh/site-functions
 $ source ~/.zshrc # 使配置生效
 ~~~
 
-> `开发环境搭建` 安装gcc,make,gtk,glib,gnome,java,openjdk,oraclejdk,ssh,python,nodejs,npm等
+> `开发环境搭建` 安装gcc,make,gtk,glib,gnome,ssh,java,openjdk,oraclejdk,.NET-Core,R,python,nodejs等
 ~~~shell
   # < Windows Subsystem for Linux | WSL >---------------------------
   $ sudo do-release-upgrade -d        # 升级至18.04LTS ( 如果是16.04? > cat /etc/issue )
@@ -388,6 +388,9 @@ $ source ~/.zshrc # 使配置生效
   $ sudo dpkg -i packages-microsoft-prod.deb
   $ sudo apt-get update
   $ sudo apt-get install dotnet-sdk-3.0           # 安装 .NET Core SDK  > dotnet -h
+  
+  $ sudo apt-get update
+  $ sudo apt-get -y install r-recommended --fix-broken # 安装 R > /usr/bin/R --help ; R --version #大写R
   
   $ sudo apt install -f libncurses5-dev freeglut3-dev fop m4 tk unixodbc unixodbc-dev xsltproc socat #安装erlang依赖
   $ wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_22.1-1~ubuntu~xenial_amd64.deb

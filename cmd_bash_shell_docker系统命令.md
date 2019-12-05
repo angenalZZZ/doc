@@ -390,7 +390,7 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt-get install dotnet-sdk-3.0           # 安装 .NET Core SDK  > dotnet -h
   
   $ sudo apt-get update
-  $ sudo apt-get -y install r-recommended --fix-broken # 安装 R 语言(统计计算) > /usr/bin/R --help ; R --version #大写
+  $ sudo apt-get -y install r-recommended --fix-broken # 安装 R 语言(用于统计计算) > /usr/bin/R --help # 大写R
   
   $ sudo apt install -f libncurses5-dev freeglut3-dev fop m4 tk unixodbc unixodbc-dev xsltproc socat # erlang依赖
   $ wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_22.1-1~ubuntu~xenial_amd64.deb

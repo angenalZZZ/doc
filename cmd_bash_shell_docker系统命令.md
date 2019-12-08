@@ -325,6 +325,7 @@
   $ sudo add-apt-repository ppa:fcitx-team/nightly
   $ sudo apt-get install fcitx-pinyin fcitx-sogoupinyin fcitx-googlepinyin # 拼音
   $ sudo apt-get install fcitx-table fcitx-table-wubi fcitx-table-wbpy     # 五笔
+  $ sudo apt-get -y install im-config libapt-pkg-perl fcitx fcitx-table-wbpy && im-config -s fcitx # 安装五笔并设置fcitx为默认输入法
 ~~~
 
 ## linux开发环境及常用安装

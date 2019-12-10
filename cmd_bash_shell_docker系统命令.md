@@ -1122,8 +1122,14 @@ $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/contain
     # echo "AKIAIOSFODNN7EXAMPLE" | docker secret create access_key -
     # echo "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" | docker secret create secret_key -
   # 分布式存储文件系统 seaweedfs 参考 github.com/chrislusf/seaweedfs  *8.8k (推荐)
-  git clone https://github.com/chrislusf/seaweedfs.git #or: go get github.com/chrislusf/seaweedfs/weed
-  cd $GOPATH/src/github.com/chrislusf/seaweedfs/docker
+  $ mkdir -p $HOME/.seaweedfs/data01 && cd $HOME/.seaweedfs 
+  $ weed scaffold -config=filer|master|notification|replication|security -output=. 
+  $ weed master -port=9333 & 
+  $ weed volume -port=8080 -max=15 -mserver="localhost:9333" -dir="/home/yangzhou/.seaweedfs/data01" & 
+  $ weed filer -master="localhost:9333" & 
+  # weed cronjob '*/5 * * * * *' depends_on: - master - volume #run re-replication every 5 minutes
+  > git clone https://github.com/chrislusf/seaweedfs.git #or: go get github.com/chrislusf/seaweedfs/weed
+  > cd $GOPATH/src/github.com/chrislusf/seaweedfs/docker
   docker-compose -f seaweedfs-compose.yml -p seaweedfs up #to Development: dev-compose.yml
   # 分布式存储文件系统 godfs 参考 github.com/hetianyi/godfs  *1k
   docker pull hehety/godfs

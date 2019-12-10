@@ -1108,7 +1108,7 @@ $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/contain
   # mattermost: 一个安全的消息服务平台,自带后台管理
   docker run --name mattermost-preview -d -p 8065:8065 --add-host dockerhost:127.0.0.1 mattermost/mattermost-preview
   
-  # 云存储解决方案 minio 参考 docs.min.io/cn
+  # 云存储解决方案 minio 参考 docs.min.io/cn  *19.2k (强力推荐)
   > minio.exe server d:\docker\app\minio\data  # 本地网盘svr：http://127.0.0.1:9000/ : Access-Key & Secret-Key
   > hidec /w minio.exe server d:\docker\app\minio\data # 隐藏控制台 & 后台运行 & 配置↑ data\.minio.sys\config\config.json
   > nssm install MinIO minio.exe server A:/go/bin/minio/data  # 安装Windows服务[以管理员身份运行]
@@ -1121,7 +1121,11 @@ $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/contain
     # 设置安全密钥: using Docker secrets
     # echo "AKIAIOSFODNN7EXAMPLE" | docker secret create access_key -
     # echo "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" | docker secret create secret_key -
-  # 分布式存储文件系统 godfs 参考 github.com/hetianyi/godfs
+  # 分布式存储文件系统 seaweedfs 参考 github.com/chrislusf/seaweedfs  *8.8k (推荐)
+  git clone https://github.com/chrislusf/seaweedfs.git #or: go get github.com/chrislusf/seaweedfs/weed
+  cd $GOPATH/src/github.com/chrislusf/seaweedfs/docker
+  docker-compose -f seaweedfs-compose.yml -p seaweedfs up #to Development: dev-compose.yml
+  # 分布式存储文件系统 godfs 参考 github.com/hetianyi/godfs  *1k
   docker pull hehety/godfs
   docker run -d --name godfs-tracker -p 1022:1022 --restart always -v /godfs/data:/godfs/data --privileged -e log_level="info" 
     hehety/godfs tracker  #1.start tracker

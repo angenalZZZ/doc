@@ -1126,16 +1126,21 @@ $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/contain
     # echo "AKIAIOSFODNN7EXAMPLE" | docker secret create access_key -
     # echo "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" | docker secret create secret_key -
   # 分布式存储文件系统 seaweedfs 参考 github.com/chrislusf/seaweedfs  *8.8k (推荐)
-  $ mkdir -p $HOME/.seaweedfs/data01 && cd $HOME/.seaweedfs 
-  $ weed scaffold -config=filer|master|notification|replication|security -output=. 
-  $ weed master -port=9333 & 
-  $ weed volume -port=8080 -max=15 -mserver="localhost:9333" -dir="/home/yangzhou/.seaweedfs/data01" & 
-  $ weed filer -master="localhost:9333" & 
-  # weed cronjob '*/5 * * * * *' depends_on: - master - volume #run re-replication every 5 minutes
-  > git clone https://github.com/chrislusf/seaweedfs.git #or: go get github.com/chrislusf/seaweedfs/weed
-  > cd $GOPATH/src/github.com/chrislusf/seaweedfs/docker
-  docker-compose -f seaweedfs-compose.yml -p seaweedfs up #to Development: dev-compose.yml
-  # 分布式存储文件系统 godfs 参考 github.com/hetianyi/godfs  *1k
+  $ mkdir -p $HOME/.seaweedfs/data01 && cd $HOME/.seaweedfs #创建目录
+  $ weed scaffold -config=filer|master|notification|replication|security -output=. #配置文件
+  $ weed master -ip `hostname -i` -mdir /data -peers=127.0.0.1:9333 & #启动1个节点n1\文件数据中心c1
+  $ weed volume -ip `hostname -i` -dir="$HOME/.seaweedfs/data01" -port=8080 -max=15 -mserver=127.0.0.1:9333 & #存储分区v1
+  $ weed server -ip `hostname -i` -dir /data -master.peers=127.0.0.1:9333 & #数据中心服务c1Api
+  $ weed filer -port=8088 -master=127.0.0.1:9333 & #local文件服务Api
+  $ weed s3 -domainName=$S3_DOMAIN -cert.file=$S3_CERT -key.file=$S3_KEY -filer=127.0.0.1:8089 & #S3文件服务Api
+  #-config>>  $HOME/.seaweedfs/crontab #计划任务配置-文件处理
+*/2 * * * * * echo "volume.fix.replication" | weed shell -master=127.0.0.1:9333
+*/2 * * * * * echo "volume.balance -c ALL -force" | weed shell -master=127.0.0.1:9333
+  $ exec supercronic $HOME/.seaweedfs/crontab & #执行计划任务-使用以上配置文件-依赖master-n1,volume-v1..每2分钟轮训1次
+  > git clone https://github.com/chrislusf/seaweedfs.git #下载Src: go get github.com/chrislusf/seaweedfs/weed
+  > cd $GOPATH/src/github.com/chrislusf/seaweedfs/docker #配置Dockerfile,*compose.yml..
+  docker-compose -f seaweedfs-compose.yml -p seaweedfs up #生产:master,volume,filer,cronjob,s3..开发:dev-compose.yml
+  # 分布式存储文件系统 godfs 参考 github.com/hetianyi/godfs  *1k (推荐)
   docker pull hehety/godfs
   docker run -d --name godfs-tracker -p 1022:1022 --restart always -v /godfs/data:/godfs/data --privileged -e log_level="info" 
     hehety/godfs tracker  #1.start tracker

@@ -1132,11 +1132,11 @@ $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/contain
   $ weed master -ip `hostname -i` -mdir="$HOME/.seaweedfs/data" -peers=127.0.0.1:9333 & 
   ##启动统计服务Stats  http://localhost:9333
   $ weed server -ip `hostname -i` -dir="$HOME/.seaweedfs/data" -master.peers=127.0.0.1:9333 & 
-  ##添加存储服务Disk 01  http://localhost:8380
+  ##添加存储服务Disk   http://localhost:8380
   $ weed volume -ip `hostname -i` -dir="$HOME/.seaweedfs/data" -port=8380 -max=15 -mserver=127.0.0.1:9333 & 
-  ##添加文件服务File.Upload  http://localhost:8388
+  ##添加文件服务File.Upload  http://localhost:8388    http://localhost:8888
   $ weed filer -port=8388 -master=127.0.0.1:9333 & 
-  ##添加云S3服务File.Upload  http://localhost:8333
+  ##添加云S3服务File.Upload  http://localhost:8333    https://aws.amazon.com/cn/s3
   $ weed s3 -port=8333 -domainName=$S3_DOMAIN -cert.file=$S3_CERT -key.file=$S3_KEY -filer=127.0.0.1:8388 & 
   #-config>>  $HOME/.seaweedfs/crontab #任务配置-文件处理
 */2 * * * * * echo "volume.fix.replication" | weed shell -master=127.0.0.1:9333

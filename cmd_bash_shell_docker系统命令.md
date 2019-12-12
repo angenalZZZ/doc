@@ -193,7 +193,11 @@
   
   # 网络地址 - inet&inet6
   > ipconfig /?
+  > hostname     # `主机名`
+  $ hostname -i  # 127.0.1.1
   $ ifconfig |grep inet
+  $ ifconfig |grep 'inet ' |head -5  # 获取前5条ipV4
+  $ ifconfig |grep 'inet6' |head -5  # 获取前5条ipV6
   # 科学上网 - 代理设置 (解决网络问题)  蓝灯: https://github.com/getlantern/lantern
   $ sudo vim /etc/profile [全局|用户配置：~/.profile]# 填写如下VPN转发PORT
   export FTP_PROXY=http://<proxy hostname:port>     # 临时使用

@@ -1126,11 +1126,11 @@ $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/contain
     # echo "AKIAIOSFODNN7EXAMPLE" | docker secret create access_key -
     # echo "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" | docker secret create secret_key -
   # 分布式文件存储系统 seaweedfs 参考 github.com/chrislusf/seaweedfs  *8.8k (强力推荐)
-  $ mkdir -p $HOME/.seaweedfs/data01 && cd $HOME/.seaweedfs #创建目录
+  $ mkdir -p $HOME/.seaweedfs/data && cd $HOME/.seaweedfs #创建目录
   $ weed scaffold -config=filer|master|notification|replication|security -output=. #配置文件
-  $ weed master -ip `hostname -i` -mdir /data -peers=127.0.0.1:9333 & #启动1个节点n1\文件数据中心c1
-  $ weed volume -ip `hostname -i` -dir="$HOME/.seaweedfs/data01" -port=8080 -max=15 -mserver=127.0.0.1:9333 & #存储分区v1
-  $ weed server -ip `hostname -i` -dir /data -master.peers=127.0.0.1:9333 & #数据中心服务c1Api
+  $ weed master -ip `hostname -i` -mdir="$HOME/.seaweedfs/data" -peers=127.0.0.1:9333 & #启动1个节点n1\文件数据中心c1
+  $ weed volume -ip `hostname -i` -dir="$HOME/.seaweedfs/data" -port=8080 -max=15 -mserver=127.0.0.1:9333 & #存储分区v1
+  $ weed server -ip `hostname -i` -dir="$HOME/.seaweedfs/data" -master.peers=127.0.0.1:9333 & #数据查询服务c1Api
   $ weed filer -port=8088 -master=127.0.0.1:9333 & #local文件服务Api
   $ weed s3 -domainName=$S3_DOMAIN -cert.file=$S3_CERT -key.file=$S3_KEY -filer=127.0.0.1:8089 & #S3文件服务Api
   #-config>>  $HOME/.seaweedfs/crontab #计划任务配置-文件处理

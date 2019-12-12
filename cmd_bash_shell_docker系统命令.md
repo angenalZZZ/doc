@@ -1133,10 +1133,11 @@ $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/contain
   $ weed server -ip `hostname -i` -dir="$HOME/.seaweedfs/data" -master.peers=127.0.0.1:9333 & #数据查询服务c1Api
   $ weed filer -port=8088 -master=127.0.0.1:9333 & #local文件服务Api
   $ weed s3 -domainName=$S3_DOMAIN -cert.file=$S3_CERT -key.file=$S3_KEY -filer=127.0.0.1:8089 & #S3文件服务Api
-  #-config>>  $HOME/.seaweedfs/crontab #计划任务配置-文件处理
+  #-config>>  $HOME/.seaweedfs/crontab #任务配置-文件处理
 */2 * * * * * echo "volume.fix.replication" | weed shell -master=127.0.0.1:9333
 */2 * * * * * echo "volume.balance -c ALL -force" | weed shell -master=127.0.0.1:9333
-  $ exec supercronic $HOME/.seaweedfs/crontab & #执行计划任务-使用以上配置文件-依赖master-n1,volume-v1..每2分钟轮训1次
+  $ systemctl status crond #检查系统任务的服务状态, 或使用容器任务的管理工具: github.com/aptible/supercronic
+  $ exec crontab -iu root $HOME/.seaweedfs/crontab & #执行任务-使用以上配置文件-依赖master-n1,volume-v1..每2分钟轮训
   > git clone https://github.com/chrislusf/seaweedfs.git #下载Src: go get github.com/chrislusf/seaweedfs/weed
   > cd $GOPATH/src/github.com/chrislusf/seaweedfs/docker #配置Dockerfile,*compose.yml..
   docker-compose -f seaweedfs-compose.yml -p seaweedfs up #生产:master,volume,filer,cronjob,s3..开发:dev-compose.yml

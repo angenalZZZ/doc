@@ -1125,7 +1125,7 @@ $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/contain
     # 设置安全密钥: using Docker secrets
     # echo "AKIAIOSFODNN7EXAMPLE" | docker secret create access_key -
     # echo "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" | docker secret create secret_key -
-  # 分布式存储文件系统 seaweedfs 参考 github.com/chrislusf/seaweedfs  *8.8k (推荐)
+  # 分布式文件存储系统 seaweedfs 参考 github.com/chrislusf/seaweedfs  *8.8k (强力推荐)
   $ mkdir -p $HOME/.seaweedfs/data01 && cd $HOME/.seaweedfs #创建目录
   $ weed scaffold -config=filer|master|notification|replication|security -output=. #配置文件
   $ weed master -ip `hostname -i` -mdir /data -peers=127.0.0.1:9333 & #启动1个节点n1\文件数据中心c1
@@ -1140,7 +1140,7 @@ $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/contain
   > git clone https://github.com/chrislusf/seaweedfs.git #下载Src: go get github.com/chrislusf/seaweedfs/weed
   > cd $GOPATH/src/github.com/chrislusf/seaweedfs/docker #配置Dockerfile,*compose.yml..
   docker-compose -f seaweedfs-compose.yml -p seaweedfs up #生产:master,volume,filer,cronjob,s3..开发:dev-compose.yml
-  # 分布式存储文件系统 godfs 参考 github.com/hetianyi/godfs  *1k (推荐)
+  # 分布式文件存储系统 godfs 参考 github.com/hetianyi/godfs  *1k (推荐)
   docker pull hehety/godfs
   docker run -d --name godfs-tracker -p 1022:1022 --restart always -v /godfs/data:/godfs/data --privileged -e log_level="info" 
     hehety/godfs tracker  #1.start tracker

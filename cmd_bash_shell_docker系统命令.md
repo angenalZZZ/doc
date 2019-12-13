@@ -1000,21 +1000,25 @@ $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/contain
   docker container export -o="d:\docker\snapshot\ubuntu_19_04.tar" ubuntu # 导出快照 (container export snapshot)
   docker cp d:\docker\app\xxx\publish centos.netcore:/home/app/xxx/publish # 复制目录 (copy dir to container)
   docker cp centos.netcore:/home/app/entrypoint.sh d:\docker\app\centos\home\app\entrypoint.sh # 复制文件
+  #-config>>  ~/.bash_aliases
+alias dockerstartall='docker container start $(docker ps -aq)'     # 启动所有容器
+alias dockerstopall='docker container stop $(docker ps -aq)'       # 停止所有容器
+alias dockerrestartall='docker container restart $(docker ps -aq)' # 重启所有容器
+alias dockerkillall='docker kill $(docker ps -q)'                  # 杀死所有运行的容器
+alias dockercleanc='docker container prune'                        # 删除所有停止的容器(同下)
+alias dockercleanc='printf "\n>>> Deleting stopped containers\n\n" && docker rm $(docker ps -aq)'
+alias dockercleaniall='docker rm $(docker ps -a -q)'               # 删除所有容器(下面是删未标记的镜像)
+alias dockercleani='printf "\n>>> Deleting untagged images\n\n" && docker rmi $(docker images -qf dangling=true)'
+alias dockerclean='dockercleanc || true && dockercleani'           # 清除停止的容器及删未标记的镜像
 
-  docker container start $(docker ps -aq)   # 启动所有容器
-  docker container stop $(docker ps -aq)    # 停止所有容器
-  docker container restart $(docker ps -aq) # 重启所有容器
-  docker kill $(docker ps -a -q)            # 杀死所有运行的容器
-  docker container prune                    # 删除所有停止的容器
   docker volume prune                       # 删除未使用volumes
   docker system prune                       # 删除未使用数据
   docker rm [container]                     # 删除1个容器
-  docker rm $(docker ps -a -q)              # 删除所有容器
   docker rmi [image]                        # 删除1个镜像
   docker rmi $(docker images -q)            # 删除所有镜像
   docker port [container]                   # 查看端口映射
   docker inspect [container]                # 查看容器详情
-  docker rename web [container]             # 容器重命名 > 查看容器 docker ps -a
+  docker rename web [container]             # 容器重新命名
   docker logs [container]                   # 查看容器日志
   docker update --restart=always [container] # 修改配置: 设置为开机启动 (可在 docker run 时添加此参数)
   

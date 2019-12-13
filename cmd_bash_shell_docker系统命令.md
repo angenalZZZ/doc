@@ -146,6 +146,8 @@
   # 目录访问权限
   > cd [目录]
   $ sudo chown -R 1000 [目录]  # 改变[目录](-R递归修改文件和目录)的"拥有者"为uid:1000 = $(id -u)
+  $ sudo chown root:root [目录] #修改目录的"拥有者"
+  $ find . -type f -user root -exec chown `id -u` {} #修改root的文件的"拥有者"为当前用户(find文件后-exec执行操作)
   $ sudo chgrp –R users [目录] # 改变[目录]的"所属用户组"为G:users = $(id -g)
   $ sudo chmod 744 [目录]      # 修改当前目录(.)权限为可读写及执行(-R递归修改文件和目录)
   $ sudo chmod 777 to/path    # 每个人都有读和写以及执行的权限(约定的三个数字owner=7;group=7;others=7)

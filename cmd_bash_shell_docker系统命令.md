@@ -301,13 +301,21 @@
   #1.创建openssl数字签名认证
   $ openssl req -new -nodes -x509 -out conf/server.crt -keyout conf/server.key \
     -days 3650 -subj "/C=DE/ST=NRW/L=Earth/O=Random Company/OU=IT/CN=127.0.0.1/emailAddress=***@example.com"
+openssl genrsa -passout pass:123456 -des3 -out ca.key 1024
+openssl req -passin pass:123456 -new -x509 -days 3650 -key ca.key -out ca.crt -subj "/C=CN/ST=SiChuan/CN=fpapi.cn" -extensions SAN -config openssl.conf
+openssl genrsa -passout pass:123456 -des3 -out server.key 1024
+openssl req -passin pass:123456 -new -key server.key -out server.csr -subj "/C=CN/ST=SiChuan/CN=fpapi.cn" -reqexts SAN -config openssl.conf
+openssl ca -passin pass:123456 -days 3650 -in server.csr -keyfile ca.key -cert ca.crt -extensions SAN -config openssl.conf
+openssl rsa -passin pass:123456 -in server.key -out server.key
+openssl pkcs8 -topk8 -nocrypt -in server.key -out server.pem
+
   #2.安装mkcert数字签名工具 *21k
   $ sudo apt install libnss3-tools  #or: sudo yum install nss-tools #or: sudo pacman -S nss
   $ git clone github.com/FiloSottile/mkcert && go build -ldflags "-X main.Version=$(git describe --tags)"
   $ mkcert -help    #.用于搭建本地CA数字签名认证: CA, Digital Signature, Key Encipherment, Certificate Signing.
-  $ mkcert -CAROOT  #1.Print the CA certificate and key storage location: rootCA.pem,rootCA-key.pem
-  $ mkcert -install #2.The local CA is installed in the system trust store! #安装本地证书CA服务环境↑↑
-  $ mkcert example.com "*.example.com" localhost 127.0.0.1 ::1 #3.创建证书: ./example.com+4.pem,example.com+4-key.pem
+  $ mkcert -CAROOT  #1.查看证书存储路径"${HOME}/.local/share/mkcert": rootCA.pem,rootCA-key.pem
+  $ mkcert -install      #2.安装本地CA证书,为下面创建证书作准备↑↑
+  $ mkcert example.com "*.example.com" localhost 127.0.0.1 ::1 #3.创建证书,指定域名或IP
   #3.1修改PowerShell脚本执行策略 windows 10
   > Get-ExecutionPolicy
   > Set-ExecutionPolicy RemoteSigned [RemoteSigned,AllSigned,Bypass,Restricted]

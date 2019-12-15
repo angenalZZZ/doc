@@ -300,12 +300,15 @@
   
   #1.创建openssl数字签名认证
   $ openssl req -new -nodes -x509 -out conf/server.crt -keyout conf/server.key \
-    -days 3650 -subj "/C=DE/ST=NRW/L=Earth/O=Random Company/OU=IT/CN=127.0.0.1/emailAddress=***@example.com"
+    -days 3650 -subj "/C=DE/ST=NRW/L=Earth/O=Company-Name/OU=IT/CN=127.0.0.1/emailAddress=***@example.com"
 openssl genrsa -passout pass:123456 -des3 -out ca.key 1024
-openssl req -passin pass:123456 -new -x509 -days 3650 -key ca.key -out ca.crt -subj "/C=CN/ST=SiChuan/CN=fpapi.cn" -extensions SAN -config openssl.conf
+openssl req -passin pass:123456 -new -x509 -days 3650 -key ca.key -out ca.crt -subj "/C=CN/ST=SiChuan/CN=www.fpapi.cn" \
+    -extensions SAN -config  <(cat /etc/ssl/openssl.cnf < (printf "[SAN]\nsubjectAltName=DNS:*.fpapi.cn,IP:127.0.0.1"))
 openssl genrsa -passout pass:123456 -des3 -out server.key 1024
-openssl req -passin pass:123456 -new -key server.key -out server.csr -subj "/C=CN/ST=SiChuan/CN=fpapi.cn" -reqexts SAN -config openssl.conf
-openssl ca -passin pass:123456 -days 3650 -in server.csr -keyfile ca.key -cert ca.crt -extensions SAN -config openssl.conf
+openssl req -passin pass:123456 -new -key server.key -out server.csr -subj "/C=CN/ST=SiChuan/CN=www.fpapi.cn" -reqexts SAN \
+    -config <(cat /etc/ssl/openssl.cnf < (printf "[SAN]\nsubjectAltName=DNS:*.fpapi.cn,IP:127.0.0.1"))
+openssl ca -passin pass:123456 -days 3650 -in server.csr -keyfile ca.key -cert ca.crt -extensions SAN \
+    -config <(cat /etc/ssl/openssl.cnf < (printf "[SAN]\nsubjectAltName=DNS:*.fpapi.cn,IP:127.0.0.1"))
 openssl rsa -passin pass:123456 -in server.key -out server.key
 openssl pkcs8 -topk8 -nocrypt -in server.key -out server.pem
 

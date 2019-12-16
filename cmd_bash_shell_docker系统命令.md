@@ -299,8 +299,7 @@
     *指纹             a79be724538b668fa817e8578d6a8078337fd3ad
   
   #1.创建openssl数字签名认证
-  $ openssl req -new -nodes -x509 -out conf/server.crt -keyout conf/server.key \
-    -days 3650 -subj "/C=DE/ST=NRW/L=Earth/O=Company-Name/OU=IT/CN=127.0.0.1/emailAddress=***@example.com"
+  $ openssl genrsa -out demo.key 2048  #genrsa生成密钥
 openssl genrsa -passout pass:123456 -des3 -out ca.key 1024
 openssl req -passin pass:123456 -new -x509 -days 3650 -key ca.key -out ca.crt -subj "/C=CN/ST=SiChuan/CN=www.fpapi.cn" \
     -extensions SAN -config  <(cat /etc/ssl/openssl.cnf < (printf "[SAN]\nsubjectAltName=DNS:*.fpapi.cn,IP:127.0.0.1"))
@@ -311,6 +310,8 @@ openssl ca -passin pass:123456 -days 3650 -in server.csr -keyfile ca.key -cert c
     -config <(cat /etc/ssl/openssl.cnf < (printf "[SAN]\nsubjectAltName=DNS:*.fpapi.cn,IP:127.0.0.1"))
 openssl rsa -passin pass:123456 -in server.key -out server.key
 openssl pkcs8 -topk8 -nocrypt -in server.key -out server.pem
+  ##openssl req -new -nodes -x509 -out server.crt -keyout server.key -days 3650 \
+    -subj "/C=DE/ST=NRW/L=Earth/O=Company-Name/OU=IT/CN=127.0.0.1/emailAddress=***@example.com"
 
   #2.安装mkcert数字签名工具 *21k
   $ sudo apt install libnss3-tools  #or: sudo yum install nss-tools #or: sudo pacman -S nss

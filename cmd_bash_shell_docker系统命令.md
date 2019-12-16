@@ -301,7 +301,7 @@
   #1.创建openssl数字签名认证
   ##openssl genrsa -out demo.key 2048    #genrsa生成密钥文件
 openssl rand -out ~/.rnd $(date +%s)     #rand生成随机数文件
-mkdir -p ./demoCA/newcerts && touch demoCA/index.txt && touch demoCA/serial && echo 01 > demoCA/serial
+mkdir -p ./demoCA/newcerts && touch demoCA/index.txt demoCA/index.txt.attr && echo 01 |tee demoCA/serial 
 openssl genrsa -passout pass:123456 -des3 -out ca.key 1024
 openssl req -passin pass:123456 -new -x509 -days 3650 -key ca.key -out ca.crt \
     -subj "/C=CN/ST=SiChuan/CN=www.fpapi.cn" -extensions SAN \

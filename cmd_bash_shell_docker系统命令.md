@@ -299,15 +299,16 @@
     *指纹             a79be724538b668fa817e8578d6a8078337fd3ad
   
   #1.创建openssl数字签名认证
-  $ openssl genrsa -out demo.key 2048  #genrsa生成密钥
+  $ openssl genrsa -out demo.key 2048    #genrsa生成密钥文件
+openssl rand -out ~/.rnd $(date +%s)     #rand生成随机数文件...
 openssl genrsa -passout pass:123456 -des3 -out ca.key 1024
 openssl req -passin pass:123456 -new -x509 -days 3650 -key ca.key -out ca.crt -subj "/C=CN/ST=SiChuan/CN=www.fpapi.cn" \
-    -extensions SAN -config  <(cat /etc/ssl/openssl.cnf < (printf "[SAN]\nsubjectAltName=DNS:*.fpapi.cn,IP:127.0.0.1"))
+    -extensions SAN -config  <(cat /etc/ssl/openssl.cnf <(printf "[SAN]\nsubjectAltName=DNS:*.fpapi.cn,IP:127.0.0.1"))
 openssl genrsa -passout pass:123456 -des3 -out server.key 1024
 openssl req -passin pass:123456 -new -key server.key -out server.csr -subj "/C=CN/ST=SiChuan/CN=www.fpapi.cn" -reqexts SAN \
-    -config <(cat /etc/ssl/openssl.cnf < (printf "[SAN]\nsubjectAltName=DNS:*.fpapi.cn,IP:127.0.0.1"))
+    -config <(cat /etc/ssl/openssl.cnf <(printf "[SAN]\nsubjectAltName=DNS:*.fpapi.cn,IP:127.0.0.1"))
 openssl ca -passin pass:123456 -days 3650 -in server.csr -keyfile ca.key -cert ca.crt -extensions SAN \
-    -config <(cat /etc/ssl/openssl.cnf < (printf "[SAN]\nsubjectAltName=DNS:*.fpapi.cn,IP:127.0.0.1"))
+    -config <(cat /etc/ssl/openssl.cnf <(printf "[SAN]\nsubjectAltName=DNS:*.fpapi.cn,IP:127.0.0.1"))
 openssl rsa -passin pass:123456 -in server.key -out server.key
 openssl pkcs8 -topk8 -nocrypt -in server.key -out server.pem
   ##openssl req -new -nodes -x509 -out server.crt -keyout server.key -days 3650 \

@@ -107,6 +107,21 @@
   # sudo apt -y install netcat-traditional # 手动安装netcat(nc)网络调试和探测工具，被誉为网络安全界的“瑞士军刀”
   $ sudo update-alternatives --config nc   # 替换默认安装的 netcat-OpenBSD < ubuntu >
   $ nc -help # 开启服务器监听> nc -lnvp 4488 -w 2 ; netstat -anT|grep 4488 < windows >
+  $ nc -vz www.baidu.com 443         # 查询DNS记录
+  # 域名解析
+  $ host localhost
+  $ nslookup www.baidu.com           # 查询DNS记录，查看域名解析是否正常
+  $ dig -h                           # 查询DNS包括A记录，MX记录，NS记录等信息
+  $ dig @server [解析域名] 
+  $ dig -x [反向解析IP地址] @server
+  $ dig baidu.com +nssearch          # 查找一个域的授权 dns 服务器
+  $ dig www.baidu.com +trace         # 从根服务器开始追踪一个域名的解析过程
+  $ dig yahoo.com A +noall +answer   # A记录
+  $ dig yahoo.com MX +noall +answer  # MX记录
+  $ dig yahoo.com NS +noall +answer  # NS记录
+  $ dig yahoo.com ANY +noall +answer # 查询上面所有的记录
+  $ dig www.baidu.com +short         # 查询快速回答
+  $ dig baidu.com ANY +noall +answer +nocmd +multiline # 查询详细回答
   
   # 进程详情
   > tasklist

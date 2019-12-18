@@ -106,7 +106,7 @@
   $ ss -aup   # udp端口
   # sudo apt -y install netcat-traditional # 手动安装netcat(nc)网络调试和探测工具，被誉为网络安全界的“瑞士军刀”
   $ sudo update-alternatives --config nc   # 替换默认安装的 netcat-OpenBSD < ubuntu >
-  $ nc -help  # 开启服务器监听> nc -lk 8888 ; netstat -anop|grep 8888
+  $ nc -help # 开启服务器监听> nc -lnvp 4488 -w 2 ; netstat -anT|grep 4488 < windows >
   
   # 进程详情
   > tasklist

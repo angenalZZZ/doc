@@ -99,11 +99,14 @@
   $ ss -t4 state time-wait                    # tcp超时-ubuntu $ apt install -y iproute2 iproute2-doc
   $ ss -at '( dport = :ssh or sport = :ssh )' # 端口为 ssh 的套接字
   $ ss -lntp '( dst :443 or dst :80 )'        # 目的端口为 80,443 的套接字
-  $ ss -lntp  # tcp端口+users进程name-pid-fd  # 常用ss(iproute工具)比netstat(net-tools工具)更强大
+  $ ss -lntp  # tcp端口+users进程name-pid-fd   # 常用ss(iproute工具)比netstat(net-tools工具)更强大
   $ ss -nt state connected dport = :80
   $ ss -nt dport lt :100  # 端口小于100
   $ ss -nt dport gt :1024 # 端口大于1024
   $ ss -aup   # udp端口
+  # sudo apt -y install netcat-traditional # 手动安装netcat(nc)网络调试和探测工具，被誉为网络安全界的“瑞士军刀”
+  $ sudo update-alternatives --config nc   # 替换默认安装的 netcat-OpenBSD < ubuntu >
+  $ nc -help  # 开启服务器监听> nc -lk 8888 ; netstat -anop|grep 8888
   
   # 进程详情
   > tasklist

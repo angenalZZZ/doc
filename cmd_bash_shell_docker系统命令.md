@@ -149,6 +149,7 @@
   > dir [目录]           # 默认当前目录(命令pwd)
   $ ls -al [目录]        # 查看目录及文件读写权限 alias ll='ls -alF' ; alias la='ls -A' ; alias l='ls -CF'
   $ touch main.js        # 新建文件
+  $ mktemp && mktemp -d  # 新建临时文件和临时目录
   $ mv main.js main.cs   # 重命名文件,移动文件位置
   $ cat main.cs          # 输出文件内容
   $ namo|vi main.cs      # 编辑文件内容

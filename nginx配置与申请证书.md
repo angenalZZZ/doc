@@ -55,12 +55,19 @@ certbot certonly --email *@*.com --agree-tos --no-eff-email --webroot \
   -w /data/web/www* -d www.*.cn -d api.*.cn \
   -w /data/web/www* -d www.*.cn -d api.*.cn \
 ## 配置nginx
-  // 参考下面 * 配置代理 https & ws
-  // 注意事项：因为默认环境是不允许访问以"."开头的隐藏文件及目录，
-  // 所以访问http://abc.com/.well-known/acme-challenge/* 这个链接会返回403错误，必须改虚拟主机配置文件：
-  // 在配置 location ~ /\. { deny all; } 前面添加：location ~ /.well-known { allow all; } 然后重启nginx
-## 配置crontab 计划任务
-* * * */1 * /data/certificate/certbot-auto renew --disable-hook-validation
+  #参考下面 * 配置代理 https & ws
+  #注意事项：因为默认环境是不允许访问以"."开头的隐藏文件及目录，
+  #所以访问http://abc.com/.well-known/acme-challenge/* 这个链接会返回403错误，必须修改虚拟主机vhost配置文件
+  #在配置 location ~ /\. { deny all; } 前面添加，最后重启nginx
+  location ~ /.well-known { allow all; } #或加下面两行
+  location ^~ /.well-known/acme-challenge/ { default_type "text/plain"; root /path/website/; }
+  location = /.well-known/acme-challenge/ { return 404; }
+## 配置crontab `把证书更新添加到计划任务` 由于只有90天就得更新证书，而且只有在7天内的过期的才能更新
+## * * * */1 * /data/certificate/certbot-auto renew --disable-hook-validation
+00 00 00 */3 * /sbin/certbot renew --renew-hook "service nginx reload" --quiet > /dev/null 2>&1 &
+## 回收证书
+certbot revoke --cert-path /etc/letsencrypt/live/example.com/cert.pem
+certbot delete --cert-name example.com
 ## 在阿里云上，OSS和CDN的配置上，选择直接输入证书内容替换原来直接选择的阿里云证书。
 ~~~
 

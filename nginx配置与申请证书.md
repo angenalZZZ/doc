@@ -1,21 +1,21 @@
 # [Nginx](http://nginx.org/en/docs/)  [中文](http://www.nginx.cn/doc/)
 
 * 安装
-~~~
-$ yum -y install nginx          # <CentOS>
-$ sudo apt-get -y install nginx # <Ubuntu>
-$ sudo ufw allow 'Nginx Full'   # 配置防火墙
-$ sudo ufw status               # 验证更改
-$ sudo systemctl enable nginx   # 设置开机启动
-$ sudo systemctl status nginx   # 检查服务状态，Nginx 默认监听 80 端口(确保没被占用)
-$ sudo systemctl restart nginx  # 重启服务
-$ sudo systemctl reload nginx   # 修改配置后，需要重新加载服务
-$ sudo systemctl disable nginx && sudo systemctl stop nginx #禁止开机启动，停止服务
-$ ls /etc/nginx/sites-available # 设置Nginx服务器模块(类似Apache虚拟主机) www.linuxidc.com/Linux/2018-05/152258.htm
-$ sudo apt install certbot      # 使用Let's Encrypt保护Nginx  www.linuxidc.com/Linux/2018-05/152259.htm
+~~~bash
+yum -y install nginx          # <CentOS>
+sudo apt-get -y install nginx # <Ubuntu>
+sudo ufw allow 'Nginx Full'   # 配置防火墙
+sudo ufw status               # 验证更改
+sudo systemctl enable nginx   # 设置开机启动
+sudo systemctl status nginx   # 检查服务状态，Nginx 默认监听 80 端口(确保没被占用)
+sudo systemctl restart nginx  # 重启服务
+sudo systemctl reload nginx   # 修改配置后，需要重新加载服务
+sudo systemctl disable nginx && sudo systemctl stop nginx #禁止开机启动，停止服务
+ls /etc/nginx/sites-available # 设置Nginx服务器模块(类似Apache虚拟主机) www.linuxidc.com/Linux/2018-05/152258.htm
+sudo apt install certbot      # 使用Let's Encrypt保护Nginx  www.linuxidc.com/Linux/2018-05/152259.htm
 ~~~
 * 常用命令
-~~~
+~~~bash
 which nginx         # 查找 Nginx 命令所在路径
 nginx -s stop       # 快速关闭 Nginx，可能不保存相关信息，并迅速终止 Web 服务
 nginx -s quit       # 平稳关闭 Nginx，保存相关信息，有安排的结束 Web 服务
@@ -27,7 +27,7 @@ nginx -v            # 显示 Nginx 的版本
 nginx -V            # 显示 Nginx 的版本、编译器版本和配置参数
 ~~~
 * 检查与分析工具[gixy](https://github.com/yandex/gixy)
-~~~
+~~~bash
 # 检查
 cd /etc/nginx
 nginx -t
@@ -37,7 +37,7 @@ gixy nginx.conf
 ~~~
 
 * 使用let's encrypt免费证书[工具certbot](https://certbot.eff.org)
-~~~
+~~~bash
 # 安装certbot
 cd /data/certificate
 wget -O /sbin/certbot --no-check-certificate https://dl.eff.org/certbot-auto
@@ -62,11 +62,10 @@ certbot certonly --email *@*.com --agree-tos --no-eff-email --webroot \
 ## 配置crontab 计划任务
 * * * */1 * /data/certificate/certbot-auto renew --disable-hook-validation
 ## 在阿里云上，OSS和CDN的配置上，选择直接输入证书内容替换原来直接选择的阿里云证书。
-
 ~~~
 
 * [配置参数说明](https://github.com/digitalocean/nginxconfig.io)与[✨在线编辑器](https://nginxconfig.io/)
-~~~
+~~~nginx
 # 进程用户
 user nginx; # <linux>
 
@@ -208,7 +207,7 @@ http {
 ~~~
 
  * 配置代理 https & ws
-~~~
+~~~nginx
  # 负载均衡 http web
  upstream web {
     server 127.0.0.1:8080; # 转发策略(默认:轮询)

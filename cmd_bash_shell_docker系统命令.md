@@ -895,6 +895,42 @@ $ source ~/.zshrc # 使配置生效
   $ gfio   # 桌面应用→分析(>1h)→ 顺序读、顺序写、随机读、随机写等存储性能
 ~~~
 
+> `supervisor`[守护进程工具](http://supervisord.org)
+~~~shell
+  $ sudo apt-get -y autoremove python-setuptools # 卸载
+  $ sudo apt-get -y install python-setuptools    # 重装
+  $ cd ~/.local/bin/ && su root                  # 切换目录及账号
+  $ ./easy_install supervisor                    # 安装supervisor (以root身份)
+  $ mkdir -p /etc/supervisor/conf.d && cd /etc/supervisor
+  $ echo_supervisord_conf > supervisord.conf
+#-config>>  /etc/supervisor/supervisord.conf     # 配置 
+;conf.d 守护应用程序的配置文件夹，需要手动创建
+[include]
+files = conf.d/*.conf
+#-为你的程序创建一个.conf文件，放在目录"/etc/supervisor/conf.d/"下
+[program:MGToastServer]                       ; 程序名称-终端-控制台的标识<application-name>
+user=root                                     ; 执行用户身份
+autorestart=true                              ; 程序意外退出-是否自动重启
+command=dotnet MGToastServer.dll              ; 运行程序的完整命令
+directory=/root/app/toastServer/              ; 程序执行的工作目录
+environment=ASPNETCORE_ENVIRONMENT=Production ; 程序运行的环境变量
+stderr_logfile=/var/log/MGToastServer.err.log ; 错误日志文件
+stdout_logfile=/var/log/MGToastServer.out.log ; 输出日志文件
+stopsignal=INT                                ; 结束进程信号`Ctrl+C`
+  $ supervisord -c /etc/supervisor/supervisord.conf # 运行supervisor
+  $ ps -ef | grep MGToastServer                     # 检查你的程序的进程
+  $ supervisorctl reload                            # 重启supervisor (修改配置后)
+#-config>>  /usr/lib/systemd/system/supervisord.service # 配置supervisor开机启动 (参考其它*.service)
+*** ***
+ExecStart=/usr/bin/supervisord -c /etc/supervisor/supervisord.conf
+ExecStop=/usr/bin/supervisorctl shutdown
+ExecReload=/usr/bin/supervisorctl reload
+*** ***
+  $ systemctl enable supervisord && systemctl is-enabled supervisord # 查看系统服务状态
+  $ supervisorctl restart|stop|start <application-name>  # 重启|停止|启动指定应用
+  $ supervisorctl restart|stop|start all     # 重启|停止|启动所有应用
+~~~
+
 > `glances`[系统实时监控](https://www.tecmint.com/command-line-tools-to-monitor-linux-performance/)
 ~~~shell
   $ sudo apt-add-repository ppa:arnaud-hartmann/glances-stable

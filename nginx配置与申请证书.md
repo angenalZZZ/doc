@@ -35,6 +35,36 @@ nginx -t
 pip install gixy
 gixy nginx.conf
 ~~~
+
+* 使用let's encrypt免费证书[工具certbot](https://certbot.eff.org)
+~~~
+# 安装certbot
+cd /data/certificate
+wget -O /sbin/certbot --no-check-certificate https://dl.eff.org/certbot-auto
+chmod a+x /sbin/certbot
+certbot -n  # 安装依赖 (建议先修改为国内的pip源)
+# 生成证书 >> /etc/letsencrypt/live/*.com/*.pem
+## 单域名生成证书
+certbot certonly --email *@*.com --agree-tos --no-eff-email --webroot \
+  -w /data/web/www* -d www.*.cn
+## 多域名单目录生成单证书：(即一个网站多个域名使用同一个证书)
+certbot certonly --email *@*.com --agree-tos --no-eff-email --webroot \
+  -w /data/web/www* -d www.*.cn -d api.*.cn
+## 多域名多目录生成一个证书：(即一次生成多个域名的一个证书)
+certbot certonly --email *@*.com --agree-tos --no-eff-email --webroot \
+  -w /data/web/www* -d www.*.cn -d api.*.cn \
+  -w /data/web/www* -d www.*.cn -d api.*.cn \
+## 配置nginx
+  // 参考下面 * 配置代理 https & ws
+  // 注意事项：因为默认环境是不允许访问以"."开头的隐藏文件及目录，
+  // 所以访问http://abc.com/.well-known/acme-challenge/* 这个链接会返回403错误，必须改虚拟主机配置文件：
+  // 在配置 location ~ /\. { deny all; } 前面添加：location ~ /.well-known { allow all; } 然后重启nginx
+## 配置crontab 计划任务
+* * * */1 * /data/certificate/certbot-auto renew --disable-hook-validation
+## 在阿里云上，OSS和CDN的配置上，选择直接输入证书内容替换原来直接选择的阿里云证书。
+
+~~~
+
 * [配置参数说明](https://github.com/digitalocean/nginxconfig.io)与[✨在线编辑器](https://nginxconfig.io/)
 ~~~
 # 进程用户
@@ -195,12 +225,18 @@ http {
     listen       443;
     server_name  localhost;
     ssl          on;
-    ssl_certificate      /cert/cert.crt; # 证书
-    ssl_certificate_key  /cert/cert.key; # 密钥
-    ssl_session_cache    shared:SSL:1m;
-    ssl_session_timeout  50m;
-    ssl_protocols TLSv1 TLSv1.1 TLSv1.2 SSLv2 SSLv3;
-    ssl_ciphers  HIGH:!aNULL:!MD5;
+    #ssl_certificate         /cert/cert.crt; # 证书
+    ssl_certificate          /etc/letsencrypt/live/*.com/fullchain.pem;
+    #ssl_certificate_key     /cert/cert.key; # 密钥
+    ssl_certificate_key      /etc/letsencrypt/live/*.com/privkey.pem;
+    #ssl_trusted_certificate /cert/cert.pem; # 授信
+    ssl_trusted_certificate  /etc/letsencrypt/live/*.com/chain.pem;
+    #ssl_session_cache    shared:SSL:1m;
+    ssl_session_timeout  5m;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    #ssl_protocols TLSv1 TLSv1.1 TLSv1.2 SSLv2 SSLv3;
+    #ssl_ciphers  HIGH:!aNULL:!MD5;
+    ssl_ciphers  ALL:!DH:!EXPORT:!RC4:+HICH:+MEDIUM:!LOW:!aNULL:!eNULL;
     ssl_prefer_server_ciphers  on;
 
     # wss 反向代理  

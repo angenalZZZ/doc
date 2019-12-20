@@ -36,7 +36,7 @@ pip install gixy
 gixy nginx.conf
 ~~~
 
-* 使用let's encrypt免费证书与[✨工具certbot](https://certbot.eff.org)
+* 使用let's encrypt免费证书与[✨工具certbot](https://certbot.eff.org) [工具acme.sh](https://github.com/Neilpang/acme.sh/wiki/%E8%AF%B4%E6%98%8E)
 ~~~shell
 # 安装certbot
 cd /data/certificate

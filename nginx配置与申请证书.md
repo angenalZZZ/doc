@@ -1,7 +1,7 @@
 # [Nginx](http://nginx.org/en/docs/)  [中文](http://www.nginx.cn/doc/)
 
 * 安装
-~~~bash
+~~~shell
 yum -y install nginx          # <CentOS>
 sudo apt-get -y install nginx # <Ubuntu>
 sudo ufw allow 'Nginx Full'   # 配置防火墙
@@ -15,7 +15,7 @@ ls /etc/nginx/sites-available # 设置Nginx服务器模块(类似Apache虚拟主
 sudo apt install certbot      # 使用Let's Encrypt保护Nginx  www.linuxidc.com/Linux/2018-05/152259.htm
 ~~~
 * 常用命令
-~~~bash
+~~~shell
 which nginx         # 查找 Nginx 命令所在路径
 nginx -s stop       # 快速关闭 Nginx，可能不保存相关信息，并迅速终止 Web 服务
 nginx -s quit       # 平稳关闭 Nginx，保存相关信息，有安排的结束 Web 服务
@@ -26,8 +26,8 @@ nginx -t            # 不运行，而仅仅测试配置文件。Nginx 将检查�
 nginx -v            # 显示 Nginx 的版本
 nginx -V            # 显示 Nginx 的版本、编译器版本和配置参数
 ~~~
-* 检查与分析工具[gixy](https://github.com/yandex/gixy)
-~~~bash
+* 检查分析与[✨工具gixy](https://github.com/yandex/gixy)
+~~~shell
 # 检查
 cd /etc/nginx
 nginx -t
@@ -36,8 +36,8 @@ pip install gixy
 gixy nginx.conf
 ~~~
 
-* 使用let's encrypt免费证书[工具certbot](https://certbot.eff.org)
-~~~bash
+* 使用let's encrypt免费证书与[✨工具certbot](https://certbot.eff.org)
+~~~shell
 # 安装certbot
 cd /data/certificate
 wget -O /sbin/certbot --no-check-certificate https://dl.eff.org/certbot-auto

@@ -58,6 +58,7 @@ npm i -g v8-profiler --profiler_binary_host_mirror=https://npm.taobao.org/mirror
 
  # npm 工具链 web 开发时 npm i -D [--save-dev]
 ~~~
+cnpm install -g whistle               # 基于http,https,websocket的调试代理工具(配置功能丰富)
 npm i -D concurrently                 # 让"阻塞"的命令, 可以并发执行.
     # -D less,less-loader,typescript
 npm i -D supervisor                   # 监视代码的改动后自动重启 Node.js 服务: supervisor / nodemon / pm2

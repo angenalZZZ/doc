@@ -276,15 +276,15 @@ http {
 ~~~js
 //-配置Nginx响应`头信息`：http.server.add_header, http.server.location.proxy_set_header
 {
+    "server": "nginx",
     "date": "Thu, 12 Dec 2019 06:09:32 GMT", // 时间戳
     "content-type": "application/json", // default: api request
     "transfer-encoding": "chunked",
     "connection": "close", // default: keep-alive
-    "vary": "Cookie", // default: Accept-Encoding
-    "x-frame-options": "deny",  // 拒绝跨站加载iframe
-    "allow": "GET, PUT, PATCH, DELETE, HEAD, OPTIONS",
-    "server": "nginx",
+    "vary": "Cookie", // default: Accept-Encoding // 允许编码
+    "allow": "GET, PUT, PATCH, DELETE, HEAD, OPTIONS",  // 允许跨站加载方式
     "strict-transport-security": "max-age=31536000",
+    "x-frame-options": "deny",  // 拒绝跨站加载iframe
     "x-content-type-options": "nosniff", // 拒绝跨站跟踪
     "x-xss-protection": "1; mode=block", // 拒绝跨站攻击
     "x-rate-limit-limit": "300", // request: limited times of a minute 请求限制

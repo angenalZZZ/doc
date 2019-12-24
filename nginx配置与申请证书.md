@@ -276,17 +276,20 @@ http {
 ~~~json
 //-配置Nginx响应`头信息`：http.server.add_header, http.server.location.proxy_set_header
 {
-    "date": "Thu, 12 Dec 2019 06:09:32 GMT",
-    "content-type": "application/json",
+    "date": "Thu, 12 Dec 2019 06:09:32 GMT", // 时间戳
+    "content-type": "application/json", // default: api request
     "transfer-encoding": "chunked",
-    "connection": "close",
-    "vary": "Cookie",
-    "x-frame-options": "deny",
+    "connection": "close", // default: keep-alive
+    "vary": "Cookie", // default: Accept-Encoding
+    "x-frame-options": "deny",  // 拒绝跨站加载iframe
     "allow": "GET, PUT, PATCH, DELETE, HEAD, OPTIONS",
     "server": "nginx",
-    "x-content-type-options": "nosniff",
-    "x-xss-protection": "1; mode=block",
-    "strict-transport-security": "max-age=31536000"
+    "strict-transport-security": "max-age=31536000",
+    "x-content-type-options": "nosniff", // 拒绝跨站跟踪
+    "x-xss-protection": "1; mode=block", // 拒绝跨站攻击
+    "x-rate-limit-limit": "300", // request: limited times of a minute 请求限制
+    "x-rate-limit-remaining": "299", // request: remaining times
+    "x-rate-limit-reset": "18"   // request: reset times after 18 seconds
 }
 ~~~
 

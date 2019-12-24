@@ -36,12 +36,12 @@
   $ TZ=Asia/Shanghai date +%FT%T%z # 当前时间2019-11-11T11:11:11+0800
   $ TIMESTAMP="$(date --utc +%s)" # 时间戳+签名认证
   # 分布式id生成器, 推荐以下6种方式:
-  $ guid -n=1 # len(s)=9    boqC5uQ5K                             生成浏览器请求URL参数 teris-io/shortid
+  $ guid -n=1 # len(s)=9    boqC5uQ5K                    //(推荐) 生成浏览器请求URL参数 teris-io/shortid
   $ guid -n=2 # len(s)=20   -LwqiJUclrFXp8OsJro9                  生成全局唯一标识符 kjk/betterguid
   $ guid -n=3 # len(s)=36   c195090f-261b-11ea-a869-00155d14724d  生成全局唯一标识符 google/uuid
   $ guid -n=4 # len(s)=36   ab6d20ca-2321-4e6a-ab5b-4879e4d07154  生成全局唯一标识符 satori/go.uuid
   $ guid -n=5 # len(s)=19   1209369639956516864 bb1rme6zhyryy 1577171165824 1 0 //Twitter/snowflake算法: bwmarrin/snowflake
-  $ guid -n=6 # len(s)=20   bo0rhq9n39b4430gg1l0 1577171177000000000 1081450 16908 7V //uuid shortuuid Snowflake MongoID: rs/xid
+  $ guid -n=6 # len(s)=20   bo0rhq9n39b4430gg1l0 1577171177000000000 1081450 16908 7V //(推荐) github.com/rs/xid
   $ SECRET=123456 && TOKEN="$(cat /dev/urandom|tr -d -c '[:alnum:]'|head -c $(( 32 - ${#TIMESTAMP} )))"
   $ SIGNATURE="$(printf "${TIMESTAMP}${TOKEN}"|openssl dgst -sha256 -hmac "${SECRET}" -binary|openssl enc -base64)"
   $ echo "Authorization: signature=${SIGNATURE},secret=${SECRET},token=${TOKEN},timestamp=${TIMESTAMP}"

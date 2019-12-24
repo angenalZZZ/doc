@@ -273,6 +273,22 @@ http {
     }
 }
 ~~~
+~~~json
+//-配置Nginx响应`头信息`：http.server.add_header, http.server.location.proxy_set_header
+{
+    "date": "Thu, 12 Dec 2019 06:09:32 GMT",
+    "content-type": "application/json",
+    "transfer-encoding": "chunked",
+    "connection": "close",
+    "vary": "Cookie",
+    "x-frame-options": "deny",
+    "allow": "GET, PUT, PATCH, DELETE, HEAD, OPTIONS",
+    "server": "nginx",
+    "x-content-type-options": "nosniff",
+    "x-xss-protection": "1; mode=block",
+    "strict-transport-security": "max-age=31536000"
+}
+~~~
 
  * 配置（HA）高可用 Nginx + Keepalived
         <br>Keepalived 以 VRRP 协议为基础来实现高可用性。VRRP（Virtual Router Redundancy Protocol 虚拟路由冗余协议）是用于实现路由器冗余的协议，它将两台或多台路由器设备虚拟成一个设备，对外提供虚拟路由器 IP（一个或多个VIP）<br>

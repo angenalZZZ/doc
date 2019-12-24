@@ -273,7 +273,7 @@ http {
     }
 }
 ~~~
-~~~json
+~~~js
 //-配置Nginx响应`头信息`：http.server.add_header, http.server.location.proxy_set_header
 {
     "date": "Thu, 12 Dec 2019 06:09:32 GMT", // 时间戳

@@ -149,6 +149,8 @@
   $ kill -l            # 查看软件中断SIG [Linux标准信号1~31] (实时信号:32~64) +打印所有支持的信号名称
   $ kill -9 <<PID>>    # -9=KILL无条件结束程序(不能被捕获-阻塞-忽略) 参考: https://gist.github.com/biezhi/74bfe20f9758210c1be18c64e6992a37
   # -1=HUP终端控制进程结束(终端连接断开) -2=INT用户发送INTR字符(Ctrl+C)触发进程结束 -3=QUIT用户发送QUIT字符(Ctrl+/)
+  # -18=TSTP暂停进程 -19=CONT继续进程 -17=STOP停止进程(不能被捕获) 
+  # -21=TTIN读数据时 -22=TTOU写数据时 -20=CHLD子进程结束(由父进程接收)
   $ lsof -i @localhost:3000 && kill -9 <<PID>> # 杀死进程(指定占用端口号的程序)
   $ lsof -i:22         # 查看端口号22(sshd)连接情况 lsof 列出当前系统打开的文件(list open files)
   $ smem -k -s USS     # 进程的内存使用情况

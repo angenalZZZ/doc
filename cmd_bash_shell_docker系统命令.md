@@ -144,10 +144,13 @@
     > clrthreads ; setthread [线程DBG] ; clrstack ; clrstack -a ; dumpobj 0x00*** # 分析线程/堆栈/内存数据
   $ ps aux | head -1; ps aux | sort -rn -k3 | head -10 # 占用CPU最高的前10个进程
   $ ps -e -o stat,ppid,pid,cmd | grep -e '^[Zz]' | awk '{print $2}' | xargs kill -9 # 批量删除(Z开头)僵尸进程
-  $ killall            # 杀死进程使用, 杀死单个进程: kill -9 [ProcessId] (-9=KILL)
-  $ kill -l            # 查看软件中断SIG [Linux标准信号1~31] (实时信号:32~64)
-  $ lsof -i @localhost:3000 && kill -9 <<PID>> # 杀死进程使用, 指定占用的端口号
-  $ lsof -i:22         # 查看22端口连接情况(默认为sshd端口) lsof 列出当前系统打开的文件(list open files)
+  $ killall -I NAME... # 杀死进程,指定进程名称NAME...
+  $ killall -I -s 15 -u `id -un` NAME... # -s 15=TERM结束程序(可以被捕获-阻塞-忽略)+程序内可监听该信号SIG
+  $ kill -l            # 查看软件中断SIG [Linux标准信号1~31] (实时信号:32~64) +打印所有支持的信号名称
+  $ kill -9 <<PID>>    # -9=KILL无条件结束程序(不能被捕获-阻塞-忽略) 参考: https://gist.github.com/biezhi/74bfe20f9758210c1be18c64e6992a37
+  # -1=HUP终端控制进程结束(终端连接断开) -2=INT用户发送INTR字符(Ctrl+C)触发进程结束 -3=QUIT用户发送QUIT字符(Ctrl+/)
+  $ lsof -i @localhost:3000 && kill -9 <<PID>> # 杀死进程(指定占用端口号的程序)
+  $ lsof -i:22         # 查看端口号22(sshd)连接情况 lsof 列出当前系统打开的文件(list open files)
   $ smem -k -s USS     # 进程的内存使用情况
   # < ubuntu > apt update & apt install smem
   # < centos > yum install epel-release & yum install smem python-matplotlib python-tk

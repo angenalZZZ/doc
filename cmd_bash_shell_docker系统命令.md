@@ -330,12 +330,15 @@
     *指纹             a79be724538b668fa817e8578d6a8078337fd3ad
   
   #1.创建openssl数字签名认证
-  ## 单个域名 [sv.key sv.crt ci.key ci.crt]
+  ## 快捷方式 openssl req -new -nodes -x509 -out server.crt -keyout server.key -days 3650 \
+    -subj "/C=DE/ST=NRW/L=Earth/O=Company-Name/OU=IT/CN=127.0.0.1/emailAddress=***@example.com"
+
+  ## 单个域名 [sv.key sv.crt ci.key ci.crt] -一般用于本地开发(无密码验证-pass*)
 openssl genrsa -out sv.key 2048    # genrsa生成server端密钥文件
 openssl req -new -x509 -days 3650 -key sv.key -out sv.crt -subj "/C=GB/L=China/O=grpc-server/CN=server.grpc.io"
 openssl genrsa -out ci.key 2048    # genrsa生成client端密钥文件
 openssl req -new -x509 -days 3650 -key ci.key -out ci.crt -subj "/C=GB/L=China/O=grpc-client/CN=client.grpc.io"
-  ## 单个域名+CA [ca.key ca.crt sv.key sv.crt ci.key ci.crt]
+  ## 单个域名+CA [ca.key ca.crt sv.key sv.crt ci.key ci.crt] -一般用于服务器生产
 openssl genrsa -out ca.key 2048
 openssl req -new -x509 -days 3650 -key ca.key -out ca.crt -subj "/C=GB/L=China/O=gobook/CN=github.com"
  // 生成server端`证书签名请求文件`sv.csr,然后根证书重新对server端签名,获得sv.crt
@@ -360,10 +363,8 @@ openssl ca -passin pass:123456 -days 3650 -in server.csr -keyfile ca.key -cert c
     -config <(cat /etc/ssl/openssl.cnf <(printf "[SAN]\nsubjectAltName=DNS:*.fpapi.cn,IP:127.0.0.1"))
 openssl rsa -passin pass:123456 -in server.key -out server.key
 openssl pkcs8 -topk8 -nocrypt -in server.key -out server.pem
-  ## 快捷方式 openssl req -new -nodes -x509 -out server.crt -keyout server.key -days 3650 \
-    -subj "/C=DE/ST=NRW/L=Earth/O=Company-Name/OU=IT/CN=127.0.0.1/emailAddress=***@example.com"
 
-  #2.安装mkcert数字签名工具  github.com/FiloSottile/mkcert  *22k
+  #2.安装mkcert数字签名工具 github.com/FiloSottile/mkcert *22k
   $ sudo apt install libnss3-tools  #or: sudo yum install nss-tools #or: sudo pacman -S nss
   $ git clone github.com/FiloSottile/mkcert && go build -ldflags "-X main.Version=$(git describe --tags)"
   $ mkcert -help    #.用于搭建本地CA数字签名认证: CA, Digital Signature, Key Encipherment, Certificate Signing.
@@ -378,13 +379,13 @@ openssl pkcs8 -topk8 -nocrypt -in server.key -out server.pem
   > makecert -n "CN=Api Cert" -a sha1 -eku 1.3.6.1.5.5.7.3.1 -r -sv api-root.pvk api-root.cer -ss Root -sr LocalMachine
   #3.3打开PowerShell查询数字签名证书
   > ls Cert:\CurrentUser\Root | where {$_.Subject -eq "CN=Api Cert"}
-  
+
   # 请求Http资源的工具curl
   $ curl https://www.baidu.com/ |tee baidu.index.html  # 下载并保存html
   $ curl -XGET https://127.0.0.1:8080/v1/user -H "Content-Type: application/json" \
     -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MjgwMTY5MjIsImlkIjowLCJuYmYiOjE1MjgwMTY5MjIsInVzZXJuYW1lIjoiYWRtaW4ifQ.LjxrK9DuAwAzUD8-9v43NzWBN7HXsSLfebw92DKd1JQ" \
     --cacert server.crt --cert server.crt --key server.key  # 开发环境 自签名证书(结合#1.openssl)
-  
+
   # 字体
   $ sudo apt-get install fontconfig                # yum install fontconfig  #<CentOS>
   $ sudo apt-get install ttf-mscorefonts-installer # yum install mkfontscale #安装中文字体

@@ -11,7 +11,7 @@
  * [docker](#docker) | [k8s](#Kubernetes) | [Minikube](#Minikube) | [Consul](#Consul) | [etcd](#Etcd) 
 　[`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)
 
-~~~shell
+~~~bash
   # 清屏
   > cls
   $ clear         # 快捷命令: alias cls='clear'
@@ -338,10 +338,10 @@ openssl req -new -x509 -days 3650 -key ci.key -out ci.crt -subj "/C=GB/L=China/O
   ## 单个域名+CA [ca.key ca.crt sv.key sv.crt ci.key ci.crt]
 openssl genrsa -out ca.key 2048
 openssl req -new -x509 -days 3650 -key ca.key -out ca.crt -subj "/C=GB/L=China/O=gobook/CN=github.com"
- // 生成server端`证书签名请求文件`*.csr,然后根证书重新对server端签名,获得sv.crt
+ // 生成server端`证书签名请求文件`sv.csr,然后根证书重新对server端签名,获得sv.crt
 openssl req -new -key sv.key -out sv.csr -subj "/C=GB/L=China/O=server/CN=server.io"
 openssl x509 -req -sha256 -CA ca.crt -CAkey ca.key -CAcreateserial -days 3650 -in sv.csr -out sv.crt
- // 生成client端`证书签名请求文件`*.csr,然后根证书重新对client端签名,获得client.crt
+ // 生成client端`证书签名请求文件`ci.csr,然后根证书重新对client端签名,获得ci.crt
 openssl req -new -key ci.key -out ci.csr -subj "/C=GB/L=China/O=client/CN=client.io"
 openssl x509 -req -sha256 -CA ca.crt -CAkey ca.key -CAcreateserial -days 3650 -in ci.csr -out ci.crt
 

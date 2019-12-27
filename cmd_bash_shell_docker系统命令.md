@@ -330,8 +330,30 @@
     *指纹             a79be724538b668fa817e8578d6a8078337fd3ad
   
   #1.创建openssl数字签名认证
-  ##openssl genrsa -out demo.key 2048    #genrsa生成密钥文件
-openssl rand -out ~/.rnd $(date +%s)     #rand生成随机数文件
+  ## 单个域名 [server.key server.crt client.key client.crt]
+openssl genrsa -out server.key 2048    # genrsa生成server端密钥文件
+openssl req -new -x509 -days 3650 -key server.key -out server.crt \
+    -subj "/C=GB/L=China/O=grpc-server/CN=server.grpc.io"
+openssl genrsa -out client.key 2048    # genrsa生成client端密钥文件
+openssl req -new -x509 -days 3650 -key client.key -out client.crt \
+    -subj "/C=GB/L=China/O=grpc-client/CN=client.grpc.io"
+  ## 单个域名+CA [ca.key ca.crt server.key server.crt client.key client.crt]
+openssl genrsa -out ca.key 2048
+openssl req -new -x509 -days 3650 -key ca.key -out ca.crt
+    -subj "/C=GB/L=China/O=gobook/CN=github.com" \
+ // 生成server端`证书签名请求文件`*.csr,然后根证书重新对server端签名,获得server.crt
+openssl req -new -key server.key -out server.csr \
+    -subj "/C=GB/L=China/O=server/CN=server.io"
+openssl x509 -req -sha256 -CA ca.crt -CAkey ca.key -CAcreateserial -days 3650 \
+    -in server.csr -out server.crt
+ // 生成client端`证书签名请求文件`*.csr,然后根证书重新对client端签名,获得client.crt
+openssl req -new -key client.key -out client.csr \
+    -subj "/C=GB/L=China/O=client/CN=client.io"
+openssl x509 -req -sha256 -CA ca.crt -CAkey ca.key -CAcreateserial -days 3650 \
+    -in client.csr -out client.crt
+
+  ## 多IP+多域名+CA [ca.key ca.crt server.key server.crt server.pem]
+openssl rand -out ~/.rnd $(date +%s)   #rand生成随机数文件
 mkdir -p ./demoCA/newcerts && touch demoCA/index.txt demoCA/index.txt.attr && echo 01 |tee demoCA/serial 
 openssl genrsa -passout pass:123456 -des3 -out ca.key 1024
 openssl req -passin pass:123456 -new -x509 -days 3650 -key ca.key -out ca.crt \
@@ -345,7 +367,7 @@ openssl ca -passin pass:123456 -days 3650 -in server.csr -keyfile ca.key -cert c
     -config <(cat /etc/ssl/openssl.cnf <(printf "[SAN]\nsubjectAltName=DNS:*.fpapi.cn,IP:127.0.0.1"))
 openssl rsa -passin pass:123456 -in server.key -out server.key
 openssl pkcs8 -topk8 -nocrypt -in server.key -out server.pem
-  ##openssl req -new -nodes -x509 -out server.crt -keyout server.key -days 3650 \
+  ## 快捷方式 openssl req -new -nodes -x509 -out server.crt -keyout server.key -days 3650 \
     -subj "/C=DE/ST=NRW/L=Earth/O=Company-Name/OU=IT/CN=127.0.0.1/emailAddress=***@example.com"
 
   #2.安装mkcert数字签名工具 *21k

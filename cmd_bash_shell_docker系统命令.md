@@ -23,7 +23,7 @@
   $ uname -a         # 系统信息: $(uname -s)=系统'Linux'; $(uname -m)=CPU架构'x86_64';
   $ egrep -c ' lm ' /proc/cpuinfo  &&  egrep -c '(vmx|svm)' /proc/cpuinfo
   # 系统版本号'发行版本'*** Linux-redhat > cat /etc/redhat-release
-  $ cat /etc/issue && lsb_release -cs ; lsb_release -a #Linux发行版本信息
+  $ cat /etc/issue && lsb_release -cs ; lsb_release -a #Linux发行版本信息+支持的体系结构[amd64,x86_64,arm64]
   $ echo "Linux-x86_64" && echo $(uname -s)-$(uname -m) && echo `uname -s`-`uname -m`
   
   # 时间
@@ -494,14 +494,15 @@ $ source ~/.zshrc # 使配置生效
   $ ls /etc/nginx/sites-available # 设置Nginx服务器模块(类似Apache虚拟主机) www.linuxidc.com/Linux/2018-05/152258.htm
   $ sudo apt install certbot      # 使用Let's Encrypt保护Nginx  www.linuxidc.com/Linux/2018-05/152259.htm
   
-  $ sudo systemctl disable nginx && sudo systemctl stop nginx # 准备安装openresty > cd /tmp
+  $ sudo systemctl disable nginx && sudo systemctl stop nginx # 安装OpenResty > cd /tmp
   $ sudo apt-get -y install --no-install-recommends wget gnupg ca-certificates software-properties-common
-  $ wget -O - https://openresty.org/package/pubkey.gpg | sudo apt-key add -
-  $ sudo add-apt-repository -y "deb http://openresty.org/package/ubuntu $(lsb_release -sc) main"
-  $ sudo apt-get -y install openresty # 安装openresty  参考 https://openresty.org/en/linux-packages.html
-  $ sudo apt-get -y install --no-install-recommends openresty # 最小化安装
+  $ wget -O - https://openresty.org/package/pubkey.gpg | sudo apt-key add -  # 导入GPG密钥
+  $ sudo add-apt-repository -y "deb http://openresty.org/package/ubuntu $(lsb_release -sc) main" # 添加官方APT仓库
+  $ sudo apt-get update  # 更新APT索引
+  $ sudo apt-get -y install openresty # 安装OpenResty 参考 openresty.org/cn/linux-packages.html
+  $ sudo apt-get -y install --no-install-recommends openresty # 最小化安装,不装推荐的openresty-opm,openresty-restydoc
   #-config>>  /usr/local/openresty/nginx/conf/nginx.conf
-  $ sudo systemctl restart openresty  # 重启
+  $ sudo systemctl restart openresty  # 重启; 开始HelloWorld  openresty.org/cn/getting-started.html
   
   $ sudo apt install nodejs # 安装Nodejs(此安装方式版本太低; 推荐wget安装方式-如下)
   $ wget https://npm.taobao.org/mirrors/node/v10.16.0/node-v10.16.0-linux-x64.tar.xz

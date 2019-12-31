@@ -386,6 +386,11 @@ openssl pkcs8 -topk8 -nocrypt -in server.key -out server.pem
     -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MjgwMTY5MjIsImlkIjowLCJuYmYiOjE1MjgwMTY5MjIsInVzZXJuYW1lIjoiYWRtaW4ifQ.LjxrK9DuAwAzUD8-9v43NzWBN7HXsSLfebw92DKd1JQ" \
     --cacert server.crt --cert server.crt --key server.key  # 开发环境 自签名证书(结合#1.openssl)
 
+  # 请求Http资源的工具postwoman > postman
+  $ git clone https://github.com/postwoman-io/postwoman-proxy.git
+  $ ./build.sh windows|linux|darwin [server]       # To build the desktop or server application
+  $ ./server --host="localhost:9159" --token=""    # server token: blank; allowing anyone to access
+  
   # 字体
   $ sudo apt-get install fontconfig                # yum install fontconfig  #<CentOS>
   $ sudo apt-get install ttf-mscorefonts-installer # yum install mkfontscale #安装中文字体

@@ -59,6 +59,16 @@ npm i -g v8-profiler --profiler_binary_host_mirror=https://npm.taobao.org/mirror
  # npm 工具链 web 开发时 npm i -D [--save-dev]
 ~~~
 cnpm install -g whistle               # 基于http,https,websocket的调试代理工具(配置功能丰富)
+npm i proxyquire # 代理 https://github.com/thlorenz/proxyquire
+
+git clone https://github.com/postwoman-io/postwoman-cli.git \
+  && npm install && npm link && postwoman-cli [options] # 调试工具 Postwoman CLI 超越CURL
+
+npm i chalk      # 命令行输出文字颜色  https://github.com/chalk/chalk
+npm i commander  # 命令行神器，能帮助我们简化很多操作  http://blog.fens.me/nodejs-commander
+npm i pidusage   # 检查进程(PID) / CPU & 内存的使用 https://github.com/soyuka/pidusage
+npm i monaco-editor # 在线代码编辑器 https://microsoft.github.io/monaco-editor/index.html
+
 npm i -D concurrently                 # 让"阻塞"的命令, 可以并发执行.
     # -D less,less-loader,typescript
 npm i -D supervisor                   # 监视代码的改动后自动重启 Node.js 服务: supervisor / nodemon / pm2
@@ -118,6 +128,11 @@ npm i -S hapi            # hapi基于express构建 https://github.com/hapijs/hap
 # node 后端开发包推荐 (npm|yarn) install
 
 ~~~
+# 常用PKG基础库
+npm i rxjs                                 # 响应式编程的库 https://cn.rx.js.org
+npm i -g yo jspm sqlpad @compodoc/compodoc # 标准文档生成工具
+yarn global add thelounge                  # Web IRC 客户端(在线聊天服务)
+
 # orm 数据库访问
 npm i -S mongoose  # for Mongodb https://mongoosejs.com/docs/index.html
 npm i -S knex | npm i -S pg sqlite3 mysql mysql2 oracle mssql  # https://knexjs.org
@@ -141,22 +156,13 @@ npm i botkit     # 聊天机器人 https://github.com/howdyai/botkit
 npm i puppeteer  # 提供了一个高级 API 来通过 DevTools 协议控制 Chromium 或 Chrome (调试|抓取|截图|Pdf|等)
 npm i puppeteer-core # 同上 - 中文文档 https://zhaoqize.github.io/puppeteer-api-zh_CN/#/
 
-# utility 实用
-npm i rxjs       # 响应式编程的库 https://cn.rx.js.org
-npm i chalk      # 命令行输出文字颜色  https://github.com/chalk/chalk
-npm i commander  # 命令行神器，能帮助我们简化很多操作  http://blog.fens.me/nodejs-commander
-npm i pidusage   # 检查进程(PID) / CPU & 内存的使用 https://github.com/soyuka/pidusage
-npm i proxyquire # 代理 https://github.com/thlorenz/proxyquire
-npm i monaco-editor # 在线代码编辑器 https://microsoft.github.io/monaco-editor/index.html
-
-#---------------------------------------------------------------------------------
-npm i -g yo jspm sqlpad @compodoc/compodoc # 标准文档生成工具
-yarn global add thelounge                  # Web IRC 客户端(在线聊天服务)
-
 ~~~
 
 ----
 
 # node 桌面应用推荐
- > [node-webkit](https://github.com/nwjs/nw.js)、[Electron](https://www.cnblogs.com/cczw/archive/2016/10/21/5984012.html)
+ > [node-webkit](https://github.com/nwjs/nw.js)
+ > [Electron](https://www.cnblogs.com/cczw/archive/2016/10/21/5984012.html)
+
+----
 

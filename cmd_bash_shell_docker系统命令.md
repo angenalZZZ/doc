@@ -389,7 +389,8 @@ openssl pkcs8 -topk8 -nocrypt -in server.key -out server.pem
   # 请求Http资源的工具postwoman > postman
   $ git clone https://github.com/postwoman-io/postwoman-proxy.git
   $ ./build.sh windows|linux|darwin [server]       # To build the desktop or server application
-  $ ./server --host="localhost:9159" --token=""    # server token: blank; allowing anyone to access
+  $ ./server --host="localhost:9159" --token=""    # server token: blank= allowing anyone to access
+  > nssm install PostwomanProxyWSLubuntu1804 bash.exe -c postwoman-proxy-server # 启动前设置Windows服务登录账户为Administrator
   
   # 字体
   $ sudo apt-get install fontconfig                # yum install fontconfig  #<CentOS>

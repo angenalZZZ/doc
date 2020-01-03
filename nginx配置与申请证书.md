@@ -146,16 +146,18 @@ http {
     # 设定主机配置
     server {
         # 主机端口 检查: sudo netstat -anptW|grep -i "listen" # <windows> netstat -anp tcp|findstr -i "listening"
-        listen  80;
+        listen  80;  # 唯一性: listen+server_name
         # 主机域名
         server_name  localhost;
-        # server_name  apiserver.com;
-        # server_name  www.nginx.cn;
+        # server_name  www.x.cn;
+        # server_name  api.x.cn;
+        # server_name  static.x.cn;
+        # server_name     *.x.com; # 一般会结合反向代理 location / { proxy_pass...
         # 主机http请求限制
         client_max_body_size 1024M;
 
         # 定义服务器默认网站根目录
-        # root html; # <windows> wwwroot
+        root  /html/static; # <windows> C:/inetpub/wwwroot
 
         # 设定本主机的访问日志
         # access_log  logs/access.80.log; # <windows>
@@ -166,7 +168,7 @@ http {
 
         # 默认页(首页)
         location / {
-            # index index.php index.html index.htm;
+            # index index.php index.html index.htm start.htm;
         }
         
         # 跳转页(301,302)
@@ -268,6 +270,7 @@ http {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header REMOTE-HOST $remote_addr;
         proxy_cache_bypass $http_upgrade;
+        # proxy_redirect  off;   # 禁止反转url
         proxy_read_timeout 600s; # 下载超时-限制
         client_max_body_size 5m; # 上传文件-限制
     }

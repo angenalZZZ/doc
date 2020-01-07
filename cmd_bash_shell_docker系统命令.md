@@ -683,8 +683,9 @@ $ source ~/.zshrc # 使配置生效
   $ curl -LO https://github.com/pilosa/pilosa/releases/download/v1.3.0/pilosa-v1.3.0-linux-amd64.tar.gz
   $ tar xfz pilosa-v1.3.0-linux-amd64.tar.gz 
   $ sudo cp -i pilosa-v1.3.0-linux-amd64/pilosa /usr/local/bin
-  $ pilosa server --data-dir ~/.pilosa --bind :10101 --handler.allowed-origins "*"&       # 指定origins: http://localhost:10102
-  $ go get github.com/pilosa/console && cd $GOPATH/src/github.com/pilosa/console && make install && pilosa-console -bind :10102
+  $ pilosa server --data-dir ~/.pilosa --bind :10101 --handler.allowed-origins "*"& 
+  $ go get github.com/pilosa/console && cd $GOPATH/src/github.com/pilosa/console \
+    && make install && pilosa-console -bind :10102  # 指定origins: http://localhost:10102
 ~~~
 
 > [`InfluxDB`](https://portal.influxdata.com) 时间序列数据库

@@ -13,6 +13,8 @@
 
 ![](https://github.com/angenalZZZ/doc/blob/master/screenshots/fwunixref.jpg)
 ![](https://github.com/angenalZZZ/doc/blob/master/screenshots/db53464b7746.png)
+![](https://github.com/angenalZZZ/doc/blob/master/screenshots/gnulinuxfiles.webp)
+![](https://github.com/angenalZZZ/doc/blob/master/screenshots/gnulinuxfilesd.webp)
 
 ~~~bash
   # 清屏

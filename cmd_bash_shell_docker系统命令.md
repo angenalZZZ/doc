@@ -9,7 +9,7 @@
  * [Linux开发环境及常用安装zsh-ssh-git-redis-mysql-mongodb-pilosa-influxdb-grafana-nsq.kafka.rabbitmq...](#linux开发环境及常用安装)
  * [Linux常用命令ls-find-grep-xargs-sort-uniq-tr-wc-sed-awk-head-tail...](#Linux常用命令)
  * [docker](#docker) | [k8s](#Kubernetes) | [Minikube](#Minikube) | [Consul](#Consul) | [etcd](#Etcd) 
-　[`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)、[安全相关思维导图收集](https://github.com/phith0n/Mind-Map)
+　[`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)、[`安全相关思维导图收集`](https://github.com/phith0n/Mind-Map)
 
 ![](https://github.com/angenalZZZ/doc/blob/master/screenshots/fwunixref.jpg)
 ![](https://github.com/angenalZZZ/doc/blob/master/screenshots/db53464b7746.png)
@@ -668,6 +668,14 @@ $ source ~/.zshrc # 使配置生效
   $ sudo service mongodb status,start,stop                # 状态,启动,停止
   > mongo --eval 'db.runCommand({ connectionStatus: 1 })' # 诊断服务器正在运行
   $ sudo apt-get purge mongodb-org*                       # 卸载 rm -rf /var/log/mongodb /var/lib/mongodb
+~~~
+
+> `Elasticsearch` 你知道的, 为了搜索。[中文社区](https://elasticsearch.cn)、[文档](https://www.elastic.co/guide/cn/elasticsearch/guide/current/index.html)、[下载](https://www.elastic.co/downloads/elasticsearch)
+~~~shell
+./bin/elasticsearch -d #后台运行                 # 启动ES: http://localhost:9200
+./bin/kibana plugin --install elastic/sense      # 安装与运行 Sense
+./bin/kibana plugin -i sense -u file:///to/path  # 离线安装 Sense
+./bin/kibana    # 启动Kibana: http://localhost:5601/app/sense
 ~~~
 
 > `Pilosa` 分布式位图索引数据库 www.pilosa.com

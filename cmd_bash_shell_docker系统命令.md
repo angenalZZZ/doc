@@ -570,7 +570,7 @@ $ source ~/.zshrc # 使配置生效
   > sc create gitea start= auto binPath= "D:\Program\Git\Server\gitea\gitea.exe web --config \"D:\Program\Git\Server\gitea\custom\conf\app.ini\""
 ~~~
 
-> [`Redis`](www.redis.cn) 内存数据库
+> [`Redis`](http://www.redis.cn) 内存数据库
 ~~~shell
   $ wget http://download.redis.io/releases/redis-stable.tar.gz # 下载源码 # cd ~
   $ tar xzf redis-stable.tar.gz                                # 解压源码
@@ -657,7 +657,7 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt-get purge postgre*                           # 卸载
 ~~~
 
-> [`mongodb`](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu) NoSql数据库
+> [`Mongodb`](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu) NoSql数据库
 ~~~shell
   $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
   $ echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
@@ -699,7 +699,7 @@ $ source ~/.zshrc # 使配置生效
   # #初始化Bucket -> 设置数据源Collector + 监听跟踪数据Dashboard + 分析数据使用Flux -> 管理Tasks
 ~~~
 
-> [`grafana`](https://grafana.com/docs/) 一个开源的度量分析与可视化套件  漂亮的监测、报警、指标分析、图表工具<br>
+> [`Grafana`](https://grafana.com/docs/) 一个开源的度量分析与可视化套件  漂亮的监测、报警、指标分析、图表工具<br>
     时序数据库 [InfluxDB](https://grafana.com/docs/features/datasources/influxdb/),[Prometheus](https://grafana.com/docs/features/datasources/prometheus/),[Graphite](https://grafana.com/docs/features/datasources/graphite/),[OpenTSDB](https://grafana.com/docs/features/datasources/opentsdb/); 文档数据库 [Elasticsearch](https://grafana.com/docs/features/datasources/elasticsearch/),[Loki](https://grafana.com/docs/features/datasources/loki/)...
 ~~~shell
   $ wget https://dl.grafana.com/oss/release/grafana_6.3.5_amd64.deb

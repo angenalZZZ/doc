@@ -660,10 +660,12 @@ $ source ~/.zshrc # 使配置生效
 > [`Mongodb`](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu) NoSql数据库
 ~~~shell
   $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
-  $ echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
+  $ echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse" \
+    | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
   $ sudo apt-get update
   $ sudo apt-get -y install mongodb-org                   # 安装/下面是指定版本
-  $ sudo apt-get -y install mongodb-org=4.0.10 mongodb-org-server=4.0.10 mongodb-org-shell=4.0.10 mongodb-org-mongos=4.0.10 mongodb-org-tools=4.0.10
+  $ sudo apt-get -y install mongodb-org=4.0.10 mongodb-org-server=4.0.10 mongodb-org-shell=4.0.10 \
+    mongodb-org-mongos=4.0.10 mongodb-org-tools=4.0.10
   $ sudo systemctl enable mongodb.service                 # 开机启动,WSL将为 sudo /etc/inid.d/mongodb enable
   $ sudo service mongodb status,start,stop                # 状态,启动,停止
   > mongo --eval 'db.runCommand({ connectionStatus: 1 })' # 诊断服务器正在运行
@@ -680,9 +682,9 @@ $ source ~/.zshrc # 使配置生效
 
 > [`Pilosa`](https://www.pilosa.com) 分布式位图索引数据库
 ~~~shell
-  $ curl -LO https://github.com/pilosa/pilosa/releases/download/v1.3.0/pilosa-v1.3.0-linux-amd64.tar.gz
-  $ tar xfz pilosa-v1.3.0-linux-amd64.tar.gz 
-  $ sudo cp -i pilosa-v1.3.0-linux-amd64/pilosa /usr/local/bin
+  $ curl -LO https://github.com/pilosa/pilosa/releases/download/v1.4.0/pilosa-v1.4.0-linux-amd64.tar.gz
+  $ tar xfz pilosa-v1.4.0-linux-amd64.tar.gz 
+  $ sudo cp -i pilosa-v1.4.0-linux-amd64/pilosa /usr/local/bin
   $ pilosa server --data-dir ~/.pilosa --bind :10101 --handler.allowed-origins "*"& 
   $ go get github.com/pilosa/console && cd $GOPATH/src/github.com/pilosa/console \
     && make install && pilosa-console -bind :10102  # 指定origins: http://localhost:10102

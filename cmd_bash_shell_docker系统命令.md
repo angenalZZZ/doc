@@ -570,7 +570,7 @@ $ source ~/.zshrc # 使配置生效
   > sc create gitea start= auto binPath= "D:\Program\Git\Server\gitea\gitea.exe web --config \"D:\Program\Git\Server\gitea\custom\conf\app.ini\""
 ~~~
 
-> `Redis` 内存数据库 (KeyValue,) www.redis.cn
+> [`Redis`](www.redis.cn) 内存数据库
 ~~~shell
   $ wget http://download.redis.io/releases/redis-stable.tar.gz # 下载源码 # cd ~
   $ tar xzf redis-stable.tar.gz                                # 解压源码
@@ -646,7 +646,7 @@ $ source ~/.zshrc # 使配置生效
   # Run Vitess on Kubernetes vitess.io/docs/get-started/kubernetes
 ~~~
 
-> `PostgreSQL` 关系型数据库 - 文档 www.postgresql.org
+> [`PostgreSQL`](https://www.postgresql.org) 关系型数据库
 ~~~shell
   $ sudo apt-get update
   $ sudo apt-get -y install postgresql postgresql-contrib # 安装 psql --version
@@ -657,7 +657,7 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt-get purge postgre*                           # 卸载
 ~~~
 
-> `mongodb` NoSql数据库 - 文档 docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu
+> [`mongodb`](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu) NoSql数据库
 ~~~shell
   $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
   $ echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
@@ -670,15 +670,15 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt-get purge mongodb-org*                       # 卸载 rm -rf /var/log/mongodb /var/lib/mongodb
 ~~~
 
-> `Elasticsearch` 你知道的, 为了搜索。[中文社区](https://elasticsearch.cn)、[文档](https://www.elastic.co/guide/cn/elasticsearch/guide/current/index.html)、[下载](https://www.elastic.co/downloads/elasticsearch)
+> [`Elasticsearch`](https://www.elastic.co/guide/cn/elasticsearch/guide/current/index.html) 你知道的, 为了搜索。[中文社区](https://elasticsearch.cn)、[下载](https://www.elastic.co/downloads/elasticsearch)
 ~~~shell
-./bin/elasticsearch -d #后台运行                 # 启动ES: http://localhost:9200
-./bin/kibana plugin --install elastic/sense      # 安装与运行 Sense
-./bin/kibana plugin -i sense -u file:///to/path  # 离线安装 Sense
+./bin/elasticsearch -d #后台运行                 # 启动Elasticsearch: http://localhost:9200
+./bin/kibana plugin --install elastic/sense       # 安装与运行Sense
+./bin/kibana plugin -i sense -u /*/sense-*-*.tar.gz # 离线安装Sense
 ./bin/kibana    # 启动Kibana: http://localhost:5601/app/sense
 ~~~
 
-> `Pilosa` 分布式位图索引数据库 www.pilosa.com
+> [`Pilosa`](https://www.pilosa.com) 分布式位图索引数据库
 ~~~shell
   $ curl -LO https://github.com/pilosa/pilosa/releases/download/v1.3.0/pilosa-v1.3.0-linux-amd64.tar.gz
   $ tar xfz pilosa-v1.3.0-linux-amd64.tar.gz 
@@ -687,7 +687,7 @@ $ source ~/.zshrc # 使配置生效
   $ go get github.com/pilosa/console && cd $GOPATH/src/github.com/pilosa/console && make install && pilosa-console -bind :10102
 ~~~
 
-> `InfluxDB` 时间序列数据库 portal.influxdata.com
+> [`InfluxDB`](https://portal.influxdata.com) 时间序列数据库
 ~~~shell
   $ curl -LO https://dl.influxdata.com/influxdb/releases/influxdb_2.0.0-alpha.17_linux_amd64.tar.gz
   $ tar xfz influxdb_2.0.0-alpha.17_linux_amd64.tar.gz

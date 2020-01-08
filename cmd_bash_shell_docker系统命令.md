@@ -674,17 +674,24 @@ $ source ~/.zshrc # 使配置生效
   $ echo "mongodb-org-mongos hold" | sudo dpkg --set-selections  # 包含mongos守护进程
   $ echo "mongodb-org-tools hold" | sudo dpkg --set-selections   # 工具: mongoimport bsondump, mongodump等等
   $ sudo service mongod status,start,stop,restart         # 查服务状态,启动,停止等
-  $ sudo systemctl enable mongodb.service                 # 开机启动,WSL将为 sudo /etc/inid.d/mongodb enable
+  $ sudo systemctl enable mongod.service                  # 开机启动,WSL> sudo /etc/init.d/mongodb status,start..
   > mongo --eval 'db.runCommand({ connectionStatus: 1 })' # 诊断服务正在运行
   $ sudo apt-get purge mongodb-org*                       # 卸载 rm -rf /var/log/mongodb /var/lib/mongodb
 ~~~
 
 > [`Elasticsearch`](https://www.elastic.co/guide/cn/elasticsearch/guide/current/index.html) 你知道的, 为了搜索。[中文社区](https://elasticsearch.cn)、[下载](https://www.elastic.co/downloads/elasticsearch)
 ~~~shell
-./bin/elasticsearch -d #后台运行                 # 启动Elasticsearch: http://localhost:9200
-./bin/kibana plugin --install elastic/sense       # 安装与运行Sense
-./bin/kibana plugin -i sense -u /*/sense-*-*.tar.gz # 离线安装Sense
-./bin/kibana          # 启动Kibana: http://localhost:5601/app/sense
+  # 下载安装包
+  $ sudo dpkg -i elasticsearch-7.5.1-amd64.deb   # 安装Es,WSL> sudo /etc/init.d/elasticsearch status,start..
+  $ sudo dpkg -i kibana-7.5.1-amd64.deb          # 安装Kibana
+  $ cd /usr/share/elasticsearch                  # 开始目录
+  $ bin/kibana plugin -i ik -u elasticsearch-analysis-ik-7.5.1.zip  # 安装插件-ik-分词
+  $ bin/kibana plugin -i pinyin -u elasticsearch-analysis-pinyin-7.5.1.zip # 安装插件-pinyin-拼音
+  # 安装后运行
+  $ bin/elasticsearch -d # 后台,手动启动Es,检查> curl localhost:9200 -H "Content-Type: application/json"
+  $ bin/kibana plugin --install elastic/sense               # 安装并运行Sense
+  $ bin/kibana plugin -i sense -u /*/plugins/sense-*-*.tar.gz # 离线安装Sense
+  $ bin/kibana                  # 启动Kibana: http://localhost:5601/app/sense
 ~~~
 
 > [`Pilosa`](https://www.pilosa.com) 分布式位图索引数据库
@@ -692,7 +699,7 @@ $ source ~/.zshrc # 使配置生效
   $ curl -LO https://github.com/pilosa/pilosa/releases/download/v1.4.0/pilosa-v1.4.0-linux-amd64.tar.gz
   $ tar xfz pilosa-v1.4.0-linux-amd64.tar.gz 
   $ sudo cp -i pilosa-v1.4.0-linux-amd64/pilosa /usr/local/bin
-  $ pilosa server --data-dir ~/.pilosa --bind :10101 --handler.allowed-origins "*"& 
+  $ pilosa server --data-dir ~/.pilosa --bind :10101 --handler.allowed-origins "*"& # 启动,检查> curl localhost:10101
   $ go get github.com/pilosa/console && cd $GOPATH/src/github.com/pilosa/console \
     && make install && pilosa-console -bind :10102  # 指定origins: http://localhost:10102
 ~~~
@@ -859,7 +866,7 @@ $ source ~/.zshrc # 使配置生效
   $ rpm -qa | grep ssh  # 检查服务ssh是否已安装: netstat -antp | grep sshd [端口:22]
   $ yum install -y initscripts # 安装服务netstat [/sbin/service]
   $ yum install -y openssh-server # 安装服务ssh
-  $ service sshd start | service sshd stop # 启动sshd|停止
+  $ service sshd start,stop # 启动sshd,WSL> /etc/init.d/ssh {start|stop|reload|force-reload|restart|try-restart|status}
   $ chkconfig sshd on # 开机启动
   # < ubuntu >---------------------------
   $ sudo apt-get remove --purge openssh-server # 先删ssh(可忽略此操作)

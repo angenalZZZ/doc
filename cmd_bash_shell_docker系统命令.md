@@ -680,17 +680,20 @@ $ source ~/.zshrc # 使配置生效
 
 > [`Elasticsearch`](https://www.elastic.co/guide/cn/elasticsearch/guide/current/index.html) 你知道的, 为了搜索。[中文社区](https://elasticsearch.cn)、[下载](https://www.elastic.co/downloads/elasticsearch)
 ~~~shell
-  # 下载安装包
   $ sudo dpkg -i elasticsearch-7.5.1-amd64.deb   # 安装Es,WSL> sudo /etc/init.d/elasticsearch status,start..
-  $ sudo dpkg -i kibana-7.5.1-amd64.deb          # 安装Kibana
   $ cd /usr/share/elasticsearch/                 # 进入Es目录
-  $ bin/kibana plugin -i ik -u /temp/elasticsearch-analysis-ik-7.5.1.zip         # 安装插件-ik-分词
-  $ bin/kibana plugin -i pinyin -u /temp/elasticsearch-analysis-pinyin-7.5.1.zip # 安装插件-pinyin-拼音
-  # 安装后运行
-  $ bin/elasticsearch -d # 后台,手动启动Es,检查> curl localhost:9200 -H "Content-Type: application/json"
-  $ bin/kibana plugin --install elastic/sense               # 安装并运行Sense
-  $ bin/kibana plugin -i sense -u /temp/sense-*-*.tar.gz    # 离线安装插件Sense
-  $ bin/kibana # 启动Kibana: http://localhost:5601/app/sense
+  $ bin/elasticsearch --help
+  $ bin/elasticsearch -d # 手动启动Es,后台运行-d,检查> curl localhost:9200 -H "Content-Type: application/json"
+  # 安装Es插件 ik 中文分词
+  $ bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.5.1/elasticsearch-analysis-ik-7.5.1.zip
+  # 安装Es插件 pinyin 中文拼音
+  $ bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-pinyin/releases/download/v7.5.1/elasticsearch-analysis-pinyin-7.5.1.zip
+  $ sudo dpkg -i kibana-7.5.1-amd64.deb          # 安装Kibana
+  $ cd /usr/share/kibana/                        # 进入Kibana目录
+  $ bin/kibana --help [--allow-root]             # 配置config/kibana.yml "elasticsearch.hosts"指向Elasticsearch
+  # 安装KibanaApp插件(可先设置代理http_proxy)
+  $ bin/kibana plugin --install elastic/sense
+  $ bin/kibana -H 127.0.0.1 -p 5601 # 启动Kibana: http://localhost:5601/app/sense
 ~~~
 
 > [`Pilosa`](https://www.pilosa.com) 分布式位图索引数据库

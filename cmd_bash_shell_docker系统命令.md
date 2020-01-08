@@ -665,11 +665,11 @@ $ source ~/.zshrc # 使配置生效
   $ echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse"\
     | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list
   $ sudo apt-get update
-  $ sudo apt-get -y install mongodb-org                   # 安装最新版
-  $ sudo apt-get install -y mongodb-org=4.2.2 mongodb-org-server=4.2.2 \     # 指定安装的版本
+  $ sudo apt-get install -y mongodb-org                   # 安装最新版
+  $ sudo apt-get install -y mongodb-org=4.2.2 mongodb-org-server=4.2.2 \     # 安装指定的版本(推荐)
     mongodb-org-shell=4.2.2 mongodb-org-mongos=4.2.2 mongodb-org-tools=4.2.2
   $ echo "mongodb-org hold" | sudo dpkg --set-selections         # 阻止升级，将包固定在当前版本
-  $ echo "mongodb-org-server hold" | sudo dpkg --set-selections  # 包含mongod守护程序;初始化脚本和配置文件
+  $ echo "mongodb-org-server hold" | sudo dpkg --set-selections  # 包含mongod守护程序, 初始化脚本和配置文件
   $ echo "mongodb-org-shell hold" | sudo dpkg --set-selections   # 包含mongo外壳shell
   $ echo "mongodb-org-mongos hold" | sudo dpkg --set-selections  # 包含mongos守护进程
   $ echo "mongodb-org-tools hold" | sudo dpkg --set-selections   # 工具: mongoimport bsondump, mongodump等等

@@ -659,16 +659,23 @@ $ source ~/.zshrc # 使配置生效
 
 > [`Mongodb`](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu) NoSql数据库
 ~~~shell
-  $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
-  $ echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse" \
-    | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
+  $ wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
+  $ sudo apt-get install gnupg
+  $ wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
+  $ echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse"\
+    | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list
   $ sudo apt-get update
-  $ sudo apt-get -y install mongodb-org                   # 安装/下面是指定版本
-  $ sudo apt-get -y install mongodb-org=4.0.10 mongodb-org-server=4.0.10 mongodb-org-shell=4.0.10 \
-    mongodb-org-mongos=4.0.10 mongodb-org-tools=4.0.10
+  $ sudo apt-get -y install mongodb-org                   # 安装最新版
+  $ sudo apt-get install -y mongodb-org=4.2.2 mongodb-org-server=4.2.2 \     # 指定安装的版本
+    mongodb-org-shell=4.2.2 mongodb-org-mongos=4.2.2 mongodb-org-tools=4.2.2
+  $ echo "mongodb-org hold" | sudo dpkg --set-selections         # 阻止升级，将包固定在当前版本
+  $ echo "mongodb-org-server hold" | sudo dpkg --set-selections  # 包含mongod守护程序;初始化脚本和配置文件
+  $ echo "mongodb-org-shell hold" | sudo dpkg --set-selections   # 包含mongo外壳shell
+  $ echo "mongodb-org-mongos hold" | sudo dpkg --set-selections  # 包含mongos守护进程
+  $ echo "mongodb-org-tools hold" | sudo dpkg --set-selections   # 工具: mongoimport bsondump, mongodump等等
+  $ sudo service mongod status,start,stop,restart         # 查服务状态,启动,停止等
   $ sudo systemctl enable mongodb.service                 # 开机启动,WSL将为 sudo /etc/inid.d/mongodb enable
-  $ sudo service mongodb status,start,stop                # 状态,启动,停止
-  > mongo --eval 'db.runCommand({ connectionStatus: 1 })' # 诊断服务器正在运行
+  > mongo --eval 'db.runCommand({ connectionStatus: 1 })' # 诊断服务正在运行
   $ sudo apt-get purge mongodb-org*                       # 卸载 rm -rf /var/log/mongodb /var/lib/mongodb
 ~~~
 
@@ -677,7 +684,7 @@ $ source ~/.zshrc # 使配置生效
 ./bin/elasticsearch -d #后台运行                 # 启动Elasticsearch: http://localhost:9200
 ./bin/kibana plugin --install elastic/sense       # 安装与运行Sense
 ./bin/kibana plugin -i sense -u /*/sense-*-*.tar.gz # 离线安装Sense
-./bin/kibana    # 启动Kibana: http://localhost:5601/app/sense
+./bin/kibana          # 启动Kibana: http://localhost:5601/app/sense
 ~~~
 
 > [`Pilosa`](https://www.pilosa.com) 分布式位图索引数据库

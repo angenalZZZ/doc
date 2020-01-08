@@ -661,21 +661,20 @@ $ source ~/.zshrc # 使配置生效
 ~~~shell
   $ wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
   $ sudo apt-get install gnupg
-  $ wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
-  $ echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse"\
+  $ echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse" \
     | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list
   $ sudo apt-get update
-  $ sudo apt-get install -y mongodb-org                   # 安装最新版
-  $ sudo apt-get install -y mongodb-org=4.2.2 mongodb-org-server=4.2.2 \     # 安装指定的版本(推荐)
+  $ sudo apt-get install -y mongodb-org                                  # 安装最新版
+  $ sudo apt-get install -y mongodb-org=4.2.2 mongodb-org-server=4.2.2 \ # 安装指定的版本(推荐)
     mongodb-org-shell=4.2.2 mongodb-org-mongos=4.2.2 mongodb-org-tools=4.2.2
   $ echo "mongodb-org hold" | sudo dpkg --set-selections         # 阻止升级，将包固定在当前版本
   $ echo "mongodb-org-server hold" | sudo dpkg --set-selections  # 包含mongod守护程序, 初始化脚本和配置文件
   $ echo "mongodb-org-shell hold" | sudo dpkg --set-selections   # 包含mongo外壳shell
   $ echo "mongodb-org-mongos hold" | sudo dpkg --set-selections  # 包含mongos守护进程
-  $ echo "mongodb-org-tools hold" | sudo dpkg --set-selections   # 工具: mongoimport bsondump, mongodump等等
+  $ echo "mongodb-org-tools hold" | sudo dpkg --set-selections   # 工具: mongoimport bsondump, mongodump 等
   $ sudo service mongod status,start,stop,restart         # 查服务状态,启动,停止等
   $ sudo systemctl enable mongod.service                  # 开机启动,WSL> sudo /etc/init.d/mongodb status,start..
-  > mongo --eval 'db.runCommand({ connectionStatus: 1 })' # 诊断服务正在运行
+  > mongo --eval 'db.runCommand({ connectionStatus: 1 })' # 诊断服务,正在运行
   $ sudo apt-get purge mongodb-org*                       # 卸载 rm -rf /var/log/mongodb /var/lib/mongodb
 ~~~
 
@@ -684,14 +683,14 @@ $ source ~/.zshrc # 使配置生效
   # 下载安装包
   $ sudo dpkg -i elasticsearch-7.5.1-amd64.deb   # 安装Es,WSL> sudo /etc/init.d/elasticsearch status,start..
   $ sudo dpkg -i kibana-7.5.1-amd64.deb          # 安装Kibana
-  $ cd /usr/share/elasticsearch                  # 开始目录
-  $ bin/kibana plugin -i ik -u elasticsearch-analysis-ik-7.5.1.zip  # 安装插件-ik-分词
-  $ bin/kibana plugin -i pinyin -u elasticsearch-analysis-pinyin-7.5.1.zip # 安装插件-pinyin-拼音
+  $ cd /usr/share/elasticsearch/                 # 进入Es目录
+  $ bin/kibana plugin -i ik -u /temp/elasticsearch-analysis-ik-7.5.1.zip         # 安装插件-ik-分词
+  $ bin/kibana plugin -i pinyin -u /temp/elasticsearch-analysis-pinyin-7.5.1.zip # 安装插件-pinyin-拼音
   # 安装后运行
   $ bin/elasticsearch -d # 后台,手动启动Es,检查> curl localhost:9200 -H "Content-Type: application/json"
   $ bin/kibana plugin --install elastic/sense               # 安装并运行Sense
-  $ bin/kibana plugin -i sense -u /*/plugins/sense-*-*.tar.gz # 离线安装Sense
-  $ bin/kibana                  # 启动Kibana: http://localhost:5601/app/sense
+  $ bin/kibana plugin -i sense -u /temp/sense-*-*.tar.gz    # 离线安装插件Sense
+  $ bin/kibana # 启动Kibana: http://localhost:5601/app/sense
 ~~~
 
 > [`Pilosa`](https://www.pilosa.com) 分布式位图索引数据库

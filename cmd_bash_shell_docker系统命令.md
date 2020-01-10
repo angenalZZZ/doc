@@ -427,20 +427,25 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
 
 > `zsh`是一款强大的虚拟终端，推荐使用 [oh my zsh](https://github.com/robbyrussell/oh-my-zsh) 配置管理终端
 ~~~bash
-# 安装 zsh
-$ sudo apt-get -y install zsh
-# 设置终端shell默认为zsh, 输入以下命令后(重启终端>选择>2) [加sudo修改root的默认shell]
-$ chsh -s `which zsh`    # 安装完毕
-# 安装 antigen 设置主题
-$ curl -L https://raw.githubusercontent.com/skywind3000/vim/30b702725847bac4708de34664bb68454b54e0c0/etc/zshrc.zsh > ~/.zshrc
-# 修改配置 ~/.zshrc 
-#1. # antigen theme +> 添加[主题ys]
-antigen theme ys     # 参考 github.com/robbyrussell/oh-my-zsh/wiki/themes
-#2. # load local config +> 添加[.bashrc]
-[ -f "$HOME/.profile" ] && source "$HOME/.profile"
-# 最后再执行 zsh ; 如果出现 compinit 权限问题, 解决如下:
-$ sudo chmod -R 755 /usr/local/share/zsh/site-functions
-$ source ~/.zshrc # 使配置生效
+##安装 zsh
+  $ sudo apt-get -y install zsh
+##设置终端shell默认为zsh, 输入以下命令后(重启终端>选择>2) [加sudo修改root的默认shell]
+  $ chsh -s `which zsh`    # 安装完毕
+##安装 antigen 设置主题
+  $ curl -L https://raw.githubusercontent.com/skywind3000/vim/30b702725847bac4708de34664bb68454b54e0c0/etc/zshrc.zsh > ~/.zshrc
+##修改配置
+#1->config: ~/.zshrc
+  # antigen theme +> 添加[主题ys]
+  antigen theme ys   # 参考 github.com/robbyrussell/oh-my-zsh/wiki/themes
+  # load config   +> 加载个性化设置
+  [ -f "$HOME/.profile" ] && source "$HOME/.profile"
+#2->config: ~/.profile
+  # load aliases  +> 加载个性化设置
+  [ -f "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
+  # 或者; if [ -f "$HOME/.bash_aliases" ]; then . "$HOME/.bash_aliases"; fi
+##最后再执行 zsh ; 如果出现 compinit 权限问题, 解决如下:
+  $ sudo chmod -R 755 /usr/local/share/zsh/site-functions
+  $ source ~/.zshrc # 使配置生效
 ~~~
 
 > `开发环境搭建` 安装gcc/g++/gdb/make, gtk/glib/gnome, java, dot.NET Core, R, python, nodejs等

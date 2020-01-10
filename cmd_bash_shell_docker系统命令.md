@@ -429,22 +429,23 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
 ~~~bash
 ##安装 zsh
   $ sudo apt-get -y install zsh
-##设置终端shell默认为zsh, 输入以下命令后(重启终端>选择>2) [加sudo修改root的默认shell]
-  $ chsh -s `which zsh`    # 安装完毕
-##安装 antigen 设置主题
+##设置终端shell默认为zsh, 输入以下命令后(重启终端>选择>2) [sudo修改root的默认shell]
+  $ chsh -s `which zsh`  # 修改$SHELL [可忽略该选项]
+##个性化Vim配置 [可忽略该选项] github.com/skywind3000/vim
   $ i=https://raw.githubusercontent.com/skywind3000/vim/30b702725847bac4708de34664bb68454b54e0c0/etc/zshrc.zsh
   $ curl -L $i > ~/.zshrc
 ##修改配置
-#1->config: ~/.zshrc
+#1->config shell init: ~/.zshrc
   # antigen theme +> 添加[主题ys]
   antigen theme ys   # 参考 github.com/robbyrussell/oh-my-zsh/wiki/themes
-  # load config   +> 加载个性化设置
+  # shell login   +> 加载个性化用户设置
   [ -f "$HOME/.profile" ] && source "$HOME/.profile"
-#2->config: ~/.profile
-  # load aliases  +> 加载个性化设置
+  [ -f "$HOME/.bash_profile" ] && source "$HOME/.bash_profile"
+#2->config shell login: ~/.profile
+  # load aliases  +> 加载个性化命令设置
   [ -f "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
-  # 或者; if [ -f "$HOME/.bash_aliases" ]; then . "$HOME/.bash_aliases"; fi
-##最后再执行 zsh ; 如果出现 compinit 权限问题, 解决如下:
+  # 或者使用; if [ -f "$HOME/.bash_aliases" ]; then . "$HOME/.bash_aliases"; fi
+##最后执行 zsh ; 如果出现 compinit 权限问题, 解决如下:
   $ sudo chmod -R 755 /usr/local/share/zsh/site-functions
   $ source ~/.zshrc  # 执行脚本,使配置生效.
 ~~~

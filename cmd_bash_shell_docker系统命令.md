@@ -432,7 +432,8 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
 ##设置终端shell默认为zsh, 输入以下命令后(重启终端>选择>2) [加sudo修改root的默认shell]
   $ chsh -s `which zsh`    # 安装完毕
 ##安装 antigen 设置主题
-  $ curl -L https://raw.githubusercontent.com/skywind3000/vim/30b702725847bac4708de34664bb68454b54e0c0/etc/zshrc.zsh > ~/.zshrc
+  $ i=https://raw.githubusercontent.com/skywind3000/vim/30b702725847bac4708de34664bb68454b54e0c0/etc/zshrc.zsh
+  $ curl -L $i > ~/.zshrc
 ##修改配置
 #1->config: ~/.zshrc
   # antigen theme +> 添加[主题ys]
@@ -445,7 +446,7 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   # 或者; if [ -f "$HOME/.bash_aliases" ]; then . "$HOME/.bash_aliases"; fi
 ##最后再执行 zsh ; 如果出现 compinit 权限问题, 解决如下:
   $ sudo chmod -R 755 /usr/local/share/zsh/site-functions
-  $ source ~/.zshrc # 使配置生效
+  $ source ~/.zshrc  # 执行脚本,使配置生效.
 ~~~
 
 > `开发环境搭建` 安装gcc/g++/gdb/make, gtk/glib/gnome, java, dot.NET Core, R, python, nodejs等
@@ -1035,12 +1036,12 @@ ExecReload=/usr/bin/supervisorctl reload
 ~~~shell
   # < Windows Subsystem for Linux | WSL >---------------------------
   $ sudo apt install docker.io              # 安装Docker客户端 | docker.io get client connection.
-  $ export DOCKER_HOST=tcp://127.0.0.1:2375 # 设置环境, 使用 vi ~/.bashrc [~/.bash_profile](在文件结尾添加)
-  $ docker [COMMAND] --help                 # 执行Docker命令
+  $ export DOCKER_HOST=tcp://127.0.0.1:2375 # 设置环境 vi ~/.bashrc [或者~/.profile](文件结尾添加)
+  $ docker [COMMAND] --help                 # 执行Docker命令:重定向Docker\Server响应输出/如同R语言sink()
 
   # Docker正式环境: 修改Linux内核参数 https://blog.csdn.net/guanheng68/article/details/81710406
-  $ sysctl -w vm.max_map_count=262144       # 操作无效时, 使用 vi /etc/sysctl.conf 修改
-  $ grep vm.max_map_count /etc/sysctl.conf  # 检查设置
+  $ grep vm.max_map_count /etc/sysctl.conf  # 检查vm设置
+  $ sysctl -w vm.max_map_count=262144       # 执行Docker操作无效时才修改 vi /etc/sysctl.conf
 
   # 安装 Ansible 配置管理和IT自动化工具-(系统运维)一个强大的配置管理解决方案(由Python编写)
   $ sudo apt update  # < ubuntu >

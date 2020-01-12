@@ -153,8 +153,8 @@ npm i socket.io  # 聊天服务 https://github.com/socketio/socket.io
 npm i botkit     # 聊天机器人 https://github.com/howdyai/botkit
 
 # Google Chrome 开源项目 https://github.com/GoogleChrome
-npm i puppeteer  # 提供了一个高级 API 来通过 DevTools 协议控制 Chromium 或 Chrome (调试|抓取|截图|Pdf|等)
-npm i puppeteer-core # 同上 - 中文文档 https://zhaoqize.github.io/puppeteer-api-zh_CN/#/
+npm i puppeteer  # 提供了一个高级 API 来通过 DevTools 协议控制 Chromium 或 Chrome (UI调试|抓取|截图|Pdf等)
+npm i puppeteer-core # 中文文档 https://zhaoqize.github.io/puppeteer-api-zh_CN/ (Required Node^v6.4.0)
 
 ~~~
 

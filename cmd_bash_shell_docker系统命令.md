@@ -2101,19 +2101,19 @@ sysctl：运行时修改内核参数；加载并应用所有设置的系统内�
 $ grep -rin vm /etc/sysctl*         # 查找所有vm-内存使用限制
 $ cat /proc/sys/vm/max_map_count    # 查看用户进程-最大内存限制(默认 65530
 $ sysctl -w vm.max_map_count=262144 # 修改用户进程-最大内存限制(可以改成 655360
-$ limit                             # 限制系统根级对shell资源的访问
-$ ulimit -a                         # 显示系统用户对shell资源的访问
-$ ulimit -u 7823 && ulimit -n 65536
+$ limit                             # 显示系统底层对shell资源的访问限制
+$ ulimit -a                         # 显示系统用户对shell资源的访问限制
+$ ulimit -u 7823 && ulimit -n 65536 # 修改访问限制
 $ grep -rin hard /etc/security/limits* # 查找所有hard-硬件使用限制
 $ grep -rin soft /etc/security/limits* # 查找所有soft-软件使用限制
-$ vi /etc/security/limits.conf >    # 修改安全限制：
+$ vi /etc/security/limits.conf >    # 修改安全限制：ulimit -a
 # nofile:可打开的最大文件数; nproc:进程数限制-即Linux线程数(LWP)
 *   hard    nofile      131072
 *   soft    nofile      65536
-*   hard    nproc       4096
-*   soft    nproc       2048
-$ vi /etc/security/limits.d/90-nproc.conf >
-*   soft    nproc       4096
+*   hard    nproc       7820
+*   soft    nproc       3910
+$ vi /etc/security/limits.d/90-nproc.conf > ulimit -u
+*   soft    nproc       7820
 
 depmod：处理内核可加载模块的依赖关系
 dmesg：显示内核的输出信息

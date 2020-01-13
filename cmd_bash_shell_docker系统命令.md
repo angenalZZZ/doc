@@ -1163,7 +1163,7 @@ alias dockerclean='dockercleanc || true && dockercleani'           # 清除停�
   docker inspect [container]                # 查看容器详情
   docker rename web [container]             # 容器重新命名
   docker logs [container]                   # 查看容器日志
-  docker update --restart=always [container] # 修改配置: 设置为开机启动 (可在 docker run 时添加此参数)
+  docker update --restart=always [container] # 修改配置: 设置为开机启动 (可在 docker run 时, 添加该参数)
   
   docker stop 8b49 & docker rm -f mysite    # 停止+删除 :容器[ID前缀3-4位 或 containerName]
   docker stop web & docker commit web myweb & docker run -p 8080:80 -td myweb # commit新容器myweb&端口映射
@@ -1224,6 +1224,15 @@ alias dockerclean='dockercleanc || true && dockercleani'           # 清除停�
   
   # 数据库 PostgreSql + 时序数据timescaledb + 云计算
   docker run --name timescaledb -d -p 5432:5432 -e POSTGRES_PASSWORD=123456 timescale/timescaledb:latest-pg11
+  
+  # 搜索引擎 ElasticSearch 中文参考 www.elastic.co/guide/cn/elasticsearch/guide/current/index.html
+  docker pull elasticsearch:6.8.0
+  docker run --name es -d -p 9200:9200 -p 9300:9300 \
+    -e "discovery.type=single-node" -e ES_JAVA_OPTS="-Xms128m -Xmx128m" elasticsearch:6.8.0
+    # 跨域配置: http.cors.enabled: true; http.cors.allow-origin: "*"
+  docker exec -it es /bin/bash > vi /usr/share/elasticsearch/config/elasticsearch.yml 
+  docker run --name es_admin -d -p 9100:9100 mobz/elasticsearch-head #参考 github.com/mobz/elasticsearch-head
+  
   # 开源时序数据库 influxdb  portal.influxdata.com
   docker run --name influxdb -d -p 9999:9999 quay.io/influxdb/influxdb:2.0.0-alpha
   # 开源时序数据库 opentsdb  opentsdb.net/docs/build/html/resources.html
@@ -2089,7 +2098,8 @@ umount：卸载已经加载的文件系统
 #### 十、Linux下常用命令：内核与性能
 ~~~
 sysctl：运行时修改内核参数；加载并应用所有设置的系统内核参数：sysctl -f --system
-$ sysctl -w vm.max_map_count=262144 # 用户程序使用的最大内存限制[默认65530] -> 655360
+$ cat /proc/sys/vm/max_map_count    # 查看用户进程拥有的最大内存限制(默认 65530 )
+$ sysctl -w vm.max_map_count=262144 # 修改最大内存限制(可以改成 655360 )
 
 depmod：处理内核可加载模块的依赖关系
 dmesg：显示内核的输出信息

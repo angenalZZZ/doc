@@ -704,6 +704,20 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.5.1/elasticsearch-analysis-ik-7.5.1.zip
   # 安装Es插件 pinyin 中文拼音
   $ bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-pinyin/releases/download/v7.5.1/elasticsearch-analysis-pinyin-7.5.1.zip
+  # 搭建集群 -> 配置: /etc/elasticsearch/elasticsearch.yaml > Cluster ...
+  # cluster.name: c1         集群名称;
+  # node.name: node-1        节点名称-对应一台主机;
+  # node.master: true        节点选举-可为master; //master节点管理索引&分片分配&集群检查//不配置node.master&node.data时默认true
+  # node.data: true          节点选举-可为data; //data节点 //客户端节点/路由节点/负载均衡:master&data都为false //部落节点/跨集群:配置tribe
+  # node.attr.rack: r1       节点属性; 前缀 r 指数据备份节点data, m 指集群主节点master [选填];
+  # network.host: 0.0.0.0    集群中当前宿主机ip地址;
+  # http.port: 9200          绑定端口号;
+  # discovery.seed_hosts: ["host1_ip","host2_ip","host3_ip"] 集群中每台宿主机的ip地址;
+  # cluster.initial_master_nodes: ["node-1"]  启动时选举节点策略 [选填];
+  # gateway.recover_after_nodes: 2            启动后选举节点策略（master_eligible_nodes / 2）+ 1 [轻量集群3个节点时>=2];
+  # http.cors.enabled: true                   客户端请求允许跨域;
+  # http.cors.allow-origin: "*"
+  
   $ sudo dpkg -i kibana-7.5.1-amd64.deb          # 安装Kibana
   $ cd /usr/share/kibana/                        # 进入Kibana目录
   $ bin/kibana --help [--allow-root]             # 配置config/kibana.yml "elasticsearch.hosts"指向Elasticsearch
@@ -1241,8 +1255,7 @@ alias dockerclean='dockercleanc || true && dockercleani'           # 清除停�
   docker pull elasticsearch:6.8.0
   docker run --name es -d -p 9200:9200 -p 9300:9300 \
     -e "discovery.type=single-node" -e ES_JAVA_OPTS="-Xms128m -Xmx128m" elasticsearch:6.8.0
-    # 跨域配置: http.cors.enabled: true; http.cors.allow-origin: "*"
-  docker exec -it es /bin/bash > vi /usr/share/elasticsearch/config/elasticsearch.yml 
+  docker exec -it es /bin/bash > vi /usr/share/elasticsearch/config/elasticsearch.yml # 跨域配置
   docker run --name es_admin -d -p 9100:9100 mobz/elasticsearch-head #参考 github.com/mobz/elasticsearch-head
   
   # 开源时序数据库 influxdb  portal.influxdata.com

@@ -1,4 +1,4 @@
-
+# 个人备份zshrc
 # Antigen: https://github.com/zsh-users/antigen
 ANTIGEN="$HOME/.local/bin/antigen.zsh"
 
@@ -118,6 +118,7 @@ ZSH_HIGHLIGHT_STYLES[assign]=none
 # load local config
 [ -f "$HOME/.local/etc/config.zsh" ] && source "$HOME/.local/etc/config.zsh" 
 [ -f "$HOME/.local/etc/local.zsh" ] && source "$HOME/.local/etc/local.zsh"
+# load local profile & bash aliases
 [ -f "$HOME/.profile" ] && source "$HOME/.profile"
 [ -f "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
 # [ -f "$HOME/.bash_profile" ] && source "$HOME/.bash_profile"
@@ -167,13 +168,9 @@ setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history 
 setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
 setopt HIST_VERIFY # Don't execute immediately upon history expansion.
 
-
 # source function.sh if it exists
 [ -f "$HOME/.local/etc/function.sh" ] && . "$HOME/.local/etc/function.sh"
-
 
 # ignore complition
 zstyle ':completion:*:complete:-command-:*:*' ignored-patterns '*.pdf|*.exe|*.dll'
 zstyle ':completion:*:*sh:*:' tag-order files
-
-

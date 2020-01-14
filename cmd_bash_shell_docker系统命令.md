@@ -519,6 +519,7 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ sudo systemctl reload nginx   # 修改配置后，需要重新加载Nginx服务
   $ ls /etc/nginx/sites-available # 设置Nginx服务器模块(类似Apache虚拟主机) www.linuxidc.com/Linux/2018-05/152258.htm
   $ sudo apt install certbot      # 使用Let's Encrypt保护Nginx  www.linuxidc.com/Linux/2018-05/152259.htm
+  # runuser -l yangzhou -s /bin/sh -m -c "/usr/local/nginx/sbin/nginx" # 启动(可用 su+目标用户的密码; sudo+自己的密码)
   
   $ sudo systemctl disable nginx && sudo systemctl stop nginx # 安装OpenResty > cd /tmp
   $ sudo apt-get -y install --no-install-recommends wget gnupg ca-certificates software-properties-common
@@ -700,6 +701,9 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ cd /usr/share/elasticsearch/                 # 进入Es目录
   $ bin/elasticsearch --help
   $ bin/elasticsearch -d # 手动启动Es,后台运行-d,检查> curl localhost:9200 -H "Content-Type: application/json"
+  # sudo /etc/init.d/elasticsearch status,start  # 系统启动服务 < Windows Subsystem for Linux | WSL > 
+  # su - yangzhou -m -s /bin/sh -c "/usr/share/elasticsearch/bin/elasticsearch" # 为解压安装方式时 
+  
   # 安装Es插件 ik 中文分词
   $ bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.5.1/elasticsearch-analysis-ik-7.5.1.zip
   # 安装Es插件 pinyin 中文拼音
@@ -713,7 +717,7 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   # network.host: 0.0.0.0    集群中当前宿主机ip地址;
   # http.port: 9200          绑定端口号;
   # discovery.seed_hosts: ["host1_ip","host2_ip","host3_ip"] 集群中每台宿主机的ip地址;
-  # cluster.initial_master_nodes: ["node-1"]  启动时选举节点策略 [选填];
+  # cluster.initial_master_nodes: ["node-1"]  启动时选举节点策略;
   # gateway.recover_after_nodes: 2            启动后选举节点策略（master_eligible_nodes / 2）+ 1 [轻量集群3个节点时>=2];
   # http.cors.enabled: true                   客户端请求允许跨域;
   # http.cors.allow-origin: "*"

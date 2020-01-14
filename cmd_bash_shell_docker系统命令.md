@@ -703,7 +703,7 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ cd /usr/share/elasticsearch/                 # 进入Es目录
   $ bin/elasticsearch --help
   $ bin/elasticsearch -d # 手动启动Es,后台运行-d,检查> curl localhost:9200 -H "Content-Type: application/json"
-  # su - yangzhou -m -s /bin/sh -c "/usr/share/elasticsearch/bin/elasticsearch" # 为解压安装方式时启动
+  # su -l elasticsearch -m -s /bin/sh -c "/usr/share/elasticsearch/bin/elasticsearch" # 为解压安装方式时启动
   # dpkg --remove elasticsearch && dpkg --purge --force-all elasticsearch       # 卸载
   # rm -rf /etc/elasticsearch /var/lib/elasticsearch /usr/share/elasticsearch   # 清理
   

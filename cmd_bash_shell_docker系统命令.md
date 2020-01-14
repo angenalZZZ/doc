@@ -430,6 +430,7 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ chsh -s `which zsh`  # 修改默认$BASH [可选项]Login Shell: [/bin/bash] -> [/usr/bin/zsh]
   # 个性化Vim配置 [可忽略该选项] github.com/skywind3000/vim
   $ i=https://raw.githubusercontent.com/skywind3000/vim/30b702725847bac4708de34664bb68454b54e0c0/etc/zshrc.zsh
+  $ i=https://github.com/angenalZZZ/doc/blob/master/sh/zshrc.zsh
   $ curl -L $i > ~/.zshrc
   
   ##配置zsh(2)为一般用户 

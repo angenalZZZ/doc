@@ -78,14 +78,15 @@
   $ useradd -d /home/admin -G adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare,libvirt admin
   # 修改密码
   $ passwd admin 
-  # 修改用户多选组-G=groups   ;查用户组${id -g 用户名} $ groups yangzhou
+  # 修改用户多选组-G=groups   ; 查用户组${id -g 用户名} $ groups yangzhou
+  $ id -gn && id -Gn         # 返回用户组: sudo grep $USER /etc/group /etc/gshadow
   $ usermod -G yangzhou,adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare,docker,mysql,mongodb,libvirt,rabbitmq yangzhou
-  $ usermod -aG rabbitmq yangzhou # 直接添加组给用户
-  # 查询用户信息
+  $ usermod -aG rabbitmq yangzhou # 添加组给用户,方便操作.
+  # 查询用户更多信息
   $ sudo grep $USER /etc/passwd /etc/shadow /etc/group /etc/gshadow
   
-  $ sudo su -      # 切换用户至root (并切换到用户主目录/root；超级用户提示符结尾 # 普通用户$ 主目录/home/*)
-  $ su admin       # 切换用户至admin
+  $ su - root      # 切换用户至root (并切换到用户主目录/root；超级用户提示符结尾 # 普通用户$ 主目录/home/*)
+  $ su - admin     # 切换用户至admin
   $ exit           # 退出登录
   
   $ cat /etc/passwd # 查看所有用户
@@ -621,8 +622,8 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ sudo apt-get update
   $ sudo apt-get install mysql-server  # 默认版本 <CentOS7> sudo yum install mariadb mariadb-server
   $ sudo mysql_secure_installation     # 安装配置
-  $ sudo systemctl status mysql   # 检查状态
-  $ sudo systemctl enable mysql  # 开机启动
+  $ sudo systemctl status mysql        # 检查状态
+  $ sudo systemctl enable mysql        # 开机启动
   $ ps aux |grep mysqld　　　　　       # 查看进程 /usr/sbin/mysqld --daemonize --pid-file=/run/mysqld/mysqld.pid
   $ cat /etc/mysql/debian.cnf          # 查看系统密码
   $ mysql -u debian-sys-maint -p       # 准备修改密码
@@ -630,7 +631,7 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   > update mysql.user set authentication_string=password('root') where user='root' and Host ='localhost';
   > update user set plugin="mysql_native_password";
   > flush privileges; quit;
-  $ sudo service mysql restart            # 重启 systemctl restart mysql
+  $ sudo service mysql restart          # 重启 systemctl restart mysql
   $ mysql -P3306 -uroot -p < init.sql   # 以root身份登录并执行脚本> source init.sql
   # 配置远程访问 (@'localhost'本机访问; @'%'所有主机都可连接)
   > CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';
@@ -639,9 +640,9 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   > GRANT ALL PRIVILEGES ON dbname.* TO 'newuser'@'%' IDENTIFIED BY 'root'; # 授权newuser
   > GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY 'root'; # 默认授权
   > SET PASSWORD FOR 'root'@'%' = PASSWORD('root');    # 设置密码为root
-  > mysqladmin -u root password 123456       # 初始化密码
+  > mysqladmin -u root password 123456                  # 初始化密码
   > mysqladmin -u root -p 123456 password HGJ766GR767FKJU0 # 修改密码
-  > mysqladmin -u root -p shutdown                 # 关闭mysql
+  > mysqladmin -u root -p shutdown                      # 关闭mysql
   
   # GitHub在线使用的数据库迁移工具 github.com/github/gh-ost
   $ gh-ost help
@@ -703,6 +704,7 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ cd /usr/share/elasticsearch/                 # 进入Es目录
   $ bin/elasticsearch --help
   $ bin/elasticsearch -d # 手动启动Es,后台运行-d,检查> curl localhost:9200 -H "Content-Type: application/json"
+  $ sudo usermod -aG elasticsearch yangzhou # 添加组给用户,方便操作. id -Gn
   # su -l elasticsearch -m -s /bin/sh -c "/usr/share/elasticsearch/bin/elasticsearch" # 为解压安装方式时启动
   # dpkg --remove elasticsearch && dpkg --purge --force-all elasticsearch       # 卸载
   # rm -rf /etc/elasticsearch /var/lib/elasticsearch /usr/share/elasticsearch   # 清理

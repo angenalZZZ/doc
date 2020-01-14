@@ -118,7 +118,7 @@ ZSH_HIGHLIGHT_STYLES[assign]=none
 # load local config
 [ -f "$HOME/.local/etc/config.zsh" ] && source "$HOME/.local/etc/config.zsh" 
 [ -f "$HOME/.local/etc/local.zsh" ] && source "$HOME/.local/etc/local.zsh"
-# load local profile & bash aliases
+# load local profile & .bash_aliases <- 02-bash_aliases.sh
 [ -f "$HOME/.profile" ] && source "$HOME/.profile"
 [ -f "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
 # [ -f "$HOME/.bash_profile" ] && source "$HOME/.bash_profile"

@@ -8,7 +8,7 @@
  * [Windows10安装Linux子系统(WSL)](https://www.cnblogs.com/xiaoliangge/p/9124089.html)
  * [Linux开发环境及常用安装zsh-ssh-git-redis-mysql-mongodb-pilosa-influxdb-grafana-nsq.kafka.rabbitmq..](#linux开发环境及常用安装)
  * [Linux常用命令ls-find-grep-xargs-sort-uniq-tr-wc-sed-awk-head-tail..](#Linux常用命令)
- * [`BASH中文速查表`](https://github.com/angenalZZZ/doc/blob/master/sh/bash.sh)、[`命令图解`](#Linux命令图解)
+ * [`BASH中文速查表`](https://github.com/angenalZZZ/doc/blob/master/sh/bash.sh)、[`看命令图解`](#Linux命令图解)
  * [`docker`](#docker) | [`k8s`](#Kubernetes) | [`Minikube`](#Minikube) | [`Consul`](#Consul) | [`etcd`](#Etcd) 
 　[`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)、[`安全相关思维导图收集`](https://github.com/phith0n/Mind-Map)
 
@@ -24,6 +24,7 @@
   $ uname -a         # 系统信息: $(uname -s)=系统'Linux'; $(uname -m)=CPU架构'x86_64';
   $ egrep -c ' lm ' /proc/cpuinfo  &&  egrep -c '(vmx|svm)' /proc/cpuinfo
   # 系统版本号'发行版本'*** Linux-redhat > cat /etc/redhat-release
+  $ cat /etc/os-release # 系统完整信息
   $ cat /etc/issue && lsb_release -cs ; lsb_release -a #Linux发行版本信息+支持的体系结构[amd64,x86_64,arm64]
   $ echo "Linux-x86_64" && echo $(uname -s)-$(uname -m) && echo `uname -s`-`uname -m`
   
@@ -137,6 +138,7 @@
   > netstat -ano | findstr :3000 # 杀死进程使用, 指定占用的端口号
   > taskkill /F /PID <<PID>>     # PowerShell
   $ ps aux                       # 进程列表: USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND
+  $ ps -ef                       # 进程列表: UID  PID  PPID  C STIME TTY TIME CMD
   $ ps -eo pid,cmd | grep uuid   # [o输出字段,e依赖的系统环境]
   $ ps -u $USER -o pid,%cpu,tty,cputime,cmd
   $ ps -ef | grep dotnet         # 查看dotnet进程id
@@ -701,8 +703,9 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ cd /usr/share/elasticsearch/                 # 进入Es目录
   $ bin/elasticsearch --help
   $ bin/elasticsearch -d # 手动启动Es,后台运行-d,检查> curl localhost:9200 -H "Content-Type: application/json"
-  # sudo /etc/init.d/elasticsearch status,start  # 系统启动服务 < Windows Subsystem for Linux | WSL > 
-  # su - yangzhou -m -s /bin/sh -c "/usr/share/elasticsearch/bin/elasticsearch" # 为解压安装方式时 
+  # su - yangzhou -m -s /bin/sh -c "/usr/share/elasticsearch/bin/elasticsearch" # 为解压安装方式时启动
+  # dpkg --remove elasticsearch && dpkg --purge --force-all elasticsearch       # 卸载
+  # rm -rf /etc/elasticsearch /var/lib/elasticsearch /usr/share/elasticsearch   # 清理
   
   # 安装Es插件 ik 中文分词
   $ bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.5.1/elasticsearch-analysis-ik-7.5.1.zip
@@ -714,7 +717,7 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   # node.master: true        节点选举-可为master; //master节点管理索引&分片分配&集群检查//不配置node.master&node.data时默认true
   # node.data: true          节点选举-可为data; //data节点 //客户端节点/路由节点/负载均衡:master&data都为false //部落节点/跨集群:配置tribe
   # node.attr.rack: r1       节点属性; 前缀 r 指数据备份节点data, m 指集群主节点master [选填];
-  # network.host: 0.0.0.0    集群中当前宿主机ip地址;
+  # network.host: 0.0.0.0    当前宿主机ip地址; 非127.0.0.1时表示正式部署;
   # http.port: 9200          绑定端口号;
   # discovery.seed_hosts: ["host1_ip","host2_ip","host3_ip"] 集群中每台宿主机的ip地址;
   # cluster.initial_master_nodes: ["node-1"]  启动时选举节点策略;

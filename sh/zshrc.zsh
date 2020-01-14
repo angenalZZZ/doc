@@ -1,4 +1,4 @@
-
+# zsh: cp zshrc.zsh ~/.zshrc ; /root/.zshrc
 # Antigen: https://github.com/zsh-users/antigen
 ANTIGEN="$HOME/.local/bin/antigen.zsh"
 

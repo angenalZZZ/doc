@@ -431,7 +431,8 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   # 个性化Vim配置 [可忽略该选项] github.com/skywind3000/vim
   $ i=https://raw.githubusercontent.com/skywind3000/vim/30b702725847bac4708de34664bb68454b54e0c0/etc/zshrc.zsh
   $ curl -L $i > ~/.zshrc
-  ##配置zsh(2)
+  
+  ##配置zsh(2)为一般用户 
   #1->config shell init: ~/.zshrc
   # antigen theme +> 添加[主题ys]
   antigen theme ys   # 参考 github.com/robbyrussell/oh-my-zsh/wiki/themes
@@ -445,6 +446,15 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   ##启动zsh(3) 输入命令zsh; 如果出现权限问题compinit解决如下:
   $ sudo chmod -R 755 /usr/local/share/zsh/site-functions
   $ source ~/.zshrc  # 执行脚本,使配置生效.
+  
+  ##配置zsh(2)为系统用户root 
+  $ su - root
+  $ cp /home/*/.zshrc /root/.zshrc
+  #2->config shell login: ~/.zshrc
+  [ -f "$HOME/.profile" ] && source "$HOME/.profile"
+  [ -f "$HOME/.bash_aliases" ] && . "$HOME/.bash_aliases"
+  [ -f "$HOME/.bash_profile" ] && source "$HOME/.bash_profile"
+  ##启动zsh(3) 输入命令zsh
 ~~~
 
 > `开发环境搭建` 安装gcc/g++/gdb/make, gtk/glib/gnome, java, dot.NET Core, R, python, nodejs等

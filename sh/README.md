@@ -1,5 +1,9 @@
 # I. 介绍 Shell
 
+> [函数 Functions](#ii-函数-functions)、[条件语句 Conditionals / Input](#iii-条件语句-conditionals--input)<br>
+[变量 Parameter Expansions and Strings](#iv-变量-parameter-expansions-and-strings)、[循环语句 Looping](#v-循环语句-looping)<br>
+[数组 Arrays](#vi-数组-arrays)、[位置参数 Positional Parameters](#vii-位置参数-positional-parameters)
+
 > 1. A shell script contains commands that are executed as if you typed them in the terminal.
 
 > 2. We'll be using Vim for this tutorial

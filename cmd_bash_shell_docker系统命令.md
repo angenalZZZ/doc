@@ -538,8 +538,9 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ sudo tar -zxf node-v13.6.0-linux-x64.tar.gz -C /usr/local/
   $ sudo mv /usr/local/node-v13.6.0-linux-x64 /usr/local/node
   $ sudo chown `id -un`:`id -gn` /usr/local/node -R  # 设置目录
-  $ export PATH=/usr/local/node/bin:$PATH # 配置环境变量,如下 01-locale-profile.sh (选项)设置软链接 ln -s
-  # ln -s /usr/local/node/bin/node /usr/local/bin/node ; ln -s /usr/local/node/bin/npm /usr/local/bin/npm
+  $ export PATH=/usr/local/node/bin:$PATH # 配置环境变量,如下 01-locale-profile.sh (替代选项)设置软链接 ln
+  $ sudo ln -sf /usr/local/node/bin/node /usr/local/bin/node
+  $ sudo ln -sf /usr/local/node/bin/npm /usr/local/bin/npm
   
   # 通讯协议: thrift.apache.org
   #1.Thrift是一种接口描述语言和二进制通讯协议，它被用来定义和创建跨语言的服务。它被当作一个远程过程调用（RPC）框架来使用，是由Facebook为“大规模跨语言服务开发”而开发的。

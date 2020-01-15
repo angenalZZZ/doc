@@ -720,16 +720,16 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   # 安装Es插件 pinyin 中文拼音
   $ bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-pinyin/releases/download/v7.5.1/elasticsearch-analysis-pinyin-7.5.1.zip
   # 搭建集群 -> 配置: /etc/elasticsearch/elasticsearch.yaml > Cluster ...
-  # cluster.name: c1         集群名称;
-  # node.name: node-1        节点名称-对应一台主机;
-  # node.master: true        节点选举-可为master; //master节点管理索引&分片分配&集群检查//不配置node.master&node.data时默认true
-  # node.data: true          节点选举-可为data; //data节点 //客户端节点/路由节点/负载均衡:master&data都为false //部落节点/跨集群:配置tribe
-  # node.attr.rack: r1       节点属性; 前缀 r 指数据备份节点data, m 指集群主节点master [选填];
+  # cluster.name: c1         集群名称;             //0-配置部落节点/跨集群调用:tribe;
+  # node.name: node-1        节点名称-对应一台主机; //*-不配置node.master&node.data时默认true;
+  # node.master: true        节点选举-可为master;  //1-master节点管理集群&添加索引&分片分配等;
+  # node.data: true          节点选举-可为data; //2-data节点CRUD //3-客户端节点/路由节点/负载均衡:master&data都为false;
+  # node.attr.rack: r1       节点属性[选填]; 前缀 r 指数据备份节点data, m 指集群主节点master;
   # network.host: 0.0.0.0    当前宿主机ip地址; 非127.0.0.1时表示正式部署;
   # http.port: 9200          绑定端口号;
   # discovery.seed_hosts: ["host1_ip","host2_ip","host3_ip"] 集群中每台宿主机的ip地址;
   # cluster.initial_master_nodes: ["node-1"]  启动时选举节点策略;
-  # gateway.recover_after_nodes: 2            启动后选举节点策略（master_eligible_nodes / 2）+ 1 [轻量集群3个节点时>=2];
+  # gateway.recover_after_nodes: 2            启动后选举节点策略(master_eligible_nodes / 2) + 1 [轻量集群3个节点时>=2];
   # http.cors.enabled: true                   客户端请求允许跨域;
   # http.cors.allow-origin: "*"
   

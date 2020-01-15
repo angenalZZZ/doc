@@ -1866,6 +1866,7 @@ awk '{buffer[NR%10]=$0} END {for(i=0;i<11;i++){ print buffer[i %10]} } ' filenam
 # 显示文件内容行head&tail------------------------------------------------------
 head -n 10 filename # 前10行[默认为10行] head -5 前5行; head -n -10 除最后10行外,显示前面所有内容;
 tail -n 10 filename # 后10行[-n默认10] tail -n +10 从开头第10行开始输出; tail -n 2 filename |head -n 1 倒数第2行
+tail -f /var/log/auth.log # 跟踪后10行 tail -10f /var/log/auth.log
 ~~~
 
 

@@ -1,5 +1,5 @@
-##[服务]描述####
-##执行的命令脚本##
+#### *服务描述* #########
+#### >执行的命令脚本 ####
 
 [cronsun] cron local server
 /4g/git/doc/sh/cronsun.sh
@@ -21,4 +21,7 @@
 
 [pilosa] pilosa server
 /4g/git/doc/sh/pilosa.sh
+
+[elasticsearch] elasticsearch single-node server
+/4g/git/doc/sh/elasticsearch.sh
 

@@ -733,6 +733,10 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   # http.cors.enabled: true                   客户端 请求允许跨域;
   # http.cors.allow-origin: "*"
   
+  # 数据采集Beats      https://www.elastic.co/cn/downloads/beats
+  # 指标采集Metricbeat 日志收集Filebeat  审计日志Auditbeat  系统事件日志采集Winlogbeat
+  # 网络流量Packetbeat 系统监控Heartbeat 云服务监控Functionbeat
+  
   # 安装Kibana可视化工具
   $ sudo dpkg -i kibana-7.5.1-amd64.deb          # 安装Kibana
   $ cd /usr/share/kibana/                        # 进入Kibana目录

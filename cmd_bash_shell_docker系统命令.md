@@ -546,14 +546,21 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   #1.Thrift是一种接口描述语言和二进制通讯协议，它被用来定义和创建跨语言的服务。它被当作一个远程过程调用（RPC）框架来使用，是由Facebook为“大规模跨语言服务开发”而开发的。
   $ sudo apt-get install automake bison flex g++ git libboost-all-dev libevent-dev libssl-dev libtool make pkg-config
   
-  # 环境变量
-  export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin #系统(内置)
-  export PATH=$PATH:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin
-  export JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk/jre
+  # 环境变量: https://github.com/angenalZZZ/doc/blob/master/sh/01-locale-profile.sh
+  # path 系统目录;SHELL搜索目录;
+  export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+  # java 开发环境;java,javaw,javaws,jdb,jps,jrunscript,keytool等
+  export JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk/jre # export JAVA_HOME=/usr/local/java/jdk1.8.0_221
+  export JAVA_BIN=$JAVA_HOME/bin
+  export JRE_HOME=$JAVA_HOME/jre
+  export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib
+  export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
   export JAVA_VERSION=8u212
   export SCALA_VERSION=2.12
   export GLIBC_VERSION=2.29-r0
-  # .profile 文件设置 Aliases
+  # 快捷命令: https://github.com/angenalZZZ/doc/blob/master/sh/02-bash_aliases.sh
+  alias lht='ls -lht'  # 文件列表-按时间倒序
+  alias lhs='ls -lhS'  # 文件列表-按大小倒序
   alias start-pg='sudo service postgresql start'
   alias run-pg='sudo -u postgres psql'
 ~~~

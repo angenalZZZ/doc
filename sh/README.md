@@ -1,4 +1,6 @@
-# I. 介绍 Shell
+# Shell 脚本语言
+
+#### I. 介绍 Shell
 
 > [函数 Functions](#ii-函数-functions)、[条件语句 Conditionals / Input](#iii-条件语句-conditionals--input)<br>
 [变量 Parameter Expansions and Strings](#iv-变量-parameter-expansions-and-strings)、[循环语句 Looping](#v-循环语句-looping)<br>
@@ -117,7 +119,7 @@
 	many lines
 	END
 
- # II. 函数 Functions
+ #### II. 函数 Functions
  
  	1. You can use functions to avoid the need to write duplicate code
  	
@@ -171,7 +173,7 @@
  	sum=$(getSum num1 num2)
  	echo "The sum is $sum"
  	
-# III. 条件语句 Conditionals / Input 
+#### III. 条件语句 Conditionals / Input 
 
 	1. 
 	#!/bin/bash
@@ -423,7 +425,7 @@
 	echo "Can Vote : $can_vote"
 	
 	
-# IV. 变量 Parameter Expansions and Strings
+#### IV. 变量 Parameter Expansions and Strings
 
 	1. Strings
 	#!/bin/bash
@@ -442,7 +444,7 @@
 	# Return whats left after A
 	echo "${rand_str#*A }"
 
-# V. 循环语句 Looping
+#### V. 循环语句 Looping
 
 	1. While Loop
 	#!/bin/bash
@@ -510,7 +512,7 @@
   	
   	7.
   	
-# VI. 数组 Arrays
+#### VI. 数组 Arrays
 
 	1. Bash arrays can only have one dimension and indexes start at 0
 	
@@ -562,7 +564,7 @@
 	unset sorted_nums
 
 	
-# VII. 位置参数 Positional Parameters
+#### VII. 位置参数 Positional Parameters
 
 	1. Positional parameters are variables that can store data on the command line in variable names 0 - 9
 	
@@ -591,4 +593,6 @@
 	done
 	
 	echo "Sum : $sum
+
+----
 

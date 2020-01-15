@@ -1852,12 +1852,12 @@ echo i123450 | tr -dc '0-9' # 删除所有非数字 -c 求补集
 echo file.txt | tr -c '0-9' # 获取文件中所有数字
 echo 'as   i' | tr -s ' '   # 压缩字符 -s # as i
 cat file.txt | tr [:lower:] [:upper:]    # 小写转大写
-# 按列切分文本cut
-# 按列拼接文本paste
+# 按列切分文本cut 按列拼接文本paste
 # 统计行和字符wc---------------------------------------------------------------
 find . -type f -name "*.java" -print0 |xargs -0 wc -l # 统计代码行数, wc -w file单词数, wc -c file字符数
 # 文本替换利器sed--------------------------------------------------------------
 echo 'ABC' | sed 's/[[:upper:]]*/\L&/' # 大写转小写 echo 'ABC' | tr A-Z a-z
+PATH=`echo $PATH |sed 's#/mnt/d#/mnt/x#g'` # 批量替换-环境变量PATH-> sed 's#原始值#替换值#g'
 sed '/^$/d' file                       # 移除空白行
 seg 's/text/replace_text/' file        # 替换每一行的第一处匹配的 text
 seg 's/text/replace_text/g' file       # 全局替换

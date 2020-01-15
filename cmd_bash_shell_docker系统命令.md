@@ -5,10 +5,9 @@
 > [`《Linux就该这么学》pdf`](https://www.linuxprobe.com/docs/LinuxProbe.pdf)、
   [`《Linux基础课程》video`](https://www.linuxprobe.com/chapter-01.html)<br>
 
- * [Windows10安装Linux子系统(WSL)](https://www.cnblogs.com/xiaoliangge/p/9124089.html)
  * [Linux开发环境及常用安装zsh-ssh-git-redis-mysql-mongodb-pilosa-influxdb-grafana-nsq.kafka.rabbitmq..](#linux开发环境及常用安装)
  * [Linux常用命令ls-find-grep-xargs-sort-uniq-tr-wc-sed-awk-head-tail..](#Linux常用命令)
- * [`BASH中文速查表`](https://github.com/angenalZZZ/doc/blob/master/sh/bash.sh)、[`看命令图解`](#Linux命令图解)
+ * [`BASH中文速查表`](https://github.com/angenalZZZ/doc/blob/master/sh/bash.sh)、[`常见命令图解`](#Linux常见命令图解)、[`windows10安装linux(WSL)`](https://www.cnblogs.com/xiaoliangge/p/9124089.html)
  * [`docker`](#docker) | [`k8s`](#Kubernetes) | [`Minikube`](#Minikube) | [`Consul`](#Consul) | [`etcd`](#Etcd) 
 　[`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)、[`安全相关思维导图收集`](https://github.com/phith0n/Mind-Map)
 
@@ -2336,7 +2335,7 @@ exec curl -T \
 
 ----
 
-#### Linux命令图解
+#### Linux常见命令图解
 ![](https://github.com/angenalZZZ/doc/blob/master/screenshots/fwunixref.jpg)
 ![](https://github.com/angenalZZZ/doc/blob/master/screenshots/db53464b7746.png)
 ![](https://github.com/angenalZZZ/doc/blob/master/screenshots/gnulinuxfiles.webp)

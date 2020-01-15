@@ -5,10 +5,9 @@
 > [`《Linux就该这么学》pdf`](https://www.linuxprobe.com/docs/LinuxProbe.pdf)、
   [`《Linux基础课程》video`](https://www.linuxprobe.com/chapter-01.html)<br>
 
- * [Windows10安装Linux子系统(WSL)](https://www.cnblogs.com/xiaoliangge/p/9124089.html)
  * [Linux开发环境及常用安装zsh-ssh-git-redis-mysql-mongodb-pilosa-influxdb-grafana-nsq.kafka.rabbitmq..](#linux开发环境及常用安装)
  * [Linux常用命令ls-find-grep-xargs-sort-uniq-tr-wc-sed-awk-head-tail..](#Linux常用命令)
- * [`BASH中文速查表`](https://github.com/angenalZZZ/doc/blob/master/sh/bash.sh)、[`看命令图解`](#Linux命令图解)
+ * [`BASH中文速查表`](https://github.com/angenalZZZ/doc/blob/master/sh/bash.sh)、[`常见命令图解`](#Linux常见命令图解)、[`windows10安装linux(WSL)`](https://www.cnblogs.com/xiaoliangge/p/9124089.html)
  * [`docker`](#docker) | [`k8s`](#Kubernetes) | [`Minikube`](#Minikube) | [`Consul`](#Consul) | [`etcd`](#Etcd) 
 　[`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)、[`安全相关思维导图收集`](https://github.com/phith0n/Mind-Map)
 
@@ -535,25 +534,33 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ sudo systemctl restart openresty  # 重启; 开始HelloWorld  openresty.org/cn/getting-started.html
   
   $ sudo apt install nodejs # 安装Nodejs(此安装方式版本太低; 推荐wget安装方式-如下)
-  $ wget https://npm.taobao.org/mirrors/node/v10.16.0/node-v10.16.0-linux-x64.tar.xz
-  $ sudo tar -zxf node-v10.16.0-linux-x64.tar.xz -C /usr/local/
-  $ sudo mv /usr/local/node-v10.16.0-linux-x64 /usr/local/node
-  $ vi ~/.bashrc  # 配置 export PATH=/usr/local/node/bin:$PATH # bash生效 source ~/.bashrc ; zsh需修改~/.zshrc
-  # (选项)设置软链接: ln -s /usr/local/node/bin/node /usr/local/bin/node ; ln -s /usr/local/node/bin/npm /usr/local/bin/npm
-  $ npm install -g npm # 更新安装npm
+  $ wget https://npm.taobao.org/mirrors/node/v13.6.0/node-v13.6.0-linux-x64.tar.gz
+  $ sudo tar -zxf node-v13.6.0-linux-x64.tar.gz -C /usr/local/
+  $ sudo mv /usr/local/node-v13.6.0-linux-x64 /usr/local/node
+  $ sudo chown `id -un`:`id -gn` /usr/local/node -R  # 设置目录
+  $ export PATH=/usr/local/node/bin:$PATH # 配置环境变量,如下 01-locale-profile.sh (替代选项)设置软链接 ln
+  $ sudo ln -sf /usr/local/node/bin/node /usr/local/bin/node
+  $ sudo ln -sf /usr/local/node/bin/npm /usr/local/bin/npm
   
   # 通讯协议: thrift.apache.org
   #1.Thrift是一种接口描述语言和二进制通讯协议，它被用来定义和创建跨语言的服务。它被当作一个远程过程调用（RPC）框架来使用，是由Facebook为“大规模跨语言服务开发”而开发的。
   $ sudo apt-get install automake bison flex g++ git libboost-all-dev libevent-dev libssl-dev libtool make pkg-config
   
-  # 环境变量
-  export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin #系统(内置)
-  export PATH=$PATH:/usr/lib/jvm/java-1.8-openjdk/jre/bin:/usr/lib/jvm/java-1.8-openjdk/bin
-  export JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk/jre
+  # 环境变量: https://github.com/angenalZZZ/doc/blob/master/sh/01-locale-profile.sh
+  # path 系统目录;SHELL搜索目录;
+  export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+  # java 开发环境;java,javaw,javaws,jdb,jps,jrunscript,keytool等
+  export JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk/jre # export JAVA_HOME=/usr/local/java/jdk1.8.0_221
+  export JAVA_BIN=$JAVA_HOME/bin
+  export JRE_HOME=$JAVA_HOME/jre
+  export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib
+  export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
   export JAVA_VERSION=8u212
   export SCALA_VERSION=2.12
   export GLIBC_VERSION=2.29-r0
-  # .profile 文件设置 Aliases
+  # 快捷命令: https://github.com/angenalZZZ/doc/blob/master/sh/02-bash_aliases.sh
+  alias lht='ls -lht'  # 文件列表-按时间倒序
+  alias lhs='ls -lhS'  # 文件列表-按大小倒序
   alias start-pg='sudo service postgresql start'
   alias run-pg='sudo -u postgres psql'
 ~~~
@@ -714,25 +721,31 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   # 安装Es插件 pinyin 中文拼音
   $ bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-pinyin/releases/download/v7.5.1/elasticsearch-analysis-pinyin-7.5.1.zip
   # 搭建集群 -> 配置: /etc/elasticsearch/elasticsearch.yaml > Cluster ...
-  # cluster.name: c1         集群名称;
-  # node.name: node-1        节点名称-对应一台主机;
-  # node.master: true        节点选举-可为master; //master节点管理索引&分片分配&集群检查//不配置node.master&node.data时默认true
-  # node.data: true          节点选举-可为data; //data节点 //客户端节点/路由节点/负载均衡:master&data都为false //部落节点/跨集群:配置tribe
-  # node.attr.rack: r1       节点属性; 前缀 r 指数据备份节点data, m 指集群主节点master [选填];
+  # cluster.name: c1         集群名称;             //*-配置部落节点/跨集群调用时设置tribe;
+  # node.name: node-1        节点名称-对应一台主机; //*-不配置node.master&node.data时默认true;
+  # node.master: true        节点选举-可为master; //1-master节点管理&添加索引&分片分配(索引主分片数不允许再改);
+  # node.data: true          节点选举-可为data; //2-data节点CRUD //3-客户端节点/路由节点/负载均衡master&data=false;
+  # node.attr.rack: r1       节点属性[选填]; 前缀 r 指数据备份节点data, m 指集群主节点master;
   # network.host: 0.0.0.0    当前宿主机ip地址; 非127.0.0.1时表示正式部署;
   # http.port: 9200          绑定端口号;
   # discovery.seed_hosts: ["host1_ip","host2_ip","host3_ip"] 集群中每台宿主机的ip地址;
-  # cluster.initial_master_nodes: ["node-1"]  启动时选举节点策略;
-  # gateway.recover_after_nodes: 2            启动后选举节点策略（master_eligible_nodes / 2）+ 1 [轻量集群3个节点时>=2];
-  # http.cors.enabled: true                   客户端请求允许跨域;
+  # cluster.initial_master_nodes: ["node-1"]  启动前 选举节点策略;
+  # gateway.recover_after_nodes: 2            启动后 选举节点策略(master_eligible_nodes/2)+1 [轻量集群3个节点时>=2];
+  # http.cors.enabled: true                   客户端 请求允许跨域;
   # http.cors.allow-origin: "*"
   
+  # 安装数据采集Beats  Go语言开发 https://github.com/elastic/beats  下载 https://www.elastic.co/cn/downloads/beats
+  # 指标采集Metricbeat 日志收集Filebeat  审计日志Auditbeat     系统事件日志采集Winlogbeat
+  # 网络流量Packetbeat 系统监控Heartbeat 云服务监控Functionbeat
+  
+  # 安装Kibana可视化工具
+  $ docker pull docker.elastic.co/kibana/kibana:7.5.1 # docker with xpack
+  $ docker pull neemuchaordic/kibana-without-xpack    # docker without xpack
   $ sudo dpkg -i kibana-7.5.1-amd64.deb          # 安装Kibana
   $ cd /usr/share/kibana/                        # 进入Kibana目录
   $ bin/kibana --help [--allow-root]             # 配置config/kibana.yml "elasticsearch.hosts"指向Elasticsearch
-  # 安装KibanaApp插件(可先设置代理http_proxy)
-  $ bin/kibana plugin --install elastic/sense
-  $ bin/kibana -H 127.0.0.1 -p 5601 # 启动Kibana: http://localhost:5601/app/sense
+  # 启动Kibana   /plugins(安装时可设代理http_proxy): bin/kibana-plugin install elastic/sense
+  $ bin/kibana -H 127.0.0.1 -p 5601 # 参数可设置kibana.yml,访问: http://localhost:5601
 ~~~
 
 > [`Pilosa`](https://www.pilosa.com) 分布式位图索引数据库
@@ -1841,12 +1854,12 @@ echo i123450 | tr -dc '0-9' # 删除所有非数字 -c 求补集
 echo file.txt | tr -c '0-9' # 获取文件中所有数字
 echo 'as   i' | tr -s ' '   # 压缩字符 -s # as i
 cat file.txt | tr [:lower:] [:upper:]    # 小写转大写
-# 按列切分文本cut
-# 按列拼接文本paste
+# 按列切分文本cut 按列拼接文本paste
 # 统计行和字符wc---------------------------------------------------------------
 find . -type f -name "*.java" -print0 |xargs -0 wc -l # 统计代码行数, wc -w file单词数, wc -c file字符数
 # 文本替换利器sed--------------------------------------------------------------
 echo 'ABC' | sed 's/[[:upper:]]*/\L&/' # 大写转小写 echo 'ABC' | tr A-Z a-z
+PATH=`echo $PATH |sed 's#/mnt/d#/mnt/x#g'` # 批量替换-环境变量PATH-> sed 's#原始值#替换值#g'
 sed '/^$/d' file                       # 移除空白行
 seg 's/text/replace_text/' file        # 替换每一行的第一处匹配的 text
 seg 's/text/replace_text/g' file       # 全局替换
@@ -1866,6 +1879,7 @@ awk '{buffer[NR%10]=$0} END {for(i=0;i<11;i++){ print buffer[i %10]} } ' filenam
 # 显示文件内容行head&tail------------------------------------------------------
 head -n 10 filename # 前10行[默认为10行] head -5 前5行; head -n -10 除最后10行外,显示前面所有内容;
 tail -n 10 filename # 后10行[-n默认10] tail -n +10 从开头第10行开始输出; tail -n 2 filename |head -n 1 倒数第2行
+tail -f /var/log/auth.log # 跟踪后10行 tail -10f /var/log/auth.log
 ~~~
 
 
@@ -2328,7 +2342,7 @@ exec curl -T \
 
 ----
 
-#### Linux命令图解
+#### Linux常见命令图解
 ![](https://github.com/angenalZZZ/doc/blob/master/screenshots/fwunixref.jpg)
 ![](https://github.com/angenalZZZ/doc/blob/master/screenshots/db53464b7746.png)
 ![](https://github.com/angenalZZZ/doc/blob/master/screenshots/gnulinuxfiles.webp)

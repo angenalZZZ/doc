@@ -1,8 +1,15 @@
-I. Intro
+# Shell 脚本语言
 
-1. A shell script contains commands that are executed as if you typed them in the terminal.
+> [`函数 Functions`](#ii-函数-functions)、[`条件语句 Conditionals / Input`](#iii-条件语句-conditionals--input)<br>
+[`变量 Parameter Expansions and Strings`](#iv-变量-parameter-expansions-and-strings)、[`循环语句 Looping`](#v-循环语句-looping)<br>
+[`数组 Arrays`](#vi-数组-arrays)、[`位置参数 Positional Parameters`](#vii-位置参数-positional-parameters)
 
-2. We'll be using Vim for this tutorial
+
+#### I. 介绍 Shell
+
+> 1. A shell script contains commands that are executed as if you typed them in the terminal.
+
+> 2. We'll be using Vim for this tutorial
 
 	a. Install Vim : sudo apt-get install vim
 	
@@ -34,11 +41,12 @@ I. Intro
 		
 			a. Find out what vimrc file you are using with this command in Vim :echo $MYVIMRC
 
-3. Hello World Script
-# The #! shebang tells the system the interpreter to use for the script
-#!/bin/bash
-# Comment
-echo 'Hello World' # Print the string to the screen
+> 3. Hello World Script
+
+	# The #! shebang tells the system the interpreter to use for the script
+	#!/bin/bash
+	# Comment
+	echo 'Hello World' # Print the string to the screen
 
 	a. To make it executable chmod 755 hello_world
 	
@@ -59,7 +67,7 @@ echo 'Hello World' # Print the string to the screen
 		7. 1 : Execute Only
 		8. 0 : None
 		
-4. We define variables like this myName="Derek"
+> 4. We define variables like this myName="Derek"
 
 	a. The variable name starts with a letter or _ and then can also contain numbers
 	
@@ -112,7 +120,7 @@ echo 'Hello World' # Print the string to the screen
 	many lines
 	END
 
- II. Functions
+ #### II. 函数 Functions
  
  	1. You can use functions to avoid the need to write duplicate code
  	
@@ -166,7 +174,7 @@ echo 'Hello World' # Print the string to the screen
  	sum=$(getSum num1 num2)
  	echo "The sum is $sum"
  	
-III. Conditionals / Input 
+#### III. 条件语句 Conditionals / Input 
 
 	1. 
 	#!/bin/bash
@@ -418,7 +426,7 @@ III. Conditionals / Input
 	echo "Can Vote : $can_vote"
 	
 	
-IV. Parameter Expansions and Strings
+#### IV. 变量 Parameter Expansions and Strings
 
 	1. Strings
 	#!/bin/bash
@@ -437,7 +445,7 @@ IV. Parameter Expansions and Strings
 	# Return whats left after A
 	echo "${rand_str#*A }"
 
-V. Looping
+#### V. 循环语句 Looping
 
 	1. While Loop
 	#!/bin/bash
@@ -505,7 +513,7 @@ V. Looping
   	
   	7.
   	
-VI. Arrays
+#### VI. 数组 Arrays
 
 	1. Bash arrays can only have one dimension and indexes start at 0
 	
@@ -557,7 +565,7 @@ VI. Arrays
 	unset sorted_nums
 
 	
-VII. Positional Parameters
+#### VII. 位置参数 Positional Parameters
 
 	1. Positional parameters are variables that can store data on the command line in variable names 0 - 9
 	
@@ -586,4 +594,6 @@ VII. Positional Parameters
 	done
 	
 	echo "Sum : $sum
+
+----
 

@@ -739,6 +739,8 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   # 网络流量Packetbeat 系统监控Heartbeat 云服务监控Functionbeat
   
   # 安装Kibana可视化工具
+  $ docker pull docker.elastic.co/kibana/kibana:7.5.1 # docker with xpack
+  $ docker pull neemuchaordic/kibana-without-xpack    # docker without xpack
   $ sudo dpkg -i kibana-7.5.1-amd64.deb          # 安装Kibana
   $ cd /usr/share/kibana/                        # 进入Kibana目录
   $ bin/kibana --help [--allow-root]             # 配置config/kibana.yml "elasticsearch.hosts"指向Elasticsearch

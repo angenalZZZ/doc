@@ -537,6 +537,7 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ wget https://npm.taobao.org/mirrors/node/v13.6.0/node-v13.6.0-linux-x64.tar.gz
   $ sudo tar -zxf node-v13.6.0-linux-x64.tar.gz -C /usr/local/
   $ sudo mv /usr/local/node-v13.6.0-linux-x64 /usr/local/node
+  $ sudo chown `id -un`:`id -gn` /usr/local/node -R  # 设置目录
   $ export PATH=/usr/local/node/bin:$PATH # 配置环境变量,如下 01-locale-profile.sh (选项)设置软链接 ln -s
   # ln -s /usr/local/node/bin/node /usr/local/bin/node ; ln -s /usr/local/node/bin/npm /usr/local/bin/npm
   

@@ -752,13 +752,12 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   # https://github.com/angenalZZZ/doc/blob/master/sh/elasticsearch-7-docker-compose.yml
   > docker network create -d bridge elk7         # 网络 elk7 - created
   > docker run --name elasticsearch7 --network elk7 --network-alias elasticsearch \
-      -v "/elasticsearch7/data:/usr/share/elasticsearch/data" \
+      -v "d:/docker/app/elasticsearch7/data:/usr/share/elasticsearch/data" \  # 数据盘映射
       -e "discovery.type=single-node" -e "ES_JAVA_OPTS=-Xms512m -Xmx512m" \
       --restart=always -d -m 512m -p 19200:9200 -p 19300:9300 \ # 网址 http://localhost:19200/?pretty
       elasticsearch:7.5.1                        # 安装 elasticsearch-v7.x.x
        sh -c "./bin/elasticsearch-plugin install analysis-kuromoji && \
-       ./bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download
-       /v7.5.1/elasticsearch-analysis-ik-7.5.1.zip" # 安装Es插件 ik 中文分词
+       ./bin/elasticsearch-plugin install ./data/elasticsearch-analysis-ik-7.5.1.zip" # 安装Es插件 ik 中文分词
   > docker run --name kibana7 --network elk7 --network-alias kibana -e "I18N_LOCALE=zh-CN" \
       --restart=always -d -p 15601:5601 \        # 网址 http://localhost:15601 << http://elasticsearch:9200
       docker.elastic.co/kibana/kibana:7.5.1      # 安装 kibana-v7.x.x with xpack

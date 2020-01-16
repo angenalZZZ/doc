@@ -717,31 +717,33 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   # rm -rf /etc/elasticsearch /var/lib/elasticsearch /usr/share/elasticsearch   # 清理
   
   # 安装Es插件 ik 中文分词
-  $ bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.5.1/elasticsearch-analysis-ik-7.5.1.zip
+  $ bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download
+    /v7.5.1/elasticsearch-analysis-ik-7.5.1.zip
   # 安装Es插件 pinyin 中文拼音
-  $ bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-pinyin/releases/download/v7.5.1/elasticsearch-analysis-pinyin-7.5.1.zip
+  $ bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-pinyin/releases/download
+    /v7.5.1/elasticsearch-analysis-pinyin-7.5.1.zip
   # 搭建集群 -> 配置: /etc/elasticsearch/elasticsearch.yaml > Cluster ...
   # cluster.name: c1         集群名称;             //*-配置部落节点/跨集群调用时设置tribe;
   # node.name: node-1        节点名称-对应一台主机; //*-不配置node.master&node.data时默认true;
   # node.master: true        节点选举-可为master; //1-master节点管理&添加索引&分片分配(索引主分片数不允许再改);
-  # node.data: true          节点选举-可为data; //2-data节点CRUD //3-客户端节点/路由节点/负载均衡master&data=false;
+  # node.data: true          节点选举-可为data; //2-data节点CRUD //3-客户端节点/路由节点/负载均衡master&data=false
   # node.attr.rack: r1       节点属性[选填]; 前缀 r 指数据备份节点data, m 指集群主节点master;
   # network.host: 0.0.0.0    当前宿主机ip地址; 非127.0.0.1时表示正式部署;
   # http.port: 9200          绑定端口号;
   # discovery.seed_hosts: ["host1_ip","host2_ip","host3_ip"] 集群中每台宿主机的ip地址;
   # cluster.initial_master_nodes: ["node-1"]  启动前 选举节点策略;
-  # gateway.recover_after_nodes: 2            启动后 选举节点策略(master_eligible_nodes/2)+1 [轻量集群3个节点时>=2];
+  # gateway.recover_after_nodes: 2            启动后 选举节点策略(master_eligible_nodes/2)+1 [轻集群3个节点时>=2]
   # http.cors.enabled: true                   客户端 请求允许跨域;
   # http.cors.allow-origin: "*"
   
-  # 安装数据采集Beats  Go语言开发 https://github.com/elastic/beats  下载 https://www.elastic.co/cn/downloads/beats
+  # 安装数据采集Beats  Go语言开发 github.com/elastic/beats  下载 www.elastic.co/cn/downloads/beats
   # 指标采集Metricbeat 日志收集Filebeat  审计日志Auditbeat     系统事件日志采集Winlogbeat
   # 网络流量Packetbeat 系统监控Heartbeat 云服务监控Functionbeat
   
   # 安装Kibana可视化工具
   $ sudo dpkg -i kibana-7.5.1-amd64.deb          # 安装Kibana
   $ cd /usr/share/kibana/                        # 进入Kibana目录
-  $ bin/kibana --help [--allow-root]             # 配置config/kibana.yml "elasticsearch.hosts"指向Elasticsearch
+  $ bin/kibana --help [--allow-root]             # 配置config/kibana.yml "elasticsearch.hosts"指向ES
   # 启动Kibana   /plugins(安装时可设代理http_proxy): bin/kibana-plugin install elastic/sense
   $ bin/kibana -H 127.0.0.1 -p 5601 # 参数可设置kibana.yml,访问: http://localhost:5601
   

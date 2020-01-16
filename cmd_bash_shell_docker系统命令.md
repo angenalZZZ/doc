@@ -722,6 +722,7 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   # 安装Es插件 pinyin 中文拼音
   $ bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-pinyin/releases/download
     /v7.5.1/elasticsearch-analysis-pinyin-7.5.1.zip
+  $ bin/elasticsearch-plugin install analysis-kuromoji
   # 搭建集群 -> 配置: /etc/elasticsearch/elasticsearch.yaml > Cluster ...
   # cluster.name: c1         集群名称;             //*-配置部落节点/跨集群调用时设置tribe;
   # node.name: node-1        节点名称-对应一台主机; //*-不配置node.master&node.data时默认true;
@@ -755,9 +756,9 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
       -v "d:/docker/app/elasticsearch7/data:/usr/share/elasticsearch/data" \  # 数据盘映射
       -e "discovery.type=single-node" -e "ES_JAVA_OPTS=-Xms512m -Xmx512m" \
       --restart=always -d -m 512m -p 19200:9200 -p 19300:9300 \ # 网址 http://localhost:19200/?pretty
-      elasticsearch:7.5.1                        # 安装 elasticsearch-v7.x.x
-       sh -c "./bin/elasticsearch-plugin install analysis-kuromoji && \
-       ./bin/elasticsearch-plugin install ./data/elasticsearch-analysis-ik-7.5.1.zip" # 安装Es插件 ik 中文分词
+      elasticsearch:7.5.1                        # 安装 elasticsearch-v7.x.x + Es插件 ik 中文分词
+       sh -c "bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases
+       /download/v7.5.1/elasticsearch-analysis-ik-7.5.1.zip" 
   > docker run --name kibana7 --network elk7 --network-alias kibana -e "I18N_LOCALE=zh-CN" \
       --restart=always -d -p 15601:5601 \        # 网址 http://localhost:15601 << http://elasticsearch:9200
       docker.elastic.co/kibana/kibana:7.5.1      # 安装 kibana-v7.x.x with xpack

@@ -745,13 +745,17 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   # 启动Kibana   /plugins(安装时可设代理http_proxy): bin/kibana-plugin install elastic/sense
   $ bin/kibana -H 127.0.0.1 -p 5601 # 参数可设置kibana.yml,访问: http://localhost:5601
   
-  # 使用Docker安装
-  > docker network create -d bridge elk7         # 创建网络elk7
+  # 使用Docker安装Elastic Stack (ELK)
+  # 使用可选项：github.com/sherifabdlnaby/elastdocker
+  > docker network create -d bridge elk7         # 网络 elk7 - created
   > docker run --name elasticsearch7 --network elk7 --network-alias elasticsearch \
       -v "/elasticsearch7/data:/usr/share/elasticsearch/data" \
-      -e "discovery.type=single-node" -e "ES_JAVA_OPTS=-Xms128m -Xmx512m" \
+      -e "discovery.type=single-node" -e "ES_JAVA_OPTS=-Xms512m -Xmx512m" \
       --restart=always -d -m 512m -p 19200:9200 -p 19300:9300 \ # 网址 http://localhost:19200/?pretty
       elasticsearch:7.5.1                        # 安装 elasticsearch-v7.x.x
+       sh -c "./bin/elasticsearch-plugin install analysis-kuromoji && \
+       ./bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download
+       /v7.5.1/elasticsearch-analysis-ik-7.5.1.zip" # 安装Es插件 ik 中文分词
   > docker run --name kibana7 --network elk7 --network-alias kibana -e "I18N_LOCALE=zh-CN" \
       --restart=always -d -p 15601:5601 \        # 网址 http://localhost:15601 << http://elasticsearch:9200
       docker.elastic.co/kibana/kibana:7.5.1      # 安装 kibana-v7.x.x with xpack
@@ -1099,9 +1103,9 @@ ExecReload=/usr/bin/supervisorctl reload
   $ docker [COMMAND] --help                 # 执行Docker命令:重定向Docker\Server响应输出/如同R语言sink()
 
   # Docker正式环境: 修改Linux内核参数 https://blog.csdn.net/guanheng68/article/details/81710406
-  $ grep vm.max_map_count /etc/sysctl.conf  # 检查vm设置
-  $ sysctl -w vm.max_map_count=262144       # 执行Docker操作无效时才修改 vi /etc/sysctl.conf
-  $ sysctl -p                               # 保存修改并生效 sysctl -w
+  $ grep vm.max_map_count /etc/sysctl.conf  # 检查vm设置, 默认虚拟内存大小不够;
+  $ sysctl -w vm.max_map_count=262144       # 执行Docker操作无效时才修改, 或者 vi /etc/sysctl.conf
+  $ sysctl -p                               # 生效/etc/sysctl.conf 修改.
 
   # 安装 Ansible 配置管理和IT自动化工具-(系统运维)一个强大的配置管理解决方案(由Python编写)
   $ sudo apt update  # < ubuntu >

@@ -748,15 +748,17 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   # 使用Docker安装
   > docker network create -d bridge elk7         # 创建网络elk7
   > docker run --name elasticsearch7 --network elk7 --network-alias elasticsearch \
-      --restart=always -d -m 512m -p 19200:9200 -p 19300:9300 \
-      -e "discovery.type=single-node" -e "ES_JAVA_OPTS=-Xms128m -Xmx512m" \
       -v "/elasticsearch7/data:/usr/share/elasticsearch/data" \
+      -e "discovery.type=single-node" -e "ES_JAVA_OPTS=-Xms128m -Xmx512m" \
+      --restart=always -d -m 512m -p 19200:9200 -p 19300:9300 \ # 网址 http://localhost:19200/?pretty
       elasticsearch:7.5.1                        # 安装 elasticsearch-v7.x.x
-  > docker run --name kibana7 --network elk7 --network-alias kibana \
-      --restart=always -d -m 512m -p 15601:5601 \
-      -e "I18N_LOCALE=zh-CN" \
+  > docker run --name kibana7 --network elk7 --network-alias kibana -e "I18N_LOCALE=zh-CN" \
+      --restart=always -d -p 15601:5601 \        # 网址 http://localhost:15601 << http://elasticsearch:9200
       docker.elastic.co/kibana/kibana:7.5.1      # 安装 kibana-v7.x.x with xpack
     # neemuchaordic/kibana-without-xpack         # 安装 kibana-v7.x.x without xpack
+  > docker run --name cerebro --network elk7 --network-alias cerebro \
+      --restart=always -itd -p 19201:9000 \      # 网址 http://localhost:19201 << http://elasticsearch:9200
+      lmenezes/cerebro:0.8.5                     # 安装 elasticsearch 管理工具 cerebro
 ~~~
 
 > [`Pilosa`](https://www.pilosa.com) 分布式位图索引数据库

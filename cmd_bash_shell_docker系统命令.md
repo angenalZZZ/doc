@@ -175,13 +175,13 @@
   > for /r C:\windows\addins\ %i in (explorer.exe) do @echo %i # 在指定目录下查找匹配文件
   $ locate /bin/ps          # 遍历文件系统/路径包含/bin/ps所有匹配文件
   $ find / -name [filename] # 查找在根目录下/所有匹配文件
-  $ find /etc -type f -name passwd
+  $ find /etc -type f -name passwd  # 如下，修改root用户的文件"拥有者"为当前用户:文件占位符{}
+  $ find . -type f -user root -exec chown `id -un` {} \; # find文件后-exec执行操作(注意:必须以 \; 结尾)
   
   # 目录访问权限
   > cd [目录]
   $ sudo chown -R 1000 [目录]  # 改变[目录](-R递归修改文件和目录)的"拥有者"为uid:1000 = $(id -u)
   $ sudo chown root:root [目录] #修改目录的"拥有者"
-  $ find . -type f -user root -exec chown `id -u` {} #修改root的文件的"拥有者"为当前用户(find文件后-exec执行操作)
   $ sudo chgrp –R users [目录] # 改变[目录]的"所属用户组"为G:users = $(id -g)
   $ sudo chmod 744 [目录]      # 修改当前目录(.)权限为可读写及执行(-R递归修改文件和目录)
   $ sudo chmod 777 to/path    # 每个人都有读和写以及执行的权限(约定的三个数字owner=7;group=7;others=7)
@@ -1805,9 +1805,9 @@ $ sudo kubeadm reset #[重置]
 #### 最常用的工具：find、grep、xargs、sort、uniq、tr、wc、sed、awk、head、tail...
 ~~~bash
 # 文件搜索ls&find----------------------------------------------------------
-ls -lhR . |grep -i .key$  # 递归查找文件[后缀名为 .key ; 文件名称排序] --time={atime,ctime} 访问时间, 权限属性改变时间
-ls -lhRt . |grep -i .key$  # 递归查找文件[后缀名为 .key ; 文件时间排序] --full-time 输出完整时间ms(默认为内容变更时间)
-ls -lhRS . |grep -i .key$  # 递归查找文件[后缀名为 .key ; 文件大小排序] 
+ls -lhR . | grep -i .key$  # 递归查找文件[后缀名为 .key ; 文件名称排序] --time={atime,ctime} 访问时间,权限属性
+ls -lhRt . |grep -i .key$  # 递归查找文件[后缀名为 .key ; 文件时间排序] --full-time 输出完整时间ms默认为变更时间
+ls -lhRS . |grep -i .key$  # 递归查找文件[后缀名为 .key ; 文件大小排序]
 ls -lF # 在文件或目录后加上文件类型的指示符号，例如：* 代表可运行文件，/ 为目录，= 为socket文件，| 为FIFO文件等
 # 正则查找*.conf              #  ls -lhFRS *.zip  #常用文件查找并按文件大小排序
 find . -regex ".*\.conf$" -print0   # -iregex忽略大小写 -print0 使用''作为文件的定界符，就能搜索含空格的文件
@@ -1824,9 +1824,9 @@ find . -type f -perm 644 -print   # 具有可执行权限的所有文件
 find . -type f -user weber -print # 找用户 weber 所拥有的文件
 # 找到文件后的后续动作
 find . -type f -name "*.tmp" -delete # 删除当前目录下所有的tmp文件; 断言-delete -print0 -printf -prune -quit ...
-find . -type f -user root -exec chown weber {} # 将目录下的所有权变更为用户weber [-exec执行动作{}相应文件名]
-find . -type f -mtime +10 -name "*.txt" -exec cp {} OLD # 将找到的文件全都copy到另一个目录OLD
-find . -type f -name "*.json" -exec ./commands.sh {} # 将找到的文件全都调用可执行脚本
+find . -type f -user root -exec chown weber {} \; # 将目录下的所有权变更为用户weber [-exec执行动作{}相应文件名]
+find . -type f -mtime +10 -name "*.txt" -exec cp {} OLD \; # 将找到的文件全都copy到另一个目录OLD
+find . -type f -name "*.json" -exec ./commands.sh {} \; # 将找到的文件全都调用可执行脚本
 
 # 文本搜索grep--------------------------------------------------------------
 # grep文本搜索 ( -o 只输出匹配的文本行  -v 只输出没有匹配的文本行 )

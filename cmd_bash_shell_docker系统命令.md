@@ -747,6 +747,7 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   
   # 使用Docker安装Elastic Stack (ELK)
   # 使用可选项：github.com/sherifabdlnaby/elastdocker
+  # https://github.com/angenalZZZ/doc/blob/master/sh/elasticsearch-7-docker-compose.yml
   > docker network create -d bridge elk7         # 网络 elk7 - created
   > docker run --name elasticsearch7 --network elk7 --network-alias elasticsearch \
       -v "/elasticsearch7/data:/usr/share/elasticsearch/data" \

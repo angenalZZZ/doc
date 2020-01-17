@@ -1,18 +1,18 @@
-# docker-compose -f elasticsearch-7-docker-compose.yml up -d
+# docker-compose -f elasticsearch-7-cluster-2nodes-cerebro-docker-compose.yml up -d
 version: '3.1'
 services:
   cerebro:
     image: lmenezes/cerebro:0.8.5
-    container_name: 'cerebro'
+    container_name: 'eck7_cerebro'
     ports:
       - 19201:9000
     command:
       - -Dhosts.0.host=http://elasticsearch:9200
     networks:
-      - elk7
+      - eck7
   kibana:
     image: docker.elastic.co/kibana/kibana:7.5.1
-    container_name: 'kibana7'
+    container_name: 'eck7_kibana7'
     environment:
       - I18N_LOCALE=zh-CN
       - XPACK_GRAPH_ENABLED=true
@@ -21,17 +21,17 @@ services:
     ports:
       - 15601:5601
     networks:
-      - elk7
+      - eck7
   elasticsearch:
     image: elasticsearch:7.5.1
-    container_name: 'elasticsearch7_01'
+    container_name: 'eck7_elasticsearch_01'
     environment:
       - cluster.name=geektime
-      - node.name=elasticsearch7_01
+      - node.name=eck7_elasticsearch_01
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - discovery.seed_hosts=elasticsearch7_01
-      - cluster.initial_master_nodes=elasticsearch7_01,elasticsearch7_02
+      - discovery.seed_hosts=eck7_elasticsearch_01
+      - cluster.initial_master_nodes=eck7_elasticsearch_01,eck7_elasticsearch_02
     ulimits:
       memlock:
         soft: -1
@@ -41,17 +41,17 @@ services:
     ports:
       - 19210:9200
     networks:
-      - elk7
+      - eck7
   elasticsearch2:
     image: elasticsearch:7.5.1
-    container_name: 'elasticsearch7_02'
+    container_name: 'eck7_elasticsearch_02'
     environment:
       - cluster.name=geektime
-      - node.name=elasticsearch7_02
+      - node.name=eck7_elasticsearch_02
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - discovery.seed_hosts=elasticsearch7_01
-      - cluster.initial_master_nodes=elasticsearch7_01,elasticsearch7_02
+      - discovery.seed_hosts=eck7_elasticsearch_01
+      - cluster.initial_master_nodes=eck7_elasticsearch_01,eck7_elasticsearch_02
     ulimits:
       memlock:
         soft: -1
@@ -61,7 +61,7 @@ services:
     ports:
       - 19220:9200
     networks:
-      - elk7
+      - eck7
 
 volumes:
   es7data1:
@@ -70,5 +70,5 @@ volumes:
     driver: local
 
 networks:
-  elk7:
+  eck7:
     driver: bridge

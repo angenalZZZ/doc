@@ -1163,13 +1163,14 @@ $ docker-machine version                   #安装完毕
 $ sudo gpasswd -M ${USER} docker && newgrp - docker # 将当前用户加入docker组> sudo usermod -aG docker ${USER}
 $ sudo service docker restart              #重启服务
 # 本机启动 Docker daemon
-$ sudo docker-machine create -d virtualbox default  # 1.下载安装服务 ~/.docker/machine/cache/boot2docker.iso
-$ sudo docker-machine env default                   # 2.设置客户端docker-cli的环境变量
+$ curl -Lo ~/.docker/machine/cache/boot2docker.iso https://github.com/boot2docker/boot2docker/releases/download/v19.03.5/boot2docker.iso
+$ sudo docker-machine create -d virtualbox default  # 1.下载安装默认主机server
+$ sudo docker-machine env default                   # 2.设置客户端docker-client环境变量
 export DOCKER_TLS_VERIFY="1"
 export DOCKER_HOST="tcp://192.168.99.102:2376"      # 对应> docker-machine ip
-export DOCKER_CERT_PATH="/home/yangzhou/.docker/machine/machines/default"
+export DOCKER_CERT_PATH="$HOME/.docker/machine/machines/default"
 export DOCKER_MACHINE_NAME="default"
-$ sudo chmod 777 -R ~/.docker && docker info        # 监听> tcp & TLS 允许cli远程访问
+$ sudo chown `id -un`:`id -un`~/.docker && docker info        # 监听> tcp & TLS 允许cli远程访问
 $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/containerd/containerd.sock
 ~~~
 

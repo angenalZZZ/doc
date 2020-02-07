@@ -1161,12 +1161,12 @@ $ curl -L https://get.daocloud.io/docker/compose/releases/download/1.24.1/docker
 $ sudo dpkg -i virtualbox-6.1_6.1.2-135662_Ubuntu_bionic_amd64.deb --fix-missing 
 $ curl -L https://github.com/docker/machine/releases/download/v0.16.2/docker-machine-$(uname -s)-$(uname -m) \
     > /usr/local/bin/docker-machine   # install docker-machine
-$ docker-machine version                   #安装完毕
+$ docker-machine version                   # 安装完毕
 # 设置 Docker, 不使用sudo执行docker命令，先切换当前用户-user(root~exit)
-$ sudo gpasswd -M ${USER} docker && newgrp - docker # 将当前用户加入docker组> sudo usermod -aG docker ${USER}
-$ sudo service docker restart              #重启服务
+$ sudo usermod -aG docker ${USER} # 将当前用户加入docker组 # sudo gpasswd -M ${USER} docker && newgrp - docker
+$ sudo service docker restart              # 重启服务
 # 本机启动 Docker daemon
-$ curl -Lo ~/.docker/machine/cache/boot2docker.iso \  # 下载最新版本的boot2docker镜像 for docker-machine create
+$ curl -Lo ~/.docker/machine/cache/boot2docker.iso \ # 下载最新版本的boot2docker镜像 for docker-machine create
     https://github.com/boot2docker/boot2docker/releases/download/v19.03.5/boot2docker.iso
 $ docker-machine create -d kvm2 default  # 推荐安装 默认主机server
 $ docker-machine create -d virtualbox default  # 1.下载安装默认主机server
@@ -1182,7 +1182,7 @@ $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/contain
 $ docker-machine create -d generic --generic-ip-address=192.168.99.103 --generic-ssh-key ~/.ssh/id_rsa manager
 $ docker-machine create -d generic --generic-ip-address=192.168.99.104 --generic-ssh-key ~/.ssh/id_rsa worker1
 $ docker-machine create -d generic --generic-ip-address=192.168.99.105 --generic-ssh-key ~/.ssh/id_rsa worker2
-$ docker-machine ls           # 查看docker主机servers
+$ docker-machine ls           # 查看虚拟机上的servers
 $ docker-machine env manager  # 在manager虚拟机上执行docker指令> docker ps 
 ~~~
 

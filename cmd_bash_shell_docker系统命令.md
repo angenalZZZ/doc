@@ -1146,44 +1146,43 @@ ExecReload=/usr/bin/supervisorctl reload
   `Cert`       : `C:/ProgramData/DockerDesktop/pki/` ...
 
 ~~~shell
-# 安装Docker，先切换用户root ~ su   (一般用国内镜像daocloud)
-$ curl -sSL https://get.daocloud.io/docker | sh 
+# 安装Docker，先切换用户root ~ su 
+$ curl -sSL https://get.daocloud.io/docker | sh  # 一般用国内镜像daocloud
 $ curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io # for Linux
 $ sudo systemctl daemon-reload && sudo systemctl restart docker.service
-$ curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh - #阿里云
+$ curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh - #镜像-阿里云
 $ sudo systemctl status docker #运行状态检查
 # 卸载Docker，最后清理 ~ rm -fr /var/lib/docker/
 $ apt-get remove docker docker-engine
 # 安装 Docker Compose
 $ curl -L https://get.daocloud.io/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` \
-    > /usr/local/bin/docker-compose 
-$ chmod +x /usr/local/bin/docker-compose   #设置文件为可执行
-# 安装 Docker Machine基于virtualBox github.com/docker/machine/releases/download/v0.16.1/docker-machine-Linux-x86_64
-$ sudo dpkg -i virtualbox-6.0_6.0.8-130520_Ubuntu_bionic_amd64.deb --fix-missing  # www.virtualbox.org/wiki/Linux_Downloads
-$ curl -L https://github.com/docker/machine/releases/download/v0.16.1/docker-machine-$(uname -s)-$(uname -m) \
+    > /usr/local/bin/docker-compose # 设置文件为可执行 sudo chmod +x docker-compose
+# 安装 Docker Machine基于virtualBox # www.virtualbox.org/wiki/Linux_Downloads
+$ sudo dpkg -i virtualbox-6.1_6.1.2-135662_Ubuntu_bionic_amd64.deb --fix-missing 
+$ curl -L https://github.com/docker/machine/releases/download/v0.16.2/docker-machine-$(uname -s)-$(uname -m) \
     > /usr/local/bin/docker-machine   # install docker-machine
 $ docker-machine version                   #安装完毕
 # 设置 Docker, 不使用sudo执行docker命令，先切换当前用户-user(root~exit)
 $ sudo gpasswd -M ${USER} docker && newgrp - docker # 将当前用户加入docker组> sudo usermod -aG docker ${USER}
 $ sudo service docker restart              #重启服务
 # 本机启动 Docker daemon
-$ curl -Lo ~/.docker/machine/cache/boot2docker.iso \
+$ curl -Lo ~/.docker/machine/cache/boot2docker.iso \  # 下载最新版本的boot2docker daemon
     https://github.com/boot2docker/boot2docker/releases/download/v19.03.5/boot2docker.iso
 $ docker-machine create -d kvm2 default  # 推荐安装 默认主机server
 $ docker-machine create -d virtualbox default  # 1.下载安装默认主机server
 $ docker-machine env default                   # 2.设置客户端docker-cli默认server环境变量
 export DOCKER_TLS_VERIFY="1"
-export DOCKER_HOST="tcp://192.168.99.102:2376"      # 对应> docker-machine ip
+export DOCKER_HOST="tcp://192.168.99.102:2376" # 对应> docker-machine ip
 export DOCKER_CERT_PATH="$HOME/.docker/machine/machines/default"
 export DOCKER_MACHINE_NAME="default"
 $ sudo chown `id -un`:`id -un`~/.docker && docker info  # 查看docker完整信息
 # 监听> tcp & TLS 允许cli远程访问:2376
 $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/containerd/containerd.sock
 # 在虚拟机上安装运行docker  # 先手动创建虚拟机manager,worker.. 宿主机通过ssh访问虚拟机免密设置;  generic表示虚拟机已创建
-$ docker-machine create --driver generic --generic-ip-address=192.168.56.103 --generic-ssh-key ~/.ssh/id_rsa manager
-$ docker-machine create --driver generic --generic-ip-address=192.168.56.104 --generic-ssh-key ~/.ssh/id_rsa worker1
-$ docker-machine create --driver generic --generic-ip-address=192.168.56.105 --generic-ssh-key ~/.ssh/id_rsa worker2
-$ docker-machine ls                          # 查看主机servers
+$ docker-machine create --driver generic --generic-ip-address=192.168.99.103 --generic-ssh-key ~/.ssh/id_rsa manager
+$ docker-machine create --driver generic --generic-ip-address=192.168.99.104 --generic-ssh-key ~/.ssh/id_rsa worker1
+$ docker-machine create --driver generic --generic-ip-address=192.168.99.105 --generic-ssh-key ~/.ssh/id_rsa worker2
+$ docker-machine ls           # 查看docker主机servers
 $ docker-machine env manager  # 在manager虚拟机上执行docker指令> docker ps 
 ~~~
 
@@ -1592,7 +1591,7 @@ $ kubectl exec $pods_name -it -n test -- /bin/sh #执行Pods -pods/service descr
 ~~~bash
 # 安装 minikube
 $ sudo apt install socat cpu-checker -y
-$ curl -LO https://github.com/kubernetes/minikube/releases/download/v1.3.1/minikube-linux-amd64
+$ curl -LO https://github.com/kubernetes/minikube/releases/download/v1.7.1/minikube-linux-amd64
 $ sudo install minikube-linux-amd64 /usr/local/bin/minikube 
 # #安装<推荐方式>使用阿里下载
 $ curl -Lo minikube http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v1.3.0/minikube-linux-amd64
@@ -1601,9 +1600,9 @@ $ sudo chmod +x minikube && sudo mv minikube /usr/local/bin/
 # 安装虚拟机kvm | https://help.ubuntu.com/community/KVM/Installation
 $ kvm-ok && uname -m  #INFO: /dev/kvm exists; x86_64;Ubuntu需升级^18.10 > sudo do-release-upgrade -d
 $ sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients libvirt-bin bridge-utils #依赖<ubuntu>
-$ curl -LO https://github.com/kubernetes/minikube/releases/download/v1.3.1/docker-machine-driver-kvm2
+$ curl -LO https://github.com/kubernetes/minikube/releases/download/v1.7.1/docker-machine-driver-kvm2
 $ sudo adduser `id -un` libvirt        #添加当前用户到组libvirt
-$ sudo chown root:libvirt /dev/kvm     #改变目录kvm的属主 (如果> ll /dev/kvm ;返回root属主)
+$ sudo chown root:libvirt /dev/kvm     #改变目录kvm的组 (如> ll /dev/kvm ;返回root属主)
 $ rmmod kvm && modprobe -a kvm         #跳过ERR: Module kvm is in use by: kvmgt kvm_intel
 $ sudo apt-get install virt-manager    #可选,安装virt管理应用程序
 $ sudo install docker-machine-driver-kvm2 /usr/local/bin/ #安装kvm2

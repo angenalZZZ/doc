@@ -1156,18 +1156,21 @@ $ sudo systemctl status docker #运行状态检查
 # 卸载Docker，最后清理 ~ rm -fr /var/lib/docker/
 $ apt-get remove docker docker-engine
 # 安装 Docker Compose
-$ curl -L https://get.daocloud.io/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose 
+$ curl -L https://get.daocloud.io/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` \
+    > /usr/local/bin/docker-compose 
 $ chmod +x /usr/local/bin/docker-compose   #设置文件为可执行
 # 安装 Docker Machine基于virtualBox github.com/docker/machine/releases/download/v0.16.1/docker-machine-Linux-x86_64
 $ sudo dpkg -i virtualbox-6.0_6.0.8-130520_Ubuntu_bionic_amd64.deb --fix-missing  # www.virtualbox.org/wiki/Linux_Downloads
-$ curl -L https://github.com/docker/machine/releases/download/v0.16.1/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine
-$ chmod +x /tmp/docker-machine && sudo cp /tmp/docker-machine /usr/local/bin/docker-machine  # install /tmp/docker-machine /usr/local/bin/docker-machine
+$ curl -L https://github.com/docker/machine/releases/download/v0.16.1/docker-machine-$(uname -s)-$(uname -m) \
+    > /usr/local/bin/docker-machine   # install docker-machine
 $ docker-machine version                   #安装完毕
 # 设置 Docker, 不使用sudo执行docker命令，先切换当前用户-user(root~exit)
 $ sudo gpasswd -M ${USER} docker && newgrp - docker # 将当前用户加入docker组> sudo usermod -aG docker ${USER}
 $ sudo service docker restart              #重启服务
 # 本机启动 Docker daemon
-$ curl -Lo ~/.docker/machine/cache/boot2docker.iso https://github.com/boot2docker/boot2docker/releases/download/v19.03.5/boot2docker.iso
+$ curl -Lo ~/.docker/machine/cache/boot2docker.iso \
+    https://github.com/boot2docker/boot2docker/releases/download/v19.03.5/boot2docker.iso
+$ docker-machine create -d kvm2 default  # 推荐安装
 $ sudo docker-machine create -d virtualbox default  # 1.下载安装默认主机server
 $ sudo docker-machine env default                   # 2.设置客户端docker-cli默认server环境变量
 export DOCKER_TLS_VERIFY="1"

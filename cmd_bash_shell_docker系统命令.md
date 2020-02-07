@@ -968,7 +968,11 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ sudo vim /etc/ssh/sshd_config # 修改配置文件 > # Authentication: (全部启用,去除#)
     # vim命令（:w 编辑模式, :i 插入模式, :x 回车保存, :qa! 退出不保存, gg dG 清空文件）
     > PermitRootLogin yes         # 启用root登录  #PermitRootLogin prohibit-password
-    > sudo service ssh restart    # 重启ssh
+    > sudo service ssh restart    # 重启ssh, <WSL> /etc/init.d/ssh restart
+  # 宿主机通过ssh访问虚拟机 (免密设置:虚拟机默认不允许root用户通过ssh远程访问)
+    # 分别在每台虚拟机上修改/etc/ssh/sshd_config 参考上面
+    # 宿主机生成秘钥对后,将公钥传输给虚拟机,需要输入root密码
+    > ssh-keygen > ssh-copy-id root@192.*.*.*   # 在虚拟上安装docker时会使用
   # < user login >-----------------------
   > ssh-keygen -t rsa -C "angenal@hotmail.com" #+生成密钥对( ~/.ssh/ id_rsa + id_rsa.pub )
   > dir "C:\Users\Administrator/.ssh"     # 存储的本地公钥目录
@@ -1165,13 +1169,19 @@ $ sudo service docker restart              #重启服务
 # 本机启动 Docker daemon
 $ curl -Lo ~/.docker/machine/cache/boot2docker.iso https://github.com/boot2docker/boot2docker/releases/download/v19.03.5/boot2docker.iso
 $ sudo docker-machine create -d virtualbox default  # 1.下载安装默认主机server
-$ sudo docker-machine env default                   # 2.设置客户端docker-client环境变量
+$ sudo docker-machine env default                   # 2.设置客户端docker-cli默认server环境变量
 export DOCKER_TLS_VERIFY="1"
 export DOCKER_HOST="tcp://192.168.99.102:2376"      # 对应> docker-machine ip
 export DOCKER_CERT_PATH="$HOME/.docker/machine/machines/default"
 export DOCKER_MACHINE_NAME="default"
 $ sudo chown `id -un`:`id -un`~/.docker && docker info        # 监听> tcp & TLS 允许cli远程访问
 $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/containerd/containerd.sock
+# 在虚拟机上安装运行docker  # 先手动创建虚拟机manager,worker.. 宿主机通过ssh访问虚拟机免密设置;  generic表示虚拟机已创建
+$ docker-machine create --driver generic --generic-ip-address=192.168.56.103 --generic-ssh-key ~/.ssh/id_rsa manager
+$ docker-machine create --driver generic --generic-ip-address=192.168.56.104 --generic-ssh-key ~/.ssh/id_rsa worker1
+$ docker-machine create --driver generic --generic-ip-address=192.168.56.105 --generic-ssh-key ~/.ssh/id_rsa worker2
+$ docker-machine ls                          # 查看主机servers
+$ docker-machine env manager  # 在manager虚拟机上执行docker指令> docker ps 
 ~~~
 
 > **Shell** [samples](https://docs.docker.com/samples)、[labs/tutorials](https://github.com/angenal/labs)、[小结](https://github.com/AlexWoo/doc/blob/master/devops/docker小结.md)

@@ -1166,22 +1166,22 @@ $ docker-machine version                   #安装完毕
 $ sudo gpasswd -M ${USER} docker && newgrp - docker # 将当前用户加入docker组> sudo usermod -aG docker ${USER}
 $ sudo service docker restart              #重启服务
 # 本机启动 Docker daemon
-$ curl -Lo ~/.docker/machine/cache/boot2docker.iso \  # 下载最新版本的boot2docker daemon
+$ curl -Lo ~/.docker/machine/cache/boot2docker.iso \  # 下载最新版本的boot2docker镜像 for docker-machine create
     https://github.com/boot2docker/boot2docker/releases/download/v19.03.5/boot2docker.iso
 $ docker-machine create -d kvm2 default  # 推荐安装 默认主机server
 $ docker-machine create -d virtualbox default  # 1.下载安装默认主机server
-$ docker-machine env default                   # 2.设置客户端docker-cli默认server环境变量
+$ docker-machine env default                   # 2.设置客户端docker默认server环境变量
 export DOCKER_TLS_VERIFY="1"
-export DOCKER_HOST="tcp://192.168.99.102:2376" # 对应> docker-machine ip
+export DOCKER_HOST="tcp://192.168.99.102:2376" # 对应 docker-machine ip
 export DOCKER_CERT_PATH="$HOME/.docker/machine/machines/default"
 export DOCKER_MACHINE_NAME="default"
 $ sudo chown `id -un`:`id -un`~/.docker && docker info  # 查看docker完整信息
 # 监听> tcp & TLS 允许cli远程访问:2376
 $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/containerd/containerd.sock
-# 在虚拟机上安装运行docker  # 先手动创建虚拟机manager,worker.. 宿主机通过ssh访问虚拟机免密设置;  generic表示虚拟机已创建
-$ docker-machine create --driver generic --generic-ip-address=192.168.99.103 --generic-ssh-key ~/.ssh/id_rsa manager
-$ docker-machine create --driver generic --generic-ip-address=192.168.99.104 --generic-ssh-key ~/.ssh/id_rsa worker1
-$ docker-machine create --driver generic --generic-ip-address=192.168.99.105 --generic-ssh-key ~/.ssh/id_rsa worker2
+# 在虚拟机上安装运行docker # 先手动创建虚拟机manager,worker... 宿主机通过ssh访问虚拟机免密设置; generic指虚拟机已创建
+$ docker-machine create -d generic --generic-ip-address=192.168.99.103 --generic-ssh-key ~/.ssh/id_rsa manager
+$ docker-machine create -d generic --generic-ip-address=192.168.99.104 --generic-ssh-key ~/.ssh/id_rsa worker1
+$ docker-machine create -d generic --generic-ip-address=192.168.99.105 --generic-ssh-key ~/.ssh/id_rsa worker2
 $ docker-machine ls           # 查看docker主机servers
 $ docker-machine env manager  # 在manager虚拟机上执行docker指令> docker ps 
 ~~~

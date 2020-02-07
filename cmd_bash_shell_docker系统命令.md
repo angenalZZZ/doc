@@ -1138,10 +1138,7 @@ ExecReload=/usr/bin/supervisorctl reload
 >  [安装](https://docs.docker.com/install)　[docker-hub](https://hub.docker.com/repositories)　[docker-desktop](https://hub.docker.com/?overlay=onboarding)：Build构建&Compose编排&Kubernetes管理&Swarm集群<br>
   `环境 & 版本` : [`Linux x64, Kernel^3.10 cgroups & namespaces`](https://docs.docker.com/install), [`docker-ce`社区版](https://hub.docker.com/?overlay=onboarding) + `docker-ee`企业版 <br>
   `加速器`..   : [`阿里云`](https://cr.console.aliyun.com/#/accelerator)[..](https://4txtc8r4.mirror.aliyuncs.com)、[`DaoCloud道客`](https://dashboard.daocloud.io/packages/explore)[..](http://8fe1b42e.m.daocloud.io)、[`网易`](https://hub-mirror.c.163.com)
-~~~
-curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io # for Linux
-sudo systemctl daemon-reload && sudo systemctl restart docker.service
-~~~
+
 > `Dockerfile` : `docker build Image(tag=name+version)` > `push Registry` <br>
   `Registry & Disk` : `Repository` > `Image-Url` | `Image save .tar to-Disk`, `Container export .tar(snapshot)` <br>
   `Docker`     : `pull Image from-Registry` | `load Image .tar from-Disk` <br>
@@ -1151,6 +1148,8 @@ sudo systemctl daemon-reload && sudo systemctl restart docker.service
 ~~~shell
 # 安装Docker，先切换用户root ~ su   (一般用国内镜像daocloud)
 $ curl -sSL https://get.daocloud.io/docker | sh 
+$ curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io # for Linux
+$ sudo systemctl daemon-reload && sudo systemctl restart docker.service
 $ curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh - #阿里云
 $ sudo systemctl status docker #运行状态检查
 # 卸载Docker，最后清理 ~ rm -fr /var/lib/docker/
@@ -1170,14 +1169,15 @@ $ sudo service docker restart              #重启服务
 # 本机启动 Docker daemon
 $ curl -Lo ~/.docker/machine/cache/boot2docker.iso \
     https://github.com/boot2docker/boot2docker/releases/download/v19.03.5/boot2docker.iso
-$ docker-machine create -d kvm2 default  # 推荐安装
-$ sudo docker-machine create -d virtualbox default  # 1.下载安装默认主机server
-$ sudo docker-machine env default                   # 2.设置客户端docker-cli默认server环境变量
+$ docker-machine create -d kvm2 default  # 推荐安装 默认主机server
+$ docker-machine create -d virtualbox default  # 1.下载安装默认主机server
+$ docker-machine env default                   # 2.设置客户端docker-cli默认server环境变量
 export DOCKER_TLS_VERIFY="1"
 export DOCKER_HOST="tcp://192.168.99.102:2376"      # 对应> docker-machine ip
 export DOCKER_CERT_PATH="$HOME/.docker/machine/machines/default"
 export DOCKER_MACHINE_NAME="default"
-$ sudo chown `id -un`:`id -un`~/.docker && docker info        # 监听> tcp & TLS 允许cli远程访问
+$ sudo chown `id -un`:`id -un`~/.docker && docker info  # 查看docker完整信息
+# 监听> tcp & TLS 允许cli远程访问:2376
 $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/containerd/containerd.sock
 # 在虚拟机上安装运行docker  # 先手动创建虚拟机manager,worker.. 宿主机通过ssh访问虚拟机免密设置;  generic表示虚拟机已创建
 $ docker-machine create --driver generic --generic-ip-address=192.168.56.103 --generic-ssh-key ~/.ssh/id_rsa manager

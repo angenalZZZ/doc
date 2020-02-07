@@ -1599,18 +1599,20 @@ $ cat /var/lib/libvirt/dnsmasq/virbr1.status #通过kvm创建虚拟机的minikub
 $ virsh list --all                 #查询安装的虚拟机
 $ virsh edit minikube   #配置虚拟机minikube 配置文件
 $ virsh setmem minikube 1048576 #设置虚拟机内存限制1G
+$ virsh setmaxmem minikube 4194304
 $ virsh start minikube  #启动已创建的虚拟机
 $ virsh suspend|resume minikube #暂停|恢复
 
 # 启动 minikube 集群
 $ sudo minikube config set vm-driver virtualbox #默认虚拟机(virtualbox|kvm2)
 $ sudo minikube config set memory 4096          #默认内存限制4G(default:2GB-RAM)
+$ minikube start --vm-driver=virtualbox #Starting local Kubernetes cluster...Starting VM...Downloading
+    #下载~/.minikube/cache/iso/minikube-v1.3.0.iso < https://storage.googleapis.com/minikube/iso/minikube-v1.3.0.iso
 $ sudo minikube start --vm-driver=kvm2          #启动+代理;可选--registry-mirror=https://registry.docker-cn.com
   --docker-env HTTP_PROXY=http://f1361db2.m.daocloud.io --docker-env HTTPS_PROXY=http://f1361db2.m.daocloud.io
-# #启动<推荐,方式2> 使用阿里的镜像https://registry.cn-hangzhou.aliyuncs.com
-$ sudo minikube start --vm-driver=kvm2 --cpus=4 --memory=4096 #推荐kvm2 +限制cpu&memory +日志级别--v=7|3|2|1|0
-$ sudo minikube start --vm-driver=virtualbox #Starting local Kubernetes cluster...Starting VM...Downloading
-#下载~/.minikube/cache/iso/minikube-v1.3.0.iso < https://storage.googleapis.com/minikube/iso/minikube-v1.3.0.iso
+# #启动<推荐方式> 使用阿里镜像https://registry.cn-hangzhou.aliyuncs.com
+$ sudo minikube delete && sudo rm -rf ~/.minikube/machines/minikube && sudo chown `id -un`:`id -un`~/.minikube ~/.kube -R 
+$ minikube start --vm-driver=kvm2 --cpus=4 --memory=4096 #推荐kvm2 +限制cpu&memory +日志级别--v=7|3|2|1|0
 
 # #启动 第n个集群
 $ sudo minikube start -p <name> --vm-driver=kvm2  #创建1个新的VM<name>

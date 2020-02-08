@@ -1178,10 +1178,10 @@ export DOCKER_MACHINE_NAME="default"
 $ sudo chown `id -un`:`id -un`~/.docker && docker info  # 查看docker完整信息
 # 监听> tcp & TLS 允许cli远程访问:2376
 $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/containerd/containerd.sock
-# 在虚拟机上安装运行docker # 先手动创建虚拟机manager,worker... 宿主机通过ssh访问虚拟机免密设置; generic指虚拟机已创建
-$ docker-machine create -d generic --generic-ip-address=192.168.99.103 --generic-ssh-key ~/.ssh/id_rsa manager
-$ docker-machine create -d generic --generic-ip-address=192.168.99.104 --generic-ssh-key ~/.ssh/id_rsa worker1
-$ docker-machine create -d generic --generic-ip-address=192.168.99.105 --generic-ssh-key ~/.ssh/id_rsa worker2
+# 在虚拟机上安装运行docker # 先创建虚拟机manager,worker... 宿主机通过ssh访问虚拟机免密设置 generic指虚拟机已创建+vboxnet
+$ docker-machine create -d generic --generic-ip-address=192.168.56.101 --generic-ssh-key ~/.ssh/id_rsa manager
+$ docker-machine create -d generic --generic-ip-address=192.168.56.102 --generic-ssh-key ~/.ssh/id_rsa worker1
+$ docker-machine create -d generic --generic-ip-address=192.168.56.103 --generic-ssh-key ~/.ssh/id_rsa worker2
 $ docker-machine ls           # 查看虚拟机上的servers
 $ docker-machine env manager  # 在manager虚拟机上执行docker指令> docker ps 
 ~~~

@@ -1141,17 +1141,17 @@ ExecReload=/usr/bin/supervisorctl reload
 > `Dockerfile` : `docker build Image(tag=name+version)` > `push Registry` <br>
   `Registry & Disk` : `Repository` > `Image-Url` | `Image save .tar to-Disk`, `Container export .tar(snapshot)` <br>
   `Docker`     : `pull Image from-Registry` | `load Image .tar from-Disk` <br>
-  `Data`       : `docker container run Image` - `--volumes-from Data-Container` - `-v from-Disk:Data-Dir` <br>
-  `Cert`       : `C:/ProgramData/DockerDesktop/pki/` ...
+  `Data`        : `docker container run Image` - `--volumes-from Data-Container` - `-v from-Disk:Data-Dir` <br>
+  `Cert`         : `C:/ProgramData/DockerDesktop/pki/` - `C:/Users/Administrator/.kube/config`  ...  
 
 ~~~shell
 # 安装Docker，先切换用户 ~ su - root
 $ curl -sSL https://get.daocloud.io/docker | sh  # 安装,镜像 daocloud
 $ curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://{your-id}.m.daocloud.io # daocloud - linux
 $ curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh - # 安装,镜像 阿里云
-$ vi /usr/lib/systemd/system/docker.service << ... daemon --registry-mirror=https://{your-id}.mirror.aliyuncs.com
+# vi /usr/lib/systemd/system/docker.service << ... daemon --registry-mirror=https://{your-id}.mirror.aliyuncs.com
 $ systemctl enable docker && systemctl daemon-reload && systemctl restart docker # 安装后,enable开机启动
-$ tee /etc/docker/daemon.json <<-'EOF' \  {"registry-mirrors": ["http://f1361db2.m.daocloud.io"]} # 或者,配置镜像 
+# tee /etc/docker/daemon.json <<-'EOF' \  {"registry-mirrors": ["http://f1361db2.m.daocloud.io"]} # 或者,配置镜像 
 $ systemctl status docker #运行状态检查
 # 卸载Docker，最后清理 ~ rm -fr /var/lib/docker/
 $ apt-get remove docker docker-engine

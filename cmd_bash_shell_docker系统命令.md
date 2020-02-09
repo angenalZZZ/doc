@@ -1137,8 +1137,7 @@ ExecReload=/usr/bin/supervisorctl reload
 
 >  [安装](https://docs.docker.com/install)　[docker-hub](https://hub.docker.com/repositories)　[docker-desktop](https://hub.docker.com/?overlay=onboarding)：Build构建&Compose编排&Kubernetes管理&Swarm集群<br>
   `环境 & 版本` : [`Linux x64, Kernel^3.10 cgroups & namespaces`](https://docs.docker.com/install), [`docker-ce`社区版](https://hub.docker.com/?overlay=onboarding) + `docker-ee`企业版 <br>
-  `加速器`..   : [`阿里云`](https://cr.console.aliyun.com/#/accelerator)[..](https://4txtc8r4.mirror.aliyuncs.com)、[`DaoCloud道客`](https://dashboard.daocloud.io/packages/explore)[..](http://8fe1b42e.m.daocloud.io)、[`网易`](https://hub-mirror.c.163.com)
-
+  `加速器`..   : [`阿里云`](https://cr.console.aliyun.com/#/accelerator)[..](https://4txtc8r4.mirror.aliyuncs.com)、[`DaoCloud道客`](https://dashboard.daocloud.io/packages/explore)[..](http://8fe1b42e.m.daocloud.io)、[`网易`](https://hub-mirror.c.163.com)、 [`自动mirror.py`](https://github.com/silenceshell/docker_mirror) <br>
 > `Dockerfile` : `docker build Image(tag=name+version)` > `push Registry` <br>
   `Registry & Disk` : `Repository` > `Image-Url` | `Image save .tar to-Disk`, `Container export .tar(snapshot)` <br>
   `Docker`     : `pull Image from-Registry` | `load Image .tar from-Disk` <br>
@@ -1146,12 +1145,14 @@ ExecReload=/usr/bin/supervisorctl reload
   `Cert`       : `C:/ProgramData/DockerDesktop/pki/` ...
 
 ~~~shell
-# 安装Docker，先切换用户root ~ su 
-$ curl -sSL https://get.daocloud.io/docker | sh  # 一般用国内镜像daocloud
-$ curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io # for Linux
-$ sudo systemctl daemon-reload && sudo systemctl restart docker.service
-$ curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh - #镜像-阿里云
-$ sudo systemctl status docker #运行状态检查
+# 安装Docker，先切换用户 ~ su - root
+$ curl -sSL https://get.daocloud.io/docker | sh  # 安装,镜像 daocloud
+$ curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://{your-id}.m.daocloud.io # daocloud - linux
+$ curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh - # 安装,镜像 阿里云
+$ vi /usr/lib/systemd/system/docker.service << ... daemon --registry-mirror=https://{your-id}.mirror.aliyuncs.com
+$ systemctl enable docker && systemctl daemon-reload && systemctl restart docker # 安装后,enable开机启动
+$ tee /etc/docker/daemon.json <<-'EOF' \  {"registry-mirrors": ["http://f1361db2.m.daocloud.io"]} # 或者,配置镜像 
+$ systemctl status docker #运行状态检查
 # 卸载Docker，最后清理 ~ rm -fr /var/lib/docker/
 $ apt-get remove docker docker-engine
 # 安装 Docker Compose
@@ -1164,7 +1165,7 @@ $ curl -L https://github.com/docker/machine/releases/download/v0.16.2/docker-mac
 $ docker-machine version                   # 安装完毕
 # 设置 Docker, 不使用sudo执行docker命令，先切换当前用户-user(root~exit)
 $ sudo usermod -aG docker ${USER} # 将当前用户加入docker组 # sudo gpasswd -M ${USER} docker && newgrp - docker
-$ sudo service docker restart              # 重启服务
+$ sudo service docker restart               # 重启服务
 # 本机启动 Docker daemon
 $ curl -Lo ~/.docker/machine/cache/boot2docker.iso \ # 下载最新版本的boot2docker镜像 for docker-machine create
     https://github.com/boot2docker/boot2docker/releases/download/v19.03.5/boot2docker.iso
@@ -1180,7 +1181,7 @@ export DOCKER_MACHINE_NAME="default"
 $ docker-machine start default
 $ docker info  # 查看docker完整信息 # sudo chown `id -un`:`id -un`~/.docker 
 # 监听> tcp & TLS 允许cli远程访问:2376
-$ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/containerd/containerd.sock
+$ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/containerd/containerd.sock --registry-mirror={镜像加速}
 # 在虚拟机上安装运行docker # 先创建虚拟机manager,worker... 宿主机通过ssh访问虚拟机免密设置 generic指虚拟机已创建+vboxnet
 $ docker-machine create -d generic --generic-ip-address=192.168.56.101 --generic-ssh-key ~/.ssh/id_rsa manager
 $ docker-machine create -d generic --generic-ip-address=192.168.56.102 --generic-ssh-key ~/.ssh/id_rsa worker1
@@ -1525,7 +1526,7 @@ obj\
 # [**Kubernetes**](https://kubernetes.io)
 
 > [`k8s`是一个流行的容器管理编排平台，集中式管理数个服务的容器集群；](https://www.kubernetes.org.cn)<br>
-  　文档[Project-based-k8s](https://github.com/groovemonkey/project-based-kubernetes)[Aliyun-Istio](https://github.com/AliyunContainerService/k8s-for-docker-desktop)[kubeadm-ha](https://github.com/cookeem/kubeadm-ha)、安装[docker-desktop](https://www.docker.com/products/docker-desktop)已集成compose和k8s<br>
+  　文档[Project-based-k8s](https://github.com/groovemonkey/project-based-kubernetes)  [Aliyun-Istio](https://github.com/AliyunContainerService/k8s-for-docker-desktop)  [kubeadm-ha](https://github.com/cookeem/kubeadm-ha)、安装[docker-desktop](https://www.docker.com/products/docker-desktop)已集成compose和k8s<br>
   　`Pod`：最小单元、一组容器的集合、同一个Pod内的容器共享网络命名空间、短暂的未存储的(重新发布后会丢失)；<br>
   　`Controllers`： `ReplicaSet`确保预期的Pod副本数量(一般由以下部署产生)，<br>
   　  　`Deployment`无状态的(`website`...)应用部署，<br>

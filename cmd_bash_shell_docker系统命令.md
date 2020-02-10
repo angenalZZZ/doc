@@ -1106,20 +1106,26 @@ ExecReload=/usr/bin/supervisorctl reload
 ~~~shell
   # < Windows Subsystem for Linux | WSL >---------------------------
   $ sudo apt install docker.io              # 安装Docker客户端 | docker.io get client connection.
-  $ export DOCKER_HOST=tcp://127.0.0.1:2375 # 设置环境 vi ~/.bashrc [或者~/.profile](文件结尾添加)
+  $ export DOCKER_HOST=tcp://127.0.0.1:2375 # 设置环境Linux vi ~/.bashrc [或者~/.profile](文件结尾添加)
+  > $env:DOCKER_HOST="tcp://0.0.0.0:2375"   # 设置环境Windows PowerShell [连接Docker-Server端TCP地址]
   $ docker [COMMAND] --help                 # 执行Docker命令:重定向Docker\Server响应输出/如同R语言sink()
 
-  # Docker正式环境: 修改Linux内核参数 https://blog.csdn.net/guanheng68/article/details/81710406
+  # Docker环境:修改Linux内核参数 blog.csdn.net/guanheng68/article/details/81710406
   $ grep vm.max_map_count /etc/sysctl.conf  # 检查vm设置, 默认虚拟内存大小不够;
   $ sysctl -w vm.max_map_count=262144       # 执行Docker操作无效时才修改, 或者 vi /etc/sysctl.conf
   $ sysctl -p                               # 生效/etc/sysctl.conf 修改.
+~~~
 
-  # 安装 Ansible 配置管理和IT自动化工具-(系统运维)一个强大的配置管理解决方案(由Python编写)
+> `Ansible` [配置管理和IT自动化工具-(系统运维)一个强大的配置管理解决方案(由Python编写)](https://www.jianshu.com/c/67d13df667ba)
+~~~shell
   $ sudo apt update  # < ubuntu >
   $ sudo apt install software-properties-common
   $ sudo apt-add-repository --yes --update ppa:ansible/ansible
-  $ sudo apt install ansible        # https://www.jianshu.com/c/67d13df667ba
-  # 安装 Airflow 任务调度(由Python编写) https://www.jianshu.com/p/9bed1e3ab93b
+  $ sudo apt install ansible
+~~~
+
+> `Airflow` [任务调度(由Python编写)](https://www.jianshu.com/p/9bed1e3ab93b)
+~~~shell
   $ sudo apt install libkrb5-dev libsasl2-dev libmysqlclient-dev  # 安装airflow[all]依赖包
   $ mkdir airflow && cd airflow
   $ pip install setuptools_git

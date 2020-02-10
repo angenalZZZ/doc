@@ -1180,7 +1180,7 @@ export DOCKER_MACHINE_NAME="default"
 # eval $(docker-machine env default)
 $ docker-machine start default
 $ docker info  # 查看docker完整信息 # sudo chown `id -un`:`id -un`~/.docker 
-# 监听> tcp & TLS 允许cli远程访问:2376 ; windows设置: vEthernet (Default Switch) >DNS> 8.8.8.8
+# 监听> tcp & TLS 允许cli远程访问:2376 
 $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/containerd/containerd.sock --registry-mirror={镜像加速}
 # 在虚拟机上安装运行docker # 先创建虚拟机manager,worker... 宿主机通过ssh访问虚拟机免密设置 generic指虚拟机已创建+vboxnet
 $ docker-machine create -d generic --generic-ip-address=192.168.56.101 --generic-ssh-key ~/.ssh/id_rsa manager
@@ -1540,6 +1540,8 @@ obj\
   　  　前后端*`高IO型`的`Web`应用程序 (8核16G;IP3+IP4) k8s-master1,k8s-master2<br>
   　  　长时间*`可水平扩展`的`分布式计算型`任务 (16核64G;IP5+IP6) k8s-node1,k8s-node2 <br>
 ~~~
+# 启用k8s失败时; windows设置: 可参考[Aliyun-Istio] .\load_images.ps1 ...
+# Network & Docker >DNS: 8.8.8.8 ;环境变量 KUBECONFIG=C:\Users\Administrator\.kube\config ;Restart Docker Desktop
 # 安装 kubectl client
 $ curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubectl 
 $ sudo chmod +x kubectl && sudo mv kubectl /usr/local/bin/

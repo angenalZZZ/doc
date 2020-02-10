@@ -374,9 +374,9 @@ openssl pkcs8 -topk8 -nocrypt -in server.key -out server.pem
   $ mkcert -CAROOT  #1.查看证书存储路径"${HOME}/.local/share/mkcert": rootCA.pem,rootCA-key.pem
   $ mkcert -install      #2.安装本地CA证书,为下面创建证书作准备↑↑
   $ mkcert example.com "*.example.com" localhost 127.0.0.1 ::1 #3.创建证书,指定域名或IP
-  #3.1修改PowerShell脚本执行策略 windows 10
+  #3.1修改PowerShell脚本执行策略 windows
   > Get-ExecutionPolicy
-  > Set-ExecutionPolicy RemoteSigned [RemoteSigned,AllSigned,Bypass,Restricted]
+  > Set-ExecutionPolicy RemoteSigned [RemoteSigned,AllSigned,Bypass,Restricted] # 全选 A (以管理员身份执行)
   #3.2创建PowerShell数字签名认证 windows 10
   > cd "C:\Program Files (x86)\Windows Kits\10\bin\10.0.17763.0\x64" # 签名工具makecert [-eku设为代码签名]
   > makecert -n "CN=Api Cert" -a sha1 -eku 1.3.6.1.5.5.7.3.1 -r -sv api-root.pvk api-root.cer -ss Root -sr LocalMachine
@@ -1165,7 +1165,7 @@ $ curl -L https://github.com/docker/machine/releases/download/v0.16.2/docker-mac
 $ docker-machine version                   # 安装完毕
 # 设置 Docker, 不使用sudo执行docker命令，先切换当前用户-user(root~exit)
 $ sudo usermod -aG docker ${USER} # 将当前用户加入docker组 # sudo gpasswd -M ${USER} docker && newgrp - docker
-$ sudo service docker restart               # 重启服务
+$ sudo service docker restart              # 重启服务
 # 本机启动 Docker daemon
 $ curl -Lo ~/.docker/machine/cache/boot2docker.iso \ # 下载最新版本的boot2docker镜像 for docker-machine create
     https://github.com/boot2docker/boot2docker/releases/download/v19.03.5/boot2docker.iso
@@ -1180,7 +1180,7 @@ export DOCKER_MACHINE_NAME="default"
 # eval $(docker-machine env default)
 $ docker-machine start default
 $ docker info  # 查看docker完整信息 # sudo chown `id -un`:`id -un`~/.docker 
-# 监听> tcp & TLS 允许cli远程访问:2376
+# 监听> tcp & TLS 允许cli远程访问:2376 ; windows设置: vEthernet (Default Switch) >DNS> 8.8.8.8
 $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/containerd/containerd.sock --registry-mirror={镜像加速}
 # 在虚拟机上安装运行docker # 先创建虚拟机manager,worker... 宿主机通过ssh访问虚拟机免密设置 generic指虚拟机已创建+vboxnet
 $ docker-machine create -d generic --generic-ip-address=192.168.56.101 --generic-ssh-key ~/.ssh/id_rsa manager

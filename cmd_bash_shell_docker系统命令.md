@@ -1547,9 +1547,12 @@ obj\
   　  　长时间*`可水平扩展`的`分布式计算型`任务 (16核64G;IP5+IP6) k8s-node1,k8s-node2 <br>
 ~~~
 # 启用k8s失败时; windows设置:可参考[Aliyun-Istio]
-# git checkout v1.x.x && .\load_images.ps1 << registry.cn-hangzhou.aliyuncs.com/google_containers/...
-# >> k8s.gcr.io/kube-proxy,kube-scheduler,kube-controller-manager,kube-apiserver,coredns,etcd,pause ...
-# Network & Docker >DNS: 8.8.8.8 ;环境变量 KUBECONFIG=C:\Users\Administrator\.kube\config ;Restart Docker Desktop
+# > $env:DOCKER_HOST="tcp://0.0.0.0:2375"   # 设置Windows环境变量 PowerShell [cli连接Docker-Server端TCP地址]
+# > $env:KUBECONFIG="C:\Users\Administrator\.kube\config" ... 启动docker后, 签出k8s相同git版本..
+# > git clone https://github.com/AliyunContainerService/k8s-for-docker-desktop.git ..
+# > git checkout v1.15.5 && .\load_images.ps1 << registry.cn-hangzhou.aliyuncs.com/google_containers/..
+# >> k8s.gcr.io/kube-proxy,kube-scheduler,kube-controller-manager,kube-apiserver,coredns,etcd,pause ..
+# 设置Docker\Resources\Network >DNS: 8.8.8.8 ;Restart Docker Desktop ;Enable Kubernetes v1.15.5 
 # 安装 kubectl client
 $ curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubectl 
 $ sudo chmod +x kubectl && sudo mv kubectl /usr/local/bin/

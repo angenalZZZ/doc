@@ -1102,20 +1102,6 @@ ExecReload=/usr/bin/supervisorctl reload
   # q 退出(ESC或Ctrl+C)
 ~~~
 
-> `Docker` 客户端 (连接到 Docker for Windows10)
-~~~shell
-  # < Windows Subsystem for Linux | WSL >---------------------------
-  $ sudo apt install docker.io              # 安装Docker客户端 | docker.io get client connection.
-  $ export DOCKER_HOST=tcp://127.0.0.1:2375 # 设置环境Linux vi ~/.bashrc [或者~/.profile](文件结尾添加)
-  > $env:DOCKER_HOST="tcp://0.0.0.0:2375"   # 设置环境Windows PowerShell [连接Docker-Server端TCP地址]
-  $ docker [COMMAND] --help                 # 执行Docker命令:重定向Docker\Server响应输出/如同R语言sink()
-
-  # Docker环境:修改Linux内核参数 blog.csdn.net/guanheng68/article/details/81710406
-  $ grep vm.max_map_count /etc/sysctl.conf  # 检查vm设置, 默认虚拟内存大小不够;
-  $ sysctl -w vm.max_map_count=262144       # 执行Docker操作无效时才修改, 或者 vi /etc/sysctl.conf
-  $ sysctl -p                               # 生效/etc/sysctl.conf 修改.
-~~~
-
 > `Ansible` [配置管理和IT自动化工具-(系统运维)一个强大的配置管理解决方案(由Python编写)](https://www.jianshu.com/c/67d13df667ba)
 ~~~shell
   $ sudo apt update  # < ubuntu >
@@ -1135,6 +1121,20 @@ ExecReload=/usr/bin/supervisorctl reload
   $ pip install apache-airflow[all] --no-index -f ./       # 3.安装airflow[all]
   $ echo "export AIRFLOW_HOME=~/app/airflow" >> ~/.bashrc  # 4.配置
   $ source ~/.bashrc && airflow initdb                     # 5.部署
+~~~
+
+> `Docker` 客户端 (连接到 Docker for Windows10)
+~~~shell
+  # < Windows Subsystem for Linux | WSL >---------------------------
+  $ sudo apt install docker.io              # 安装Docker客户端 | docker.io get client connection.
+  $ export DOCKER_HOST=tcp://127.0.0.1:2375 # 设置环境Linux vi ~/.bashrc [或者~/.profile](文件结尾添加)
+  > $env:DOCKER_HOST="tcp://0.0.0.0:2375"   # 设置环境Windows PowerShell [连接Docker-Server端TCP地址]
+  $ docker [COMMAND] --help                 # 执行Docker命令:重定向Docker\Server响应输出/如同R语言sink()
+
+  # Docker环境:修改Linux内核参数 blog.csdn.net/guanheng68/article/details/81710406
+  $ grep vm.max_map_count /etc/sysctl.conf  # 检查vm设置, 默认虚拟内存大小不够;
+  $ sysctl -w vm.max_map_count=262144       # 执行Docker操作无效时才修改, 或者 vi /etc/sysctl.conf
+  $ sysctl -p                               # 生效/etc/sysctl.conf 修改.
 ~~~
 
 ----

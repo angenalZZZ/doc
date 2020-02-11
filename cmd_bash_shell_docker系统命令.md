@@ -1546,7 +1546,9 @@ obj\
   　  　前后端*`高IO型`的`Web`应用程序 (8核16G;IP3+IP4) k8s-master1,k8s-master2<br>
   　  　长时间*`可水平扩展`的`分布式计算型`任务 (16核64G;IP5+IP6) k8s-node1,k8s-node2 <br>
 ~~~
-# 启用k8s失败时; windows设置:可参考[Aliyun-Istio] .\load_images.ps1 registry.cn-hangzhou.aliyuncs.com/google_containers
+# 启用k8s失败时; windows设置:可参考[Aliyun-Istio]
+# git checkout v1.x.x && .\load_images.ps1 << registry.cn-hangzhou.aliyuncs.com/google_containers/...
+# >> k8s.gcr.io/kube-proxy,kube-scheduler,kube-controller-manager,kube-apiserver,coredns,etcd,pause ...
 # Network & Docker >DNS: 8.8.8.8 ;环境变量 KUBECONFIG=C:\Users\Administrator\.kube\config ;Restart Docker Desktop
 # 安装 kubectl client
 $ curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubectl 

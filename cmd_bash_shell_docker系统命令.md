@@ -1196,8 +1196,8 @@ $ docker-machine env manager  # 在manager虚拟机上执行docker指令> docker
 # 界面管理工具 DockerUI 基于Docker API 提供命令大部分功能 > docker pull uifd/ui-for-docker
 $ docker run -itd --name docker-ui -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock docker.io/uifd/ui-for-docker
 # 界面管理工具 Portainer 占用资源少，支持集群，权限分配等
-$ docker run -d -p 9000:9000 portainer/portainer # 1.简单部署，管理Swarm群集；2.如下,在Docker群集中部署Portainer为服务
-# docker service create --name portainer --publish 9000:9000 --constraint 'node.role == manager' \
+$ docker run -d -p 9000:9000 portainer/portainer # 1.简单部署，管理Swarm群集；2.如下,在Docker群集中部署Portainer服务
+$ docker service create --name portainer --publish 9000:9000 --constraint 'node.role == manager' \
   --mount type=bind,src=//var/run/docker.sock,dst=/var/run/docker.sock \
   portainer/portainer -H unix:///var/run/docker.sock
 ~~~

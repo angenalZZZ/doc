@@ -1157,21 +1157,20 @@ $ curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://{your-
 $ curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh - # 安装,镜像 阿里云
 # vi /usr/lib/systemd/system/docker.service << ... daemon --registry-mirror=https://{your-id}.mirror.aliyuncs.com
 $ systemctl enable docker && systemctl daemon-reload && systemctl restart docker # 安装后,enable开机启动
-# tee /etc/docker/daemon.json <<-'EOF' \  {"registry-mirrors": ["http://f1361db2.m.daocloud.io"]} # 或者,配置镜像 
-$ systemctl status docker #运行状态检查
-# 卸载Docker，最后清理 ~ rm -fr /var/lib/docker/
-$ apt-get remove docker docker-engine
+# tee /etc/docker/daemon.json <<-'EOF' \ {"registry-mirrors":["https://4txtc8r4.mirror.aliyuncs.com"]} # 手动配置镜像 
+$ systemctl status docker             # 检查Docker运行状态
+$ apt-get remove docker docker-engine # 卸载Docker最后清理 # rm -rf /var/lib/docker/
 # 安装 Docker Compose
 $ curl -L https://get.daocloud.io/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` \
-    > /usr/local/bin/docker-compose # 设置文件为可执行 sudo chmod +x docker-compose
-# 安装 Docker Machine基于virtualBox # www.virtualbox.org/wiki/Linux_Downloads
-$ sudo dpkg -i virtualbox-6.1_6.1.2-135662_Ubuntu_bionic_amd64.deb --fix-missing 
+    > /usr/local/bin/docker-compose  # 设置文件为可执行 sudo chmod +x docker-compose
+# 安装 Docker Machine 基于virtualBox  # www.virtualbox.org/wiki/Linux_Downloads
+$ sudo dpkg -i virtualbox-6.1_6.1.2-135662_Ubuntu_bionic_amd64.deb --fix-missing # 安装 virtualbox v6.1
 $ curl -L https://github.com/docker/machine/releases/download/v0.16.2/docker-machine-$(uname -s)-$(uname -m) \
-    > /usr/local/bin/docker-machine   # install docker-machine
-$ docker-machine version                   # 安装完毕
+    > /usr/local/bin/docker-machine  # 安装 docker-machine
+$ docker-machine version             # 安装完毕,查看版本
 # 设置 Docker, 不使用sudo执行docker命令，先切换当前用户-user(root~exit)
 $ sudo usermod -aG docker ${USER} # 将当前用户加入docker组 # sudo gpasswd -M ${USER} docker && newgrp - docker
-$ sudo service docker restart              # 重启服务
+$ sudo service docker restart        # 重启Docker服务
 # 本机启动 Docker daemon
 $ curl -Lo ~/.docker/machine/cache/boot2docker.iso \ # 下载最新版本的boot2docker镜像 for docker-machine create
     https://github.com/boot2docker/boot2docker/releases/download/v19.03.5/boot2docker.iso
@@ -1187,13 +1186,20 @@ export DOCKER_MACHINE_NAME="default"
 $ docker-machine start default
 $ docker info  # 查看docker完整信息 # sudo chown `id -un`:`id -un`~/.docker 
 # 监听> tcp & TLS 允许cli远程访问:2376 
-$ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/containerd/containerd.sock --registry-mirror={镜像加速}
+$ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/containerd/containerd.sock --registry-mirror={镜像}
 # 在虚拟机上安装运行docker # 先创建虚拟机manager,worker... 宿主机通过ssh访问虚拟机免密设置 generic指虚拟机已创建+vboxnet
 $ docker-machine create -d generic --generic-ip-address=192.168.56.101 --generic-ssh-key ~/.ssh/id_rsa manager
 $ docker-machine create -d generic --generic-ip-address=192.168.56.102 --generic-ssh-key ~/.ssh/id_rsa worker1
 $ docker-machine create -d generic --generic-ip-address=192.168.56.103 --generic-ssh-key ~/.ssh/id_rsa worker2
 $ docker-machine ls           # 查看虚拟机上的servers
-$ docker-machine env manager  # 在manager虚拟机上执行docker指令> docker ps 
+$ docker-machine env manager  # 在manager虚拟机上执行docker指令> docker ps
+# 界面管理工具 DockerUI 基于Docker API 提供命令大部分功能 > docker pull uifd/ui-for-docker
+$ docker run -itd --name docker-ui -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock docker.io/uifd/ui-for-docker
+# 界面管理工具 Portainer 占用资源少，支持集群，权限分配等
+$ docker run -d -p 9000:9000 portainer/portainer # 简单部署，管理Swarm群集；或者在Docker群集中部署Portainer为服务，如下
+# docker service create --name portainer --publish 9000:9000 --constraint 'node.role == manager' \
+  --mount type=bind,src=//var/run/docker.sock,dst=/var/run/docker.sock \
+  portainer/portainer -H unix:///var/run/docker.sock
 ~~~
 
 > **Shell** [samples](https://docs.docker.com/samples)、[labs/tutorials](https://github.com/angenal/labs)、[小结](https://github.com/AlexWoo/doc/blob/master/devops/docker小结.md)

@@ -1,4 +1,4 @@
-# docker-compose -f elasticsearch-7-3nodes-docker-compose.yml up -d
+# docker-compose -f elasticsearch7-3nodes-docker-compose.yml up -d
 version: '2.2'
 services:
   es01:

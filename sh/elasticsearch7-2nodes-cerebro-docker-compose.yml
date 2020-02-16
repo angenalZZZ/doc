@@ -1,4 +1,4 @@
-# docker-compose -f elasticsearch-7-cluster-2nodes-cerebro-docker-compose.yml up -d
+# docker-compose -f elasticsearch7-2nodes-cerebro-docker-compose.yml up -d
 version: '3.1'
 services:
   cerebro:

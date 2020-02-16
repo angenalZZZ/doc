@@ -146,7 +146,6 @@
   $ ps -u $USER -o pid,%cpu,tty,cputime,cmd
   $ ps -ef | grep dotnet         # 查看dotnet进程id
   $ top -Hp [进程id]             # 进程列表: 内存&CPU占用
-  $ lsof | tail                            # 
   $ dotnet-dump collect -p [进程id] ; dotnet-dump analyze core_***  # 查找.NET Core 占用CPU 100% 的原因
     > clrthreads ; setthread [线程DBG] ; clrstack ; clrstack -a ; dumpobj 0x00*** # 分析线程/堆栈/内存数据
   $ ps aux | head -1; ps aux | sort -rn -k3 | head -10 # 占用CPU最高的前10个进程
@@ -158,19 +157,25 @@
   # -1=HUP终端控制进程结束(终端连接断开) -2=INT用户发送INTR字符(Ctrl+C)触发进程结束 -3=QUIT用户发送QUIT字符(Ctrl+/)
   # -18=TSTP暂停进程 -19=CONT继续进程 -17=STOP停止进程(不能被捕获) 
   # -21=TTIN读数据时 -22=TTOU写数据时 -20=CHLD子进程结束(由父进程接收)
+  $ lsof | tail                 # 系统最近打开的文件(list open files)
+  $ lsof -p <<PID>>   # 进程打开的文件(包括网络端口等)
+  $ lsof -u root            # root最近打开的文件
+  $ lsof -i tcp               # tcp网络端口打开的文件
+  $ lsof -i :22                # 查看端口号22(sshd)连接情况 lsof 列出当前系统打开的文件
   $ lsof -i @localhost:3000 && kill -9 <<PID>> # 杀死进程(指定占用端口号的程序)
-  $ lsof -i:22         # 查看端口号22(sshd)连接情况 lsof 列出当前系统打开的文件(list open files)
   $ smem -k -s USS     # 进程的内存使用情况
   # < ubuntu > apt update & apt install smem
   # < centos > yum install epel-release & yum install smem python-matplotlib python-tk
   
   # 文件系统
   > dir [目录]           # 默认当前目录(命令pwd)
+  $ df -h                     # 文件系统        容量  已用  可用 已用% 挂载点
   $ ls -al [目录]        # 查看目录及文件读写权限 alias ll='ls -alF' ; alias la='ls -A' ; alias l='ls -CF'
-  $ touch main.js        # 新建文件
+  $ lsof -h                     # 查看打开的文件、网络资源等
+  $ touch main.js         # 新建文件
   $ mktemp && mktemp -d  # 新建临时文件和临时目录
   $ mv main.js main.cs   # 重命名文件,移动文件位置
-  $ cat main.cs          # 输出文件内容
+  $ cat main.cs                # 输出文件内容
   $ namo|vi main.cs      # 编辑文件内容
   $ file main.js && ls -an main.js # 查看文件类型-信息 & 查看文件读写权限&更新时间
   $ for n in {1..10000}; do echo content > "__${n}.tmp"; done # 创建 10000 个临时文件

@@ -145,7 +145,8 @@
   $ ps -eo pid,cmd | grep uuid   # [o输出字段,e依赖的系统环境]
   $ ps -u $USER -o pid,%cpu,tty,cputime,cmd
   $ ps -ef | grep dotnet         # 查看dotnet进程id
-  $ top -Hp [进程id]             # 进程列表: 内存&CPU占用
+  $ top -Hp [进程id]             # 进程列表: 内存&CPU占用            # 快捷键：k 杀死进程
+  $ htop                                    # 进程:  sudo apt-get install htop
   $ dotnet-dump collect -p [进程id] ; dotnet-dump analyze core_***  # 查找.NET Core 占用CPU 100% 的原因
     > clrthreads ; setthread [线程DBG] ; clrstack ; clrstack -a ; dumpobj 0x00*** # 分析线程/堆栈/内存数据
   $ ps aux | head -1; ps aux | sort -rn -k3 | head -10 # 占用CPU最高的前10个进程
@@ -162,7 +163,7 @@
   $ lsof -u root            # root最近打开的文件
   $ lsof -i tcp               # tcp网络端口打开的文件
   $ lsof -i :22                # 查看端口号22(sshd)连接情况 lsof 列出当前系统打开的文件
-  $ lsof -i @localhost:3000 && kill -9 <<PID>> # 杀死进程(指定占用端口号的程序)
+  # lsof -i @localhost:3000 && kill -9 <<PID>> # 杀死进程(指定占用端口号的程序)
   $ smem -k -s USS     # 进程的内存使用情况
   # < ubuntu > apt update & apt install smem
   # < centos > yum install epel-release & yum install smem python-matplotlib python-tk

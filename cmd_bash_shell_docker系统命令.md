@@ -918,7 +918,17 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
 
 > `系统服务` 计划任务管理 <br>
     Ⅰ.[uber/cadence](https://cadenceworkflow.io) [分布式的、可扩展的、高可用的任务编排引擎，异步执行长时间运行的业务逻辑](https://github.com/uber/cadence)
-~~~shell
+~~~bash
+less /etc/crontab
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,>
+# |  |  |  |  |
+# *  *  *  *  * user-name command to be executed
+
 #Ⅰ.uber/cadence  https://github.com/uber/cadence/blob/master/docker/README.md
   #-1: Quickstart for localhost development
   $ wget https://github.com/uber/cadence/releases/...
@@ -1212,7 +1222,7 @@ $ docker service create --name portainer --publish 9000:9000 --constraint 'node.
 ~~~
 
 > **Shell** [samples](https://docs.docker.com/samples)、[labs/tutorials](https://github.com/angenal/labs)、[小结](https://github.com/AlexWoo/doc/blob/master/devops/docker小结.md)
-~~~
+~~~shell
   # 构建
   docker build --build-arg NODE_ENV=dev -t test-image # 当前目录下有Dockerfile
   # 运行
@@ -1444,7 +1454,7 @@ alias dockerclean='dockercleanc || true && dockercleani'           # 清除停�
 
 > **Dockerfile** [文档](https://docs.docker.com/get-started)<br>
 　$ docker build -t <YOUR_USERNAME>/myapp . # 构建+标签[用户名/镜像名]
-~~~
+~~~dockerfile
   # 基础镜像
   FROM node:10.15.0
   
@@ -1502,7 +1512,7 @@ obj\
 > **docker-compose.yml** [安装Compose](https://docs.docker.com/compose/install/) [文档v3](https://docs.docker.com/compose/overview) | [老版本v2](https://www.jianshu.com/p/2217cfed29d7) | [votingapp例子](https://github.com/angenal/labs/blob/master/beginner/chapters/votingapp.md)<br>
 　管理容器的生命周期，从应用创建、部署、扩容、更新、调度均可在一个平台上完成。<br>
 　[`启动`](https://docs.docker-cn.com/compose/reference/up/)：`docker-compose up -d` | [`停止`](https://docs.docker-cn.com/compose/reference/down/)：`docker-compose down` | [`更多`](https://docs.docker-cn.com/compose/reference)：`pause`、`unpause`、`start`、`stop`、`restart`
-~~~
+~~~docker-compose
   version: '3' # docker compose 版本(版本不同,语法命令有所不同)
   services:    # docker services 容器服务编排
     web:       # docker container service
@@ -1560,7 +1570,7 @@ obj\
   　`搭建^6台`：负载均衡`1虚拟IP`高可用`集群` (4核8G;IP1+IP2>>`VIP*`) load-balancer-master,load-balancer-backup<br>
   　  　前后端*`高IO型`的`Web`应用程序 (8核16G;IP3+IP4) k8s-master1,k8s-master2<br>
   　  　长时间*`可水平扩展`的`分布式计算型`任务 (16核64G;IP5+IP6) k8s-node1,k8s-node2 <br>
-~~~
+~~~shell
 # 启用k8s失败时; windows设置:可参考[Aliyun-Istio]
 # > $env:DOCKER_HOST="tcp://0.0.0.0:2375"   # 设置Windows环境变量 PowerShell [cli连接Docker-Server端TCP地址]
 # > $env:KUBECONFIG="C:\Users\Administrator\.kube\config" ... 启动docker后, 签出k8s相对应的git版本
@@ -1713,7 +1723,7 @@ $ sudo kubeadm reset #[重置]
 
 > [`Consul`](https://www.consul.io) 是[HashiCorp](https://www.hashicorp.com)开源的一个使用go语言开发的服务发现、配置管理中心服务。<br>
   　[`Docker`+`Consul`+`Nginx`](https://www.jianshu.com/p/9976e874c099)基于nginx和consul构建高可用及自动发现的docker服务架构。Consul集群中的每个主机都运行Consul代理，与Docker守护程序一起运行。每个群集在服务器模式下至少有一个代理，通常为3到5个以实现高可用性。在给定主机上运行的应用程序仅使用其HTTP-API或DNS-API与其本地Consul代理进行通信。主机上的服务也要向本地Consul代理进行注册，该代理将信息与Consul服务器同步。多个HTTP应用程序与Consul的服务发现功能深入集成，并允许应用程序在没有任何中间代理的情况下定位服务并平衡负载 [`查看安装说明`](https://hub.docker.com/_/consul)、[`参数`/`开发模式`](https://www.consul.io/docs/agent/options.html#_dev)、[`API`](https://www.consul.io/docs/agent/http/agent.html)
-~~~
+~~~shell
   ######Docker容器######
   # /consul/data   容器暴露VOLUME(用于持久化存储集群的数据的目录)
     # 对于客户端代理，存储有关集群的一些信息以及客户端的运行状况检查，以防重新启动容器。
@@ -1759,7 +1769,7 @@ $ sudo kubeadm reset #[重置]
   # 在Docker容器中运行Consul检查(如果Docker守护程序暴露给Consul代理+环境变量DOCKER_HOST，则可以使用容器ID配置检查)
 ~~~
 ![](https://github.com/angenalZZZ/doc/blob/master/screenshots/a107560a.png)
-~~~
+~~~bash
   ######Consul命令行######
   $ consul [command] --help
   $ consul catalog nodes   # 节点列表+Node+ID+Address+DC... (DC: 数据中心,即节点归属)
@@ -1794,7 +1804,7 @@ $ sudo kubeadm reset #[重置]
  * 安全: 支持SSL客户端安全认证；数据持久化(默认数据更新就进行持久化)；
  * 快速: 每秒1w/qps；版本高速迭代和开发中，这既是一个优点，也是一个缺点；
  * 可靠: 使用Raft一致性算法来管理高可用复制(分布式存储)
-~~~
+~~~shell
 # 版本: 默认API版本为2(修改参数ETCDCTL_API=3)；
 # 端口: 默认2379为客户端通讯，2380进行服务器间通讯；
 # <本地简单运行>----------------------------------------------------
@@ -1828,15 +1838,15 @@ $ sudo kubeadm reset #[重置]
 > [阿里云`/fp-api/front`](https://cr.console.aliyun.com/repository/cn-hangzhou/fp-api/front/detail)
 
   1. 登录阿里云Docker Registry
-~~~
+~~~bash
   $ sudo docker login --username=angenal@hotmail.com registry.cn-hangzhou.aliyuncs.com
 ~~~
   2. 从Registry中拉取镜像
-~~~
+~~~bash
   $ sudo docker pull registry.cn-hangzhou.aliyuncs.com/fp-api/front:[镜像版本号]
 ~~~
   3. 将镜像推送到Registry
-~~~
+~~~bash
   # [ImageId]和[镜像版本号]参数(docker images 查询)
   # 　公网地址：registry.cn　经典内网：registry-internal.cn　专有网络：registry-vpc.cn
   $ sudo docker tag [ImageId] registry.cn-hangzhou.aliyuncs.com/fp-api/front:[镜像版本号]
@@ -1847,7 +1857,7 @@ $ sudo kubeadm reset #[重置]
 
 > [转发服务`ngrok`](https://dashboard.ngrok.com/get-started)
 
-~~~
+~~~bash
   # 保存路径 C:/Windows/System32/ngrok.exe
   # 查看帮助
   > ngrok help

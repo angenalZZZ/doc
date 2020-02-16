@@ -158,7 +158,7 @@
   # -18=TSTP暂停进程 -19=CONT继续进程 -17=STOP停止进程(不能被捕获) 
   # -21=TTIN读数据时 -22=TTOU写数据时 -20=CHLD子进程结束(由父进程接收)
   $ lsof | tail                 # 系统最近打开的文件(list open files)
-  $ lsof -p <<PID>>   # 进程打开的文件(包括网络端口等)
+  # lsof -p <<PID>>   # 进程打开的文件(包括网络端口等)
   $ lsof -u root            # root最近打开的文件
   $ lsof -i tcp               # tcp网络端口打开的文件
   $ lsof -i :22                # 查看端口号22(sshd)连接情况 lsof 列出当前系统打开的文件

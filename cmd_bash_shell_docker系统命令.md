@@ -139,7 +139,7 @@
   > tasklist
   > wmic process where "caption = 'java.exe' and commandline like '%server-1.properties%'" get processid
   > netstat -ano | findstr :3000 # 杀死进程使用, 指定占用的端口号
-  > taskkill /F /PID <<PID>>     # PowerShell
+  # taskkill /F /PID <<PID>>     # PowerShell杀死进程
   $ ps aux                       # 进程列表: USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND
   $ ps -ef                       # 进程列表: UID  PID  PPID  C STIME TTY TIME CMD
   $ ps -eo pid,cmd | grep uuid   # [o输出字段,e依赖的系统环境]

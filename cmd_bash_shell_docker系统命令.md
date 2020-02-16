@@ -12,6 +12,15 @@
 　[`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)、[`安全相关思维导图收集`](https://github.com/phith0n/Mind-Map)
 
 ~~~bash
+  # 帮助
+  > help cmd
+  $ info       # 系统菜单信息: Basics,Compression,Editors,Screen.…… 菜单导航&帮助文档;
+   #系统菜单信息: GNU Utilities,Individual utilities,Libraries,Math,Network applications,Text manipulation
+  $ man        # 在线帮助说明
+  $ whatis id  # 查找命令id的帮助说明 print real and effective user and group IDs
+  $ history    # 历史命令列表
+  $ sudo !!    # 以sudo方式, 执行上一次执行的命令
+  
   # 清屏
   > cls
   $ clear         # 快捷命令: alias cls='clear'
@@ -55,14 +64,6 @@
   $ sudo timedatectl set-local-rtc 1   # Ubuntu先将RTC硬件时间由UTC改为CST(中国标准时间);然后设置"日期和时间";
   $ sudo hwclock --localtime --systohc # 然后,同步机器时间(将CST本地时间更新到RTC硬件时间;Windows使用的RTC为CST)
   
-  # 帮助
-  > help cmd
-  $ info       # 系统菜单信息: Basics,Compression,Editors,Screen.…… 菜单导航&帮助文档;
-   #系统菜单信息: GNU Utilities,Individual utilities,Libraries,Math,Network applications,Text manipulation
-  $ man        # 在线帮助说明
-  $ whatis id  # 查找命令id的帮助说明 print real and effective user and group IDs
-  $ history    # 历史命令列表
-  
   # 用户登陆
   > mkdir -p %USERPROFILE% # 用户目录
   > mkdir to/path # 创建目录 $ mkdir -p to/path  [-p递归创建目录]
@@ -100,6 +101,7 @@
   # 网络端口
   > netstat -anT                              # tcp端口(本地地址,外部地址,状态)
   > netstat -anp tcp|findstr -i "listening"   # tcp端口-监听列表; [p传输协议]
+  $ netstat -tupln (TCP+UDP);  netstat -tpln (TCP);  netstat -upln (UDP);  sudo !!  (以sudo方式, 执行netstat)
   $ netstat -anp|grep 3306                    # 1.通过端口查看进程; 2.通过进程id查看占用端口; [p显示进程]
   $ sudo netstat -anpW |grep -i "grafana-server" # 网络端口资源查找; [端口tcp+udp]
   $ sudo netstat -anptW|grep -i "listen"         # 网络端口资源列表; [端口tcp] 本机所有tcp网络应用程序列表
@@ -117,6 +119,7 @@
   $ sudo update-alternatives --config nc   # 替换默认安装的 netcat-OpenBSD < ubuntu >
   $ nc -help # 开启服务器监听> nc -lnvp 4488 -w 2 ; netstat -anT|grep 4488 < windows >
   $ nc -vz www.baidu.com 443         # 查询DNS记录
+  $ mtr --curses 8.8.8.8                        # 跟踪DNS记录+路由地址
   # 域名解析
   $ host localhost
   $ nslookup www.baidu.com           # 查询DNS记录，查看域名解析是否正常
@@ -143,6 +146,7 @@
   $ ps -u $USER -o pid,%cpu,tty,cputime,cmd
   $ ps -ef | grep dotnet         # 查看dotnet进程id
   $ top -Hp [进程id]             # 进程列表: 内存&CPU占用
+  $ lsof | tail                            # 
   $ dotnet-dump collect -p [进程id] ; dotnet-dump analyze core_***  # 查找.NET Core 占用CPU 100% 的原因
     > clrthreads ; setthread [线程DBG] ; clrstack ; clrstack -a ; dumpobj 0x00*** # 分析线程/堆栈/内存数据
   $ ps aux | head -1; ps aux | sort -rn -k3 | head -10 # 占用CPU最高的前10个进程
@@ -1940,6 +1944,7 @@ awk '{buffer[NR%10]=$0} END {for(i=0;i<11;i++){ print buffer[i %10]} } ' filenam
 head -n 10 filename # 前10行[默认为10行] head -5 前5行; head -n -10 除最后10行外,显示前面所有内容;
 tail -n 10 filename # 后10行[-n默认10] tail -n +10 从开头第10行开始输出; tail -n 2 filename |head -n 1 倒数第2行
 tail -f /var/log/auth.log # 跟踪后10行 tail -10f /var/log/auth.log
+less +F /var/log/syslog  # 跟踪文件新增内容 类似tail
 ~~~
 
 

@@ -64,7 +64,7 @@
   $ sudo timedatectl set-local-rtc 1   # Ubuntu先将RTC硬件时间由UTC改为CST(中国标准时间);然后设置"日期和时间";
   $ sudo hwclock --localtime --systohc # 然后,同步机器时间(将CST本地时间更新到RTC硬件时间;Windows使用的RTC为CST)
   
-  # 用户登陆
+  # 用户
   > mkdir -p %USERPROFILE% # 用户目录
   > mkdir to/path # 创建目录 $ mkdir -p to/path  [-p递归创建目录]
   $ cd -          # 上次访问目录; 用户$HOME目录 > cd ~ ; cd /home/$(whoami) # root 用户为 cd ~  = /root 
@@ -74,29 +74,28 @@
   $ id            # 返回 uid=0(root) gid=0(root) groups=0(root)  ; root登录:  su - ; su root
   $ id -u         # 返回 uid          添加用户(-d=$home)      (-G=多选用户组)       例如(用户名=admin)
   $ mkdir -p /home/admin & chmod 777 /home/admin 
-  # 新建用户 - 默认值: useradd -D  |  cat /etc/default/useradd ;修改默认shell: useradd -D -s /bin/zsh
-  $ useradd -d /home/admin -G adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare,libvirt admin
-  # 修改密码
-  $ passwd admin 
+  # 新建用户-默认值: useradd -D  |  cat /etc/default/useradd ;修改默认shell: useradd -D -s /bin/zsh
+  $ useradd -m -d /home/admin -G adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare,libvirt admin # -m管理员
+  $ useradd -d /home/test  -s /bin/bash test  # 普通用户test
+  $ man newusers   # 批量更新和创建新用户
+  $ userdel -r test     # 删除用户
+  $ cat /etc/passwd # 查看所有用户 ; 统计用户数 cat /etc/passwd | wc -l
+  $ cat /etc/passwd |grep `id -un` # 查看当前登录用户
+  $ cat /etc/shadow # 用户列表
+  $ cat /etc/group      # 用户组列表
+  $ groups                    # 用户所在组
+  $ groupadd              # 添加用户组
+  $ passwd admin    # 修改密码
+  $ login                        # 用户登录
   # 修改用户多选组-G=groups   ; 查用户组${id -g 用户名} $ groups yangzhou
   $ id -gn && id -Gn         # 返回用户组: sudo grep $USER /etc/group /etc/gshadow
   $ usermod -G yangzhou,adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare,docker,mysql,mongodb,libvirt,rabbitmq yangzhou
   $ usermod -aG rabbitmq yangzhou # 添加组给用户,方便操作.
   # 查询用户更多信息
   $ sudo grep $USER /etc/passwd /etc/shadow /etc/group /etc/gshadow
-  
   $ su - root      # 切换用户至root (并切换到用户主目录/root；超级用户提示符结尾 # 普通用户$ 主目录/home/*)
-  $ su - admin     # 切换用户至admin
-  $ exit           # 退出登录
-  
-  $ cat /etc/passwd # 查看所有用户
-  $ cat /etc/passwd |grep `id -un` # 查看当前登录用户
-  $ login           # 用户登录
-  $ cat /etc/shadow # 用户列表
-  $ userdel -r admin# 删除用户
-  $ cat /etc/group  # 用户组列表
-  $ groups          # 用户所在组
-  $ groupadd        # 添加用户组
+  $ su - admin # 切换用户至admin
+  $ exit               # 退出登录
   
   # 网络端口
   > netstat -anT                              # tcp端口(本地地址,外部地址,状态)

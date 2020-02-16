@@ -570,14 +570,14 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ sudo add-apt-repository ppa:git-core/ppa
   $ sudo apt-get update
   $ sudo apt install git
-  $ git --version                                        # git config --local -l #查看本地配置
+  $ git --version                                        # git config --local -l       # 本地配置
   $ git config --global user.name "yangzhou"             # git config --local user.name "用户名"
   $ git config --global user.email "angenal@hotmail.com" # git config --local user.email "用户邮箱地址"
   $ git config --global http.postBuffer 524288000        # set more buffer
   $ git config --global http.sslVerify "false"           # set cancel ssl of https
   $ git init [Git项目所在目录-默认当前目录]                # git init app && ls app/.git/
-  $ git status ; git stash list ; git diff
-  $ git add [filename]                          # 新增file
+  $ git status ; git stash list ; git diff      # 状态repos
+  $ git add [file]                              # 新增file
   $ git commit -m "添加文件"                     # 新增commit
   $ git reset --soft HEAD^ && git reset HEAD *  # 取消本次提交
   $ git checkout -- [filename]    # 签出，放弃工作区最新的更改，适用于还未提交的情况
@@ -591,9 +591,9 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ git remote add origin git@github.com:dragonFly12345/ubuntuGitTest.git     # 使用远程SSH地址
   $ git push origin master -u                                                 # [u用在第一次推送时]
   # https://github.com/jesseduffield/lazygit/releases/                        # 安装lazyGit管理更方便
-  > Gitea 版本管理 docs.gitea.io/zh-cn 下载 dl.gitea.io/gitea/master
-  > Gitea API 使用指南 docs.gitea.io/zh-cn/api-usage  github.com/go-gitea/gitea
-  # Gitea 注册Windows服务
+  > Gitea 版本管理文档 docs.gitea.io/zh-cn  下载 dl.gitea.io  源码 github.com/go-gitea/gitea
+  # adduser --system --shell /bin/bash --gecos 'Git版本控制' --group --disabled-password --home /home/git git
+  # Gitea 注册Windows服务               (可选项)环境变量 GITEA_WORK_DIR 
   > sc create gitea start= auto binPath= "D:\Program\Git\Server\gitea\gitea.exe web --config \"D:\Program\Git\Server\gitea\custom\conf\app.ini\""
 ~~~
 

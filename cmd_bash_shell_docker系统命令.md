@@ -916,10 +916,12 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   > nssm install Botpress D:\Program\botpress\bp.exe serve  # Windows Service
 ~~~
 
-> `系统服务` 计划任务管理 <br>
+> `系统服务` 计划任务管理<br>
     Ⅰ.[uber/cadence](https://cadenceworkflow.io) [分布式的、可扩展的、高可用的任务编排引擎，异步执行长时间运行的业务逻辑](https://github.com/uber/cadence)
 ~~~bash
-less /etc/crontab
+> less /etc/crontab   # 系统服务 > crontab [-u user] file   # 参考file
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 # Example of job definition:
 # .---------------- minute (0 - 59)
 # |  .------------- hour (0 - 23)
@@ -928,6 +930,7 @@ less /etc/crontab
 # |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,>
 # |  |  |  |  |
 # *  *  *  *  * user-name command to be executed
+17 *    * * *   root    cd / && run-parts --report /etc/cron.hourly
 
 #Ⅰ.uber/cadence  https://github.com/uber/cadence/blob/master/docker/README.md
   #-1: Quickstart for localhost development
@@ -1512,7 +1515,7 @@ obj\
 > **docker-compose.yml** [安装Compose](https://docs.docker.com/compose/install/) [文档v3](https://docs.docker.com/compose/overview) | [老版本v2](https://www.jianshu.com/p/2217cfed29d7) | [votingapp例子](https://github.com/angenal/labs/blob/master/beginner/chapters/votingapp.md)<br>
 　管理容器的生命周期，从应用创建、部署、扩容、更新、调度均可在一个平台上完成。<br>
 　[`启动`](https://docs.docker-cn.com/compose/reference/up/)：`docker-compose up -d` | [`停止`](https://docs.docker-cn.com/compose/reference/down/)：`docker-compose down` | [`更多`](https://docs.docker-cn.com/compose/reference)：`pause`、`unpause`、`start`、`stop`、`restart`
-~~~docker-compose
+~~~dockerfile
   version: '3' # docker compose 版本(版本不同,语法命令有所不同)
   services:    # docker services 容器服务编排
     web:       # docker container service

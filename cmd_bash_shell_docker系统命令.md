@@ -170,16 +170,42 @@
   
   # 文件系统
   > dir [目录]           # 默认当前目录(命令pwd)
-  $ df -h                     # 文件系统        容量  已用  可用 已用% 挂载点
+  > devmgmt.msc          # 系统硬件驱动
+  $ df -ah               # 文件系统  容量  已用  可用  已用%  挂载点
+  $ lsblk                # 文件系统  分区  挂载点
+  $ fdisk -l             # 文件系统  硬件  挂载点
   $ ls -al [目录]        # 查看目录及文件读写权限 alias ll='ls -alF' ; alias la='ls -A' ; alias l='ls -CF'
-  $ lsof -h                     # 查看打开的文件、网络资源等
-  $ touch main.js         # 新建文件
+  $ lsof -h              # 查看打开的文件、进程、网络资源等，功能强大。
+  $ touch main.js        # 新建文件
   $ mktemp && mktemp -d  # 新建临时文件和临时目录
   $ mv main.js main.cs   # 重命名文件,移动文件位置
-  $ cat main.cs                # 输出文件内容
+  $ cat main.cs          # 输出文件内容
   $ namo|vi main.cs      # 编辑文件内容
   $ file main.js && ls -an main.js # 查看文件类型-信息 & 查看文件读写权限&更新时间
-  $ for n in {1..10000}; do echo content > "__${n}.tmp"; done # 创建 10000 个临时文件
+  $ for n in {1..10000}; do echo content > "__${n}.tmp"; done # 创建10000个临时文件
+  # linux硬件设备-挂载点  # fdisk 
+  /dev/char
+  /dev/cdrom   # 光驱
+  /dev/console
+  /dev/core -> /proc/kcore
+  /dev/cpu
+  /dev/disk
+  /dev/fd -> /proc/self/fd  # 软驱 /dev/fd[0-1] | dockerd -H fd://
+  /dev/initctl -> /run/systemd/initctl/fifo
+  /dev/input
+  /dev/log -> /run/systemd/journal/dev-log
+  /dev/lp      # 打印机 /dev/lp[0-15] 
+  /dev/mem
+  /dev/memory_bandwidth
+  /dev/mouse   # 鼠标
+  /dev/sda{sda1-3,sdb,sdc,$sdd~sdp} # 硬盘 (a~p 代表 16 块不同的硬盘; 数字代表分区数)
+  /dev/snapshot
+  /dev/stdin -> /proc/self/fd/0
+  /dev/stdout -> /proc/self/fd/1
+  /dev/stderr -> /proc/self/fd/2
+  /dev/tty
+  /dev/usb
+  /dev/zero
   
   # 文件查找
   > for /r C:\windows\addins\ %i in (explorer.exe) do @echo %i # 在指定目录下查找匹配文件
@@ -272,39 +298,6 @@
   > schtasks /create /sc once /tn "auto shutdown my computer" /tr "shutdown -s" /st 15:30
   > at 11:00:00PM /every:M,T,W,TH,F,SA,SU shutdown -s
   > at 11:00:00PM shutdown -r [r重启]
-  
-  # 系统硬件驱动
-  > devmgmt.msc
-  $ lsblk      # 文件系统  分区  挂载点
-  $ df -h      # 文件系统  容量  挂载点
-  $ sudo fdisk -l # 文件系统
-  # linux硬件设备-挂载点
-  /dev/char
-  /dev/cdrom   # 光驱
-  /dev/console
-  /dev/core -> /proc/kcore
-  /dev/cpu
-  /dev/disk
-  /dev/fd -> /proc/self/fd  # 软驱 /dev/fd[0-1] | dockerd -H fd://
-  /dev/initctl -> /run/systemd/initctl/fifo
-  /dev/input
-  /dev/log -> /run/systemd/journal/dev-log
-  /dev/lp      # 打印机 /dev/lp[0-15] 
-  /dev/mem
-  /dev/memory_bandwidth
-  /dev/mouse   # 鼠标
-  /dev/mqueue
-  /dev/net
-  /dev/null
-  /dev/port
-  /dev/sda{sda1-3,sdb,sdc,$sdd~sdp} # 硬盘 (a~p 代表 16 块不同的硬盘; 数字代表分区数)
-  /dev/snapshot
-  /dev/stdin -> /proc/self/fd/0
-  /dev/stdout -> /proc/self/fd/1
-  /dev/stderr -> /proc/self/fd/2
-  /dev/tty
-  /dev/usb
-  /dev/zero
   
   # 系统硬件序列号
   > wmic memorychip get serialnumber

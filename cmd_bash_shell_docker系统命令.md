@@ -15,15 +15,17 @@
   # 帮助
   > help cmd
   $ info       # 系统菜单信息: Basics,Compression,Editors,Screen.…… 菜单导航&帮助文档;
-   #系统菜单信息: GNU Utilities,Individual utilities,Libraries,Math,Network applications,Text manipulation
+  # 系统菜单信息: GNU Utilities,Individual utilities,Libraries,Math,Network applications,Text manipulation
   $ man        # 在线帮助说明
   $ whatis id  # 查找命令id的帮助说明 print real and effective user and group IDs
   $ history    # 历史命令列表
   $ sudo !!    # 以sudo方式, 执行上一次执行的命令
+  $ cd -       # 上次访问目录, 可用于来回切换目录
+  $ cd ~       # 用户目录 = $HOME = /home/$(whoami) # root用户 cd ~  = /root 
   
   # 清屏
   > cls
-  $ clear         # 快捷命令: alias cls='clear'
+  $ clear      # 快捷命令: alias cls='clear'
   
   # 系统
   > ver              # 系统  修复 > sfc/scannow
@@ -67,12 +69,11 @@
   # 用户
   > mkdir -p %USERPROFILE% # 用户目录
   > mkdir to/path # 创建目录 $ mkdir -p to/path  [-p递归创建目录]
-  $ cd -          # 上次访问目录; 用户$HOME目录 > cd ~ ; cd /home/$(whoami) # root 用户为 cd ~  = /root 
   > quser         # 当前用户状态
   $ whoami && w && id  # 当前用户信息
   $ echo -e "$USER\n$HOME\n$SHELL\n$PATH\n$LOGNAME\n$MAIL" # 当前用户环境 [-e允许反斜杠转义字符]
-  $ id            # 返回 uid=0(root) gid=0(root) groups=0(root)  ; root登录:  su - ; su root
-  $ id -u         # 返回 uid          添加用户(-d=$home)      (-G=多选用户组)       例如(用户名=admin)
+  $ id            # 返回 uid=0(root) gid=0(root) groups=0(root)  ; root登录:  su root ; su - ;目录不变
+  $ id -u         # 返回 uid          添加用户(-d=$home)      (-G=附加用户组)       例如(用户名=admin)
   $ mkdir -p /home/admin & chmod 777 /home/admin 
   # 新建用户-默认值: useradd -D  |  cat /etc/default/useradd ;修改默认shell: useradd -D -s /bin/zsh
   $ useradd -m -d /home/admin -G adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare,libvirt admin # -m管理员
@@ -200,8 +201,8 @@
   $ sudo chmod 644 to/path    # 所有者有读和写的权限，组用户只有读的权限
   $ [ -d /temp ] ||  sudo mkdir /temp && sudo chmod -vR 1777 /temp # 创建共享临时目录 drwxrwxrwt
   $ sudo chmod -vR +t /temp   # 添加目录[文件删除+重命名]的权限 ...rwt
-  #0 : None  #1 : Execute Only  #2 : Write Only  #3 : Write & Execute  #4 : Read Only  #5 : Read & Execute  
-  #6 : Read & Write  #7 : Read, Write & Execute
+   #0 : None  #1 : Execute Only  #2 : Write Only  #3 : Write & Execute  #4 : Read Only
+   #5 : Read & Execute  #6 : Read & Write  #7 : Read, Write & Execute
   
   # 文件复制
   > xcopy "来源目录" "目标目录" /E /H /K /X /Y
@@ -274,8 +275,9 @@
   
   # 系统硬件驱动
   > devmgmt.msc
-  $ df -h      # 文件系统   容量  挂载点
-  $ sudo fdisk -l
+  $ lsblk      # 文件系统  分区  挂载点
+  $ df -h      # 文件系统  容量  挂载点
+  $ sudo fdisk -l # 文件系统
   # linux硬件设备-挂载点
   /dev/char
   /dev/cdrom   # 光驱

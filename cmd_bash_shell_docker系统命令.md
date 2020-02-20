@@ -77,26 +77,26 @@
   $ mkdir -p /home/admin & chmod 777 /home/admin 
   # 新建用户-默认值: useradd -D  |  cat /etc/default/useradd ;修改默认shell: useradd -D -s /bin/zsh
   $ useradd -m -d /home/admin -G adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare,libvirt admin # -m管理员
-  $ useradd -d /home/test  -s /bin/bash test  # 普通用户test
-  $ man newusers   # 批量更新和创建新用户
-  $ userdel -r test     # 删除用户
+  $ useradd -d /home/test  -s /bin/bash test # 新建普通用户test
+  $ man newusers    # 批量更新和创建新用户
+  $ userdel -r test # 删除用户
   $ cat /etc/passwd # 查看所有用户 ; 统计用户数 cat /etc/passwd | wc -l
   $ cat /etc/passwd |grep `id -un` # 查看当前登录用户
   $ cat /etc/shadow # 用户列表
-  $ cat /etc/group      # 用户组列表
-  $ groups                    # 用户所在组
-  $ groupadd              # 添加用户组
+  $ cat /etc/group  # 用户组列表
+  $ groups          # 用户所在组
+  $ groupadd        # 添加用户组
   $ passwd admin    # 修改密码
-  $ login                        # 用户登录
-  # 修改用户多选组-G=groups   ; 查用户组${id -g 用户名} $ groups yangzhou
+  $ login           # 用户登录
+  # 修改用户多选组-G=groups   # 查用户组${id -g 用户名} $ groups yangzhou
   $ id -gn && id -Gn         # 返回用户组: sudo grep $USER /etc/group /etc/gshadow
   $ usermod -G yangzhou,adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare,docker,mysql,mongodb,libvirt,rabbitmq yangzhou
   $ usermod -aG rabbitmq yangzhou # 添加组给用户,方便操作.
   # 查询用户更多信息
   $ sudo grep $USER /etc/passwd /etc/shadow /etc/group /etc/gshadow
   $ su - root      # 切换用户至root (并切换到用户主目录/root；超级用户提示符结尾 # 普通用户$ 主目录/home/*)
-  $ su - admin # 切换用户至admin
-  $ exit               # 退出登录
+  $ su - admin     # 切换用户至admin
+  $ exit           # 退出登录
   
   # 网络端口
   > netstat -anT                              # tcp端口(本地地址,外部地址,状态)
@@ -119,7 +119,7 @@
   $ sudo update-alternatives --config nc   # 替换默认安装的 netcat-OpenBSD < ubuntu >
   $ nc -help # 开启服务器监听> nc -lnvp 4488 -w 2 ; netstat -anT|grep 4488 < windows >
   $ nc -vz www.baidu.com 443         # 查询DNS记录
-  $ mtr --curses 8.8.8.8                        # 跟踪DNS记录+路由地址
+  $ mtr --curses 8.8.8.8             # 跟踪DNS记录+路由地址
   # 域名解析
   $ host localhost
   $ nslookup www.baidu.com           # 查询DNS记录，查看域名解析是否正常
@@ -146,7 +146,7 @@
   $ ps -u $USER -o pid,%cpu,tty,cputime,cmd
   $ ps -ef | grep dotnet         # 查看dotnet进程id
   $ top -Hp [进程id]             # 进程列表: 内存&CPU占用            # 快捷键：k 杀死进程
-  $ htop                                    # 进程:  sudo apt-get install htop
+  $ htop                        # 进程管理:  sudo apt-get install htop
   $ dotnet-dump collect -p [进程id] ; dotnet-dump analyze core_***  # 查找.NET Core 占用CPU 100% 的原因
     > clrthreads ; setthread [线程DBG] ; clrstack ; clrstack -a ; dumpobj 0x00*** # 分析线程/堆栈/内存数据
   $ ps aux | head -1; ps aux | sort -rn -k3 | head -10 # 占用CPU最高的前10个进程
@@ -154,15 +154,16 @@
   $ killall -I NAME... # 杀死进程,指定进程名称NAME...
   $ killall -I -s 15 -u `id -un` NAME... # -s 15=TERM结束程序(可以被捕获-阻塞-忽略)+程序内可监听该信号SIG
   $ kill -l            # 查看软件中断SIG [Linux标准信号1~31] (实时信号:32~64) +打印所有支持的信号名称
-  # kill -9 <<PID>>    # -9=KILL无条件结束程序(不能被捕获-阻塞-忽略) 参考: https://gist.github.com/biezhi/74bfe20f9758210c1be18c64e6992a37
+  # kill -9 <<PID>>    # -9=KILL无条件结束程序(不能被捕获-阻塞-忽略) 
+  # 参考: https://gist.github.com/biezhi/74bfe20f9758210c1be18c64e6992a37
   # -1=HUP终端控制进程结束(终端连接断开) -2=INT用户发送INTR字符(Ctrl+C)触发进程结束 -3=QUIT用户发送QUIT字符(Ctrl+/)
   # -18=TSTP暂停进程 -19=CONT继续进程 -17=STOP停止进程(不能被捕获) 
   # -21=TTIN读数据时 -22=TTOU写数据时 -20=CHLD子进程结束(由父进程接收)
-  $ lsof | tail                 # 系统最近打开的文件(list open files)
-  # lsof -p <<PID>>   # 进程打开的文件(包括网络端口等)
-  $ lsof -u root            # root最近打开的文件
-  $ lsof -i tcp               # tcp网络端口打开的文件
-  $ lsof -i :22                # 查看端口号22(sshd)连接情况 lsof 列出当前系统打开的文件
+  $ lsof | tail        # 系统最近打开的文件(list open files)
+  # lsof -p <<PID>>    # 进程打开的文件(包括网络端口等)
+  $ lsof -u root       # root最近打开的文件
+  $ lsof -i tcp        # tcp网络端口打开的文件
+  $ lsof -i :22        # 查看端口号22(sshd)连接情况 lsof 列出当前系统打开的文件
   # lsof -i @localhost:3000 && kill -9 <<PID>> # 杀死进程(指定占用端口号的程序)
   $ smem -k -s USS     # 进程的内存使用情况
   # < ubuntu > apt update & apt install smem
@@ -185,19 +186,19 @@
   $ for n in {1..10000}; do echo content > "__${n}.tmp"; done # 创建10000个临时文件
   # linux硬件设备-挂载点  # fdisk 
   /dev/char
-  /dev/cdrom   # 光驱
+  /dev/cdrom                        # 光驱
   /dev/console
   /dev/core -> /proc/kcore
   /dev/cpu
   /dev/disk
-  /dev/fd -> /proc/self/fd  # 软驱 /dev/fd[0-1] | dockerd -H fd://
-  /dev/initctl -> /run/systemd/initctl/fifo
+  /dev/fd -> /proc/self/fd          # 软驱 /dev/fd[0-1] | dockerd -H fd://
   /dev/input
+  /dev/initctl -> /run/systemd/initctl/fifo
   /dev/log -> /run/systemd/journal/dev-log
-  /dev/lp      # 打印机 /dev/lp[0-15] 
+  /dev/lp                           # 打印机 /dev/lp[0-15] 
   /dev/mem
   /dev/memory_bandwidth
-  /dev/mouse   # 鼠标
+  /dev/mouse                        # 鼠标
   /dev/sda{sda1-3,sdb,sdc,$sdd~sdp} # 硬盘 (a~p 代表 16 块不同的硬盘; 数字代表分区数)
   /dev/snapshot
   /dev/stdin -> /proc/self/fd/0
@@ -209,16 +210,16 @@
   
   # 文件查找
   > for /r C:\windows\addins\ %i in (explorer.exe) do @echo %i # 在指定目录下查找匹配文件
-  $ locate /bin/ps          # 遍历文件系统/路径包含/bin/ps所有匹配文件
-  $ find / -name [filename] # 查找在根目录下/所有匹配文件
+  $ locate /bin/ps                  # 遍历文件系统/路径包含/bin/ps所有匹配文件
+  $ find / -name [filename]         # 查找在根目录下/所有匹配文件
   $ find /etc -type f -name passwd  # 如下，修改root用户的文件"拥有者"为当前用户:文件占位符{}
   $ find . -type f -user root -exec chown `id -un` {} \; # find文件后-exec执行操作(注意:必须以 \; 结尾)
   
   # 目录访问权限
   > cd [目录]
-  $ sudo chown -R 1000 [目录]  # 改变[目录](-R递归修改文件和目录)的"拥有者"为uid:1000 = $(id -u)
-  $ sudo chown root:root [目录] #修改目录的"拥有者"
-  $ sudo chgrp –R users [目录] # 改变[目录]的"所属用户组"为G:users = $(id -g)
+  $ sudo chown -R 1000 [目录]   # 改变[目录](-R递归修改文件和目录)的"拥有者"为uid:1000 = $(id -u)
+  $ sudo chown root:root [目录] # 修改目录的"拥有者"
+  $ sudo chgrp –R users [目录]  # 改变[目录]的"所属用户组"为G:users = $(id -g)
   $ sudo chmod 744 [目录]      # 修改当前目录(.)权限为可读写及执行(-R递归修改文件和目录)
   $ sudo chmod 777 to/path    # 每个人都有读和写以及执行的权限(约定的三个数字owner=7;group=7;others=7)
   $ sudo chmod 666 to/path    # 每个人都有读和写的权限(常用于文件上传下载)
@@ -237,31 +238,30 @@
   $ cp -if /mnt/floppy/* ~/floppy                   # [~/floppy 指向 /root/floppy 或 /home/floppy]
   $ cp -if /mnt/d/Docker/App/ubuntu/usr/local/bin/* /usr/local/bin # [i覆盖文件时,询问?]
   $ cp -fr /usr/local/bin/* /mnt/d/Docker/App/ubuntu/usr/local/bin # [r复制文件目录!]
-  # 创建目录的`符号链接(软链接)`
-  > mklink /d "来源目录" "目标目录"
+  
+  > mklink /d "来源目录" "目标目录"  # 创建目录的`符号链接(软链接)`
   $ ln -s '来源目录' '目标目录'
-  # 创建目录的`目录联接(硬链接)`
-  > mklink /j "来源目录" "目标目录"
-  $ ln -f '来源文件' '目标文件'  #-f强制(可选参数)
+  > mklink /j "来源目录" "目标目录"  # 创建目录的`目录联接(硬链接)`
+  $ ln -f '来源文件' '目标文件'      #-f强制(可选参数)
   
   # 系统备份和还原
   $ tar -czpvf /media/yangzhou/Software/Software/ubuntu/backup@`date +%Y`.tar.gz 
-      --exclude=/proc --exclude=/tmp --exclude=/boot --exclude=/home --exclude=/lost+found 
-      --exclude=/media --exclude=/mnt --exclude=/run / #-c备份文档 -z用gzip压缩 -p保存权限 -v显示详细 -f输出文件
+    --exclude=/proc --exclude=/tmp --exclude=/boot --exclude=/home --exclude=/lost+found 
+    --exclude=/media --exclude=/mnt --exclude=/run / # -c备份文档 -z用gzip压缩 -p保存权限 -v显示详细 -f输出文件
   $ tar -xzpvf /media/yangzhou/Software/Software/ubuntu/backup@`date +%Y`.tar.gz -C /
-  # linux-live-U盘+启动盘制作
-  $ df -h                  # 查找U盘位置<假如为sdb>
+  # linux-live-U盘+启动盘制作       df -h # 查找U盘位置<假如为sdb>
   $ sudo ntfs-3g /dev/sda1 /mnt/windows  # 挂载硬盘分区<假如为sda1:第1块硬盘分区1>
   $ sudo /sbin/mount.ntfs /dev/sdc2 /40g -o rw,nosuid,nodev
   $ sudo /sbin/mount.ntfs /dev/sdc3 /20g -o rw,nosuid,nodev
-  $ sudo umount /dev/sdb*  # 手动卸载 U盘
-  $ sudo mkfs.vfat /dev/sdb -I  # 格式化 U盘
+  $ sudo umount /dev/sdb*                # 手动卸载 U盘
+  $ sudo mkfs.vfat /dev/sdb -I           # 格式化 U盘
   $ sudo dd if=~/ubuntu.iso of=/dev/sdb  # 制作 U盘启动盘
   
   # 文件删除
   > del /f /s /q [目录|文件]
   > rd /s /q %windir%\temp & md %windir%\temp [删除临时文件]
-  $ rm -f -r [r删除目录,否则删除文件] [f强制] [rmdir移除空目录]
+  $ rm -f -r [r删除目录,否则删除文件] [f强制]
+  $ rmdir   [移除空目录]
   
   # 网络地址 - inet&inet6
   > ipconfig /?
@@ -271,8 +271,8 @@
   $ ifconfig |grep 'inet ' |head -5  # 获取前5条ipV4
   $ ifconfig |grep 'inet6' |head -5  # 获取前5条ipV6
   # 科学上网 - 代理设置 (解决网络问题)  蓝灯: https://github.com/getlantern/lantern
-  $ sudo vim /etc/profile [全局|用户配置：~/.profile]# 填写如下VPN转发PORT
-  export FTP_PROXY=http://<proxy hostname:port>     # 临时使用
+  $ sudo vim /etc/profile [全局|用户配置：~/.profile] # 填写如下VPN转发PORT
+  export FTP_PROXY=http://<proxy hostname:port>      # 临时使用
   export HTTP_PROXY=http://<proxy hostname:port>
   export HTTPS_PROXY=https://<proxy hostname:port>
   export NO_PROXY=localhost,127.0.0.1,10.96.0.0/12,192.168.99.0/24,192.168.39.0/24
@@ -282,8 +282,7 @@
   $ export              # 查看系统环境变量linux
   $ cat /etc/hosts      # 一次显示整个文件
   $ cat > /etc/hosts    # 从键盘创建一个文件
-  # 刷新dns缓存
-  > ipconfig /flushdns
+  > ipconfig /flushdns  # 刷新dns缓存
   $ sudo killall -HUP mDNSResponder
   $ sudo dscacheutil -flushcache
   
@@ -1231,11 +1230,11 @@ $ docker service create --name portainer --publish 9000:9000 --constraint 'node.
   docker network ls                                 # 查看网络列表
   docker network create -d bridge [network-name]    # 创建自定义网络[-d bridge 网络驱动=桥接模式]
   docker network create -o "com.docker.network.bridge.name"="***-net" --subnet 172.18.0.0/16 ***-net #指定子网172.18/255
-  docker network connect [network-name] [container] # 1.加入自定义网络(参数2,3,4可一起写)
-  docker network connect --alias db [network-name] [container-db] # 2.入网,提供别名访问
-  docker network connect --link other_container:alias_name [network-name] [container] # 3.入网,其它容器连接别名
-  docker network connect --ip 10.10.36.122 [network-name] [container] # 4.入网,其它容器连接指定ip
-  docker network disconnect [network-name] [container] # 退出网络
+  docker network connect [network-name] [container] # 1.入网,加入自定义网络(参数2,3,4可一起写)
+  docker network connect --alias db [network-name] [container] # 2.入网,提供别名访问
+  docker network connect --link other_container:alias_name [network-name] [container] # 3.入网,连接其它容器指定别名
+  docker network connect --ip 10.10.36.122 [network-name] [container] # 4.入网,连接其它容器指定ip
+  docker network disconnect [network-name] [container] # 退出网络 指定[container]
   docker network create -d host host        # 创建自定义网络host(默认已添加); -d [host:与主机共享一个IP地址/内网地址]
   docker network create -d bridge workgroup # 创建自定义网络workgroup; -d [bridge(默认):分配给容器一个IP地址]
   docker network connect workgroup redis5 && docker network connect workgroup centos.netcore # 加入自定义网络workgroup

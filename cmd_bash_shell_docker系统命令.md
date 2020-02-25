@@ -913,6 +913,7 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
 > `系统服务` 计划任务管理<br>
     Ⅰ.[uber/cadence](https://cadenceworkflow.io) [分布式的、可扩展的、高可用的任务编排引擎，异步执行长时间运行的业务逻辑](https://github.com/uber/cadence)
 ~~~bash
+#Ⅰ.<linux> crontab
 > less /etc/crontab   # 系统服务 > crontab [-u user] file   # 参考file
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
@@ -925,6 +926,10 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 # |  |  |  |  |
 # *  *  *  *  * user-name command to be executed
 17 *    * * *   root    cd / && run-parts --report /etc/cron.hourly
+
+#Ⅰ.<windows&linux> gocron（替代Linux-crontab）& gocron-node & mysql
+> nssm install Gocron %gopath%\bin\gocron\gocron.exe web -p 5920 -e prod  # 默认端口5920
+> nssm install GocronNode %gopath%\bin\gocron\gocron-node.exe             # 默认端口5921
 
 #Ⅰ.uber/cadence  https://github.com/uber/cadence/blob/master/docker/README.md
   #-1: Quickstart for localhost development

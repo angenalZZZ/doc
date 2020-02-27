@@ -1465,7 +1465,9 @@ alias dockerclean='dockercleanc || true && dockercleani'           # 清除停�
   LABEL description="this is a test image"
   LABEL version="1.0"
   
-  # 设置工作目录，若不存在会自动创建，其他指令会以此为相对路径
+  # 设置当前用户为root，因为后面安装需要使用root用户执行
+  USER root
+  # 设置当前工作目录，若不存在会自动创建，其他指令会以此为相对路径
   WORKDIR /work/app
   
   # ADD <src> <dest>
@@ -1477,23 +1479,33 @@ alias dockerclean='dockercleanc || true && dockercleani'           # 清除停�
   COPY ./ ./
   
   # RUN 构建镜像时执行的命令(安装运行时环境、软件等)
-  RUN npm install
+  RUN npm install  # RUN前提:FROM基础镜像的:系统环境变量:PATH中的可执行程序npm
+  
+  # 安装 .NET Core https://docs.microsoft.com/zh-cn/dotnet/core/install/runtime?pivots=os-linux
+  # RUN wget -O dotnet-runtime.tar.gz https://download.*/aspnetcore-runtime-3.1.2-linux-x64.tar.gz
+  # RUN mkdir -p $HOME/dotnet && tar zxf dotnet-runtime.tar.gz -C $HOME/dotnet
+  # RUN usermod -aG root dotnet  # 添加root用户至dotnet(附加用户组)
+  # USER dotnet                  # 设置当前用户为dotnet(用于执行以后的命令)
+  # ENV DOTNET_ROOT=$HOME/dotnet  # 添加dotnet环境变量
+  # ENV PATH=$PATH:$HOME/dotnet   # 修改环境变量PATH
+  # dotnet tool install -g [工具] # 在线安装dotnet工具
   
   # ARG 构建镜像时可传递的参数，配合 ENV 使用 docker build --build-arg NODE_ENV=dev
-  ARG NODE_ENV
-  ARG TZ='Asia/Shanghai'
+  ARG NODE_ENV            # 必填的参数
+  ARG TZ='Asia/Shanghai'  # 可选的带默认值的参数
   
-  # ENV 容器运行时环境变量，配合 ARG 使用 $NODE_ENV '${TZ}'
-  ENV NODE_ENV=$NODE_ENV
-  ENV TZ '${TZ}'
+  # ENV 容器运行时的环境变量，配合 ARG 使用 $NODE_ENV '${TZ}'
+  ENV PATH="${PATH}:/dotnet:/var/.dotnet/tools" # 修改:FROM基础镜像的:系统环境变量
+  ENV NODE_ENV=$NODE_ENV  # 添加环境变量
+  ENV TZ '${TZ}'          # 设置时区
   
   # EXPOSE 容器端口(可指定多个)，启动时指定与宿主机端口的映射 docker run -p 9999:8888
-  EXPOSE 8080 8888
+  EXPOSE 8080 8888  # 暴露的两个端口都可与宿主机端口进行映射
   
   # CMD 容器启动后执行的命令，会被 docker run 命令覆盖
   CMD ["npm", "start"]  # other, web-proxy: CMD ["nginx", "-g", "daemon off;"]
   
-  # ENTRYPOINT 容器启动后执行的命令，不会被 docker run 命令覆盖；一般不会使用；
+  # ENTRYPOINT 容器启动后执行的命令，不会被 docker run 命令覆盖，一般不会使用；
   # 任何 docker run 命令设置的指令参数 或 CMD 指令，都将作为参数追加至 ENTRYPOINT 命令之后
   # ENTRYPOINT ["dotnet", "aspnetapp.dll"]
 ~~~

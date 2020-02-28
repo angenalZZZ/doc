@@ -335,6 +335,7 @@
     *基本约束         Subject Type=CA \ Path Length Constraint=None
     *指纹             a79be724538b668fa817e8578d6a8078337fd3ad
   
+  #openssl官方文档 https://www.openssl.org/docs/manmaster/man1/
   #1.创建openssl数字签名认证
   ## 快捷方式 openssl req -new -nodes -x509 -out server.crt -keyout server.key -days 3650 \
     -subj "/C=DE/ST=NRW/L=Earth/O=Company-Name/OU=IT/CN=127.0.0.1/emailAddress=***@example.com"
@@ -370,6 +371,22 @@ openssl ca -passin pass:123456 -days 3650 -in server.csr -keyfile ca.key -cert c
 openssl rsa -passin pass:123456 -in server.key -out server.key
 openssl pkcs8 -topk8 -nocrypt -in server.key -out server.pem
 
+  #1.1使用openssl加密解密
+  openssl list -help            # 帮助
+  openssl list -commands        # 命令列表
+  openssl list -cipher-commands # 加密方式列表
+  # 加密签名 hmac+sha256
+  SIGNATURE="$(printf "${TIMESTAMP}${TOKEN}"|openssl dgst -sha256 -hmac "${SECRET}" -binary|openssl enc -base64)"
+  # 编码解码 base64
+  openssl base64 -in file.bin -out file.b64
+  openssl base64 -d -in file.b64 -out file.bin
+  # AES128加密 (CBC模式&PBKDF2密钥)密码+Salt 可选模式:aes-[128|192|256]-[cbc|cfb|cfb1|cfb8|ctr|ecb|ofb]
+  openssl enc -aes128 -pbkdf2 -in file.txt -out file.aes128    # 需输入密码<password>
+  openssl enc -aes128 -pbkdf2 -d -in file.aes128 -out file.txt -pass pass:<password>
+  # AES256加密 (CTR模式&PBKDF2密钥)密码+Salt + base64
+  openssl enc -aes-256-ctr -pbkdf2 -a -in file.txt -out file.aes256  # 需输入密码<password>
+  openssl enc -aes-256-ctr -pbkdf2 -d -a -in file.aes256 -out file.txt -pass file:<passfile> #提供密钥文件
+  
   #2.安装mkcert数字签名工具 github.com/FiloSottile/mkcert *22k
   $ sudo apt install libnss3-tools  #or: sudo yum install nss-tools #or: sudo pacman -S nss
   $ git clone github.com/FiloSottile/mkcert && go build -ldflags "-X main.Version=$(git describe --tags)"

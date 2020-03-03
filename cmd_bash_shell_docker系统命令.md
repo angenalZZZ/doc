@@ -1533,14 +1533,12 @@ alias dockerclean='dockercleanc || true && dockercleani'           # 清除停�
 
 > **.dockerignore** 配置文件/屏蔽读取
 ~~~
-# 一般临时文件
+# 临时文件
 */temp*
 */*/temp*
 temp?
-*.md
 !README*.md
-# 编译临时文件
-bin\
+# 编译文件
 obj\
 ~~~
 

@@ -1452,9 +1452,13 @@ alias dockerclean='dockercleanc || true && dockercleani'           # 清除停�
   
   # 基于 Jenkins 快速搭建持续集成环境
   git clone https://github.com/AliyunContainerService/docker-jenkins 
-    && cd docker-jenkins/jenkins && docker build -t denverdino/jenkins .
+  cd docker-jenkins/jenkins && docker build -t denverdino/jenkins .
   docker run --name jenkins -d -p 8080:8080 -p 50000:50000 -v d:\docker\app\jenkins_home:/var/jenkins_home denverdino/jenkins
   # docker run --name jenkins -d -p 8080:8080 -p 50000:50000 -v d:\docker\app\jenkins_home:/var/jenkins_home jenkins
+  
+  # 搭建 OpenVPN 服务器 安全通信-基于-EasyRSA PKI CA
+  git clone https://github.com/kylemanna/docker-openvpn
+  git clone https://github.com/hwdsl2/docker-ipsec-vpn-server
 ~~~
 
 > **docker-search-tags.sh** 搜索/标签/版本

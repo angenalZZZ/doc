@@ -170,7 +170,8 @@
   # < centos > yum install epel-release & yum install smem python-matplotlib python-tk
   
   # 文件系统
-  > dir [目录]           # 默认当前目录(命令pwd)
+  > dir /d /S [目录]     # 默认当前目录(命令pwd)
+  > tree /f [目录]
   > devmgmt.msc          # 系统硬件驱动
   $ df -ah               # 文件系统  容量  已用  可用  已用%  挂载点
   $ lsblk                # 文件系统  分区  挂载点

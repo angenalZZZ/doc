@@ -214,8 +214,36 @@ http {
     }
 }
 ~~~
+ * 配置代理 https
+~~~nginx
+server {
+    listen *:80;
+    server_name company.com www.company.com;
 
- * 配置代理 https & ws
+    return 301 https://$host$request_uri;
+}
+server {
+    listen *:443 ssl;
+    server_name company.com www.company.com;
+    ssl on;
+    ssl_certificate /etc/nginx/ssl/company-cert.pem;
+    ssl_certificate_key /etc/nginx/ssl/company-key.pem;
+
+    location /  {
+      root    /var/www/html;
+      expires 1d;
+    }
+
+    location /api {
+        proxy_pass http://127.0.0.1:8080; // proxy pass a real host.
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+~~~
+ * 配置代理 https & 负载均衡 upstream & ws
 ~~~nginx
  # 负载均衡 http web
  upstream web {
@@ -276,7 +304,7 @@ http {
     }
 }
 ~~~
-~~~js
+~~~json
 //-配置Nginx响应`头信息`：http.server.add_header, http.server.location.proxy_set_header
 {
     "server": "nginx",

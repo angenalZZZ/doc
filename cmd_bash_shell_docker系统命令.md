@@ -943,7 +943,13 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 # |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,>
 # |  |  |  |  |
 # *  *  *  *  * user-name command to be executed
-17 *    * * *   root    cd / && run-parts --report /etc/cron.hourly
+  17 *  *  *  * root    cd / && run-parts --report /etc/cron.hourly
+# 特定字符的含义如下：
+# * 表示匹配该域的任意值，假如在Minutes域使用*, 即表示每分钟都会触发事件。
+# ? 字符仅被用于“日”和“周”两个子表达式，表示不指定值，当两个子表达式其中之一被指定了值以后，为了避免冲突，需要将另一个子表达式的值设为“?”。
+# - 表示范围，例如在Minutes域使用5-20，表示从5分到20分每分钟触发一次。
+# / 表示起始时间开始触发，然后每隔固定时间触发一次，例如在Minutes域使用5/20,则意味着在5分的时候开始触发一次，而25，45等分别触发一次。
+# , 表示列出枚举值。例如：在Minutes域使用5,20，则意味着在5和20分每分钟触发一次。
 
 #Ⅰ.<windows&linux> gocron（替代Linux-crontab）& gocron-node & mysql
 > nssm install Gocron %gopath%\bin\gocron\gocron.exe web -p 5920 -e prod  # 默认端口5920

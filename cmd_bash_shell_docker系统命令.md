@@ -299,11 +299,15 @@
   > at 11:00:00PM /every:M,T,W,TH,F,SA,SU shutdown -s
   > at 11:00:00PM shutdown -r [r重启]
   
-  # 系统硬件序列号
-  > wmic memorychip get serialnumber
-  > wmic diskdrive get serialnumber
-  > wmic baseboard get serialnumber
-  > wmic cdrom where drive='G:' get SerialNumber
+  # 系统硬件信息
+  > wmic memorychip list brief        # 内存条列表  # 参数可选 list [brief|full|writeable]
+  > wmic bios|cpu|desktopmonitor|diskdrive|environment|logicaldisk
+        |os|process|product|service|share|useraccout... /?    # 查看命令列表/?
+  > wmic process where name="qq.exe" delete # 删除进程 # 参数可选 process [create|delete|list]
+  > wmic cdrom where drive='G:' get SerialNumber # 光驱序列号
+  > wmic memorychip get serialnumber  # 内存序列号
+  > wmic diskdrive get serialnumber   # 磁盘序列号
+  > wmic baseboard get serialnumber   # 主板序列号
   # 系统自动登录
   > autologon  userName domainName password
   # 修改计算机名

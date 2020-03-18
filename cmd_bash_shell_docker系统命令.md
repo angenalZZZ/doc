@@ -340,7 +340,16 @@
     *基本约束         Subject Type=CA \ Path Length Constraint=None
     *指纹             a79be724538b668fa817e8578d6a8078337fd3ad
   
-  #openssl官方文档 https://www.openssl.org/docs/manmaster/man1/
+  # Let’s Encrypt 免费证书 https://go-acme.github.io/lego/usage/cli/examples/
+  $ lego --email="foo@bar.com" --domains="example.com" --http run   # 获取证书
+  $ AWS_REGION=us-east-1 AWS_ACCESS_KEY_ID=my_id AWS_SECRET_ACCESS_KEY=my_key \
+  $ lego --email="foo@bar.com" --domains="example.com" --dns="route53" run # 获取证书时使用AWS/DNS
+  $ lego --email="foo@bar.com" --http --csr=/path/to/csr.pem run # 获取给定由其他内容生成的证书签名请求(CSR)的证书
+  $ lego --email="foo@bar.com" --domains="example.com" --http renew # 续订证书
+  $ lego --email="foo@bar.com" --domains="example.com" --http renew --days 45 # 证书在45天内过期时续订证书
+  $ lego --email="foo@bar.com" --domains="example.com" --http renew --renew-hook="./myscript.sh" # 续订证书(钩子)
+  
+  # openssl 管理证书 https://www.openssl.org/docs/manmaster/man1/
   #1.创建openssl数字签名认证
   ## 快捷方式 openssl req -new -nodes -x509 -out server.crt -keyout server.key -days 3650 \
     -subj "/C=DE/ST=NRW/L=Earth/O=Company-Name/OU=IT/CN=127.0.0.1/emailAddress=***@example.com"

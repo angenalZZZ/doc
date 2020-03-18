@@ -345,6 +345,11 @@
   ## 快捷方式 openssl req -new -nodes -x509 -out server.crt -keyout server.key -days 3650 \
     -subj "/C=DE/ST=NRW/L=Earth/O=Company-Name/OU=IT/CN=127.0.0.1/emailAddress=***@example.com"
 
+  ## 本机开发证书 localhost.crt & localhost.key  # hosts可指定子域名www等: 127.0.0.1 www.localhost
+  openssl req -x509 -out localhost.crt -keyout localhost.key -newkey rsa:2048 -nodes -sha256 \
+    -subj '/CN=localhost' -extensions EXT -config <( printf "[dn]\nCN=localhost\n[req]\ndistinguished_name \
+    = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
+
   ## 单个域名 [sv.key sv.crt ci.key ci.crt] -一般用于本地开发(无密码验证-pass*)
 openssl genrsa -out sv.key 2048    # genrsa生成server端密钥文件
 openssl req -new -x509 -days 3650 -key sv.key -out sv.crt -subj "/C=GB/L=China/O=grpc-server/CN=server.grpc.io"

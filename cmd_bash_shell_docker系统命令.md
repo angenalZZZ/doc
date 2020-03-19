@@ -349,6 +349,13 @@
   $ lego --email="foo@bar.com" --domains="example.com" --http renew --days 45 # 证书在45天内过期时续订证书
   $ lego --email="foo@bar.com" --domains="example.com" --http renew --renew-hook="./myscript.sh" # 续订证书(钩子)
   
+  # Let’s Encrypt 免费证书/自动化脚本 https://github.com/srvrco/getssl
+  $ curl --silent https://raw.githubusercontent.com/srvrco/getssl/master/getssl > getssl ; chmod 700 getssl
+  $ ./getssl -c yourdomain.com  # config
+  $ getssl yourdomain.com       # run
+  $ crontab
+  23  5 * * * /root/scripts/getssl -u -a -q  # auto updates
+  
   # openssl 管理证书 https://www.openssl.org/docs/manmaster/man1/
   #1.创建openssl数字签名认证
   ## 快捷方式 openssl req -new -nodes -x509 -out server.crt -keyout server.key -days 3650 \

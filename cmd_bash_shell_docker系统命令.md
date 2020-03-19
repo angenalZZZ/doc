@@ -1571,7 +1571,7 @@ obj\
 > **docker-compose.yml** [安装Compose](https://docs.docker.com/compose/install/) [文档v3](https://docs.docker.com/compose/overview) | [老版本v2](https://www.jianshu.com/p/2217cfed29d7) | [votingapp例子](https://github.com/angenal/labs/blob/master/beginner/chapters/votingapp.md)<br>
 　管理容器的生命周期，从应用创建、部署、扩容、更新、调度均可在一个平台上完成。<br>
 　[`启动`](https://docs.docker-cn.com/compose/reference/up/)：`docker-compose up -d` | [`停止`](https://docs.docker-cn.com/compose/reference/down/)：`docker-compose down` | [`更多`](https://docs.docker-cn.com/compose/reference)：`pause`、`unpause`、`start`、`stop`、`restart`
-~~~dockerfile
+~~~docker-compose
   version: '3' # docker compose 版本(版本不同,语法命令有所不同)
   services:    # docker services 容器服务编排
     web:       # docker container service
@@ -1613,7 +1613,7 @@ obj\
       driver: bridge
 ~~~
  * [搭建超强【流量转发、负载均衡】HTTPS服务器，在设计、部署和运行应用程序时-简化网络复杂性](https://docs.traefik.io/getting-started/quick-start/)
-~~~dockerfile
+~~~docker-compose
 version: '3'
 
 services:

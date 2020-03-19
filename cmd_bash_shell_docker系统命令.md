@@ -341,7 +341,7 @@
     *指纹             a79be724538b668fa817e8578d6a8078337fd3ad
   
   # Let’s Encrypt 免费证书 https://go-acme.github.io/lego/usage/cli/examples/
-  $ lego --email="foo@bar.com" --domains="example.com" --http run   # 获取证书
+  $ lego --email="foo@bar.com" --domains="example.com" --http run   # 获取证书 ACME v2 版本支持申请通配符证书了
   $ AWS_REGION=us-east-1 AWS_ACCESS_KEY_ID=my_id AWS_SECRET_ACCESS_KEY=my_key \
   $ lego --email="foo@bar.com" --domains="example.com" --dns="route53" run # 获取证书时使用AWS/DNS
   $ lego --email="foo@bar.com" --http --csr=/path/to/csr.pem run # 获取给定由其他内容生成的证书签名请求(CSR)的证书
@@ -351,10 +351,25 @@
   
   # Let’s Encrypt 免费证书/自动化脚本 https://github.com/srvrco/getssl
   $ curl --silent https://raw.githubusercontent.com/srvrco/getssl/master/getssl > getssl ; chmod 700 getssl
-  $ ./getssl -c yourdomain.com  # config
+  $ ./getssl -c yourdomain.com  # config, set email account.
   $ getssl yourdomain.com       # run
   $ crontab
   23  5 * * * /root/scripts/getssl -u -a -q  # auto updates
+  
+  # Let’s Encrypt 免费证书/自动化工具 https://certbot.eff.org
+  $ sudo add-apt-repository universe
+  $ sudo add-apt-repository ppa:certbot/certbot
+  $ sudo apt-get update
+  $ sudo apt-get install certbot
+  # certbot-auto -V  # update client version for certbot^0.22.0 # 1.登录域名管理给域名添一个 DNS TXT 记录
+  $ tree /etc/letsencrypt/accounts  # 如何使用 ACME v2 版本?  https://www.jianshu.com/p/c5c9d071e395
+  $ certbot-auto certonly -d *.newyingyong.cn --manual --preferred-challenges dns \
+    --server https://acme-v02.api.letsencrypt.org/directory # 2.没有获得 DNS TXT 记录生效前不要回车执行确认
+  $ dig -t txt _acme-challenge.newyingyong.cn @8.8.8.8      # 2.1确认获得 DNS TXT 记录是否生效的命令
+  $ tree /etc/letsencrypt/archive/newyingyong.cn            # 2.2证书申请成功
+  $ openssl x509 -in /etc/letsencrypt/archive/newyingyong.cn/cert1.pem -noout -text # 2.3校验证书
+  $ certbot-auto certificates                               # 2.4查看机器上有多少证书
+  # 自动续期证书参考 https://github.com/ywdblog/certbot-letencrypt-wildcardcertificates-alydns-au
   
   # openssl 管理证书 https://www.openssl.org/docs/manmaster/man1/
   #1.创建openssl数字签名认证

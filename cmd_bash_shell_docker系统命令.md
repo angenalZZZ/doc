@@ -1481,7 +1481,7 @@ alias dockerclean='dockercleanc || true && dockercleani'           # 清除停�
   cd docker-jenkins/jenkins && docker build -t denverdino/jenkins .
   docker run --name jenkins -d -p 8080:8080 -p 50000:50000 -v d:\docker\app\jenkins_home:/var/jenkins_home denverdino/jenkins
   # docker run --name jenkins -d -p 8080:8080 -p 50000:50000 -v d:\docker\app\jenkins_home:/var/jenkins_home jenkins
-  
+
   # 搭建 OpenVPN 服务器 安全通信-基于-EasyRSA PKI CA
   git clone https://github.com/kylemanna/docker-openvpn
   git clone https://github.com/hwdsl2/docker-ipsec-vpn-server
@@ -1611,6 +1611,36 @@ obj\
       driver: bridge
     back-tier:
       driver: bridge
+~~~
+ * [搭建超强【流量转发、负载均衡】HTTPS服务器，在设计、部署和运行应用程序时-简化网络复杂性](https://docs.traefik.io/getting-started/quick-start/)
+~~~dockerfile
+version: '3'
+
+services:
+  reverse-proxy:
+    # The official v2 Traefik docker image
+    image: traefik:v2.1
+    # Enables the web UI and tells Traefik to listen to docker
+    command: --api.insecure=true --providers.docker
+    ports:
+      # The HTTP port
+      - "80:80"
+      # The Web UI (enabled by --api.insecure=true)
+      - "8080:8080"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  whoami:
+    # A container that exposes an API to show its IP address
+    image: containous/whoami
+    labels:
+      - "traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)"
+
+# > docker-compose up -d reverse-proxy
+# > docker-compose up -d whoami
+# > docker-compose up -d --scale whoami=2
+# > curl -H Host:whoami.docker.localhost http://127.0.0.1
 ~~~
 
 # [**Kubernetes**](https://kubernetes.io)

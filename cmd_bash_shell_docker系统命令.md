@@ -1634,13 +1634,13 @@ obj\
     back-tier:
       driver: bridge
 ~~~
- * [搭建【反向代理、负载均衡】HTTPS服务器，在设计、部署和运行应用程序时-简化网络复杂性](https://docs.traefik.io/getting-started/quick-start/) [中文文档](https://docs.traefik.cn)
+ * [快速搭建【反向代理、负载均衡】HTTPS服务器，在设计、部署和运行应用程序时-简化网络复杂性](https://docs.traefik.io/getting-started/quick-start/) 、[中文文档](https://docs.traefik.cn)
 ~~~dockercompose
 version: '3'
 
 services:
   reverse-proxy:
-    # The official v2 Traefik docker image
+    # The official Traefik docker image
     image: traefik:v2.1
     # Enables the web UI and tells Traefik to listen to docker
     command: --api.insecure=true --providers.docker
@@ -1659,9 +1659,9 @@ services:
     labels:
       - "traefik.http.routers.whoami.rule=Host(`whoami.docker.localhost`)"
 
-# > docker-compose up -d reverse-proxy
-# > docker-compose up -d whoami
-# > docker-compose up -d --scale whoami=2
+# > docker-compose up -d reverse-proxy       # web-main
+# > docker-compose up -d whoami              # backend-1
+# > docker-compose up -d --scale whoami=2    # backend-2
 # > curl -H Host:whoami.docker.localhost http://127.0.0.1
 ~~~
 

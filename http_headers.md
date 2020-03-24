@@ -12,7 +12,8 @@ Status: 200 OK
 Vary: Origin
 Vary: Accept-Encoding, Accept, X-Requested-With
 Strict-Transport-Security: max-age=31536000; includeSubdomains; preload
-Set-Cookie: user_session=1OUjiNMkXZPGHlteIdQpWACqfgchWAqLqFFN44SXv1-_tXMn; path=/; expires=Tue, 07 Apr 2020 01:15:43 GMT; secure; HttpOnly
+Set-Cookie: user_session=1OUjiNMkXZPGHlteIdQpWACqfgchWAqLqFFN44SXv1-_tXMn; \
+            path=/; expires=Tue, 07 Apr 2020 01:15:43 GMT; secure; HttpOnly
 
 Access-Control-Allow-Credentials: true
 Access-Control-Allow-Origin: [*-Origin-Host-Name-*]

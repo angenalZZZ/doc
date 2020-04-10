@@ -37,3 +37,11 @@ commonName_max			= 64
 emailAddress			= Email Address
 emailAddress_default		= fpapi@gmail.com
 emailAddress_max		= 64
+
+[ req_ext ]
+subjectAltName = @req_ext_names
+
+[ req_ext_names ]
+DNS.1 = www.fpapi.cn
+DNS.2 = www.fpapi.com
+IP    = 192.168.1.100

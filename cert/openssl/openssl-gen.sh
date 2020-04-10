@@ -13,4 +13,5 @@ openssl req -config openssl.cnf -key ca.key.pem -new -x509 -days 7300 -sha256 -e
 # 生成证书签发请求，得到 server.csr
 # openssl req -new -sha256 -out server.csr -key server.key -config openssl.conf
 # 用CA证书生成终端用户证书，得到 server.crt
-# openssl x509 -req -days 3650 -CA ca.crt -CAkey ca.key -CAcreateserial -in server.csr -out server.crt -extensions req_ext -extfile openssl.conf
+# openssl x509 -req -days 3650 -CA ca.crt -CAkey ca.key -CAcreateserial -in server.csr -out server.crt \
+#  -extensions req_ext -extfile openssl.conf

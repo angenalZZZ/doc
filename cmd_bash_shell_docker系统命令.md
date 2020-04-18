@@ -1420,13 +1420,24 @@ alias dockerclean='dockercleanc || true && dockercleani'           # 清除停�
     microsoft/dotnet     # 最新版dotnet
     microsoft/dotnet:sdk # 最新版dotnet-sdk 用于开发
     microsoft/dotnet:aspnetcore-runtime #最新版dotnet-runtime 用于生产
-  
+  # 步骤Step:
+  #1. dotnet publish -f netcoreapp3.1 -o ..\publish\ # 生成app可执行dll,存放容器中/publish/
+  #2. create ..\publish\app\Dockerfile `
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+COPY . /publish
+WORKDIR /publish
+# EXPOSE 443
+EXPOSE 80
+ENTRYPOINT ["dotnet", "App.Host.dll"] `
+  #3. docker build -t app:1.0 . # 构建镜像V1.0
+  #4. docker run --name app -d -p 8080:80 --restart=always app:1.0 # 运行容器, 执行入口命令 ENTRYPOINT
+
   # 开源系统 Linux 分支 centos
   docker run --name centos -it --network=workgroup -m 512m -p 8000:80 -v "d:\docker\app\centos\home:/home" -w /home 
     centos /bin/bash # 其它: --workdir /home/ConsoleApp2NewLife centos /bin/sh -c "/bin/bash ./entrypoint.sh"
     $ rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-runtime-2.1
     $ dotnet /home/ConsoleApp2NewLife/ConsoleApp2NewLife.dll # 访问tcp://127.0.0.1:8000
-  
+
   # 开源数据库mysql
   docker run --name mysql -itd -p 3306:3306 --network=workgroup --network-alias=mysql --env MYSQL_ROOT_PASSWORD=HGJ766GR767FKJU0 
     mysql:5.7 # mariadb、mongo、mysql/mysql-server、microsoft/mssql-server-linux, (--network-alias)其它容器连此容器
@@ -1434,7 +1445,7 @@ alias dockerclean='dockercleanc || true && dockercleani'           # 清除停�
   docker run --name mssql -itd -p 1433:1433 --network=workgroup --network-alias=mssql -v "d:\docker\app\mssql\data:/var/opt/mssql/data" 
     -v "d:\docker\app\mssql\log:/var/opt/mssql/log" -e SA_PASSWORD=HGJ766GR767FKJU0 -e ACCEPT_EULA=Y 
     mcr.microsoft.com/mssql/server
-    
+
   # 外部访问控制：(--link)其它容器连db, 外部内网访问控制：(--net=host -bind=192.168.1.2)不安全连接(与主机共享一个IP)+内网私有访问bind-ip
   
   # 开源数据库mysql中间件, 开源分布式中间件dble, 上海.爱可生开源社区 opensource.actionsky.com

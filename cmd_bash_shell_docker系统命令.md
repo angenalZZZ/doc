@@ -1422,15 +1422,15 @@ alias dockerclean='dockercleanc || true && dockercleani'           # 清除停�
     microsoft/dotnet:aspnetcore-runtime #最新版dotnet-runtime 用于生产
   # 步骤Step:
   #1. dotnet publish -f netcoreapp3.1 -o ..\publish\ # 生成app可执行dll,存放容器中/publish/
-  #2. create ..\publish\app\Dockerfile `
+  #2. create ..\publish\app\Dockerfile /*
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
 COPY . /publish
 WORKDIR /publish
 # EXPOSE 443
 EXPOSE 80
-ENTRYPOINT ["dotnet", "App.Host.dll"] `
-  #3. docker build -t app:1.0 . # 构建镜像V1.0
-  #4. docker run --name app -d -p 8080:80 --restart=always app:1.0 # 运行容器, 执行入口命令 ENTRYPOINT
+ENTRYPOINT ["dotnet", "App.Host.dll"] */
+  #3. docker build -t app:1.0 .  # 构建镜像V1.0
+  #4. docker run --name app -d -p 8080:80 --restart=always app:1.0 # 运行容器, 执行命令入口 ENTRYPOINT
 
   # 开源系统 Linux 分支 centos
   docker run --name centos -it --network=workgroup -m 512m -p 8000:80 -v "d:\docker\app\centos\home:/home" -w /home 

@@ -1209,31 +1209,6 @@ ExecReload=/usr/bin/supervisorctl reload
   $ source ~/.bashrc && airflow initdb                     # 5.部署
 ~~~
 
-> `Docker` 客户端 (连接到 Docker for Windows10)
-~~~shell
-  # < Windows Subsystem for Linux | WSL >---------------------------
-  $ sudo apt install docker.io              # 安装Docker客户端 | docker.io get client connection.
-  $ export DOCKER_HOST=tcp://127.0.0.1:2375 # 设置环境Linux vi ~/.bashrc [或者~/.profile](文件结尾添加)
-  > $env:DOCKER_HOST="tcp://0.0.0.0:2375"   # 设置环境Windows PowerShell [连接Docker-Server端TCP地址]
-  
-  $ docker [OPTIONS] COMMAND
-  # 选项Options:
-  #1. --config 默认=$HOME/.docker
-  #2. --context -c 默认=$DOCKER_HOST=`docker context use` 当前上下文指向的容器服务端主机
-  #3. --debug -D 是否启用调试
-  #4. --host -H 容器服务端主机socket(s)列表
-  #5. --tls --tlsverify --tlscacert * --tslcert * --tlskey * 启用tls安全连接
-  #6. --log-level -l 日志级别,默认=info(debug|info|warn|error|fatal)
-  #7. --version -v 打印版本信息
-  
-  $ docker [COMMAND] --help                 # 执行Docker命令:重定向Docker\Server响应输出/如同R语言sink()
-
-  # Docker环境:修改Linux内核参数 blog.csdn.net/guanheng68/article/details/81710406
-  $ grep vm.max_map_count /etc/sysctl.conf  # 检查vm设置, 默认虚拟内存大小不够;
-  $ sysctl -w vm.max_map_count=262144       # 执行Docker操作无效时才修改, 或者 vi /etc/sysctl.conf
-  $ sysctl -p                               # 生效/etc/sysctl.conf 修改.
-~~~
-
 ----
 
 # [**docker**](https://docs.docker.com)
@@ -1299,7 +1274,30 @@ $ docker service create --name portainer --publish 9000:9000 --constraint 'node.
   portainer/portainer -H unix:///var/run/docker.sock
 ~~~
 
-> **Shell** [samples](https://docs.docker.com/samples)、[labs/tutorials](https://github.com/angenal/labs)、[小结](https://github.com/AlexWoo/doc/blob/master/devops/docker小结.md)
+> **Docker Config** 
+~~~shell
+  # < Windows Subsystem for Linux | WSL >---#(连接到 Docker for Windows10)
+  $ sudo apt install docker.io              # 安装Docker客户端 | docker.io get client connection.
+  $ export DOCKER_HOST=tcp://127.0.0.1:2375 # 设置环境Linux vi ~/.bashrc [或者~/.profile](文件结尾添加)
+  > $env:DOCKER_HOST="tcp://0.0.0.0:2375"   # 设置环境Windows PowerShell [连接Docker-Server端TCP地址]
+  
+  $ docker [OPTIONS] COMMAND
+  # 选项Options:
+  #1. --config 默认=$HOME/.docker
+  #2. --context -c 默认=$DOCKER_HOST=`docker context use` 当前上下文指向的容器服务端主机
+  #3. --debug -D 是否启用调试
+  #4. --host -H 容器服务端主机socket(s)列表
+  #5. --tls --tlsverify --tlscacert * --tslcert * --tlskey * 启用tls安全连接
+  #6. --log-level -l 日志级别,默认=info(debug|info|warn|error|fatal)
+  #7. --version -v 打印版本信息
+  $ docker [COMMAND] --help                 # 执行Docker命令:重定向Docker\Server响应输出/如同R语言sink()
+  # Docker环境:修改Linux内核参数 blog.csdn.net/guanheng68/article/details/81710406
+  $ grep vm.max_map_count /etc/sysctl.conf  # 检查vm设置, 默认虚拟内存大小不够;
+  $ sysctl -w vm.max_map_count=262144       # 执行Docker操作无效时才修改, 或者 vi /etc/sysctl.conf
+  $ sysctl -p                               # 生效/etc/sysctl.conf 修改.
+~~~
+
+> **Docker Command** [samples](https://docs.docker.com/samples)、[labs/tutorials](https://github.com/angenal/labs)、[小结](https://github.com/AlexWoo/doc/blob/master/devops/docker小结.md)
 ~~~shell
   # 运行
   docker-machine ip          # 获得当前Docker宿主机的IP地址
@@ -1337,19 +1335,21 @@ $ docker service create --name portainer --publish 9000:9000 --constraint 'node.
   docker push [镜像id|name] # 推送镜像 [Docker-Hub]
   docker rmi [镜像id|name]  # 删除1个镜像
   docker rmi $(docker images -q) # 删除所有镜像
+  docker save -o d:\docker\images\ubuntu_latest.tar ubuntu:latest # 保存镜像
+  docker save ubuntu:latest > d:\docker\images\ubuntu_latest.tar  # 保存镜像
   docker load -i /opt/images/ubuntu_latest.tar # 加载镜像 (使用Xftp将镜像tar上传至Docker虚拟机或共享盘)
-  docker load < /opt/images/ubuntu_latest.tar  # 加载镜像 (以文件流的方式)
-  docker save -o d:\docker\images\ubuntu_latest.tar ubuntu:latest # 保存镜像 (save image)
-  docker save ubuntu:latest > d:\docker\images\ubuntu_latest.tar  # 保存镜像 (save image)
-  docker commit [容器id|name] [镜像id|name][:tag] # 从容器创建一个新的镜像,另存为镜像(save container to image)
+  docker load < /opt/images/ubuntu_latest.tar  # 加载镜像 (文件流的方式)
+  docker import /opt/images/ubuntu_latest.tar [镜像name] # 从镜像归档文件创建指定命名的镜像
+  docker commit [容器id|name] [镜像id|name][:tag] # 从容器创建一个新的镜像-另存为镜像(save container to image)
   docker logout        # 退出^镜像^管理
   
   # 管理容器
   docker stats         # 查看容器占用资源, 例如：容器名、cpu、内存、io等
-  docker ps -a         # 查看容器 docker container ls -a
+  docker ps -a         # 查看容器 docker container ls -a -q # -q列出容器ID
+  docker ps -a -f name=ubuntu -n 1 # -a显示所有容器 -f过滤容器名 -n列出最近创建的n个容器
   
   docker export ubuntu > "d:\docker\snapshot\ubuntu_19_04.tar"           # 导出快照 (export snapshot)
-  docker container export -o="d:\docker\snapshot\ubuntu_19_04.tar" ubuntu # 导出快照 (container export snapshot)
+  docker container export -o "d:\docker\snapshot\ubuntu_19_04.tar" ubuntu # 导出快照 (export snapshot)
   docker cp d:\docker\app\xxx\publish centos.netcore:/home/app/xxx/publish # 复制目录 (copy dir to container)
   docker cp centos.netcore:/home/app/entrypoint.sh d:\docker\app\centos\home\app\entrypoint.sh # 复制文件
   #-config>>  ~/.bash_aliases
@@ -1363,23 +1363,49 @@ alias dockercleaniall='docker rm $(docker ps -a -q)'               # 删除所�
 alias dockercleani='printf "\n>>> Deleting untagged images\n\n" && docker rmi $(docker images -qf dangling=true)'
 alias dockerclean='dockercleanc || true && dockercleani'           # 清除停止的容器及删未标记的镜像
 
-  docker volume prune                       # 删除未使用volumes
-  docker system prune                       # 删除未使用数据
-  docker rm [container]                     # 删除1个容器
+  docker inspect [container]       # 查看容器详情(container包括ID或名称)
+  docker diff [container]          # 检查容器里文件结构的更改 (相对原始镜像里的文件结构)
+  docker rename web [container]    # 容器重新命名
+  docker rm [container]            # 删除1个容器( +自管理卷模式 --volume [匿名volume-name] )
+  docker rm $(docker ps -a -q)     # 删除所有容器
+  docker port [container]          # 查看端口映射
+  docker system prune              # 删除未使用数据
+  docker volume prune              # 删除未使用volume
+  docker volume rm [name]          # 删除指定的volume
+  docker volume ls                 # 查看当前所有volume
+  docker volume inspect [name]     # 查看volume详细信息
+  docker volume create --name [name] # 创建 volume-name 默认路径 /var/lib/docker/volumes/[name]/_data/
   
-  docker port [container]                   # 查看端口映射
-  docker inspect [container]                # 查看容器详情
-  docker rename web [container]             # 容器重新命名
-  docker logs [container]                   # 查看容器日志
-  docker update --restart=always [container] # 修改配置: 设置为开机启动 (可在 docker run 时, 添加该参数)
+  docker run [OPTIONS] [镜像id|name][:tag] # 创建一个新的容器并运行
+  # 选项Options:
+  #1. --name 为容器指定名称
+  #2. --volume -v 绑定一个卷(目录不存在,会自动创建) 1.[匿名volume-name] 2.[volume-name]:容器目录/文件 3.宿主目录/文件:容器目录/文件
+  #3. --restart=no|always|on-failure 重启策略
+  #4. -m 内存限制大小 ( eg: -m 512m )
+  #5. -d 后台运行容器，并返回容器ID
+  #6. -p 指定端口映射，格式：主机(宿主)端口:容器端口
+  docker update --restart=always [container] # 修改配置: 设置为开机启动 (可在 docker run 时添加)
+  docker logs [OPTIONS] [container] # 查看容器日志
+  # 选项Options:
+  #1. -t 显示时间戳
+  #2. -f 跟踪日志输出
+  #3. --since 显示某个开始时间以来的所有日志
+  #4. --tail 仅列出最新N条日志
+  # docker logs --since="2020-02-02" --tail=10 nginx
+  # docker 启动后默认日志路径：/var/lib/docker/containers/容器ID/*.log
   
-  docker stop 8b49 & docker rm -f mysite    # 停止+删除 :容器[ID前缀3-4位 或 containerName]
-  docker stop web & docker commit web myweb & docker run -p 8080:80 -td myweb # commit新容器myweb&端口映射
+  docker start|restart [container] # 开启或重启指定容器
+  docker pause|unpause [container] # 暂停或恢复指定容器
+  docker stop $(docker ps -q -f status=running) # 停掉所有正在运行的容器
+  docker stop 8b49 & docker rm -f mysite    # 停止+删除 :容器[ID前缀4位 或 FullName]
+  docker stop web & docker commit web webimg & docker run -p 8080:80 -td webimg # commit新镜像webimg&run端口映射
+  
+  docker top [options] [container] # 查看容器中运行的进程，支持ps命令参数(不会被exec代替,因为容器中不一定有top命令)
   docker exec -it redis5 /bin/sh -c "ps aux & /bin/sh"  # 在容器中执行命令: 查看进程详情后,进入工作目录执行sh
 
   docker run -it --rm -e AUTHOR="Test" alpine /bin/sh #查找镜像alpine+运行容器alpine+终端交互it+停止自动删除+执行命令
   docker run --name mysite -d -p 8080:80 -p 8081:443 dockersamples/static-site #查找镜像&运行容器mysite&服务&端口映射
-  
+
   # 内存KV数据库redis
   docker run --name redis5 --network=workgroup --network-alias=redis5 --restart=always -d -m 512m -p 6379:6379 
     -v d:\docker\app\redis5\redis.conf:/etc/redis/redis.conf -v d:\docker\app\redis5\data:/data 

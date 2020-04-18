@@ -1215,6 +1215,17 @@ ExecReload=/usr/bin/supervisorctl reload
   $ sudo apt install docker.io              # 安装Docker客户端 | docker.io get client connection.
   $ export DOCKER_HOST=tcp://127.0.0.1:2375 # 设置环境Linux vi ~/.bashrc [或者~/.profile](文件结尾添加)
   > $env:DOCKER_HOST="tcp://0.0.0.0:2375"   # 设置环境Windows PowerShell [连接Docker-Server端TCP地址]
+  
+  $ docker [OPTIONS] COMMAND
+  # 选项Options:
+  #1. --config 默认=$HOME/.docker
+  #2. --context -c 默认=$DOCKER_HOST=`docker context use` 当前上下文指向的容器服务端主机
+  #3. --debug -D 是否启用调试
+  #4. --host -H 容器服务端主机socket(s)列表
+  #5. --tls --tlsverify --tlscacert * --tslcert * --tlskey * 启用tls安全连接
+  #6. --log-level -l 日志级别,默认=info(debug|info|warn|error|fatal)
+  #7. --version -v 打印版本信息
+  
   $ docker [COMMAND] --help                 # 执行Docker命令:重定向Docker\Server响应输出/如同R语言sink()
 
   # Docker环境:修改Linux内核参数 blog.csdn.net/guanheng68/article/details/81710406
@@ -1237,7 +1248,7 @@ ExecReload=/usr/bin/supervisorctl reload
   `Cert`         : `C:/ProgramData/DockerDesktop/pki/` - `C:/Users/Administrator/.kube/config`  ...  
 
 ~~~shell
-# 安装Docker，先切换用户 ~ su - root
+# 安装Docker，先切换用户~ su - root #
 $ curl -sSL https://get.daocloud.io/docker | sh  # 安装,镜像 daocloud
 $ curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://{your-id}.m.daocloud.io
 $ curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh - # 安装,镜像 阿里云
@@ -1254,24 +1265,24 @@ $ sudo dpkg -i virtualbox-6.1_6.1.2-135662_Ubuntu_bionic_amd64.deb --fix-missing
 $ curl -L https://github.com/docker/machine/releases/download/v0.16.2/docker-machine-$(uname -s)-$(uname -m) \
     > /usr/local/bin/docker-machine  # 安装 docker-machine
 $ docker-machine version             # 安装完毕,查看版本
-# 设置 Docker, 不使用sudo执行docker命令，先切换当前用户-user(root~exit)
+# 设置 Docker 执行, 不使用sudo执行docker命令，先切换当前用户 su -u xxx (root~exit)
 $ sudo usermod -aG docker ${USER} # 将当前用户加入docker组 # sudo gpasswd -M ${USER} docker && newgrp - docker
-$ sudo service docker restart        # 重启Docker服务
-# 本机启动 Docker daemon
+$ sudo service docker restart        # 重启Docker服务 # sudo systemctl restart docker
+# 本机启动 Docker daemon(容器服务端) 
 $ curl -Lo ~/.docker/machine/cache/boot2docker.iso \ # 下载最新版本的boot2docker镜像 for docker-machine create
     https://github.com/boot2docker/boot2docker/releases/download/v19.03.5/boot2docker.iso
 $ docker-machine create -d kvm2 default  # 推荐安装 默认主机server
 $ docker-machine create -d virtualbox default  # 1.下载安装默认主机server    # 2.设置客户端docker默认server环境
 $ docker-machine env default
 export DOCKER_TLS_VERIFY="1"
-export DOCKER_HOST="tcp://192.168.99.100:2376"
 export DOCKER_CERT_PATH="/home/yangzhou/.docker/machine/machines/default"
 export DOCKER_MACHINE_NAME="default"
-# Run this command to configure your shell: 
+export DOCKER_HOST="tcp://192.168.99.100:2376"
+# Run this command to configure your shell:
 # eval $(docker-machine env default)
 $ docker-machine start default
-$ docker info  # 查看docker完整信息 # sudo chown `id -un`:`id -un`~/.docker 
-# 监听> tcp & TLS 允许cli远程访问:2376 
+$ docker info  # 客户端cli查看docker完整信息(当出现权限问题,无法查看时) # sudo chown `id -un`:`id -un` ~/.docker
+# 监听> tcp & TLS 允许cli远程访问:2376 暴露指定端口
 $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/containerd/containerd.sock --registry-mirror={镜像}
 # 在虚拟机上安装运行docker # 先创建虚拟机manager,worker... 宿主机通过ssh访问虚拟机免密设置 generic指虚拟机已创建+vboxnet
 $ docker-machine create -d generic --generic-ip-address=192.168.56.101 --generic-ssh-key ~/.ssh/id_rsa manager
@@ -1290,8 +1301,6 @@ $ docker service create --name portainer --publish 9000:9000 --constraint 'node.
 
 > **Shell** [samples](https://docs.docker.com/samples)、[labs/tutorials](https://github.com/angenal/labs)、[小结](https://github.com/AlexWoo/doc/blob/master/devops/docker小结.md)
 ~~~shell
-  # 构建
-  docker build --build-arg NODE_ENV=dev -t test-image # 当前目录下有Dockerfile
   # 运行
   docker-machine ip          # 获得当前Docker宿主机的IP地址
   docker-machine ssh default # 登录到Boot2docker虚拟机之上(Linux-无需如此)
@@ -1314,15 +1323,31 @@ $ docker service create --name portainer --publish 9000:9000 --constraint 'node.
   docker run --name myweb --network=workgroup --link -d -P redis5:redis5 nginx # 容器之间安全互联 myweb连接redis5:redis5别名
   docker run --name myweb --network bridge --ip 172.18.0.2 --network=***-net ... ...  # 指定子网172.18/255+bridge
 
-  # 基础
-  docker [COMMAND] --help
-  docker images        # 查看镜像
-  docker ps -a         # 查看容器 | docker container ls -a
+  # 构建镜像            # 参数-f 指定Dockerfile路径~默认.当前目录下有Dockerfile
+  docker build --build-arg NODE_ENV=dev -t test-image . # 参数-t --tag [镜像id|name]; 参数-m内存限制
+
+  # 登录^镜像^管理
+  docker login -u 用户名 -p 密码 [仓库地址] # 登录Docker镜像仓库,如果未指定,默认官方仓库hub.docker.com
+  docker images        # 查看镜像 [options] -a列出本地所有镜像 -f显示满足条件的镜像 -q只显示镜像ID
+  docker images |grep "redis" # 查看过滤的镜像
+  docker image inspect # 获取镜像的元数据
   docker search ubuntu # 搜索镜像
   docker pull ubuntu   # 下载镜像
+  docker tag [镜像id|name][:tag] [Docker-Hub-镜像仓库host]/[镜像name][:tag] # 标记本地镜像,将其归入某一仓库
+  docker push [镜像id|name] # 推送镜像 [Docker-Hub]
+  docker rmi [镜像id|name]  # 删除1个镜像
+  docker rmi $(docker images -q) # 删除所有镜像
   docker load -i /opt/images/ubuntu_latest.tar # 加载镜像 (使用Xftp将镜像tar上传至Docker虚拟机或共享盘)
-  docker commit web myweb # 创建新镜像myweb(容器web) 另存为镜像 (save container to image)
-  docker save -o d:\docker\images\ubuntu_latest.tar ubuntu:latest       # 保存镜像 (save image)
+  docker load < /opt/images/ubuntu_latest.tar  # 加载镜像 (以文件流的方式)
+  docker save -o d:\docker\images\ubuntu_latest.tar ubuntu:latest # 保存镜像 (save image)
+  docker save ubuntu:latest > d:\docker\images\ubuntu_latest.tar  # 保存镜像 (save image)
+  docker commit [容器id|name] [镜像id|name][:tag] # 从容器创建一个新的镜像,另存为镜像(save container to image)
+  docker logout        # 退出^镜像^管理
+  
+  # 管理容器
+  docker stats         # 查看容器占用资源, 例如：容器名、cpu、内存、io等
+  docker ps -a         # 查看容器 docker container ls -a
+  
   docker export ubuntu > "d:\docker\snapshot\ubuntu_19_04.tar"           # 导出快照 (export snapshot)
   docker container export -o="d:\docker\snapshot\ubuntu_19_04.tar" ubuntu # 导出快照 (container export snapshot)
   docker cp d:\docker\app\xxx\publish centos.netcore:/home/app/xxx/publish # 复制目录 (copy dir to container)
@@ -1341,8 +1366,7 @@ alias dockerclean='dockercleanc || true && dockercleani'           # 清除停�
   docker volume prune                       # 删除未使用volumes
   docker system prune                       # 删除未使用数据
   docker rm [container]                     # 删除1个容器
-  docker rmi [image]                        # 删除1个镜像
-  docker rmi $(docker images -q)            # 删除所有镜像
+  
   docker port [container]                   # 查看端口映射
   docker inspect [container]                # 查看容器详情
   docker rename web [container]             # 容器重新命名

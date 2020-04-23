@@ -1740,18 +1740,18 @@ services:
   　`Service`：防止Pod失联、定义一组Pod的访问策略`对外提供访问服务`；<br>
   　`Label`：`标签`，附加到某个资源上，用于关联对象、查询和筛选对象；<br>
   　`Namespace`：`命名空间`，将对象逻辑上隔离。<br>
-  　`搭建^6台`：负载均衡`1虚拟IP`高可用`集群` (4核8G;IP1+IP2>>`VIP*`) load-balancer-master,load-balancer-backup<br>
+  　`搭建^6台`：负载均衡`虚拟IP`高可用`集群` (4核8G;IP1+IP2>>`VIP*`) load-balancer-master,load-balancer-backup<br>
   　  　前后端*`高IO型`的`Web`应用程序 (8核16G;IP3+IP4) k8s-master1,k8s-master2<br>
   　  　长时间*`可水平扩展`的`分布式计算型`任务 (16核64G;IP5+IP6) k8s-node1,k8s-node2 <br>
 ~~~shell
-# 启用k8s失败时; windows设置:可参考[Aliyun-Istio]
+# 启用k8s失败时; windows设置:可参考[Aliyun-Istio]; 先更新[docker-desktop](https://www.docker.com/products/docker-desktop);
 # > $env:DOCKER_HOST="tcp://0.0.0.0:2375"   # 设置Windows环境变量 PowerShell [cli连接Docker-Server端TCP地址]
-# > $env:KUBECONFIG="C:\Users\Administrator\.kube\config" ... 启动docker后, 签出k8s相对应的git版本
+# > $env:KUBECONFIG="C:\Users\Administrator\.kube\config" 启动docker后, 签出k8s相对应的git版本,如下:
 # > git clone https://github.com/AliyunContainerService/k8s-for-docker-desktop.git && git checkout v1.15.5
-# > .\load_images.ps1 << registry.cn-hangzhou.aliyuncs.com/google_containers/... 下载k8s镜像资源...如下..
-# >> k8s.gcr.io/kube-proxy,kube-scheduler,kube-controller-manager,kube-apiserver,coredns,etcd,pause ...
-# > rm -rf C:/ProgramData/DockerDesktop/pki/ C:/Users/Administrator/.kube/config ... 删除临时文件..
-# >> Docker\Resources\Network >DNS: 8.8.8.8 ;Restart Docker Desktop ;Enable Kubernetes v1.15.5 设置+重启docker
+# > .\load_images.ps1 #<< registry.cn-hangzhou.aliyuncs.com/google_containers/... 下载k8s镜像资源,如下:
+# >> k8s.gcr.io/kube-proxy,kube-scheduler,kube-controller-manager,kube-apiserver,coredns,etcd,pause
+# > rm -rf C:/ProgramData/DockerDesktop/pki/ C:/Users/Administrator/.kube/config 删除临时文件;重启后会自动再生成conf;
+# >> Docker\Resources\Network >DNS: 8.8.8.8 ;Restart Docker Desktop ;Enable Kubernetes v1.15.5 设置&重启docker.
 # 安装 kubectl client
 $ curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubectl 
 $ sudo chmod +x kubectl && sudo mv kubectl /usr/local/bin/

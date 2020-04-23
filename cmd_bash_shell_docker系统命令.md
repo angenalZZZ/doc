@@ -1744,19 +1744,20 @@ services:
   　  　前后端*`高IO型`的`Web`应用程序 (8核16G;IP3+IP4) k8s-master1,k8s-master2<br>
   　  　长时间*`可水平扩展`的`分布式计算型`任务 (16核64G;IP5+IP6) k8s-node1,k8s-node2 <br>
 ~~~shell
-# 启用k8s失败时; windows设置:可参考[Aliyun-Istio]; 先更新[docker-desktop](https://www.docker.com/products/docker-desktop);
+# 启用k8s失败时; windows设置:可参考[Aliyun-Istio]; 先更新 www.docker.com/products/docker-desktop
 # > $env:DOCKER_HOST="tcp://0.0.0.0:2375"   # 设置Windows环境变量 PowerShell [cli连接Docker-Server端TCP地址]
 # > $env:KUBECONFIG="C:\Users\Administrator\.kube\config" 启动docker后, 签出k8s相对应的git版本,如下:
 # > git clone https://github.com/AliyunContainerService/k8s-for-docker-desktop.git && git checkout v1.15.5
 # > .\load_images.ps1 #<< registry.cn-hangzhou.aliyuncs.com/google_containers/... 下载k8s镜像资源,如下:
 # >> k8s.gcr.io/kube-proxy,kube-scheduler,kube-controller-manager,kube-apiserver,coredns,etcd,pause
-# > rm -rf C:/ProgramData/DockerDesktop/pki/ C:/Users/Administrator/.kube/config 删除临时文件;重启后会自动再生成conf;
+# > rm -rf C:/ProgramData/DockerDesktop/pki/ C:/Users/Administrator/.kube/config 删除临时文件;重启后会自动再生成conf
 # >> Docker\Resources\Network >DNS: 8.8.8.8 ;Restart Docker Desktop ;Enable Kubernetes v1.15.5 设置&重启docker.
 # 安装 kubectl client
 $ curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubectl 
 $ sudo chmod +x kubectl && sudo mv kubectl /usr/local/bin/
 # 部署管理程序 kubernetes dashboard
-$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
+$ kd=https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
+$ kubectl apply -f $kd
 # 编排web应用 kubernetes deployment
 $ docker-compose build && kubectl apply -f /path/to/kube-deployment.yml  # 1 deploy of apply config
 $ docker stack deploy -c /path/to/docker-compose.yml mystack             # 2 deploy stack with compose

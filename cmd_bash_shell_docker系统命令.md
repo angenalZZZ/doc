@@ -450,6 +450,9 @@ openssl pkcs8 -topk8 -nocrypt -in server.key -out server.pem
   $ curl -XGET https://127.0.0.1:8080/v1/user -H "Content-Type: application/json" \
     -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MjgwMTY5MjIsImlkIjowLCJuYmYiOjE1MjgwMTY5MjIsInVzZXJuYW1lIjoiYWRtaW4ifQ.LjxrK9DuAwAzUD8-9v43NzWBN7HXsSLfebw92DKd1JQ" \
     --cacert ca.crt --cert sv.crt --key sv.key  # 开发环境 自签名证书(结合 √ #1.创建openssl → ## 单个域名+CA)
+  $ curl -XPOST --header 'Accept: application/json' --header 'Content-Type: application/json;charset=UTF-8' \
+    -d '{"Params":{"NodeId":"212","Title":""},"PageIndex":1,"Order":"DESC","PageSize":10,"SortName":"AddDate"}'\
+    'http://api.xxx.com/xxx/xxx' | jq
 
   # 请求Http资源的工具postwoman > postman
   $ git clone https://github.com/postwoman-io/postwoman-proxy.git

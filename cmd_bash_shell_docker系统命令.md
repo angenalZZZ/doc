@@ -1491,10 +1491,12 @@ ENTRYPOINT ["dotnet", "App.Host.dll"] */
   
   # 消息平台 nsq | nsq.io/deployment/docker.html
   docker run --name nsqlookupd --network=workgroup --network-alias=nsqlookupd -p 4160:4160 -p 4161:4161 
-    nsqio/nsq /nsqlookupd  # First Run nsqlookupd for nsqd & nsqadmin 
+    nsqio/nsq /nsqlookupd -tcp-address 0.0.0.0:4160 -http-address 0.0.0.0:4161 # First Run before nsqd & nsqadmin 
   docker run --name nsqd --network=workgroup --network-alias=nsqd -p 4150:4150 -p 4151:4151 -v d:\docker\app\nsq\data:/data 
-    nsqio/nsq /nsqd --data-path=/data --lookupd-tcp-address=nsqlookupd:4160 # --broadcast-address=<dockerIP>
-  docker run --name nsqadmin -d --network=workgroup -p 4171:4171 nsqio/nsq /nsqadmin --lookupd-http-address=nsqlookupd:4161
+    nsqio/nsq /nsqd --data-path=/data --lookupd-tcp-address=nsqlookupd:4160 
+    -tcp-address 0.0.0.0:4150 -http-address 0.0.0.0:4151 -mem-queue-size 10000 # --broadcast-address=<dockerIP>
+  docker run --name nsqadmin -d --network=workgroup -p 4171:4171 nsqio/nsq /nsqadmin 
+    --lookupd-http-address=nsqlookupd:4161 -http-address 0.0.0.0:4171 -statsd-interval 1m0s
   # 消息平台 kafka | wurstmeister.github.io/kafka-docker
   docker run --name kafka wurstmeister/kafka
   # 消息平台 rabbitmq | github.com/judasn/Linux-Tutorial/blob/master/markdown-file/RabbitMQ-Install-And-Settings.md

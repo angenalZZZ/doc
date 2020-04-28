@@ -116,7 +116,24 @@ git describe --tags --abbrev=0; else git log --pretty=format:'%h' -n 1; fi ## �
 ####  9.准备远程git仓库(##代表git账号: ***@mail.com)
 
 ~~~bash
- 1)ssh-key的生成(Git-Bash密码为空): ssh-keygen -t rsa -C "##" , 默认生成到.ssh目录: id_rsa[密钥], id_rsa.pub[公钥]
+ 1)ssh-key的生成(Git-Bash密码为空): 
+   ssh-keygen -t rsa -C "##" # 默认配置生成到 ~/.ssh 目录 > id_rsa[密钥], id_rsa.pub[公钥]
+   ssh-keygen -t rsa -C 'xx@qq.com' -f ~/.ssh/gitee_id_rsa # 配置多个 SSH-Key 需要指定 file & config
+   ssh-keygen -t rsa -C 'xx@mail.com' -f ~/.ssh/github_id_rsa
+   #1)在 ~/.ssh 目录下新建一个config文件: 
+   # gitee
+   Host gitee.com
+   HostName gitee.com
+   PreferredAuthentications publickey
+   IdentityFile ~/.ssh/gitee_id_rsa
+   # github
+   Host github.com
+   HostName github.com
+   PreferredAuthentications publickey
+   IdentityFile ~/.ssh/github_id_rsa
+   #2)用ssh命令分别测试: 
+   ssh -T git@gitee.com
+   ssh -T git@github.com
  2)##注册到bitbucket.org、github.com，或者自建Git-Server: gogs、Bonobo,  然后上传公钥并检查: ssh git@bitbucket.org
  3)##登陆后, 新建1个空的git仓库***
  4)在以上1-8准备的本地git仓库的目录中执行(添加远程仓库):

@@ -134,7 +134,7 @@ $ sysctl -p                               # 生效/etc/sysctl.conf 修改
 #### 构建镜像
 
 > **Dockerfile** [文档](https://docs.docker.com/get-started) <br>
-    docker build -t <YOUR_NAME>/<YOUR_APP>:<VERSION-SYSTEM> . # -t标签 <br>
+    docker build -t <YOUR_NAME>/<YOUR_APP> ：<VERSION-SYSTEM> .  # -t标记版本 <br>
     docker build --progress=plain -t myname/demo -f Dockerfile . # -f指定文档 --progress输出细节
 
 ~~~dockerfile
@@ -229,7 +229,7 @@ RUN go build -o /app -v -tags netgo -ldflags '-w -extldflags "-static"' .
 
 CMD ["/app"]
 ~~~
-> *开启实验性功能 BuildKit 快速编译：第一行syntax务必要填写；可以在任何RUN时使用--mount进行缓存*
+> *开启实验性功能 BuildKit 快速编译：第一行syntax务必要填写；第二，可以在任何RUN时，使用--mount进行缓存*
 ~~~dockerfile
 # syntax = docker/dockerfile:experimental
 # ... ...

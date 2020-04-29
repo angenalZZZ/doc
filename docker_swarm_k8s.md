@@ -5,8 +5,8 @@
  * [`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)、[`安全相关思维导图收集`](https://github.com/phith0n/Mind-Map)
 
 
-#### [安装](https://docs.docker.com/install)、[配置](#配置)
-> [docker-hub](https://hub.docker.com/repositories)、[docker-desktop](https://hub.docker.com/?overlay=onboarding) Build构建&Compose编排&Kubernetes管理&Swarm集群<br>
+#### 安装、[配置](#配置)、[构建镜像](#构建镜像)、[使用命令](#使用命令)
+> [docker](https://docs.docker.com/install)、[docker-hub](https://hub.docker.com/repositories)、[docker-desktop](https://hub.docker.com/?overlay=onboarding) Build构建>Compose编排>K8s管理>Swarm集群<br>
   `环境 & 版本` : [`Linux x64, Kernel^3.10 cgroups & namespaces`](https://docs.docker.com/install), [`docker-ce`社区版](https://hub.docker.com/?overlay=onboarding) + `docker-ee`企业版 <br>
   `加速器`..   : [`阿里云`](https://cr.console.aliyun.com/#/accelerator)[..](https://4txtc8r4.mirror.aliyuncs.com)、[`DaoCloud道客`](https://dashboard.daocloud.io/packages/explore)[..](http://8fe1b42e.m.daocloud.io)、[`网易`](https://hub-mirror.c.163.com)、 [`自动mirror.py`](https://github.com/silenceshell/docker_mirror) <br>
 
@@ -106,18 +106,146 @@ $ sysctl -p                               # 生效/etc/sysctl.conf 修改
 ~~~js
 {
   "registry-mirrors": [
-    "https://***.mirror.aliyuncs.com"
+    "https://{your-id}.mirror.aliyuncs.com" // Or: http://{your-id}.m.daocloud.io
   ],
   "insecure-registries": [],
   "debug": false,
-  "experimental": true, // Enable new features
+  "experimental": true, // Enable实验性功能features:eg. DOCKER_BUILDKIT=1
   "features": {
     "buildkit": true // # syntax = docker/dockerfile:experimental
   }
 }
 ~~~
 
+> **docker-search-tags.sh** 搜索/标签/版本
+ - https://dashboard.daocloud.io/packages/explore
+~~~
+  # Usage: $ ./docker-search-tags.sh ubuntu
+  for Repo in $* ; do
+    curl -s -S "https://registry.hub.docker.com/v2/repositories/library/$Repo/tags/" | \
+      sed -e 's/,/,\n/g' -e 's/\[/\[\n/g' | \
+      grep '"name"' | \
+      awk -F\" '{print $4;}' | \
+      sort -fu | \
+      sed -e "s/^/${Repo}:/"
+  done
+~~~
 
+#### 构建镜像
+
+> **Dockerfile** [文档](https://docs.docker.com/get-started)<br>
+    docker build -t <YOUR_NAME>/<YOUR_APP>:<VERSION-SYSTEM> . # -t标签[用户名/镜像名:版本&系统](*)<br>
+    docker build --progress=plain -t myname/demo -f Dockerfile . # -f指定文档 --progress输出细节
+
+~~~dockerfile
+# node基础镜像
+FROM node:10.15.0
+
+# 备注镜像相关信息，通过 docker inspect 查看
+LABEL maintainer="test <test@gmail.com>"
+LABEL description="this is a test image"
+LABEL version="1.0"
+
+# 设置当前用户为root，因为后面安装需要使用root用户执行
+USER root
+# 设置当前工作目录，若不存在会自动创建，其他指令会以此为相对路径
+WORKDIR /work/app
+
+# ADD <src> <dest>
+# 添加资源到工作目录，若是压缩文件会自动解压，可指定远程地址下载url
+ADD 'https://github.com/nodejscn/node-api-cn/blob/master/README.md' ./doc/
+
+# COPY <src> <dest>
+# 复制资源到工作目录，不会解压，无法从远程地址下载
+COPY ./ ./
+
+# RUN 构建镜像时执行的命令(安装运行时环境、软件等)
+RUN npm install  # RUN前提:FROM基础镜像的:系统环境变量:PATH中的可执行程序npm
+
+# 安装 .NET Core https://docs.microsoft.com/zh-cn/dotnet/core/install/runtime?pivots=os-linux
+# RUN wget -O dotnet-runtime.tar.gz https://download.*/aspnetcore-runtime-3.1.2-linux-x64.tar.gz
+# RUN mkdir -p $HOME/dotnet && tar zxf dotnet-runtime.tar.gz -C $HOME/dotnet
+# RUN usermod -aG root dotnet  # 添加root用户至dotnet(附加用户组)
+# USER dotnet                  # 设置当前用户为dotnet(用于执行以后的命令)
+# ENV DOTNET_ROOT=$HOME/dotnet  # 添加dotnet环境变量
+# ENV PATH=$PATH:$HOME/dotnet   # 修改环境变量PATH
+# dotnet tool install -g [工具] # 在线安装dotnet工具
+
+# ARG 构建镜像时可传递的参数，配合 ENV 使用 docker build --build-arg NODE_ENV=dev
+ARG NODE_ENV            # 必填的参数
+ARG TZ='Asia/Shanghai'  # 可选的带默认值的参数
+
+# ENV 容器运行时的环境变量，配合 ARG 使用 $NODE_ENV '${TZ}'
+ENV PATH="${PATH}:/dotnet:/var/.dotnet/tools" # 修改:FROM基础镜像的:系统环境变量
+ENV NODE_ENV=$NODE_ENV  # 添加环境变量
+ENV TZ '${TZ}'          # 设置时区
+
+# EXPOSE 容器端口(可指定多个)，启动时指定与宿主机端口的映射 docker run -p 9999:8888
+EXPOSE 8080 8888  # 暴露的两个端口都可与宿主机端口进行映射
+
+# CMD 容器启动后执行的命令，会被 docker run 命令覆盖
+CMD ["npm", "start"]  # other, web-proxy: CMD ["nginx", "-g", "daemon off;"]
+
+# ENTRYPOINT 容器启动后执行的命令，不会被 docker run 命令覆盖，未指定应用时一般不会使用；
+# 任何 docker run 命令设置的指令参数 或 CMD 指令，都将作为参数追加至 ENTRYPOINT 命令之后
+# ENTRYPOINT ["dotnet", "aspnetapp.dll"]
+~~~
+
+> **.dockerignore** 配置文件/屏蔽读取
+~~~
+# 临时文件
+*/temp*
+*/*/temp*
+temp?
+!README*.md
+# 编译文件
+obj\
+~~~
+
+> **go语言**
+~~~dockerfile
+# golang基础镜像
+FROM golang:1.14-alpine
+
+LABEL maintainer="test <test@gmail.com>"
+LABEL description="this is a test image"
+LABEL version="1.0"
+
+RUN apk add bash ca-certificates git gcc g++ libc-dev
+WORKDIR /app
+
+# Force the go compiler to use modules
+ENV GO111MODULE=on
+# We want to populate the module cache based on the go.{mod,sum} files.
+COPY go.mod .
+COPY go.sum .
+RUN go mod download
+COPY main.go .
+COPY foo/foo.go foo/
+COPY bar/bar.go bar/
+
+ENV GOOS=linux
+ENV GOARCH=amd64
+RUN go build -o /app -v -tags netgo -ldflags '-w -extldflags "-static"' .
+
+CMD ["/app"]
+~~~
+
+~~~dockerfile
+# 开启实验性功能 BuildKit 快速编译
+# syntax = docker/dockerfile:experimental
+# ... ...
+RUN --mount=type=cache,target=/var/cache/apk apk add bash ca-certificates ... ...
+# ... ...
+RUN --mount=type=cache,target=/go/pkg/mod go mod download
+# ... ...
+RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build go build -o \
+  /app -v -tags netgo -ldflags '-w -extldflags "-static"' .
+
+CMD ["/app"]
+~~~
+
+#### 使用命令
 
 > **Docker Command** [samples](https://docs.docker.com/samples)、[labs/tutorials](https://github.com/angenal/labs)、[小结](https://github.com/AlexWoo/doc/blob/master/devops/docker小结.md)
 ~~~shell
@@ -394,86 +522,6 @@ ENTRYPOINT ["dotnet", "App.Host.dll"] */
   git clone https://github.com/hwdsl2/docker-ipsec-vpn-server
 ~~~
 
-> **docker-search-tags.sh** 搜索/标签/版本
- - https://dashboard.daocloud.io/packages/explore
-~~~
-  # Usage: $ ./docker-search-tags.sh ubuntu
-  for Repo in $* ; do
-    curl -s -S "https://registry.hub.docker.com/v2/repositories/library/$Repo/tags/" | \
-      sed -e 's/,/,\n/g' -e 's/\[/\[\n/g' | \
-      grep '"name"' | \
-      awk -F\" '{print $4;}' | \
-      sort -fu | \
-      sed -e "s/^/${Repo}:/"
-  done
-~~~
-
-> **Dockerfile** [文档](https://docs.docker.com/get-started)<br>
-　$ docker build -t <YOUR_USERNAME>/myapp . # 构建+标签[用户名/镜像名]
-~~~dockerfile
-  # 基础镜像
-  FROM node:10.15.0
-  
-  # 备注镜像相关信息，通过 docker inspect 查看
-  LABEL maintainer="test <test@gmail.com>"
-  LABEL description="this is a test image"
-  LABEL version="1.0"
-  
-  # 设置当前用户为root，因为后面安装需要使用root用户执行
-  USER root
-  # 设置当前工作目录，若不存在会自动创建，其他指令会以此为相对路径
-  WORKDIR /work/app
-  
-  # ADD <src> <dest>
-  # 添加资源到工作目录，若是压缩文件会自动解压，可指定远程地址下载url
-  ADD 'https://github.com/nodejscn/node-api-cn/blob/master/README.md' ./doc/
-  
-  # COPY <src> <dest>
-  # 复制资源到工作目录，不会解压，无法从远程地址下载
-  COPY ./ ./
-  
-  # RUN 构建镜像时执行的命令(安装运行时环境、软件等)
-  RUN npm install  # RUN前提:FROM基础镜像的:系统环境变量:PATH中的可执行程序npm
-  
-  # 安装 .NET Core https://docs.microsoft.com/zh-cn/dotnet/core/install/runtime?pivots=os-linux
-  # RUN wget -O dotnet-runtime.tar.gz https://download.*/aspnetcore-runtime-3.1.2-linux-x64.tar.gz
-  # RUN mkdir -p $HOME/dotnet && tar zxf dotnet-runtime.tar.gz -C $HOME/dotnet
-  # RUN usermod -aG root dotnet  # 添加root用户至dotnet(附加用户组)
-  # USER dotnet                  # 设置当前用户为dotnet(用于执行以后的命令)
-  # ENV DOTNET_ROOT=$HOME/dotnet  # 添加dotnet环境变量
-  # ENV PATH=$PATH:$HOME/dotnet   # 修改环境变量PATH
-  # dotnet tool install -g [工具] # 在线安装dotnet工具
-  
-  # ARG 构建镜像时可传递的参数，配合 ENV 使用 docker build --build-arg NODE_ENV=dev
-  ARG NODE_ENV            # 必填的参数
-  ARG TZ='Asia/Shanghai'  # 可选的带默认值的参数
-  
-  # ENV 容器运行时的环境变量，配合 ARG 使用 $NODE_ENV '${TZ}'
-  ENV PATH="${PATH}:/dotnet:/var/.dotnet/tools" # 修改:FROM基础镜像的:系统环境变量
-  ENV NODE_ENV=$NODE_ENV  # 添加环境变量
-  ENV TZ '${TZ}'          # 设置时区
-  
-  # EXPOSE 容器端口(可指定多个)，启动时指定与宿主机端口的映射 docker run -p 9999:8888
-  EXPOSE 8080 8888  # 暴露的两个端口都可与宿主机端口进行映射
-  
-  # CMD 容器启动后执行的命令，会被 docker run 命令覆盖
-  CMD ["npm", "start"]  # other, web-proxy: CMD ["nginx", "-g", "daemon off;"]
-  
-  # ENTRYPOINT 容器启动后执行的命令，不会被 docker run 命令覆盖，一般不会使用；
-  # 任何 docker run 命令设置的指令参数 或 CMD 指令，都将作为参数追加至 ENTRYPOINT 命令之后
-  # ENTRYPOINT ["dotnet", "aspnetapp.dll"]
-~~~
-
-> **.dockerignore** 配置文件/屏蔽读取
-~~~
-# 临时文件
-*/temp*
-*/*/temp*
-temp?
-!README*.md
-# 编译文件
-obj\
-~~~
 
 #### docker-compose
 > **docker-compose.yml** [安装Compose](https://docs.docker.com/compose/install/) [文档v3](https://docs.docker.com/compose/overview) | [老版本v2](https://www.jianshu.com/p/2217cfed29d7) | [votingapp例子](https://github.com/angenal/labs/blob/master/beginner/chapters/votingapp.md)<br>

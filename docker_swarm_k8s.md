@@ -134,8 +134,8 @@ $ sysctl -p                               # 生效/etc/sysctl.conf 修改
 #### 构建镜像
 
 > **Dockerfile** [文档](https://docs.docker.com/get-started) <br>
-    docker build -t {USER_NAME}/{APP_NAME} ：{VERSION-SYSTEM} .  # -t标记版本 <br>
-    docker build --progress=plain -t myname/demo -f Dockerfile . # -f指定文档 --progress输出细节
+    docker build -t {USER_NAME} / {APP_NAME} : {VERSION-SYSTEM} .  # -t标记名称+版本 <br>
+    docker build --progress=plain -t myname/demo -f Dockerfile .  # -f指定文档 --progress输出细节
 
 ~~~dockerfile
 # node基础镜像

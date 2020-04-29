@@ -94,7 +94,7 @@ $ docker service create --name portainer --publish 9000:9000 --constraint 'node.
 ~~~
 
 > ~/.docker/config.json
-~~~json
+~~~js
 {
   "credsStore":"desktop",
   "experimental":"disabled", // Enable the experimental WSL 2 based engine (requires Win 10 build 19018+)
@@ -103,7 +103,7 @@ $ docker service create --name portainer --publish 9000:9000 --constraint 'node.
 ~~~
 
 > ~/.docker/daemon.json
-~~~json
+~~~js
 {
   "registry-mirrors": [
     "https://***.mirror.aliyuncs.com"

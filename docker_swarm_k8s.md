@@ -160,7 +160,8 @@ ADD 'https://github.com/nodejscn/node-api-cn/blob/master/README.md' ./doc/
 COPY ./ ./
 
 # RUN 构建镜像时执行的命令(安装运行时环境、软件等)
-RUN npm install  # RUN前提:FROM基础镜像的:系统环境变量:PATH中的可执行程序npm
+RUN npm install
+# RUN前提:FROM基础镜像的:系统环境变量:PATH中的可执行程序npm
 
 # 安装 .NET Core https://docs.microsoft.com/zh-cn/dotnet/core/install/runtime?pivots=os-linux
 # RUN wget -O dotnet-runtime.tar.gz https://download.*/aspnetcore-runtime-3.1.2-linux-x64.tar.gz
@@ -172,19 +173,26 @@ RUN npm install  # RUN前提:FROM基础镜像的:系统环境变量:PATH中的�
 # dotnet tool install -g [工具] # 在线安装dotnet工具
 
 # ARG 构建镜像时可传递的参数，配合 ENV 使用 docker build --build-arg NODE_ENV=dev
-ARG NODE_ENV            # 必填的参数
-ARG TZ='Asia/Shanghai'  # 可选的带默认值的参数
+# 设定必填的参数
+ARG NODE_ENV
+# 设定可选的带默认值的参数
+ARG TZ='Asia/Shanghai'
 
 # ENV 容器运行时的环境变量，配合 ARG 使用 $NODE_ENV '${TZ}'
-ENV PATH="${PATH}:/dotnet:/var/.dotnet/tools" # 修改:FROM基础镜像的:系统环境变量
-ENV NODE_ENV=$NODE_ENV  # 添加环境变量
-ENV TZ '${TZ}'          # 设置时区
+# 修改:FROM基础镜像的:系统环境变量
+ENV PATH="${PATH}:/dotnet:/var/.dotnet/tools"
+# 添加环境变量
+ENV NODE_ENV=$NODE_ENV
+# 设置时区
+ENV TZ '${TZ}'
 
 # EXPOSE 容器端口(可指定多个)，启动时指定与宿主机端口的映射 docker run -p 9999:8888
-EXPOSE 8080 8888  # 暴露的两个端口都可与宿主机端口进行映射
+# 暴露的两个端口都可与宿主机端口进行映射
+EXPOSE 8080 8888
 
 # CMD 容器启动后执行的命令，会被 docker run 命令覆盖
-CMD ["npm", "start"]  # other, web-proxy: CMD ["nginx", "-g", "daemon off;"]
+CMD ["npm", "start"]
+# other, web-proxy, eg. CMD ["nginx", "-g", "daemon off;"]
 
 # ENTRYPOINT 容器启动后执行的命令，不会被 docker run 命令覆盖，未指定应用时一般不会使用；
 # 任何 docker run 命令设置的指令参数 或 CMD 指令，都将作为参数追加至 ENTRYPOINT 命令之后
@@ -192,7 +200,7 @@ CMD ["npm", "start"]  # other, web-proxy: CMD ["nginx", "-g", "daemon off;"]
 ~~~
 
 > **.dockerignore** 配置文件/屏蔽读取
-~~~
+~~~dockerignore
 # 临时文件
 */temp*
 */*/temp*

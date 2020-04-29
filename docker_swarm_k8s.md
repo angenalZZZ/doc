@@ -201,8 +201,7 @@ temp?
 # 编译文件
 obj\
 ~~~
-
-> **go语言**
+> *go语言*
 ~~~dockerfile
 # golang基础镜像
 FROM golang:1.14-alpine
@@ -230,9 +229,8 @@ RUN go build -o /app -v -tags netgo -ldflags '-w -extldflags "-static"' .
 
 CMD ["/app"]
 ~~~
-
+> *开启实验性功能 BuildKit 快速编译：第一行syntax务必要填写；可以在任何RUN时使用--mount进行缓存*
 ~~~dockerfile
-# 开启实验性功能 BuildKit 快速编译
 # syntax = docker/dockerfile:experimental
 # ... ...
 RUN --mount=type=cache,target=/var/cache/apk apk add bash ca-certificates ... ...

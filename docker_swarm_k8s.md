@@ -250,6 +250,19 @@ RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache
 
 CMD ["/app"]
 ~~~
+> *go语言/构建最小镜像*
+~~~dockerfile
+# build stage # 注意禁用CGO
+FROM golang:alpine AS build-env
+ADD . /src
+RUN cd /src && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o app
+
+# final stage
+# FROM alpine # 最小image请选择centurylink 构建后约~ 1.81MB
+FROM centurylink/ca-certs
+COPY --from=build-env /src/app /
+ENTRYPOINT ["/app"]
+~~~
 
 #### 使用命令
 

@@ -609,7 +609,7 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   #1.Thrift是一种接口描述语言和二进制通讯协议，它被用来定义和创建跨语言的服务。它被当作一个远程过程调用（RPC）框架来使用，是由Facebook为“大规模跨语言服务开发”而开发的。
   $ sudo apt-get install automake bison flex g++ git libboost-all-dev libevent-dev libssl-dev libtool make pkg-config
   
-  # 安装ffmpeg libraries: avcodec,avformat,avutil,avfilter,avdevice,swresample,swscale
+  # 安装ffmpeg视频编码/解码libraries: avcodec,avformat,avutil,avfilter,avdevice,swresample,swscale
   sudo apt-get -y install autoconf automake build-essential  # 先安装gcc/g++/gdb/make工具链
   sudo apt-get -y install libass-dev libfreetype6-dev libsdl1.2-dev libtheora-dev libtool libva-dev \
     libvdpau-dev libvorbis-dev libxcb1-dev libxcb-shm0-dev libxcb-xfixes0-dev pkg-config texi2html zlib1g-dev \
@@ -633,7 +633,9 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   export CGO_LDFLAGS="-L$FFMPEG_ROOT/lib/ -lavcodec -lavformat -lavutil -lswscale -lswresample -lavdevice -lavfilter"
   export CGO_CFLAGS="-I$FFMPEG_ROOT/include"
   export LD_LIBRARY_PATH=$HOME/ffmpeg/lib
-  # go get -u github.com/giorgisio/goav
+  # go get -u github.com/giorgisio/goav  # 提供开发 go sdk
+  # https://github.com/shimberger/gohls  # 提供点播 gohls -h ?目录中自动转码> HTTP Live Streaming (HLS)
+  # https://github.com/MattMcManis/Axiom # 提供视频转码/格式转换 c# gui windows
   
   # 快捷命令: https://github.com/angenalZZZ/doc/blob/master/sh/02-bash_aliases.sh
   alias lht='ls -lht'  # 文件列表-按时间倒序

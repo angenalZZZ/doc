@@ -1,8 +1,8 @@
 # 浏览器注入javascript
 
-#### 插件
+#### 浏览器插件
 
-> [Chrome extension to inject custom Javascript into a webpage.](https://scripty.abhisheksatre.com)
+> [Install Chrome extension, inject Javascript into a webpage](https://chrome.google.com/webstore/detail/scripty-javascript-inject/milkbiaeapddfnpenedfgbfdacpbcbam)、[scripty.abhisheksatre.com](https://scripty.abhisheksatre.com)
 ~~~javascript
 // URL to QR Code
 (function() {

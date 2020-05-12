@@ -30,7 +30,7 @@
 ~~~javascript
 // 国家药监局-抓取国产药品
 (function(i) {
-    for(var id=1;id<=i;id++){
+    var cb=function(id){
         request=new XMLHttpRequest();
         request.onreadystatechange=function(){
             if(request.readyState==4)
@@ -49,6 +49,7 @@
         request.open("GET","content.jsp?tableId=25&tableName=TABLE25&tableView=国产药品&Id="+id);
         request.setRequestHeader("Content-Type","text/html;encoding=gbk");
         request.send(null);
-    }
-})(2);
+    };
+    for(var id=1;id<=i;id++)cb(id);
+})(1);
 ~~~

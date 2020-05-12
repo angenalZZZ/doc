@@ -38,12 +38,12 @@
             {
                 if(request.status==200)
                 {
-                    alert(escape(request.responseText));
+                    alert("服务器未返回数据:国产药品:Id="+id+"  "+escape(request.responseText));
                     request=null;
                 }
                 else
                 {
-                    console.log("服务器未返回数据:国产药品:Id="+id)
+                    alert("服务器未返回数据:国产药品:Id="+id)
                 }
             }
         };

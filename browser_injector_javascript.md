@@ -38,7 +38,7 @@
             {
                 if(request.status==200)
                 {
-                    console.log(request.responseText);
+                    alert(escape(request.responseText));
                     request=null;
                 }
                 else

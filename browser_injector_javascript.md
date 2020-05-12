@@ -37,7 +37,11 @@
             {
                 if(request.status==200)
                 {
-                    alert("服务器未返回数据:国产药品:Id="+id+"  "+escape(request.responseText));
+                    var res=request.responseText;
+                    console.log(res);
+                    var t=res.substring(res.indexOf("<table "));
+                    t = t.substring(0, t.indexOf("</table>")+8);
+                    alert("服务器正常返回数据:国产药品:Id="+id+"  "+t);
                     request=null;
                 }
                 else

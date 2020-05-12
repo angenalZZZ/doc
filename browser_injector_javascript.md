@@ -31,7 +31,7 @@
 // 国家药监局-抓取国产药品
 (function(i) {
     for(var id=1;id<=i;id++){
-        request=window.createXMLHttp();
+        request=new XMLHttpRequest();
         request.onreadystatechange=function(){
             if(request.readyState==4)
             {

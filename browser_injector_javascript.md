@@ -30,9 +30,9 @@
 ~~~javascript
 // 国家药监局-抓取国产药品
 (function(i) {
-    for(var id=1; id<=i; id++) {
-        request=createXMLHttp();
-        request.onreadystatechange=function () {
+    for(var id=1;id<=i;id++){
+        request=window.createXMLHttp();
+        request.onreadystatechange=function(){
             if(request.readyState==4)
             {
                 if(request.status==200)

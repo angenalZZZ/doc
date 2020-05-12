@@ -26,6 +26,30 @@
         document.body.append(div);
     }
 })();
-
 ~~~
-
+~~~javascript
+// 国家药监局-抓取国产药品
+(function() {
+{
+    for(var id=1; id<=10; id++) {
+        request=createXMLHttp();
+        request.onreadystatechange=function () {
+            if(request.readyState==4)
+            {
+                if(request.status==200)
+                {
+                    console.log(request.responseText);
+                    request=null;
+                }
+                else
+                {
+                    console.log("服务器未返回数据:国产药品:Id="+id)
+                }
+            }
+        };
+        request.open("GET","content.jsp?tableId=25&tableName=TABLE25&tableView=国产药品&Id="+id);
+        request.setRequestHeader("Content-Type","text/html;encoding=gbk");
+        request.send(null);
+    }
+})();
+~~~

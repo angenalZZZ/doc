@@ -29,9 +29,8 @@
 ~~~
 ~~~javascript
 // 国家药监局-抓取国产药品
-(function() {
-{
-    for(var id=1; id<=10; id++) {
+(function(i) {
+    for(var id=1; id<=i; id++) {
         request=createXMLHttp();
         request.onreadystatechange=function () {
             if(request.readyState==4)
@@ -51,5 +50,5 @@
         request.setRequestHeader("Content-Type","text/html;encoding=gbk");
         request.send(null);
     }
-})();
+})(2);
 ~~~

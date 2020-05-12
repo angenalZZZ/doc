@@ -3,8 +3,8 @@
 #### 浏览器插件
 
 > [Install Chrome extension, inject Javascript into a webpage](https://chrome.google.com/webstore/detail/scripty-javascript-inject/milkbiaeapddfnpenedfgbfdacpbcbam)、[scripty.abhisheksatre.com](https://scripty.abhisheksatre.com)
+> URL to QR Code
 ~~~javascript
-// URL to QR Code
 (function() {
     var id = 'scripty-qr';
     if (!document.getElementById(id)) {
@@ -27,8 +27,8 @@
     }
 })();
 ~~~
+> [国家药监局-抓取国产药品](http://app1.sfda.gov.cn/datasearchcnda/face3/base.jsp?tableId=25&tableName=TABLE25&title=%B9%FA%B2%FA%D2%A9%C6%B7&bcId=152904713761213296322795806604)
 ~~~javascript
-// 国家药监局-抓取国产药品
 (function(i) {
     var cb=function(id){
         request=new XMLHttpRequest();
@@ -38,7 +38,7 @@
                 if(request.status==200)
                 {
                     var res=request.responseText;
-                    console.log(res);
+                    //console.log(res);
                     var t=res.substring(res.indexOf("<table "));
                     t = t.substring(0, t.indexOf("</table>")+8);
                     alert("服务器正常返回数据:国产药品:Id="+id+"  "+t);

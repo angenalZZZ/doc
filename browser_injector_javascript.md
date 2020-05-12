@@ -2,8 +2,8 @@
 
 #### 浏览器插件
 
-> [Install Chrome extension, inject Javascript into a webpage](https://chrome.google.com/webstore/detail/scripty-javascript-inject/milkbiaeapddfnpenedfgbfdacpbcbam)、[scripty.abhisheksatre.com](https://scripty.abhisheksatre.com)
-> URL to QR Code
+> [Install Chrome extension, inject Javascript into a webpage](https://chrome.google.com/webstore/detail/scripty-javascript-inject/milkbiaeapddfnpenedfgbfdacpbcbam)、[scripty.abhisheksatre.com](https://scripty.abhisheksatre.com) <br>
+> [URL to QR Code](qrserver.com)
 ~~~javascript
 (function() {
     var id = 'scripty-qr';

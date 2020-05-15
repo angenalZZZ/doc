@@ -1,6 +1,6 @@
-##文件的路径: cat ~/.bash_aliases
+##文件的路径: ~/.bash_aliases
 ##进行软链结: ln -s /*/doc/sh/02-bash_aliases.sh $HOME/.bash_aliases
-## alias：添加由alias定义的命令别名
+## alias：定义命令别名
 ## unalias：取消由alias定义的命令别名
 
 
@@ -44,5 +44,7 @@ alias dockercleaniall='docker rm $(docker ps -a -q)'
 alias dockercleani='printf "\n>>> Deleting untagged images\n\n" && docker rmi $(docker images -qf dangling=true)'
 # 清除停止的容器及删未标记的镜像
 alias dockerclean='dockercleanc || true && dockercleani'
+
+
 
 

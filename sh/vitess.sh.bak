@@ -8,9 +8,9 @@
 # sudo service apparmor teardown # safe to ignore if this errors
 # sudo update-rc.d -f apparmor remove
 
-export VTTOP=/a/database/vt
-export VTROOT=/a/database/vt
-export VTDATAROOT=/a/database/vt/data
+export VTTOP=/4g/database/vt
+export VTROOT=/4g/database/vt
+export VTDATAROOT=/4g/database/vt/data
 export MYSQL_FLAVOR=MySQL56
 export PATH=$VTROOT/bin:$PATH
 # export PATH=$VTROOT/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin

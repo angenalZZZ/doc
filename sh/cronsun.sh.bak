@@ -1,5 +1,0 @@
-#!/bin/sh
-
-cd $GOPATH/bin/cronsun
-./cronnode -conf conf/base.json &
-./cronweb -conf conf/base.json &

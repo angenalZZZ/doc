@@ -171,6 +171,7 @@
   > dir /d /S [目录]     # 默认当前目录(命令pwd)
   > tree /f [目录]
   > devmgmt.msc          # 系统硬件驱动
+  $ du -d1 -h /var/lib/docker/containers | sort -h  # 列出文件夹按大小排序
   $ df -ah               # 文件系统  容量  已用  可用  已用%  挂载点
   $ lsblk                # 文件系统  分区  挂载点
   $ fdisk -l             # 文件系统  硬件  挂载点

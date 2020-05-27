@@ -256,7 +256,7 @@ CMD ["/app"]
 # build stage # 注意禁用CGO
 FROM golang:alpine AS build-env
 ADD . /src
-RUN cd /src && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o app
+RUN cd /src && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags '-s -w -extldflags "-static"' -o app .
 
 # final stage
 # FROM alpine # 最小image请选择centurylink 构建后约~ 1.81MB
@@ -301,7 +301,7 @@ ENTRYPOINT ["/app"]
   docker image inspect # 获取镜像的元数据
   docker search ubuntu # 搜索镜像
   docker pull ubuntu   # 下载镜像
-  docker tag [镜像id|name][:tag] [Docker-Hub-镜像仓库host]/[镜像name][:tag] # 标记本地镜像,将其归入某一仓库
+  docker tag [镜像id|name][:tag] [Docker-Hub-镜像仓库host-user]/[镜像name][:tag] # 标记本地镜像,将其归入仓库
   docker push [镜像id|name] # 推送镜像 [Docker-Hub]
   docker rmi [镜像id|name]  # 删除1个镜像
   docker rmi $(docker images -q) # 删除所有镜像
@@ -373,6 +373,7 @@ alias dockerclean='dockercleanc || true && dockercleani'           # 清除停�
   docker top [options] [container] # 查看容器中运行的进程，支持ps命令参数(不会被exec代替,因为容器中不一定有top命令)
   docker exec -it redis5 /bin/sh -c "ps aux & /bin/sh"  # 在容器中执行命令: 查看进程详情后,进入工作目录执行sh
 
+  docker run -it --log-opt max-size=20m --log-opt max-file=5 alpine ash #限制容器生成的日志文件大小、文件数量
   docker run -it --rm -e AUTHOR="Test" alpine /bin/sh #查找镜像alpine+运行容器alpine+终端交互it+停止自动删除+执行命令
   docker run --name mysite -d -p 8080:80 -p 8081:443 dockersamples/static-site #查找镜像&运行容器mysite&服务&端口映射
 

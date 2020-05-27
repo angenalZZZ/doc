@@ -30,31 +30,27 @@
 ~~~
  * [国家药监局-抓取国产药品](http://app1.nmpa.gov.cn/datasearchcnda/face3/base.jsp?tableId=25&tableName=TABLE25&title=%B9%FA%B2%FA%D2%A9%C6%B7&bcId=152904713761213296322795806604)
 ~~~javascript
-(function(i) {
-    var cb=function(id){
-        request=new XMLHttpRequest();
-        request.onreadystatechange=function(){
-            if(request.readyState==4)
-            {
-                if(request.status==200)
-                {
-                    var res=request.responseText;
+table25 || table25 = function() {
+    return function(id) {
+        request = new XMLHttpRequest();
+        request.onreadystatechange = function() {
+            if (request.readyState == 4) {
+                if (request.status == 200) {
+                    var res = request.responseText;
                     //console.log(res);
-                    var t=res.substring(res.indexOf("<table "));
-                    t = t.substring(0, t.indexOf("</table>")+8);
-                    alert("服务器正常返回数据:国产药品:Id="+id+"  "+t);
-                    request=null;
-                }
-                else
-                {
-                    alert("服务器未返回数据:国产药品:Id="+id)
+                    var t = res.substring(res.indexOf("<table "));
+                    t = t.substring(0, t.indexOf("</table>") + 8);
+                    alert("服务器正常返回数据:国产药品:Id=" + id + "  " + t);
+                    request = null;
+                } else {
+                    alert("服务器未返回数据:国产药品:Id=" + id)
                 }
             }
         };
-        request.open("GET","content.jsp?tableId=25&tableName=TABLE25&tableView=国产药品&Id="+id);
-        request.setRequestHeader("Content-Type","text/html;encoding=gbk");
+        request.open("GET", "content.jsp?tableId=25&tableName=TABLE25&tableView=国产药品&Id=" + id);
+        request.setRequestHeader("Content-Type", "text/html;encoding=gbk");
         request.send(null);
     };
-    for(var id=1;id<=i;id++)cb(id);
-})(1);
+};
+table25()(1);
 ~~~

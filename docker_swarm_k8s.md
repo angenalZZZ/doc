@@ -547,45 +547,56 @@ ENTRYPOINT ["dotnet", "App.Host.dll"] */
 　管理容器的生命周期，从应用创建、部署、扩容、更新、调度均可在一个平台上完成。<br>
 　[`启动`](https://docs.docker-cn.com/compose/reference/up/)：`docker-compose up -d` | [`停止`](https://docs.docker-cn.com/compose/reference/down/)：`docker-compose down` | [`更多`](https://docs.docker-cn.com/compose/reference)：`pause`,`unpause`,`start`,`stop`,`restart`
 ~~~dockercompose
-  version: '3' # docker compose 版本(版本不同,语法命令有所不同)
-  services:    # docker services 容器服务编排
-    web:       # docker container service
-      # build: # 构建镜像
-      #   context: . # 构建镜像的上下文(本地构建的工作目录)
-      #   dockerfile: Dockerfile # 指定构建文件(工作目录下)
-      #   args: # 构建镜像时传递的参数/用于运行时环境变量
-      #   - NODE_ENV=dev
-      container_name: web-container # 容器名称
-      image: docker-web-image       # 使用已有的镜像(用 docker images 查询)
-      ports: # 端口映射(宿主机端口:容器端口)
+version: '3' # docker compose 版本(版本不同,语法命令有所不同)
+services:    # docker services 容器服务编排
+  web:       # docker container service
+    # build: # 构建镜像
+    #   context: . # 构建镜像的上下文(本地构建的工作目录)
+    #   dockerfile: Dockerfile # 指定构建文件(工作目录下)
+    #   args: # 构建镜像时传递的参数/用于运行时环境变量
+    #   - NODE_ENV=dev
+    container_name: web-container # 容器名称
+    image: docker-web-image       # 使用已有的镜像(用 docker images 查询)
+    ports: # 端口映射(宿主机端口:容器端口)
       - "9999:8888"
-      networks: # 网络设置(加入自定义网络)
+    networks: # 网络设置(加入自定义网络)
       - front-tier
       - back-tier
-      # links: # 外链容器(不安全)
-      # - redis
-      volumes: # 外挂数据(映射宿主机目录:容器工作目录)
+    # links: # 外链容器(不安全)
+    # - redis
+    volumes: # 外挂数据(映射宿主机目录:容器工作目录)
       - "./data/:/work/app/data/"
-      depends_on: # 启动时依赖的容器(容器启动顺序: 推荐第三方工具 wait-for-it dockerize 等)
+    depends_on: # 启动时依赖的容器(容器启动顺序: 推荐第三方工具 wait-for-it dockerize 等)
       - redis
-      restart: always # 重启设置
-      env_file: # 环境变量配置文件 key=value
+    restart: always # 重启设置
+    env_file: # 环境变量配置文件 key=value
       - ./docker-web.env
-      environment: # 设置容器运行时环境变量，会覆盖env_file相同变量
+    environment: # 设置容器运行时环境变量，会覆盖env_file相同变量
       - NODE_ENV: dev
-      command: npm run dev # 容器启动后执行的命令
-      
-    redis:
-      container_name: redis-container
-      image: redis:latest
-      networks:
-      - back-tier
+    command: npm run dev # 容器启动后执行的命令
 
-  networks: # 网络设置(自定义)
-    front-tier:
-      driver: bridge
-    back-tier:
-      driver: bridge
+  redis:
+    # container_name: redis-container
+    image: redis:latest
+    restart: always
+    networks:
+      - back-tier
+    # command: redis-server --requirepass "password" # set redis password 设置 Redis 密码
+    volumes:
+      - "d:/docker/app/redis/data:/data"
+    # ports:
+    #   - "6379:6379"
+    # splash:  # use Splash to run spiders on dynamic pages
+    #   image: scrapinghub/splash
+    #   container_name: splash
+    #   ports:
+    #     - "8050:8050"
+
+networks: # 网络设置(创建/自定义)
+  front-tier:
+    driver: bridge
+  back-tier:
+    driver: bridge
 ~~~
  * [快速搭建【反向代理、负载均衡】HTTPS服务器，在设计、部署和运行应用程序时-简化网络复杂性](https://docs.traefik.io/getting-started/quick-start/) 、[中文文档](https://docs.traefik.cn)
 ~~~dockercompose

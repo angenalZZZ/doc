@@ -75,7 +75,8 @@ $ docker service create --name portainer --publish 9000:9000 --constraint 'node.
 # < Windows Subsystem for Linux | WSL >---#(连接到 Docker for Windows10)
 $ sudo apt install docker.io              # 安装Docker客户端 | docker.io get client connection.
 $ export DOCKER_HOST=tcp://127.0.0.1:2375 # 设置环境Linux vi ~/.bashrc [或者~/.profile](文件结尾添加)
-> $env:DOCKER_HOST="tcp://0.0.0.0:2375"   # 设置环境Windows PowerShell [连接Docker-Server端TCP地址]
+> $env:DOCKER_HOST="tcp://localhost:2375" # 设置环境Windows PowerShell [连接Docker-Server端TCP地址]
+> set DOCKER_HOST=tcp://localhost:2375    # 设置环境Windows Command Line
 
 $ docker [OPTIONS] COMMAND
 # 选项Options:

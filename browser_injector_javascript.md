@@ -2,7 +2,7 @@
 
 #### 浏览器插件
 
-> [Install Chrome extension, inject Javascript into a webpage](https://chrome.google.com/webstore/detail/scripty-javascript-inject/milkbiaeapddfnpenedfgbfdacpbcbam)、[from scripty.abhisheksatre.com](https://scripty.abhisheksatre.com)
+> [Install Chrome extension to inject Javascript into a webpage](https://chrome.google.com/webstore/detail/scripty-javascript-inject/milkbiaeapddfnpenedfgbfdacpbcbam)、[scripty.abhisheksatre.com](https://scripty.abhisheksatre.com)
 
  * [URL to QR Code](qrserver.com)
 ~~~javascript
@@ -28,7 +28,7 @@
     }
 })();
 ~~~
- * [国家药监局-抓取国产药品](http://app1.sfda.gov.cn/datasearchcnda/face3/base.jsp?tableId=25&tableName=TABLE25&title=%B9%FA%B2%FA%D2%A9%C6%B7&bcId=152904713761213296322795806604)
+ * [国家药监局-抓取国产药品](http://app1.nmpa.gov.cn/datasearchcnda/face3/base.jsp?tableId=25&tableName=TABLE25&title=%B9%FA%B2%FA%D2%A9%C6%B7&bcId=152904713761213296322795806604)
 ~~~javascript
 (function(i) {
     var cb=function(id){

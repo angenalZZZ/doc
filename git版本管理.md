@@ -156,9 +156,10 @@ git push -u origin master # 远程有更新推送失败时(远程分支保护): 
 ~~~bash
 git remote show [远程仓库名origin] # 远程仓库的查询 git remote -v
 git remote rm [远程仓库名origin] # 远程仓库的删除
-git remote rename [远程仓库名origin] [远程仓库名origin2] # 远程仓库重命名
-git branch --set-upstream [本地已有分支master] [远程仓库名origin/已有分支master] # 建立跟踪关联
+git remote rename [远程仓库名origin] [远程仓库名origin-new] # 远程仓库重命名
 git checkout -b [本地新建分支test] [远程仓库名origin/已有分支test] # 建立跟踪关联(表示跟踪远程分支)
+git branch --set-upstream [本地已有分支master] [远程仓库名origin/已有分支master] # 建立跟踪关联
+git checkout -b <branch> && git branch --set-upstream-to=origin/<branch> <branch> # 签出分支并建立远程关联
 ~~~
 
 ####  12.获取远程origin仓库master分支所有的变更(最新代码),并下载同步到本地git仓库master

@@ -2,6 +2,7 @@
 
 #### Global Config
 ~~~bash
+git config --global --list
 git config --global user.name                 # 查询全局git用户配置
 git config --global user.name "yangzhou"      # 修改全局git用户配置
 git config --global user.email "angenal@hotmail.com"
@@ -154,6 +155,7 @@ git push -u origin master # 远程有更新推送失败时(远程分支保护): 
 ####  11.查看远程仓库信息、远程分支与本地建立跟踪关联(远程分支tracked跟踪后可直接用git push|pull)
 
 ~~~bash
+git remote -v
 git remote show [远程仓库名origin] # 远程仓库的查询 git remote -v
 git remote rm [远程仓库名origin] # 远程仓库的删除
 git remote rename [远程仓库名origin] [远程仓库名origin-new] # 远程仓库重命名
@@ -247,6 +249,8 @@ git checkout -b [新建分支]
 ####  23.合并其他分支(当前不是分支clean_up)
 
 ~~~bash
+git checkout <name-of-branch>
+git merge master
 git merge clean_up        # 合并本地分支
 git merge origin/clean_up # 合并远程分支
 ~~~

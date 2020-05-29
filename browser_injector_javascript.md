@@ -30,20 +30,38 @@
 ~~~
  * [国家药监局-抓取国产药品](http://app1.nmpa.gov.cn/datasearchcnda/face3/base.jsp?tableId=25&tableName=TABLE25&title=%B9%FA%B2%FA%D2%A9%C6%B7&bcId=152904713761213296322795806604)
 ~~~javascript
-table25 || table25 = function() {
-    return function(id) {
-        request = new XMLHttpRequest();
-        request.onreadystatechange = function() {
+(function () {
+    // create a mask layer
+    var id = 'script-20200529';
+    if (document.getElementById(id)) return;
+    var div = document.createElement('div');
+    div.id = id;
+    div.style = `background-color:rgba(0,0,0,0.5);position:fixed;z-index:999999;top:0;left:0;text-align:center;right:0;padding-top:calc(50vh-100px);bottom:0`;
+    document.body.append(div);
+    div = document.getElementById(id);
+
+    // create a show text layer
+    var loading = document.createElement('div');
+    loading.textContent = 'Loading...';
+    loading.style = `position:absolute;top:20px;left:20px;color:#fff;font-size:16px;font-weight:bold;cursor:default`;
+    div.append(loading);
+    var setContent = function (txt, add) { if (add) loading.innerHTML += txt; else loading.innerHTML = txt; };
+
+    // create ajax request
+    var getItemById = function (id, idMax, fn0, fn1) {
+        var request = new XMLHttpRequest();
+        request.onreadystatechange = function () {
             if (request.readyState == 4) {
                 if (request.status == 200) {
-                    var res = request.responseText;
-                    //console.log(res);
-                    var t = res.substring(res.indexOf("<table "));
+                    var t = request.responseText;
+                    t = t.substring(t.indexOf("<table "));
                     t = t.substring(0, t.indexOf("</table>") + 8);
-                    alert("服务器正常返回数据:国产药品:Id=" + id + "  " + t);
-                    request = null;
+                    fn0(id, t);
                 } else {
-                    alert("服务器未返回数据:国产药品:Id=" + id)
+                    fn1(id, request.responseText);
+                }
+                if (id < idMax) {
+                    getItemById(id + 1, idMax, fn0, fn1);
                 }
             }
         };
@@ -51,6 +69,16 @@ table25 || table25 = function() {
         request.setRequestHeader("Content-Type", "text/html;encoding=gbk");
         request.send(null);
     };
-};
-table25()(1);
+
+    // do ajax request
+    getItemById(1, 3, function (id, t) {
+        setContent('<p style="color:#3f9">成功: 国产药品: Id=' + id + '</p>', id > 1);
+    }, function (t) {
+        setContent('<p style="color:#f93">失败: 国产药品: Id=' + id + '</p>', id > 1);
+    });
+
+
+    // double click two times, hide div.
+    var clickTimes = 0; div.addEventListener('dblclick', function () { if (clickTimes++ >= 2) div.remove(); });
+})();
 ~~~

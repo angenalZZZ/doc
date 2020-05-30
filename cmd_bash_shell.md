@@ -472,19 +472,24 @@ openssl pkcs8 -topk8 -nocrypt -in server.key -out server.pem
 
 ## linux开发环境及常用安装
 
-> [`更新软件源`](https://www.cnblogs.com/xudalin/p/9071902.html) 镜像下载-提高速度 (推荐-阿里源ubuntu`18.04``bionic`)
+> [`更新软件源`](https://www.cnblogs.com/xudalin/p/9071902.html) 镜像下载-提高速度 (推荐-阿里源)
 ~~~bash
-$ sudo vi /etc/apt/sources.list  # 更新软件源-修改配置文件-内容如下:
-deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+$ sudo vi /etc/apt/sources.list  # ubuntu`18.04``bionic`
+deb http://mirrors.aliyun.com/ubuntu/ bionic main universe multiverse restricted
+deb http://mirrors.aliyun.com/ubuntu/ bionic-security main universe multiverse restricted
+deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main universe multiverse restricted
+deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main universe multiverse restricted
+deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main universe multiverse restricted
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic main universe multiverse restricted
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main universe multiverse restricted
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main universe multiverse restricted
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main universe multiverse restricted
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main universe multiverse restricted
+$ sudo vi /etc/apt/sources.list  # ubuntu`19.10``eoan` 同上
+deb http://mirrors.aliyun.com/ubuntu/ eoan main universe multiverse restricted
+deb-src http://mirrors.aliyun.com/ubuntu/ eoan main universe multiverse restricted
+deb http://cn.archive.ubuntu.com/ubuntu eoan main universe multiverse restricted
+deb-src http://cn.archive.ubuntu.com/ubuntu eoan main universe multiverse restricted
 $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
 ~~~
 

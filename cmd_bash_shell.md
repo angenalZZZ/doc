@@ -171,6 +171,7 @@
   > dir /d /S [目录]     # 默认当前目录(命令pwd)
   > tree /f [目录]
   > devmgmt.msc          # 系统硬件驱动
+  $ du -d1 -h /var/lib/docker/containers | sort -h  # 列出文件夹按大小排序
   $ df -ah               # 文件系统  容量  已用  可用  已用%  挂载点
   $ lsblk                # 文件系统  分区  挂载点
   $ fdisk -l             # 文件系统  硬件  挂载点
@@ -448,9 +449,13 @@ openssl pkcs8 -topk8 -nocrypt -in server.key -out server.pem
   $ curl -XGET https://127.0.0.1:8080/v1/user -H "Content-Type: application/json" \
     -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MjgwMTY5MjIsImlkIjowLCJuYmYiOjE1MjgwMTY5MjIsInVzZXJuYW1lIjoiYWRtaW4ifQ.LjxrK9DuAwAzUD8-9v43NzWBN7HXsSLfebw92DKd1JQ" \
     --cacert ca.crt --cert sv.crt --key sv.key  # 开发环境 自签名证书(结合 √ #1.创建openssl → ## 单个域名+CA)
-  $ curl -XPOST --header 'Accept: application/json' --header 'Content-Type: application/json;charset=UTF-8' \
+  $ curl -XPOST -H 'Accept: application/json' -H 'Content-Type: application/json;charset=UTF-8' \
     -d '{"Params":{"NodeId":"212","Title":""},"PageIndex":1,"Order":"DESC","PageSize":10,"SortName":"AddDate"}'\
     'http://api.xxx.com/xxx/xxx' | jq
+  $ curl -s -w ' %{time_total}s ' -XPOST 'http://localhost:7312/token' \
+    -H 'Content-Type: application/x-www-form-urlencoded' -H 'Authorization: Basic NzY2NDFhZGYtMzRiMC00YzVhLWIzOWQtMjMzNzBhYWFkODdkOjExMTExMQ==' \
+    --data-urlencode 'UserName=adminApi' --data-urlencode 'PassWord={"AccountPwd":"96e79218965eb72c92a549dd5a330112","ValidateCode":"111111","ValidateId":"111111"}' \
+    --data-urlencode 'grant_type=password'
 
   # 请求Http资源的工具postwoman > postman
   $ git clone https://github.com/postwoman-io/postwoman-proxy.git
@@ -471,19 +476,24 @@ openssl pkcs8 -topk8 -nocrypt -in server.key -out server.pem
 
 ## linux开发环境及常用安装
 
-> [`更新软件源`](https://www.cnblogs.com/xudalin/p/9071902.html) 镜像下载-提高速度 (推荐-阿里源ubuntu`18.04``bionic`)
+> [`更新软件源`](https://www.cnblogs.com/xudalin/p/9071902.html) 镜像下载-提高速度 (推荐-阿里源)
 ~~~bash
-$ sudo vi /etc/apt/sources.list  # 更新软件源-修改配置文件-内容如下:
-deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+$ sudo vi /etc/apt/sources.list  # ubuntu`18.04``bionic`
+deb http://mirrors.aliyun.com/ubuntu/ bionic main universe multiverse restricted
+deb http://mirrors.aliyun.com/ubuntu/ bionic-security main universe multiverse restricted
+deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main universe multiverse restricted
+deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main universe multiverse restricted
+deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main universe multiverse restricted
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic main universe multiverse restricted
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main universe multiverse restricted
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main universe multiverse restricted
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main universe multiverse restricted
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main universe multiverse restricted
+$ sudo vi /etc/apt/sources.list  # ubuntu`19.10``eoan` 同上
+deb http://mirrors.aliyun.com/ubuntu/ eoan main universe multiverse restricted
+deb-src http://mirrors.aliyun.com/ubuntu/ eoan main universe multiverse restricted
+deb http://cn.archive.ubuntu.com/ubuntu eoan main universe multiverse restricted
+deb-src http://cn.archive.ubuntu.com/ubuntu eoan main universe multiverse restricted
 $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
 ~~~
 
@@ -792,8 +802,8 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ bin/elasticsearch -d # 手动启动Es,后台运行-d,检查> curl localhost:9200 -H "Content-Type: application/json"
   $ sudo usermod -aG elasticsearch yangzhou # 添加组给用户,方便操作. id -Gn
   # su -l elasticsearch -m -s /bin/sh -c "/usr/share/elasticsearch/bin/elasticsearch" # 为解压安装方式时启动
-  # dpkg --remove elasticsearch && dpkg --purge --force-all elasticsearch       # 卸载
-  # rm -rf /etc/elasticsearch /var/lib/elasticsearch /usr/share/elasticsearch   # 清理
+  # sudo dpkg --remove elasticsearch && dpkg --purge --force-all elasticsearch       # 卸载
+  # rm -rf /etc/elasticsearch /var/lib/elasticsearch /usr/share/elasticsearch       # 清理
   
   # 安装Es插件 ik 中文分词
   $ bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download
@@ -826,6 +836,7 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ bin/kibana --help [--allow-root]             # 配置config/kibana.yml "elasticsearch.hosts"指向ES
   # 启动Kibana   /plugins(安装时可设代理http_proxy): bin/kibana-plugin install elastic/sense
   $ bin/kibana -H 127.0.0.1 -p 5601 # 参数可设置kibana.yml,访问: http://localhost:5601
+  # sudo dpkg --remove --force-remove-reinstreq kibana  # 卸载(强制)
   
   # 使用Docker安装Elastic Stack (ELK)
   # 使用可选项：github.com/sherifabdlnaby/elastdocker

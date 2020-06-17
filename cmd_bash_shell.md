@@ -234,7 +234,18 @@
   # 文件复制
   > xcopy "来源目录" "目标目录" /E /H /K /X /Y
   > xcopy /isy C:\...\bin\Release\netcoreapp2.1\* F:\app\dotnetcore\centos\a
-  > robocopy /e source destination [file [file]...] # Windows的可靠文件复制/备份  帮助: robocopy /?
+  > robocopy /e <source> <destination> [file [file]...] # Windows的可靠文件复制/备份  帮助: robocopy /?
+  > robocopy <sourceFolder> <targetFolder> /min:33553332 /l  # 列出大于32Mb的文件
+  > robocopy <sourceFolder> <targetFolder> /move /minage:14  # 移动超过14天的文件
+  > robocopy <sourceFolder> <targetFolder> /maxage:1         # 复制所有更改的文件
+  > robocopy <sourceFolder> <targetFolder> /MIR /dcopy:T     # 复制目录树及文件夹的源时间戳
+  > robocopy <sourceFolder> <targetFolder> /MIR /FFT /Z /XA:H /W:5  # 镜像目录
+    /MIR  设定镜像目录; 如果文件在源中被删除，这将删除目标中的文件;
+    /FFT  使用fat文件计时而不是NTFS 这意味着粒度有点不太精确;
+         #对于跨网络共享操作，这似乎更可靠-只是不要依赖文件时序来完全精确到第二个;
+    /Z    确保可以在中间文件中恢复大文件的传输，而不是重新启动;
+    /XA:H 忽略隐藏文件，通常这些将是我们不感兴趣的系统文件;
+    /W:5  将故障时间减少到5秒，而不是默认的30秒;
   $ cp -if /mnt/floppy/* ~/floppy                   # [~/floppy 指向 /root/floppy 或 /home/floppy]
   $ cp -if /mnt/d/Docker/App/ubuntu/usr/local/bin/* /usr/local/bin # [i覆盖文件时,询问?]
   $ cp -fr /usr/local/bin/* /mnt/d/Docker/App/ubuntu/usr/local/bin # [r复制文件目录!]

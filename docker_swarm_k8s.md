@@ -253,7 +253,7 @@ CMD ["/app"]
 ~~~
 > *go语言/构建最小镜像*
 ~~~dockerfile
-# build stage # 注意禁用CGO
+# build stage # 注意设定 GOOS, GOARCH 和 CGO_ENABLED
 FROM golang:alpine AS build-env
 ADD . /src
 RUN cd /src && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags '-s -w -extldflags "-static"' -o app .
@@ -262,6 +262,12 @@ RUN cd /src && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags '-s -w -e
 # FROM alpine # 最小image请选择centurylink 构建后约~ 1.81MB
 FROM centurylink/ca-certs
 COPY --from=build-env /src/app /
+ENTRYPOINT ["/app"]
+
+# final another stage  https://blog.wu-boy.com/2018/06/drone-kubernetes-with-golang/
+# FROM alpine # 其中 plugins/base:multiarch 用的是 docker scratch 最小 image 搭配 SSL
+FROM plugins/base:multiarch
+ADD /src/app /
 ENTRYPOINT ["/app"]
 ~~~
 

@@ -879,11 +879,22 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
     && make install && pilosa-console -bind :10102  # 指定origins: http://localhost:10102
 ~~~
 
-> [`InfluxDB`](https://portal.influxdata.com) 时间序列数据库
+> [`InfluxDB`](https://portal.influxdata.com) 时间序列数据库、[SDK文档](https://v2.docs.influxdata.com/v2.0/reference/api/client-libraries/)、[下载](https://portal.influxdata.com/downloads/)
 ~~~shell
-  $ curl -LO https://dl.influxdata.com/influxdb/releases/influxdb_2.0.0-alpha.17_linux_amd64.tar.gz
-  $ tar xfz influxdb_2.0.0-alpha.17_linux_amd64.tar.gz
-  $ sudo cp influxdb_2.0.0-alpha.17_linux_amd64/{influx,influxd} /usr/local/bin
+  # Ubuntu & Debian => Time-Series Data Storage
+  wget https://dl.influxdata.com/influxdb/releases/influxdb_1.8.0_amd64.deb
+  sudo dpkg -i influxdb_1.8.0_amd64.deb
+  # RedHat & CentOS
+  wget https://dl.influxdata.com/influxdb/releases/influxdb-1.8.0.x86_64.rpm
+  sudo yum localinstall influxdb-1.8.0.x86_64.rpm
+  # Windows (64-bit)
+  https://dl.influxdata.com/influxdb/releases/influxdb-1.8.0_windows_amd64.zip
+  unzip influxdb-1.8.0_windows_amd64.zip
+  
+  # Beta version 2.0.0 => Time-Series Data Storage : docker pull quay.io/influxdb/influxdb:2.0.0-beta
+  $ curl -LO https://dl.influxdata.com/influxdb/releases/influxdb_2.0.0-beta.12_linux_amd64.tar.gz
+  $ tar xfz influxdb_2.0.0-beta.12_linux_amd64.tar.gz
+  $ sudo cp influxdb_2.0.0-beta.12_linux_amd64/{influx,influxd} /usr/local/bin
   # 配置TCP port 9999  |  https://v2.docs.influxdata.com/v2.0/reference/api
   # 启动 > influxd [--reporting-disabled]  |  https://v2.docs.influxdata.com/v2.0/get-started
   # 安装 http://localhost:9999   <打开website或者cli> influx setup

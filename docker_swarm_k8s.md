@@ -556,37 +556,37 @@ ENTRYPOINT ["dotnet", "App.Host.dll"] */
 > 　管理容器的生命周期，从应用创建、部署、扩容、更新、调度均可在一个平台上完成。<br>
 > 　[`启动`](https://docs.docker-cn.com/compose/reference/up/)：`docker-compose up -d` | [`停止`](https://docs.docker-cn.com/compose/reference/down/)：`docker-compose down` | [`更多`](https://docs.docker-cn.com/compose/reference)：`pause`,`unpause`,`start`,`stop`,`restart`
 ~~~bash
-docker-compose -h
+docker-compose -h  #批量操作容器：同时启动，关闭，删除，构建等，但无法管理其他主机上的容器。
 docker-compose [-f <arg>...] [options] [COMMAND] [ARGS...]
-build              构建或重新构建容器服务
-bundle             从compose文件生成一个Docker包
-config             验证并查看compose文件
-create             创建容器服务
-down               停止并删除容器、网络、映像和卷
-events             从容器接收实时事件
-exec               在正在运行的容器中执行命令
-help               帮助命令
-images             镜像列表
-kill               杀死容器
-logs               查看容器的日志
-pause              暂停容器服务
-port               输出端口号
-ps                 容器列表
-pull               下载容器服务镜像
-push               上传容器服务镜像
-restart            容器服务重新开始
-rm                 删除停止的容器
-run                运行一次性命令
-scale              设置服务的容器数量
-start              开始容器服务
-stop               停止容器服务
-top                显示正在运行的进程
-unpause            暂停容器服务
-up                 创建并启动容器
-version            显示Docker-Compose版本信息
+build              #构建或重新构建容器服务
+bundle             #从compose文件生成一个Docker包
+config             #验证并查看compose文件
+create             #创建容器服务
+down               #停止并删除容器、网络、映像和卷
+events             #从容器接收实时事件
+exec               #在正在运行的容器中执行命令
+help               #帮助命令
+images             #镜像列表
+kill               #杀死容器
+logs               #查看容器的日志
+pause              #暂停容器服务
+port               #输出端口号
+ps                 #容器列表
+pull               #下载容器服务镜像
+push               #上传容器服务镜像
+restart            #容器服务重新开始
+rm                 #删除停止的容器
+run                #运行一次性命令
+scale              #设置服务的容器数量
+start              #开始容器服务
+stop               #停止容器服务
+top                #显示正在运行的进程
+unpause            #暂停容器服务
+up                 #创建并启动容器
+version            #显示Docker-Compose版本信息
 ~~~
 ~~~dockercompose
-version: '3' # docker compose 版本(版本不同,语法命令有所不同;最好是3.0以上版本)
+version: '3' # docker compose 文件版本(版本不同,语法命令有所不同;最好是3.0以上版本)
 services:    # docker services 容器编排;容器列表
   web:       # docker container service
     # build: # 构建镜像

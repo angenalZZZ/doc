@@ -691,22 +691,22 @@ services:
 
 > [安装](https://kubernetes.io/zh/docs/setup/)
 
- * 步骤:  1-8 (除了4) 在所有节点执行
-    * 1.关闭防火墙，配置免密登录，这点基本所有教程都有
+* 步骤:  1-8 (除了4) 在所有节点执行
+   * 1.关闭防火墙，配置免密登录
 ```
 systemctl stop firewalld #防止端口不开发，k8s集群无法启动(k8s不知道有多少个，运行之后，再开放)
 ```
-    * 2.关闭selinux
+   * 2.关闭selinux
 ```
 setenforce 0 
 ```
-    * 3.关闭swap
+   * 3.关闭swap
 ```
 swapoff -a    临时关闭
 free          可以通过这个命令查看swap是否关闭了
 vim /etc/fstab  永久关闭 注释swap那一行(访问内存分区，k8s无法启动)
 ```
-    * 4.添加主机名与IP对应的关系，免密（这一步可以只在master执行），这一步我为后面传输网络做准备
+   * 4.添加主机名与IP对应的关系，免密（这一步可以只在master执行），这一步我为后面传输网络做准备
 ```
 vim /etc/hosts
 192.168.235.145       k8s-master
@@ -719,14 +719,14 @@ chmod 600 .ssh/authorized_keys
 # 可以在master生成，然后拷贝到node节点
 scp -r .ssh root@192.168.44.5:/root
 ```
-    * 5.将桥接的IPV4流量传递到iptables 的链
+   * 5.将桥接的IPV4流量传递到iptables的链
 ```text
 vi /etc/sysctl.d/k8s.conf
 
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 ```
-    * 6.安装Docker及同步时间
+   * 6.安装Docker及同步时间
 ```
 wget https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo -O/etc/yum.repos.d/docker-ce.repo
 
@@ -739,7 +739,7 @@ systemctl enable docker
 yum install ntpdate -y
 ntpdate cn.pool.ntp.org
 ```
-    * 7.添加阿里云YUM软件源
+  * 7.添加阿里云YUM软件源
 ```text
 vi /etc/yum.repos.d/kubernetes.repo
 
@@ -752,13 +752,13 @@ repo_gpgcheck=1
 gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
 https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 ```
-    * 8.安装kubeadm，kubelet和kubectl
+   * 8.安装kubeadm，kubelet和kubectl
 ```
 yum makecache fast
 
 yum install -y kubectl-1.18.3 kubeadm-1.18.3 kubelet-1.18.3 --nogpgcheck
 ```
-    * 9. 部署Kubernetes Master  初始化master（在master执行）
+   * 9. 部署Kubernetes Master  初始化master（在master执行）
 ```
 # 第一次初始化比较慢，需要拉取镜像
 kubeadm init --apiserver-advertise-address=192.168.235.145   # 换成自己master的IP
@@ -787,7 +787,7 @@ kube-system   kube-controller-manager-local1   1/1     Running   0         100d
 kube-system   kube-proxy-2trv9                 1/1     Running   0         100d
 kube-system   kube-scheduler-local1           1/1     Running   0         100d
 ```
-    * 需要安装flannel
+   * 需要安装flannel
 ```text
 # 安装flannel（在master执行）
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
@@ -798,7 +798,7 @@ scp -r /etc/cni root@192.168.44.5:/etc
 # 这一步也要拷贝，否则节点看着正常，但是pod由于网络原因无法创建
 scp -r /run/flannel/ root@192.168.44.5:/run
 ```
-    * 再次初始化(不用做也可以)
+   * 再次初始化(不用做也可以)
 ```
 # 执行第9步的命令
 kubeadm init ...
@@ -810,7 +810,7 @@ kubeadm init ...
 --apiserver-bind-port api-server 6443的端口
 --ignore-preflight-errors all 跳过之前已安装部分（出问题时，问题解决后加上继续运行）
 ```
-    * 查看集群状态，master正常
+   * 查看集群状态，master正常
 ```
 [root@local1 ~]# kubectl get cs
 NAME                 STATUS    MESSAGE             ERROR
@@ -833,7 +833,7 @@ kube-system   kube-proxy-sdbl9                 1/1     Running   0          15m
 kube-system   kube-proxy-v4vxg                 1/1     Running   0          16m
 kube-system   kube-scheduler-local1            1/1     Running   0  
 ```
-    * 10、node工作节点加载 (node节点执行1-8，如果第五步不执行，会添加失败; 在node节点执行上面初始化时生成的join命令)
+   * 10、node工作节点加载 (node节点执行1-8，如果第五步不执行，会添加失败; 在node节点执行上面初始化时生成的join命令)
 ```
 kubeadm join 192.168.235.145:6443 --token w5rify.gulw6l1yb63zsqsa --discovery-token-ca-cert-hash sha256:4e7f3a03392a7f9277d9f0ea2210f77d6e67ce0367e824ed891f6fefc7dae3c8
 
@@ -844,14 +844,14 @@ This node has joined the cluster:
 
 Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
 ```
-    * 在master查看
+   * 在master查看
 ```text
 [root@local1 ~]# kubectl get nodes
 NAME     STATUS     ROLES    AGE     VERSION
 local1   Ready      master   4m58s   v1.18.3
 local2   Ready      <none>   3m36s   v1.18.3
 ```
-    * 在node节点查看
+   * 在node节点查看
 ```
 [root@local3 ~]# kubectl get nodes
 Unable to connect to the server: x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "kubernetes")
@@ -872,7 +872,7 @@ local1   Ready    master   6m36s   v1.18.0
 local2   Ready    <none>   31s     v1.18.0
 local3   Ready    <none>   5m43s   v1.18.0
 ```
-    * 11、如果节点出错，可以移除节点
+   * 11、如果节点出错，可以移除节点
 ```text
 #重置节点
 kubeadm reset
@@ -880,7 +880,7 @@ kubeadm reset
 #删除节点，删除后 数据就从etcd中清除了(可运行kubectl的任一节点中执行)
 kubectl delete node node-1
 ```
-    * 12、如果加入节点时，token过期，可以重新生成
+   * 12、如果加入节点时，token过期，可以重新生成
 ```text
 查看token
 kubeadm token list
@@ -897,6 +897,51 @@ W0501 09:14:13.887344   38074 validation.go:28] Cannot validate kubelet config -
 
 在worker节点执行join
 kubeadm join 192.168.0.104:6443 --token vahjcu.rhm7864v6l400188 --discovery-token-ca-cert-hash sha256:4dc852fb46813f5b1840f06578ba01283c1a12748419ba8f25ce2788419ab1c2
+```
+
+* 使用yaml文档
+   * nginx副本集部署deployment
+```
+apiVersion: apps/v1 #k8s版本号
+kind: Deployment #部署类型（资源类型）
+metadata: #元数据(用于定义资源信息)
+  name: nginx-deployment-tony5 #资源名称
+  labels: #资源标签(版本号)
+    app: nginx 
+spec: #资源相关信息规范
+  replicas: 3 #副本数
+  selector: #选择哪一个版本
+    matchLabels:
+      app: nginx
+  template: #模板
+    metadata: #资源的元数据/属性
+      labels: #设置资源的标签
+        app: nginx
+    spec: #资源规范字段(规范容器配置)
+      containers: #指定容器
+      - name: nginx #容器名称
+        image: nginx #容器使用的镜像
+        ports: #端口号
+        - containerPort: 80 #容器对应的端口号
+```
+   * nginx暴露service
+```
+apiVersion: v1 # 指定api版本，此值必须在kubectl api-versions中
+kind: Service # 指定创建资源的角色/类型
+metadata: # 资源的元数据/属性
+  name: service-tony # 资源的名字，在同一个namespace中必须唯一
+  namespace: default # 部署在哪个namespace中
+  labels: # 设定资源的标签
+    app: demo
+spec: # 资源规范字段
+  type: NodePort # ClusterIP 类型
+  ports:
+    - port: 8080 # service 端口
+      targetPort: 80 # 容器暴露的端口
+      protocol: TCP # 协议
+      name: http # 端口名称
+  selector: # 选择器(选择什么资源进行发布给外界进行访问：pod deployment 等等资源)
+    app: nginx
 ```
 
 > 使用K8s

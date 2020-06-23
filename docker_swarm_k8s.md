@@ -6,7 +6,7 @@
 
 
 #### 安装、[配置](#配置)、[构建镜像](#构建镜像)、[容器命令](#容器命令)、[容器编排](#容器编排)
-> [docker](https://docs.docker.com/install)、[docker-hub](https://hub.docker.com/repositories)、[docker-desktop](https://hub.docker.com/?overlay=onboarding) Build构建>Compose编排>K8s管理>Swarm集群<br>
+> [docker](https://docs.docker.com/install)、[docker-hub](https://hub.docker.com/repositories)、[docker-desktop](https://hub.docker.com/?overlay=onboarding) Build构建>Compose编排>Swarm集群>>K8s稳定强大<br>
   `环境 & 版本` : [`Linux x64, Kernel^3.10 cgroups & namespaces`](https://docs.docker.com/install), [`docker-ce`社区版](https://hub.docker.com/?overlay=onboarding) + `docker-ee`企业版 <br>
   `加速器`..   : [`阿里云`](https://cr.console.aliyun.com/#/accelerator)[..](https://4txtc8r4.mirror.aliyuncs.com)、[`DaoCloud道客`](https://dashboard.daocloud.io/packages/explore)[..](http://8fe1b42e.m.daocloud.io)、[`网易`](https://hub-mirror.c.163.com)、 [`自动mirror.py`](https://github.com/silenceshell/docker_mirror) <br>
 
@@ -678,15 +678,15 @@ services:
   　文档[Project-based-k8s](https://github.com/groovemonkey/project-based-kubernetes)  [Aliyun-Istio](https://github.com/AliyunContainerService/k8s-for-docker-desktop)  [kubeadm-ha](https://github.com/cookeem/kubeadm-ha)、安装[docker-desktop](https://www.docker.com/products/docker-desktop)已集成compose和k8s<br>
   　`Pod`：最小单元、一组容器的集合、同一个Pod内的容器共享网络命名空间、短暂的未存储的(重新发布后会丢失)；<br>
   　`Controllers`： `ReplicaSet`确保预期的Pod副本数量(一般由以下部署产生)，<br>
-  　  　`Deployment`无状态的(`website`...)应用部署，<br>
-  　  　`StatefulSet`有状态的(网络Id+存储`zk`,`mq`...)应用部署，<br>
+  　  　`Deployment`无状态的(`website`、`database`...)应用部署( pod应用 x 副本数量 )，<br>
+  　  　`StatefulSet`有状态的(网络Id+存储`zk`,`mq`...)应用部署( pod应用 x 副本数量 )，<br>
   　  　`DaemonSet`确保所有节点运行同一个Pod的(监控`monitor`,计划`schedule`system...)服务部署，<br>
   　  　`Job`一次性任务部署，`CronJob`定时任务部署，其它服务部署... ；<br>
   　`Service`：防止Pod失联、定义一组Pod的访问策略`对外提供访问服务`；<br>
-  　`Label`：`标签`，附加到某个资源上，用于关联对象、查询和筛选对象；<br>
+  　`Label`：`标签`附加到某个资源上，用于关联对象、查询和筛选对象；<br>
   　`Namespace`：`命名空间`，将对象逻辑上隔离。<br>
-  　`搭建^6台`：负载均衡`虚拟IP`高可用`集群` (4核8G;IP1+IP2>>`VIP*`) load-balancer-master,load-balancer-backup<br>
-  　  　前后端*`高IO型`的`Web`应用程序 (8核16G;IP3+IP4) k8s-master1,k8s-master2<br>
+  　`搭建^6台`：负载均衡`虚拟IP`高可用`集群` (4核8G;IP1+IP2>>`VIP*`) load-balancer-master,load-balancer-backup <br>
+  　  　前后端*`高IO型`的`Web`应用程序 (8核16G;IP3+IP4) k8s-master1,k8s-master2 <br>
   　  　长时间*`可水平扩展`的`分布式计算型`任务 (16核64G;IP5+IP6) k8s-node1,k8s-node2 <br>
 ~~~shell
 # 启用k8s失败时; windows设置:可参考[Aliyun-Istio]; 先更新 www.docker.com/products/docker-desktop

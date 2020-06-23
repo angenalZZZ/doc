@@ -674,8 +674,8 @@ services:
 
 # [**Kubernetes**](https://kubernetes.io)
 
-> [`k8s`是一个流行的容器管理编排平台，集中式管理数个服务的容器集群；](https://www.kubernetes.org.cn)<br>
-  　文档[Project-based-k8s](https://github.com/groovemonkey/project-based-kubernetes)  [Aliyun-Istio](https://github.com/AliyunContainerService/k8s-for-docker-desktop)  [kubeadm-ha](https://github.com/cookeem/kubeadm-ha)、安装[docker-desktop](https://www.docker.com/products/docker-desktop)已集成compose和k8s<br>
+> [`k8s`是一个流行的容器管理编排平台，集中式管理数个服务的容器集群](https://www.kubernetes.org.cn)<br>
+  　参数文档[Project-based-k8s](https://github.com/groovemonkey/project-based-kubernetes)  [Aliyun-Istio](https://github.com/AliyunContainerService/k8s-for-docker-desktop)  [kubeadm-ha](https://github.com/cookeem/kubeadm-ha)、安装[docker-desktop](https://www.docker.com/products/docker-desktop)已集成compose和k8s<br>
   　`Pod`：最小单元、一组容器的集合、同一个Pod内的容器共享网络命名空间、短暂的未存储的(重新发布后会丢失)；<br>
   　`Controllers`： `ReplicaSet`确保预期的Pod副本数量(一般由以下部署产生)，<br>
   　  　`Deployment`无状态的(`website`、`database`...)应用部署( pod应用 x 副本数量 )，<br>
@@ -688,6 +688,218 @@ services:
   　`搭建^6台`：负载均衡`虚拟IP`高可用`集群` (4核8G;IP1+IP2>>`VIP*`) load-balancer-master,load-balancer-backup <br>
   　  　前后端*`高IO型`的`Web`应用程序 (8核16G;IP3+IP4) k8s-master1,k8s-master2 <br>
   　  　长时间*`可水平扩展`的`分布式计算型`任务 (16核64G;IP5+IP6) k8s-node1,k8s-node2 <br>
+
+> [安装](https://kubernetes.io/zh/docs/setup/)
+
+ * 步骤:  1-8 (除了4) 在所有节点执行
+    * 1.关闭防火墙，配置免密登录，这点基本所有教程都有
+```
+systemctl stop firewalld #防止端口不开发，k8s集群无法启动(k8s不知道有多少个，运行之后，再开放)
+```
+    * 2.关闭selinux
+```
+setenforce 0 
+```
+    * 3.关闭swap
+```
+swapoff -a    临时关闭
+free          可以通过这个命令查看swap是否关闭了
+vim /etc/fstab  永久关闭 注释swap那一行(访问内存分区，k8s无法启动)
+```
+    * 4.添加主机名与IP对应的关系，免密（这一步可以只在master执行），这一步我为后面传输网络做准备
+```
+vim /etc/hosts
+192.168.235.145       k8s-master
+192.168.235.146       k8s-node1
+
+ssh-keygen
+cat .ssh/id_rsa.pub >> .ssh/authorized_keys
+chmod 600 .ssh/authorized_keys
+
+# 可以在master生成，然后拷贝到node节点
+scp -r .ssh root@192.168.44.5:/root
+```
+    * 5.将桥接的IPV4流量传递到iptables 的链
+```text
+vi /etc/sysctl.d/k8s.conf
+
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+```
+    * 6.安装Docker及同步时间
+```
+wget https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo -O/etc/yum.repos.d/docker-ce.repo
+
+yum -y install docker-ce
+
+systemctl start docker
+systemctl enable docker
+
+# 同步时间（这一步必须做，否则后面安装flannel可能会有证书错误）
+yum install ntpdate -y
+ntpdate cn.pool.ntp.org
+```
+    * 7.添加阿里云YUM软件源
+```text
+vi /etc/yum.repos.d/kubernetes.repo
+
+[kubernetes]
+name=Kubernetes
+baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
+https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+```
+    * 8.安装kubeadm，kubelet和kubectl
+```
+yum makecache fast
+
+yum install -y kubectl-1.18.3 kubeadm-1.18.3 kubelet-1.18.3 --nogpgcheck
+```
+    * 9. 部署Kubernetes Master  初始化master（在master执行）
+```
+# 第一次初始化比较慢，需要拉取镜像
+kubeadm init --apiserver-advertise-address=192.168.235.145   # 换成自己master的IP
+--image-repository registry.aliyuncs.com/google_containers 
+--kubernetes-version v1.18.0
+--service-cidr=10.1.0.0/16 
+--pod-network-cidr=10.244.0.0/16  # 使用flannel网络必须设置成这个cidr
+
+接下来，将初始化结果中的命令复制出来执行：
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+生成
+kubeadm join 192.168.235.145:6443 --token w5rify.gulw6l1yb63zsqsa --discovery-token-ca-cert-hash sha256:4e7f3a03392a7f9277d9f0ea2210f77d6e67ce0367e824ed891f6fefc7dae3c8
+```
+    * 验证状态，发现前两个是pending，get pods 发现是not ready
+```text
+kubectl get pods --all-namespaces
+NAMESPACE     NAME                             READY   STATUS   RESTARTS   AGE
+kube-system   coredns-9d85f5447-fhdmx         0/1     Pending   0         100d
+kube-system   coredns-9d85f5447-x5wfq         0/1     Pending   0         100d
+kube-system   etcd-local1                     1/1     Running   0         100d
+kube-system   kube-apiserver-local1           1/1     Running   0         100d
+kube-system   kube-controller-manager-local1   1/1     Running   0         100d
+kube-system   kube-proxy-2trv9                 1/1     Running   0         100d
+kube-system   kube-scheduler-local1           1/1     Running   0         100d
+```
+    * 需要安装flannel
+```text
+# 安装flannel（在master执行）
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+# 安装完flannel，将配置拷到node节点，否则添加节点之后状态不对
+scp -r /etc/cni root@192.168.44.5:/etc
+
+# 这一步也要拷贝，否则节点看着正常，但是pod由于网络原因无法创建
+scp -r /run/flannel/ root@192.168.44.5:/run
+```
+    * 再次初始化(不用做也可以)
+```
+# 执行第9步的命令
+kubeadm init ...
+
+# 参数
+--kubernetes-version 指定Kubernetes版本
+--apiserver-advertise-address 指定apiserver的监听地址
+--pod-network-cidr 10.244.0.0/16 指定使用flanneld网络
+--apiserver-bind-port api-server 6443的端口
+--ignore-preflight-errors all 跳过之前已安装部分（出问题时，问题解决后加上继续运行）
+```
+    * 查看集群状态，master正常
+```
+[root@local1 ~]# kubectl get cs
+NAME                 STATUS    MESSAGE             ERROR
+scheduler            Healthy   ok                  
+controller-manager   Healthy   ok                  
+etcd-0               Healthy   {"health":"true"}
+
+[root@local1 ~]# kubectl get nodes
+NAME     STATUS     ROLES    AGE     VERSION
+local1   Ready      master   2m16s   v1.17.3
+
+[root@local1 ~]# kubectl get pods --all-namespaces
+NAMESPACE     NAME                             READY   STATUS    RESTARTS   AGE
+kube-system   coredns-9d85f5447-9s4mc          1/1     Running   0          16m
+kube-system   coredns-9d85f5447-gt2nf          1/1     Running   0          16m
+kube-system   etcd-local1                      1/1     Running   0          16m
+kube-system   kube-apiserver-local1            1/1     Running   0          16m
+kube-system   kube-controller-manager-local1   1/1     Running   0          16m
+kube-system   kube-proxy-sdbl9                 1/1     Running   0          15m
+kube-system   kube-proxy-v4vxg                 1/1     Running   0          16m
+kube-system   kube-scheduler-local1            1/1     Running   0  
+```
+    * 10、node工作节点加载 (node节点执行1-8，如果第五步不执行，会添加失败; 在node节点执行上面初始化时生成的join命令)
+```
+kubeadm join 192.168.235.145:6443 --token w5rify.gulw6l1yb63zsqsa --discovery-token-ca-cert-hash sha256:4e7f3a03392a7f9277d9f0ea2210f77d6e67ce0367e824ed891f6fefc7dae3c8
+
+# 输出
+This node has joined the cluster:
+* Certificate signing request was sent to apiserver and a response was received.
+* The Kubelet was informed of the new secure connection details.
+
+Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
+```
+    * 在master查看
+```text
+[root@local1 ~]# kubectl get nodes
+NAME     STATUS     ROLES    AGE     VERSION
+local1   Ready      master   4m58s   v1.18.3
+local2   Ready      <none>   3m36s   v1.18.3
+```
+    * 在node节点查看
+```
+[root@local3 ~]# kubectl get nodes
+Unable to connect to the server: x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "kubernetes")
+
+# 如果报错，需要将master的admin.conf拷贝过来
+# master执行
+scp /etc/kubernetes/admin.conf root@local3:/etc/kubernetes/
+
+# 然后在node执行下面三步
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+再次在node查看
+[root@local3 ~]# kubectl get nodes
+NAME     STATUS   ROLES    AGE     VERSION
+local1   Ready    master   6m36s   v1.18.0
+local2   Ready    <none>   31s     v1.18.0
+local3   Ready    <none>   5m43s   v1.18.0
+```
+    * 11、如果节点出错，可以移除节点
+```text
+#重置节点
+kubeadm reset
+
+#删除节点，删除后 数据就从etcd中清除了(可运行kubectl的任一节点中执行)
+kubectl delete node node-1
+```
+    * 12、如果加入节点时，token过期，可以重新生成
+```text
+查看token
+kubeadm token list
+
+默认生成的token有效期是一天，生成永不过期的token
+[root@k8s-master ~]# kubeadm token create --ttl 0
+W0501 09:14:13.887115   38074 validation.go:28] Cannot validate kube-proxy config - no validator is available
+W0501 09:14:13.887344   38074 validation.go:28] Cannot validate kubelet config - no validator is available
+
+创建token
+[root@k8s-master ~]# openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
+# token
+4dc852fb46813f5b1840f06578ba01283c1a12748419ba8f25ce2788419ab1c2   
+
+在worker节点执行join
+kubeadm join 192.168.0.104:6443 --token vahjcu.rhm7864v6l400188 --discovery-token-ca-cert-hash sha256:4dc852fb46813f5b1840f06578ba01283c1a12748419ba8f25ce2788419ab1c2
+```
+
+> 使用K8s
 ~~~shell
 # 启用k8s失败时; windows设置:可参考[Aliyun-Istio]; 先更新 www.docker.com/products/docker-desktop
 # > $env:DOCKER_HOST="tcp://0.0.0.0:2375"   # 设置Windows环境变量 PowerShell [cli连接Docker-Server端TCP地址]
@@ -697,6 +909,7 @@ services:
 # >> k8s.gcr.io/kube-proxy,kube-scheduler,kube-controller-manager,kube-apiserver,coredns,etcd,pause
 # > rm -rf C:/ProgramData/DockerDesktop/pki/ C:/Users/Administrator/.kube/config 删除临时文件;重启后会自动再生成conf
 # >> Docker\Resources\Network >DNS: 8.8.8.8 ;Restart Docker Desktop ;Enable Kubernetes v1.15.5 设置&重启docker.
+
 # 安装 kubectl client
 $ curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v1.10.0/bin/linux/amd64/kubectl 
 $ sudo chmod +x kubectl && sudo mv kubectl /usr/local/bin/

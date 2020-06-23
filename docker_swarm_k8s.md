@@ -26,18 +26,19 @@ $ systemctl enable docker && systemctl daemon-reload && systemctl restart docker
 # tee /etc/docker/daemon.json <<-'EOF' \ {"registry-mirrors":["https://4txtc8r4.mirror.aliyuncs.com"]} # 手动配置 
 $ systemctl status docker             # 检查Docker运行状态
 $ apt-get remove docker docker-engine # 卸载Docker最后清理 # rm -rf /var/lib/docker/
-# 安装 Docker Compose
-$ curl -L https://get.daocloud.io/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` \
-    > /usr/local/bin/docker-compose  # 设置文件为可执行 sudo chmod +x docker-compose
+# 安装 Docker Compose (容器编排)
+$ sudo curl -L https://get.daocloud.io/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` \
+    -o /usr/local/bin/docker-compose  # 设置文件为可执行 sudo chmod +x docker-compose
+$ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose # 创建快捷方式
 # 安装 Docker Machine 基于virtualBox  # www.virtualbox.org/wiki/Linux_Downloads
 $ sudo dpkg -i virtualbox-6.1_6.1.2-135662_Ubuntu_bionic_amd64.deb --fix-missing # 安装 virtualbox v6.1
-$ curl -L https://github.com/docker/machine/releases/download/v0.16.2/docker-machine-$(uname -s)-$(uname -m) \
+$ sudo curl -L https://github.com/docker/machine/releases/download/v0.16.2/docker-machine-$(uname -s)-$(uname -m) \
     > /usr/local/bin/docker-machine  # 安装 docker-machine
 $ docker-machine version             # 安装完毕,查看版本
 # 设置 Docker 执行, 不使用sudo执行docker命令，先切换当前用户 su -u xxx (root~exit)
 $ sudo usermod -aG docker ${USER} # 将当前用户加入docker组 # sudo gpasswd -M ${USER} docker && newgrp - docker
 $ sudo service docker restart        # 重启Docker服务 # sudo systemctl restart docker
-# 本机启动 Docker daemon(容器服务端) 
+# 本机启动 Docker Daemon (容器服务端) 
 $ curl -Lo ~/.docker/machine/cache/boot2docker.iso \ # 下载最新版本的boot2docker镜像 for docker-machine create
     https://github.com/boot2docker/boot2docker/releases/download/v19.03.5/boot2docker.iso
 $ docker-machine create -d kvm2 default  # 推荐安装 默认主机server
@@ -50,7 +51,7 @@ export DOCKER_HOST="tcp://192.168.99.100:2376"
 # Run this command to configure your shell:
 # eval $(docker-machine env default)
 $ docker-machine start default
-$ docker info  # 客户端cli查看docker完整信息(当出现权限问题,无法查看时) # sudo chown `id -un`:`id -un` ~/.docker
+$ docker info  # 客户端cli查看docker完整信息; 当出现权限问题时 # sudo chown `id -un`:`id -un` ~/.docker
 # 监听> tcp & TLS 允许cli远程访问:2376 暴露指定端口
 $ sudo /usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2376 --containerd=/run/containerd/containerd.sock --registry-mirror={镜像}
 # 在虚拟机上安装运行docker # 先创建虚拟机manager,worker... 宿主机通过ssh访问虚拟机免密设置 generic指虚拟机已创建+vboxnet
@@ -61,10 +62,10 @@ $ docker-machine ls           # 查看虚拟机上的servers
 $ docker-machine env manager  # 在manager虚拟机上执行docker指令> docker ps
 # 界面管理工具 DockerUI 基于Docker API 提供命令大部分功能 > docker pull uifd/ui-for-docker
 $ docker run -itd --name docker-ui -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock docker.io/uifd/ui-for-docker
-# 界面管理工具 Portainer 占用资源少，支持集群，权限分配等
+# 界面管理工具 Portainer 占用资源少，支持集群，权限分配等管理功能
 $ docker run -d -p 9000:9000 portainer/portainer # 1.简单部署，管理Swarm群集；2.如下,在Docker群集中部署Portainer服务
 $ docker service create --name portainer --publish 9000:9000 --constraint 'node.role == manager' \
-  --mount type=bind,src=//var/run/docker.sock,dst=/var/run/docker.sock \
+  --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
   portainer/portainer -H unix:///var/run/docker.sock
 ~~~
 
@@ -552,8 +553,8 @@ ENTRYPOINT ["dotnet", "App.Host.dll"] */
 
 #### docker-compose
 > **docker-compose.yml** [安装Compose](https://docs.docker.com/compose/install/) [文档v3](https://docs.docker.com/compose/overview) | [老版本v2](https://www.jianshu.com/p/2217cfed29d7) | [votingapp例子](https://github.com/angenal/labs/blob/master/beginner/chapters/votingapp.md)<br>
-　管理容器的生命周期，从应用创建、部署、扩容、更新、调度均可在一个平台上完成。<br>
-　[`启动`](https://docs.docker-cn.com/compose/reference/up/)：`docker-compose up -d` | [`停止`](https://docs.docker-cn.com/compose/reference/down/)：`docker-compose down` | [`更多`](https://docs.docker-cn.com/compose/reference)：`pause`,`unpause`,`start`,`stop`,`restart`
+> 　管理容器的生命周期，从应用创建、部署、扩容、更新、调度均可在一个平台上完成。<br>
+> 　[`启动`](https://docs.docker-cn.com/compose/reference/up/)：`docker-compose up -d` | [`停止`](https://docs.docker-cn.com/compose/reference/down/)：`docker-compose down` | [`更多`](https://docs.docker-cn.com/compose/reference)：`pause`,`unpause`,`start`,`stop`,`restart`
 ~~~dockercompose
 version: '3' # docker compose 版本(版本不同,语法命令有所不同)
 services:    # docker services 容器服务编排

@@ -1,11 +1,11 @@
 # [Docker](https://docs.docker.com)
 
 
- * [`docker-compose`](#docker-compose) | [`k8s`](#Kubernetes) | [`Minikube`](#Minikube) | [`Consul`](#Consul) | [`etcd`](#Etcd)
- * [`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)、[`安全相关思维导图收集`](https://github.com/phith0n/Mind-Map)
+ * [`k8s`](#Kubernetes) | [`Minikube`](#Minikube) | [`Consul`](#Consul) | [`etcd`](#Etcd)
+ * [`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)、[`安全相关思维导图`](https://github.com/phith0n/Mind-Map)
 
 
-#### 安装、[配置](#配置)、[构建镜像](#构建镜像)、[使用命令](#使用命令)
+#### 安装、[配置](#配置)、[构建镜像](#构建镜像)、[容器命令](#容器命令)、[容器编排](#容器编排)
 > [docker](https://docs.docker.com/install)、[docker-hub](https://hub.docker.com/repositories)、[docker-desktop](https://hub.docker.com/?overlay=onboarding) Build构建>Compose编排>K8s管理>Swarm集群<br>
   `环境 & 版本` : [`Linux x64, Kernel^3.10 cgroups & namespaces`](https://docs.docker.com/install), [`docker-ce`社区版](https://hub.docker.com/?overlay=onboarding) + `docker-ee`企业版 <br>
   `加速器`..   : [`阿里云`](https://cr.console.aliyun.com/#/accelerator)[..](https://4txtc8r4.mirror.aliyuncs.com)、[`DaoCloud道客`](https://dashboard.daocloud.io/packages/explore)[..](http://8fe1b42e.m.daocloud.io)、[`网易`](https://hub-mirror.c.163.com)、 [`自动mirror.py`](https://github.com/silenceshell/docker_mirror) <br>
@@ -272,7 +272,7 @@ ADD /src/app /
 ENTRYPOINT ["/app"]
 ~~~
 
-#### 使用命令
+#### 容器命令
 
 > **Docker Command** [samples](https://docs.docker.com/samples)、[labs/tutorials](https://github.com/angenal/labs)、[小结](https://github.com/AlexWoo/doc/blob/master/devops/docker小结.md)
 ~~~shell
@@ -551,13 +551,13 @@ ENTRYPOINT ["dotnet", "App.Host.dll"] */
 ~~~
 
 
-#### docker-compose
+#### 容器编排
 > **docker-compose.yml** [安装Compose](https://docs.docker.com/compose/install/) [文档v3](https://docs.docker.com/compose/overview) | [老版本v2](https://www.jianshu.com/p/2217cfed29d7) | [votingapp例子](https://github.com/angenal/labs/blob/master/beginner/chapters/votingapp.md)<br>
 > 　管理容器的生命周期，从应用创建、部署、扩容、更新、调度均可在一个平台上完成。<br>
-> 　[`启动`](https://docs.docker-cn.com/compose/reference/up/)：`docker-compose up -d` | [`停止`](https://docs.docker-cn.com/compose/reference/down/)：`docker-compose down` | [`更多`](https://docs.docker-cn.com/compose/reference)：`pause`,`unpause`,`start`,`stop`,`restart`
+> 　[`启动`](https://docs.docker-cn.com/compose/reference/up/)：`docker-compose up -d` | [`停止`](https://docs.docker-cn.com/compose/reference/down/)：`docker-compose down` | [`更多`](https://docs.docker-cn.com/compose/reference):`pause`,`unpause`,`start`,`stop`,`restart`
 ~~~dockercompose
-version: '3' # docker compose 版本(版本不同,语法命令有所不同)
-services:    # docker services 容器服务编排
+version: '3' # docker compose 版本(版本不同,语法命令有所不同;最好是3.0以上版本)
+services:    # docker services 容器编排;容器列表
   web:       # docker container service
     # build: # 构建镜像
     #   context: . # 构建镜像的上下文(本地构建的工作目录)
@@ -601,11 +601,15 @@ services:    # docker services 容器服务编排
     #   ports:
     #     - "8050:8050"
 
-networks: # 网络设置(创建/自定义)
+networks: # 网络配置(创建/自定义)
   front-tier:
-    driver: bridge
+    driver: bridge # 网络驱动
+    external: true # 网络自定义
   back-tier:
     driver: bridge
+
+volumes: # 数据挂载配置
+extensions: # 扩展配置
 ~~~
  * [快速搭建【反向代理、负载均衡】HTTPS服务器，在设计、部署和运行应用程序时-简化网络复杂性](https://docs.traefik.io/getting-started/quick-start/) 、[中文文档](https://docs.traefik.cn)
 ~~~dockercompose

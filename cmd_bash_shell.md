@@ -556,7 +556,7 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ sudo apt install --no-install-recommends wget gnupg ca-certificates libfreetype6-dev libssl-dev # 安装ca/freetype/openssl
   $ sudo apt install openssh-server   # 安装SSH
   $ sudo apt install build-essential  # 安装gcc/g++/gdb/make工具链
-  $ sudo apt install autoconf automake pkg-config gnome-core # 安装桌面开发automake/glib/gnome工具链
+  $ sudo apt install autoconf automake pkg-config libtool gnome-core # 安装桌面开发automake/glib/gnome工具链
   $ sudo apt-get install libgtk-3-dev libcairo2-dev libglib2.0-dev --fix-missing   # 安装桌面开发gtk3工具链
   $ sudo apt-get install libwebkit2gtk-4.0-dev javascriptcoregtk-3.0 --fix-missing # 安装桌面开发webkit2gtk
   $ sudo apt install default-jre      # 安装jre > java -version
@@ -626,9 +626,9 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ sudo ln -sf /usr/local/node/bin/node /usr/local/bin/node
   $ sudo ln -sf /usr/local/node/bin/npm /usr/local/bin/npm
   
-  # 通讯协议: thrift.apache.org
-  #1.Thrift是一种接口描述语言和二进制通讯协议，它被用来定义和创建跨语言的服务。它被当作一个远程过程调用（RPC）框架来使用，是由Facebook为“大规模跨语言服务开发”而开发的。
-  $ sudo apt-get install automake bison flex g++ git libboost-all-dev libevent-dev libssl-dev libtool make pkg-config
+  # 通讯协议: thrift.apache.org  一个远程过程调用（RPC）框架，由Facebook为大规模跨语言服务而开发。
+  # Thrift是一种接口描述语言和二进制通讯协议，它被用来定义和创建跨语言的服务。
+  $ sudo apt-get -y install automake bison flex g++ git libboost-all-dev libevent-dev libssl-dev libtool make pkg-config
   
   # 安装ffmpeg视频编码/解码libraries: avcodec,avformat,avutil,avfilter,avdevice,swresample,swscale
   sudo apt-get -y install autoconf automake build-essential  # 先安装gcc/g++/gdb/make工具链

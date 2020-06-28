@@ -552,13 +552,13 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ lsb_release -c                    # 获取系统代号,更新软件源sources.list
   $ sudo vim /etc/apt/sources.list    # 更新软件源
   $ sudo apt-get update && sudo apt-get upgrade # 更新升级apt
-  $ sudo apt-get -y install language-pack-zh-hans # 中文语言包
-  $ sudo apt-get -y install --no-install-recommends wget gnupg ca-certificates
+  $ sudo apt -y install language-pack-zh-hans # 中文语言包
+  $ sudo apt install --no-install-recommends wget gnupg ca-certificates libfreetype6-dev libssl-dev # 安装ca/freetype/openssl
   $ sudo apt install openssh-server   # 安装SSH
-  $ sudo apt install gcc              # 安装gcc编译工具(可选)
-  $ sudo apt install make             # 安装构建工具make(可选)
   $ sudo apt install build-essential  # 安装gcc/g++/gdb/make工具链
-  $ sudo apt install autoconf automake libgtk2.0-dev pkg-config gnome-core # 桌面开发gtk/glib/gnome
+  $ sudo apt install autoconf automake pkg-config gnome-core # 安装桌面开发automake/glib/gnome工具链
+  $ sudo apt-get install libgtk-3-dev libcairo2-dev libglib2.0-dev --fix-missing   # 安装桌面开发gtk3工具链
+  $ sudo apt-get install libwebkit2gtk-4.0-dev javascriptcoregtk-3.0 --fix-missing # 安装桌面开发webkit2gtk
   $ sudo apt install default-jre      # 安装jre > java -version
   $ sudo apt install openjdk-8-jdk    # 安装OpenJDK
   $ sudo add-apt-repository ppa:webupd8team/java && sudo apt-get update

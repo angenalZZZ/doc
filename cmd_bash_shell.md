@@ -630,7 +630,7 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   #1.安装环境：Thrift是一种接口描述语言和二进制通讯协议，它被用来定义和创建跨语言的服务。
   $ sudo apt-get -y install automake bison flex g++ git libboost-all-dev libevent-dev libssl-dev libtool make pkg-config
   #2.从源代码构建：http://thrift.apache.org/docs/BuildingFromSource
-  $ git clone https://github.com/apache/thrift.git
+  #2.1下载源码 http://thrift.apache.org/download  #!src: git clone https://github.com/apache/thrift.git
   $ ./bootstrap.sh && ./configure --without-java --without-nodejs --without-nodets --without-swift
   $ make && make install
   

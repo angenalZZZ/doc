@@ -1617,6 +1617,27 @@ umount：卸载已经加载的文件系统
 ~~~
 
 #### 十、Linux下常用命令：内核与性能
+
+Increase the number of open files on your server, as:
+
+`ulimit -n 65535`, or write it in `~/.bashrc`.
+
+Suggested `sysctl.conf` parameters for better handling of UDP packets:
+
+```
+net.core.rmem_max=26214400 // BDP - bandwidth delay product
+net.core.rmem_default=26214400
+net.core.wmem_max=26214400
+net.core.wmem_default=26214400
+net.core.netdev_max_backlog=2048 // proportional to -rcvwnd
+```
+
+You can also increase the per-socket buffer by adding parameter(default 4MB):
+```
+-sockbuf 16777217
+```
+for **slow processors**, increasing this buffer is **CRITICAL** to receive packets properly.
+
 ~~~
 sysctl：运行时修改内核参数；加载并应用所有设置的系统内核参数：sysctl -f --system
 $ grep -rin vm /etc/sysctl*         # 查找所有vm-内存使用限制

@@ -3,6 +3,9 @@
 ## alias：添加由alias定义的命令别名
 ## unalias：取消由alias定义的命令别名
 
+# 生成随机数
+alias rnd="echo && cat /dev/urandom | env LC_CTYPE=C tr -dc num | head -c 6 | base64 && echo"
+
 
 # 文件列表
 alias ll='ls -alF'

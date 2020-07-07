@@ -633,18 +633,21 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ sudo apt-get -y install automake bison flex g++ git libboost-all-dev libevent-dev libssl-dev libtool make pkg-config
   #  2.从源代码构建：http://thrift.apache.org/docs/BuildingFromSource
   #  2.1下载源码 http://thrift.apache.org/download  #!src: git clone https://github.com/apache/thrift.git
-  $ ./bootstrap.sh && ./configure --without-java --without-nodejs --without-nodets --without-swift
+  $ ./bootstrap.sh && ./configure --without-go --without-java --without-nodejs --without-nodets --without-swift
   $ make && make install
   #2、ZeroMQ 跨语言LGPLed方案: zeromq.org 特点:Universal、Smart、High-speed、Multi-Transport、Community、The Guide
   $ sudo apt-get install libzmq3-dev # 安装ZeroMQ3
-  # pkg-config --modversion libzmq   # 检查模块版本
+  $ pkg-config --modversion libzmq   # 检查模块版本
   #3、Nanomsg 跨语言通信模式 nanomsg.org 具备IPC,TCP,WS通信方式 Req/Rep,Pub/Sub,Pair,Bus,Push/Pull,Surveyor/Respondent
   $ git clone --depth=1 https://github.com/nanomsg/nanomsg.git 
-  # mkdir build && cd build 
-  # cmake .. && cmake --build . && ctest . 
-  # sudo cmake --build . --target install 
-  # sudo ldconfig # on Linux
-  # NN_STATIC_LIB="C:\Program Files (x86)\nanomsg\lib" # Config on Windows
+  $ mkdir build && cd build
+  $ cmake .. && cmake --build . && ctest .
+  $ sudo cmake --build . --target install
+  $ sudo ldconfig # on Linux
+  $ git clone --depth=1 https://github.com/nanomsg/nng.git
+  $ mkdir build && cd build
+  $ cmake -G Ninja ..
+  $ ninja && ninja install
   #4、D-Bus 应用程序间通信的消息总线系统, 用于进程之间的通信。
   $ sudo apt-get install dbus  # 安装D-Bus,然后启动dbus-launch
   # dbus-daemon --session --print-address --nofork --print-pid # 启动普通进程

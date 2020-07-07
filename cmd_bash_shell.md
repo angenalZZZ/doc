@@ -643,7 +643,8 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   # mkdir build && cd build 
   # cmake .. && cmake --build . && ctest . 
   # sudo cmake --build . --target install 
-  # sudo ldconfig (if on Linux) 
+  # sudo ldconfig # on Linux
+  # NN_STATIC_LIB="C:\Program Files (x86)\nanomsg\lib" # Config on Windows
   #4、D-Bus 应用程序间通信的消息总线系统, 用于进程之间的通信。
   $ sudo apt-get install dbus  # 安装D-Bus,然后启动dbus-launch
   # dbus-daemon --session --print-address --nofork --print-pid # 启动普通进程

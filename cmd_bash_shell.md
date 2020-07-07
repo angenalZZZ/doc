@@ -626,20 +626,29 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ sudo ln -sf /usr/local/node/bin/node /usr/local/bin/node
   $ sudo ln -sf /usr/local/node/bin/npm /usr/local/bin/npm
   
-  # D-Bus应用程序间通信的消息总线系统, 用于进程之间的通信。
-  $ sudo apt-get install dbus                      # 安装D-Bus,然后启动dbus-launch
+  # 微服务 - 跨语言LGPLed - 通信方案
+  #1、Thrift通讯协议: thrift.apache.org  一个远程过程调用（RPC）框架，由Facebook为大规模跨语言服务而开发。
+  #  1.安装环境：Thrift是一种接口描述语言和二进制通讯协议，它被用来定义和创建跨语言的服务。
+  $ sudo apt-get -y install automake bison flex g++ git libboost-all-dev libevent-dev libssl-dev libtool make pkg-config
+  #  2.从源代码构建：http://thrift.apache.org/docs/BuildingFromSource
+  #  2.1下载源码 http://thrift.apache.org/download  #!src: git clone https://github.com/apache/thrift.git
+  $ ./bootstrap.sh && ./configure --without-java --without-nodejs --without-nodets --without-swift
+  $ make && make install
+  #2、ZeroMQ 跨语言LGPLed方案: zeromq.org 特点:Universal、Smart、High-speed、Multi-Transport、Community、The Guide
+  $ sudo apt-get install libzmq3-dev # 安装ZeroMQ3
+  # pkg-config --modversion libzmq   # 检查模块版本
+  #3、Nanomsg 跨语言通信模式 nanomsg.org 具备IPC,TCP,WS通信方式 Req/Rep,Pub/Sub,Pair,Bus,Push/Pull,Surveyor/Respondent
+  $ git clone --depth=1 https://github.com/nanomsg/nanomsg.git 
+  # mkdir build && cd build 
+  # cmake .. && cmake --build . && ctest . 
+  # sudo cmake --build . --target install 
+  # sudo ldconfig (if on Linux) 
+  #4、D-Bus 应用程序间通信的消息总线系统, 用于进程之间的通信。
+  $ sudo apt-get install dbus  # 安装D-Bus,然后启动dbus-launch
   # dbus-daemon --session --print-address --nofork --print-pid # 启动普通进程
   # dbus-daemon --session --print-address --fork --print-pid   # 启动后台进程
   # dbus-daemon --session --print-address --fork --print-pid --address=unix:abstract=/tmp/dbus-FixedAddress # 指定监听地址
   # dbus-daemon --system --print-address --fork --print-pid    # 启动守护进程
-  
-  # 通讯协议: thrift.apache.org  一个远程过程调用（RPC）框架，由Facebook为大规模跨语言服务而开发。
-  #1.安装环境：Thrift是一种接口描述语言和二进制通讯协议，它被用来定义和创建跨语言的服务。
-  $ sudo apt-get -y install automake bison flex g++ git libboost-all-dev libevent-dev libssl-dev libtool make pkg-config
-  #2.从源代码构建：http://thrift.apache.org/docs/BuildingFromSource
-  #2.1下载源码 http://thrift.apache.org/download  #!src: git clone https://github.com/apache/thrift.git
-  $ ./bootstrap.sh && ./configure --without-java --without-nodejs --without-nodets --without-swift
-  $ make && make install
   
   # 安装ffmpeg视频编码/解码libraries: avcodec,avformat,avutil,avfilter,avdevice,swresample,swscale
   sudo apt-get -y install autoconf automake build-essential  # 先安装gcc/g++/gdb/make工具链

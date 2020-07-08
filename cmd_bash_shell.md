@@ -627,7 +627,8 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ sudo ln -sf /usr/local/node/bin/node /usr/local/bin/node
   $ sudo ln -sf /usr/local/node/bin/npm /usr/local/bin/npm
   
-  # 微服务 - 跨语言LGPLed - 通信方案
+  # 微服务 - 消息中间件 - 跨语言LGPLed - 通信方案
+  #0、gRPC通讯协议: grpc.io/docs/ 谷歌开源 HTTP/2 传输更快 http2.golang.org
   #1、Thrift通讯协议: thrift.apache.org  一个远程过程调用（RPC）框架，由Facebook为大规模跨语言服务而开发。
   #  1.安装环境：Thrift是一种接口描述语言和二进制通讯协议，它被用来定义和创建跨语言的服务。
   $ sudo apt-get -y install automake bison flex g++ git libboost-all-dev libevent-dev libssl-dev libtool make pkg-config
@@ -635,10 +636,15 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   #  2.1下载源码 http://thrift.apache.org/download  #!src: git clone https://github.com/apache/thrift.git
   $ ./bootstrap.sh && ./configure --without-go --without-java --without-nodejs --without-nodets --without-swift
   $ make && make install
-  #2、ZeroMQ 跨语言LGPLed方案: zeromq.org 特点:Universal、Smart、High-speed、Multi-Transport、Community、The Guide
+  #2、NATS高性能通讯、消息中间件: docs.nats.io 远程过程调用（RPC）通讯框架
+  > sc create nats-server binPath= "%GOPATH%\bin\nats\nats-server.exe -a=0.0.0.0 -p=4222 --auth=HGJ766GR767FKJU0"
+  > sc start nats-server  # 启动服务
+  > nats-server.exe --signal reload|reopen|stop # reload加载配置|reopen重新打开日志文件以进行日志轮换|stop停止服务器
+  > nats-top [-s server] [-m monitor] [-n num_conns=1024] [-d delay_secs=1] [-sort by=subs|msgs_to|bytes_to|msgs_from|bytes_from]
+  #3、ZeroMQ 跨语言LGPLed方案: zeromq.org 特点:Universal、Smart、High-speed、Multi-Transport、Community、The Guide
   $ sudo apt-get install libzmq3-dev # 安装ZeroMQ3
   $ pkg-config --modversion libzmq   # 检查模块版本
-  #3、Nanomsg 跨语言通信模式 nanomsg.org 具备IPC,TCP,WS通信方式 Req/Rep,Pub/Sub,Pair,Bus,Push/Pull,Surveyor/Respondent
+  #4、Nanomsg 跨语言通信模式 nanomsg.org 具备IPC,TCP,WS通信方式 Req/Rep,Pub/Sub,Pair,Bus,Push/Pull,Surveyor/Respondent
   $ git clone --depth=1 https://github.com/nanomsg/nanomsg.git 
   $ mkdir build && cd build
   $ cmake .. && cmake --build . && ctest .
@@ -648,7 +654,7 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ mkdir build && cd build
   $ cmake -G Ninja ..
   $ ninja && ninja install
-  #4、D-Bus 应用程序间通信的消息总线系统, 用于进程之间的通信。
+  #5、D-Bus 应用程序间通信的消息总线系统, 用于进程之间的通信。
   $ sudo apt-get install dbus  # 安装D-Bus,然后启动dbus-launch
   # dbus-daemon --session --print-address --nofork --print-pid # 启动普通进程
   # dbus-daemon --session --print-address --fork --print-pid   # 启动后台进程

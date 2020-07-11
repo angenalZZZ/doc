@@ -28,10 +28,10 @@ export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
 export PATH=/usr/local/node/bin:$PATH
 
 # docker
-# export DOCKER_HOST=tcp://127.0.0.1:2375
+export DOCKER_HOST=tcp://127.0.0.1:2375
 # eval $(docker-machine env default)
 export DOCKER_TLS_VERIFY="1"
-export DOCKER_HOST="tcp://192.168.99.100:2376"
+export DOCKER_HOST="tcp://127.0.0.1:2376"
 export DOCKER_CERT_PATH="/home/yangzhou/.docker/machine/machines/default"
 export DOCKER_MACHINE_NAME="default"
 

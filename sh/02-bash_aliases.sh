@@ -4,8 +4,7 @@
 ## unalias：取消由alias定义的命令别名
 
 # 生成随机数
-alias rnd="echo && cat /dev/urandom | env LC_CTYPE=C tr -dc num | head -c 6 | base64 && echo"
-
+# alias rnd="echo && cat /dev/urandom | env LC_CTYPE=C tr -dc num | head -c 6 | base64 && echo"
 
 # 文件列表
 alias ll='ls -alF'
@@ -16,19 +15,15 @@ alias lht='ls -lht'
 # 文件列表-按大小倒序
 alias lhs='ls -lhS'
 
-
 # 清除命令行窗口
 alias cls='clear'
-
 
 # 网络监听程序端口 execute command by root user
 alias netst='netstat -anptW|grep -i "listen"'
 
-
 # 数据库 postgresql
 alias run-pg='sudo -u postgres psql'
 alias start-pg='sudo service postgresql start'
-
 
 # docker commands
 # 启动所有容器
@@ -47,5 +42,4 @@ alias dockercleaniall='docker rm $(docker ps -a -q)'
 alias dockercleani='printf "\n>>> Deleting untagged images\n\n" && docker rmi $(docker images -qf dangling=true)'
 # 清除停止的容器及删未标记的镜像
 alias dockerclean='dockercleanc || true && dockercleani'
-
 

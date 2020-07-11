@@ -650,10 +650,13 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ cmake .. && cmake --build . && ctest .
   $ sudo cmake --build . --target install
   $ sudo ldconfig # on Linux
-  $ git clone --depth=1 https://github.com/nanomsg/nng.git
+  $ git clone --depth=1 https://github.com/nanomsg/nng.git # 下一代通信模式"Scalablilty Protocols"
   $ mkdir build && cd build
   $ cmake -G Ninja ..
   $ ninja && ninja install
+  # set PKG_CONFIG_PATH=D:\Program\nanomsg\lib\pkgconfig # 设置Windows系统环境变量
+  # nngcat --rep --bind=ipc://host1 --insecure --silent --compat --count=0 --format=raw --data=<reponse> # 响应输出
+  # nngcat --req --connect=ipc://host1 --raw --data=<request-payload> # 请求输入
   #5、D-Bus 应用程序间通信的消息总线系统, 用于进程之间的通信。
   $ sudo apt-get install dbus  # 安装D-Bus,然后启动dbus-launch
   # dbus-daemon --session --print-address --nofork --print-pid # 启动普通进程

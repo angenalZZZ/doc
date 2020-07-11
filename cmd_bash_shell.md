@@ -556,8 +556,9 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ sudo apt install --no-install-recommends wget gnupg ca-certificates libfreetype6-dev libssl-dev # 安装ca/freetype/openssl
   $ sudo apt install openssh-server   # 安装SSH
   $ sudo apt install build-essential  # 安装gcc/g++/gdb/make工具链
-  $ sudo apt install cmake cmake-data cmake-doc cmake-curses-gui cmake-qt-gui # 安装cmake|ccmake|cmake-gui工具链
-  $ sudo apt install autoconf automake pkg-config libtool gnome-core # 安装桌面开发automake/glib/gnome工具链
+  $ sudo apt install clang cmake zlib1g-dev libboost-dev libboost-thread-dev  # 安装clang/cmake/boost工具链
+  $ sudo apt install cmake cmake-data cmake-doc cmake-curses-gui cmake-qt-gui # 安装ccmake/qt-gui桌面开发
+  $ sudo apt install autoconf automake pkg-config libtool gnome-core  # 安装automake/glib/gnome桌面开发
   $ sudo apt-get install libgtk-3-dev libcairo2-dev libglib2.0-dev --fix-missing   # 安装桌面开发gtk3工具链
   $ sudo apt-get install libwebkit2gtk-4.0-dev javascriptcoregtk-3.0 --fix-missing # 安装桌面开发webkit2gtk
   $ sudo apt install default-jre      # 安装jre > java -version

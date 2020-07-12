@@ -645,19 +645,16 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   #3、ZeroMQ 跨语言LGPLed方案: zeromq.org 特点:Universal、Smart、High-speed、Multi-Transport、Community、The Guide
   $ sudo apt-get install libzmq3-dev # 安装ZeroMQ3
   $ pkg-config --modversion libzmq   # 检查模块版本
-  #4、Nanomsg 跨语言通信模式 nanomsg.org 具备IPC,TCP,WS通信方式 Req/Rep,Pub/Sub,Pair,Bus,Push/Pull,Surveyor/Respondent
+  #4、Nanomsg 跨语言通信 nanomsg.org 具备IPC,TCP,WS通信方式 Req/Rep,Pub/Sub,Pair,Bus,Push/Pull,Surveyor/Respondent
   $ git clone --depth=1 https://github.com/nanomsg/nanomsg.git 
-  $ mkdir build && cd build
-  $ cmake .. && cmake --build . && ctest .
-  $ sudo cmake --build . --target install
-  $ sudo ldconfig # on Linux
-  $ git clone --depth=1 https://github.com/nanomsg/nng.git # 下一代通信模式"Scalablilty Protocols"
-  $ mkdir build && cd build
-  $ cmake -G Ninja ..
-  $ ninja && ninja install
-  # set PKG_CONFIG_PATH=D:\Program\nanomsg\lib\pkgconfig # 设置Windows系统环境变量
-  # nngcat --rep --bind=ipc://host1 --insecure --silent --compat --count=0 --format=raw --data=<reponse> # 响应输出
-  # nngcat --req --connect=ipc://host1 --raw --data=<request-payload> # 请求输入
+  $ mkdir build && cd build && cmake .. && cmake --build . && sudo cmake --build . --target install && sudo ldconfig # on Linux
+  # 1.open CMake (cmake-gui) 2.set src-dir,build-dir 3.set CMAKE_INSTALL_PREFIX=D:/Program/nanomsg 4.click Configure,Generate # windows
+  > cd build && cmake --build . --config Release --target install # on windows cmd
+  $ git clone --depth=1 https://github.com/nanomsg/nng.git # Nanomsg下一代通信"Scalablilty Protocols"
+  $ mkdir build && cd build && cmake -G Ninja .. && ninja && ninja install # on Linux or windows
+  # set PKG_CONFIG_PATH=D:\Program\nanomsg\lib\pkgconfig # on windows gcc.env../nanomsg.pc
+  > nngcat --rep --bind=ipc://host1 --insecure --silent --compat --count=0 --format=raw --data=<reponse> # 响应输出
+  > nngcat --req --connect=ipc://host1 --raw --data=<request-payload> # 请求输入
   #5、D-Bus 应用程序间通信的消息总线系统, 用于进程之间的通信。
   $ sudo apt-get install dbus  # 安装D-Bus,然后启动dbus-launch
   # dbus-daemon --session --print-address --nofork --print-pid # 启动普通进程

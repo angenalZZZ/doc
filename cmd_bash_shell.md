@@ -653,7 +653,7 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   # 3.2set NN_STATIC_LIB=OFF, NN_TOOLS=ON, others OFF, then click Configure, Generate. # on windows build for ddl
   > cd build-dir && cmake --build . --target install # to build after 3.1 and 3.2 #or if CMAKE_AR=MSVC [--config Release]
   # set PKG_CONFIG_PATH=D:\Program\mingw64\lib\pkgconfig && set NN_STATIC_LIB=D:\Program\nanomsg\lib # set windows-env/nanomsg.pc
-  # cp lib/pkgconfig/nanomsg.pc %PKG_CONFIG_PATH% && cp include/nanomsg/*.h D:/Program/mingw64/include/nanomsg # set gcc lib env
+  # cp lib/pkgconfig/*.pc %PKG_CONFIG_PATH% && cp lib/*.a /mingw64/lib && cp *.h /mingw64/include/nanomsg # set gcc lib env
   $ git clone --depth=1 https://github.com/nanomsg/nng.git # Nanomsg下一代通信"Scalablilty Protocols"
   $ mkdir build && cd build && cmake -G Ninja .. && ninja && ninja install # on Linux or windows, use Ninja build
   > nngcat --rep --bind=ipc://host1 --insecure --silent --compat --count=0 --format=raw --data=<reponse> # 响应输出

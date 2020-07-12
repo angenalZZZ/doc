@@ -648,11 +648,12 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   #4、Nanomsg 跨语言通信 nanomsg.org 具备IPC,TCP,WS通信方式 Req/Rep,Pub/Sub,Pair,Bus,Push/Pull,Surveyor/Respondent
   $ git clone --depth=1 https://github.com/nanomsg/nanomsg.git 
   $ mkdir build && cd build && cmake .. && cmake --build . && sudo cmake --build . --target install && sudo ldconfig # on Linux
-  # 1.open CMake (cmake-gui) 2.set src-dir,build-dir 3.set CMAKE_INSTALL_PREFIX=D:/Program/nanomsg 4.click Configure,Generate # windows
+  # 1.open CMake-gui 2.set src-dir,build-dir 3.set CMAKE_INSTALL_PREFIX=D:/Program/nanomsg 4.click Configure,Generate # on windows
   > cd build && cmake --build . --config Release --target install # on windows cmd
+  # set NN_STATIC_LIB="D:\Program\nanomsg\lib"             # set windows development environment
+  # set PKG_CONFIG_PATH=D:\Program\nanomsg\lib\pkgconfig   # set windows gcc.env../nanomsg.pc
   $ git clone --depth=1 https://github.com/nanomsg/nng.git # Nanomsg下一代通信"Scalablilty Protocols"
-  $ mkdir build && cd build && cmake -G Ninja .. && ninja && ninja install # on Linux or windows
-  # set PKG_CONFIG_PATH=D:\Program\nanomsg\lib\pkgconfig # on windows gcc.env../nanomsg.pc
+  $ mkdir build && cd build && cmake -G Ninja .. && ninja && ninja install # on Linux or windows, use Ninja build
   > nngcat --rep --bind=ipc://host1 --insecure --silent --compat --count=0 --format=raw --data=<reponse> # 响应输出
   > nngcat --req --connect=ipc://host1 --raw --data=<request-payload> # 请求输入
   #5、D-Bus 应用程序间通信的消息总线系统, 用于进程之间的通信。

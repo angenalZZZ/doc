@@ -649,9 +649,9 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ git clone --depth=1 https://github.com/nanomsg/nanomsg.git 
   $ mkdir build && cd build && cmake .. && cmake --build . && sudo cmake --build . --target install && sudo ldconfig # on Linux
   # 1.open CMake-gui 2.set src-dir,build-dir 3.set CMAKE_INSTALL_PREFIX=D:/Program/nanomsg 4.click Configure,Generate # on windows
-  > cd build && cmake --build . --config Release --target install # on windows cmd
-  # set NN_STATIC_LIB="D:\Program\nanomsg\lib"             # set windows development environment
-  # set PKG_CONFIG_PATH=D:\Program\nanomsg\lib\pkgconfig   # set windows gcc.env./nanomsg.pc, or not-set and copy *.pc to config path
+  > cd build && cmake --build . --config Release --target install # on windows cmd, Above step config DNN_STATIC_LIB=ON
+  # set PKG_CONFIG_PATH=D:\Program\nanomsg\lib\pkgconfig          # set windows gcc.env./nanomsg.pc
+  # copy nanomsg.pc to PKG_CONFIG_PATH ; copy ./include/nanomsg to ./mingw64/include/ # set gcc development environment
   $ git clone --depth=1 https://github.com/nanomsg/nng.git # Nanomsg下一代通信"Scalablilty Protocols"
   $ mkdir build && cd build && cmake -G Ninja .. && ninja && ninja install # on Linux or windows, use Ninja build
   > nngcat --rep --bind=ipc://host1 --insecure --silent --compat --count=0 --format=raw --data=<reponse> # 响应输出

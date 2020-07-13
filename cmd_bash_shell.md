@@ -755,8 +755,9 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ config set requirepass "123456"      # 设置访问密码
   $ auth 123456                          # 密码认证;再执行其它命令.
   # 性能测试Redis
+  > redis-benchmark -h 127.0.0.1 -p 6369 -c 30 -d 512 -t set,get -n 1000000 -r 100000000 # SET: 64K, GET: 68K
   > redis-benchmark -n 10000 -q          # 本机Redis  < SET: 90K, GET: 90K > requests per second
-  > buntdb-benchmark -n 10000 -q         # 本机BuntDB < SET:230K,GET:5000K > requests per second
+  > buntdb-benchmark -n 10000 -q         # 本机BuntDB < SET:240K,GET:4600K > requests per second (推荐) github.com/tidwall/buntdb
 ~~~
 
 > `MySQL` 关系型数据库

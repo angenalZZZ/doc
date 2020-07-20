@@ -360,11 +360,11 @@
   $ lego --email="foo@bar.com" --domains="example.com" --http renew --renew-hook="./myscript.sh" # 续订证书(钩子)
   
   # Let’s Encrypt 免费证书/自动化脚本 https://github.com/srvrco/getssl
-  $ curl --silent https://raw.githubusercontent.com/srvrco/getssl/master/getssl > getssl ; chmod 700 getssl
-  $ ./getssl -c yourdomain.com  # config, set email account.
-  $ getssl yourdomain.com       # run
-  $ crontab
-  23  5 * * * /root/scripts/getssl -u -a -q  # auto updates
+  $ wget https://raw.githubusercontent.com/srvrco/getssl/master/getssl && chmod 700 getssl  # 下载getssl工具
+  $ ./getssl -c yourdomain.com               # init email account
+  $ getssl yourdomain.com                    # run ssl service
+  $ crontab                                  # auto reboot cron
+  23  5 * * * /root/scripts/getssl -u -a -q  # auto update config
   
   # Let’s Encrypt 免费证书/自动化工具 https://certbot.eff.org
   $ sudo add-apt-repository universe
@@ -457,7 +457,8 @@ openssl pkcs8 -topk8 -nocrypt -in server.key -out server.pem
   # 请求Http资源的工具curl
   $ curl https://www.baidu.com/ |tee baidu.index.html  # 下载并保存html
   $ curl https://www.zhihu.com/qrcode?url=https%3A%2F%2Fzhuanlan.zhihu.com%2Fp%2F73347355 | qr # 二维码生成
-  $ for i in {1..100}; do curl https://postman-echo.com/time/now?i=$i; done # 循环执行100次请求http
+  $ curl --silent https://raw.githubusercontent.com/srvrco/getssl/master/getssl > getssl   # 下载getssl工具
+  $ for i in {1..100}; do curl https://postman-echo.com/time/now?i=$i; done           # 循环执行100次请求http
   $ curl -XGET https://127.0.0.1:8080/v1/user -H "Content-Type: application/json" \
     -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1MjgwMTY5MjIsImlkIjowLCJuYmYiOjE1MjgwMTY5MjIsInVzZXJuYW1lIjoiYWRtaW4ifQ.LjxrK9DuAwAzUD8-9v43NzWBN7HXsSLfebw92DKd1JQ" \
     --cacert ca.crt --cert sv.crt --key sv.key  # 开发环境 自签名证书(结合 √ #1.创建openssl → ## 单个域名+CA)

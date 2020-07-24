@@ -453,6 +453,8 @@ openssl pkcs8 -topk8 -nocrypt -in server.key -out server.pem
   > makecert -n "CN=Api Cert" -a sha1 -eku 1.3.6.1.5.5.7.3.1 -r -sv api-root.pvk api-root.cer -ss Root -sr LocalMachine
   #3.3打开PowerShell查询数字签名证书
   > ls Cert:\CurrentUser\Root | where {$_.Subject -eq "CN=Api Cert"}
+  
+  #3.安装win-acme证书管理windows客户端 github.com/win-acme/win-acme *3.7k
 
   # 请求Http资源的工具curl
   $ curl https://www.baidu.com/ |tee baidu.index.html  # 下载并保存html

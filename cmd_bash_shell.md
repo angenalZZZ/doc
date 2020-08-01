@@ -824,6 +824,12 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ sudo apt-get purge postgre*                           # 卸载
 ~~~
 
+> [`CockroachDB`](https://www.cockroachlabs.com/docs/stable/install-client-drivers.html) 提供数据扩展与集群的负载均衡，减少复杂性操作，类似PostgreSQL
+~~~shell
+  $ cockroach start-single-node --insecure --listen-addr=localhost:26257 --http-addr=localhost:6257 --background
+  > nssm install CockroachDB ...
+~~~
+
 > [`Mongodb`](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu) NoSql数据库
 ~~~shell
   $ wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -

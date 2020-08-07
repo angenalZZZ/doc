@@ -6,24 +6,37 @@ git config --global --list
 git config --global user.name                 # 查询全局git用户配置
 git config --global user.name "yangzhou"      # 修改全局git用户配置
 git config --global user.email "angenal@hotmail.com"
+
 # 1.通过修改默认配置, 解决网络问题! http限制..
 git config --global http.postBuffer 524288000 # 上传文件大小限制500M=1024*1024*500(默认100M)
 git config --global http.sslVerify "false"    # 关闭ssl验证(网络异常)
 git config --global http.lowSpeedLimit 0      # 下载文件限制
 git config --global http.lowSpeedTime 999999  # 下载文件时速
 git clone --depth=1 https://***/***/***.git   # 下载失败时，1.首先浅层clone..
-git fetch --unshallow                         # ..然后更新远程库到本地; 2.或者使用SSH进行下载.
+git fetch --unshallow                         # ..然后更新远程库到本地; 2.或者使用SSH进行下载
+
 # 2.通过获取以下 DNS Resource Records, 解决网络问题! CDN被屏蔽..
 # fix git clone github project failed /etc/hosts
 151.101.185.194 github.global.ssl.fastly.net  # github.global.ssl.fastly.net.ipaddress.com
 140.82.113.4 github.com                       # github.com.ipaddress.com
+
 # 3.刷新dns缓存..
 $ sudo killall -HUP mDNSResponder
 $ sudo dscacheutil -flushcache
 > ipconfig /flushdns
 ~~~
 
-#### Create a new repository on the command line, push into github.com
+#### Create a new repository from your `LAN(local area network)` `origin`.
+~~~bash
+git clone http://10.1.1.10/angenal/CSharpOpen.git
+cd CSharpOpen
+touch README.md
+git add README.md
+git commit -m "add README"
+git push -u origin master
+~~~
+
+#### Create a new repository, push into github.com `remote` `origin`.
 ~~~bash
 echo "# CSharpOpen" >> README.md
 git init
@@ -33,21 +46,36 @@ git remote add origin https://github.com/angenal/CSharpOpen.git
 git push -u origin master
 ~~~
 
-#### Push an existing repository from the command line.
+#### Push an existing folder.
 ~~~bash
-git remote add origin https://github.com/angenal/CSharpOpen.git
+cd CSharpOpen
+git init
+git remote add origin http://10.1.1.10/angenal/CSharpOpen.git
+git add .
+git commit -m "Initial git"
 git push -u origin master
 ~~~
 
-#### Contributing and PR for your new feature.
-1. Fork it
-2. Download your fork to your PC (`git clone https://github.com/your_username/feature && cd feature`)
-3. Create your feature branch (`git checkout -b my-new-feature`)
-4. Make changes and add them (`git add .`)
-5. Commit your changes (`git commit -m 'Add some feature'`)
-6. Push to the branch (`git push origin my-new-feature`)
-7. Create new pull request
+#### Push an existing Git repository.
+~~~bash
+cd CSharpOpen
+git remote rename origin old-origin  # rename a old-origin to new origin
+git remote add origin https://github.com/angenal/CSharpOpen.git
+git push -u origin master
+git push -u origin --all
+git push -u origin --tags
+~~~
 
+#### Contributing and `PR` for your new feature.
+~~~bash
+# 1. fork it
+git clone https://github.com/angenal/CSharpOpen && cd CSharpOpen # 2. download your fork
+git checkout -b my-new-feature  # 3. create your feature branch
+git add .                       # 4. make changes and add them into git
+git commit -m 'Add some feature # 5. commit your changes
+git push origin my-new-feature  # 6. push to the branch my-new-feature
+# 7. create new pull request
+~~~
 
 # [新建git项目与git发布`点击看其他教程`](http://wangchujiang.com/linux-command/c/git.html)
 

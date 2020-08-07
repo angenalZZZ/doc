@@ -66,15 +66,15 @@ git push -u origin --all
 git push -u origin --tags
 ~~~
 
-#### Contributing and `PR` for your new feature.
+#### Contributing and `PR` for your new-feature.
 ~~~bash
 # 1. fork it
 git clone https://github.com/angenal/CSharpOpen && cd CSharpOpen # 2. download your fork
-git checkout -b my-new-feature  # 3. create your feature branch
+git checkout -b new-feature     # 3. create your feature branch
 git add .                       # 4. make changes and add them into git
-git commit -m 'Add some feature # 5. commit your changes
-git push origin my-new-feature  # 6. push to the branch my-new-feature
-# 7. create new pull request
+git commit -m 'new feature'     # 5. commit your changes
+git push origin new-feature     # 6. push to the branch new-feature
+# 7. create new pull request.
 ~~~
 
 # [新建git项目与git发布`点击看其他教程`](http://wangchujiang.com/linux-command/c/git.html)

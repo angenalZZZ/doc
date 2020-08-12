@@ -976,15 +976,11 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
     -data-path=/nsq/data ...
   #3.最后启动Web管理
   > nsqadmin --lookupd-http-address=127.0.0.1:4161   # --tcp-address=0.0.0.0:4171 
-  #install as Windows Services:
-  > mkdir C:\Go\bin\nsq\data
-  > copy /y nsqd.exe C:\Go\bin\nsq && copy /y nsqlookupd.exe C:\Go\bin\nsq
-  > sc create nsqlookupd binpath= "C:\Go\bin\nsq\nsqlookupd.exe -tcp-address=0.0.0.0:4160 -http-address=0.0.0.0:4161" start= auto DisplayName= "nsqlookupd"
-  > sc description nsqlookupd "nsqlookupd"
-  > sc start nsqlookupd
-  > sc create nsqd binpath= "C:\Go\bin\nsq\nsqd.exe -data-path=C:\Go\bin\nsq\data -mem-queue-size=0 -lookupd-tcp-address=127.0.0.1:4160" start= auto DisplayName= "nsqd"
-  > sc description nsqd "nsqd"
-  > sc start nsqd
+  #*.install as Windows Services:
+  > mkdir C:\nsq\data  &&  copy /y nsqd.exe C:\nsq  &&  copy /y nsqlookupd.exe C:\Go\bin\nsq
+  > sc create nsqlookupd binpath= "C:\nsq\nsqlookupd.exe -tcp-address=0.0.0.0:4160 -http-address=0.0.0.0:4161" start= auto DisplayName= "nsqlookupd"
+  > sc create nsqd binpath= "C:\nsq\nsqd.exe -data-path=C:\nsq\data -mem-queue-size=0 -lookupd-tcp-address=127.0.0.1:4160" start= auto DisplayName= "nsqd"
+  > sc start nsqlookupd  &&  sc start nsqd
 
 # 消息平台2 kafka (erlang)服务: kafka.apache.org/quickstart
   ##安装kafka 参考: https://developer.ibm.com/tutorials/realtime-visitor-analysis-with-kafka/

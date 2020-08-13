@@ -967,15 +967,17 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   #1.先启动消息服务 (提供近乎实时的分析系统，被Docker、Stripe和BuzzFeed在内的一系列公司使用)
   > nsqlookupd -broadcast-address=[hostname] -tcp-address=0.0.0.0:4160 -http-address=0.0.0.0:4161 -log-level=warn
   #2.再启动几个 nsqd 存储数据
-  > nsqd -node-id=[0,1024) --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4150 -http-address=0.0.0.0:4151 -https-address=0.0.0.0:4152 \
+  > nsqd -node-id=[0,1024) -data-path=/nsq/data -mem-queue-size=0 --lookupd-tcp-address=127.0.0.1:4160 \
+    --tcp-address=0.0.0.0:4150 -http-address=0.0.0.0:4151 -https-address=0.0.0.0:4152 \
     -tls-cert=/nsq/certs/cert.pem -tls-key=/nsq/certs/key.pem -tls-root-ca-file=/nsq/certs/ca.pem \
     -tls-required=[true,false,tcp-https] -tls-client-auth-policy=[require,require-verify] \
-    -log-level=warn -sync-timeout=3s -msg-timeout=1m0s
-    -data-path=/nsq/data ...
-  > nsqd -node-id=[0,1024) --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4153 --http-address=0.0.0.0:4154 \
-    -data-path=/nsq/data ...
-  #3.最后启动Web管理
-  > nsqadmin --lookupd-http-address=127.0.0.1:4161   # --tcp-address=0.0.0.0:4171 
+    -log-level=warn -sync-timeout=3s -msg-timeout=1m0s 
+  > nsqd -node-id=1 -data-path=/nsq/data.1 -mem-queue-size=0 --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4151 
+  > nsqd -node-id=2 -data-path=/nsq/data.2 -mem-queue-size=0 --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4152 
+  > nsqd -node-id=3 -data-path=/nsq/data.3 -mem-queue-size=0 --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4153 
+  #3.最后启动Web管理界面
+  > start nsqadmin --lookupd-http-address=127.0.0.1:4161 -http-address=0.0.0.0:4171 
+  > start http://localhost:4171 
   #*.install as Windows Services:
   > mkdir C:\nsq\data  &&  copy /y nsqd.exe C:\nsq  &&  copy /y nsqlookupd.exe C:\Go\bin\nsq
   > sc create nsqlookupd binpath= "C:\nsq\nsqlookupd.exe -tcp-address=0.0.0.0:4160 -http-address=0.0.0.0:4161" start= auto DisplayName= "nsqlookupd"

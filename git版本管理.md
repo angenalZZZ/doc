@@ -8,7 +8,7 @@ git config --global user.name "yangzhou"      # 修改全局git用户配置
 git config --global user.email "angenal@hotmail.com"
 
 # 设置SSH-Key: github.com/settings/keys 
-ssh-keygen -t rsa -C "angenal@hotmail.com" #1.创建SSHKey #2.复制文件为Key>id_rsa.pub #3.测试SSHKey>ssh -T git@github.com
+ssh-keygen -t rsa -C "angenal@hotmail.com" #1.创建SSHKey #2.复制文件为Key>id_rsa.pub #3.测试SSHKey>ssh -T git@github.com #4.设置<hosts> 52.74.223.119 github.com
 
 # 1.通过修改默认配置, 解决网络问题! http限制..
 git config --global http.postBuffer 524288000 # 上传文件大小限制500M=1024*1024*500(默认100M)

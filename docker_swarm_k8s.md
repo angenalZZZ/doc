@@ -83,10 +83,10 @@ $ export DOCKER_HOST=tcp://127.0.0.1:2375 # 设置环境Linux vi ~/.bashrc [或�
 $ docker [OPTIONS] COMMAND
 # 选项Options:
 #1. --config 默认=$HOME/.docker
-#2. --context -c 默认=$DOCKER_HOST=`docker context use` 当前上下文指向的容器服务端主机
-#3. --debug -D 是否启用调试
+#2. --context -c 默认为$DOCKER_HOST=`docker context use` 当前用户上下文指向的容器服务端(不同用户登录后,可能需要切换)
+#3. --debug -D 是否启用调试?
 #4. --host -H 容器服务端主机socket(s)列表
-#5. --tls --tlsverify --tlscacert * --tslcert * --tlskey * 启用tls安全连接
+#5. --tls --tlsverify --tlscacert * --tslcert * --tlskey * 启用服务端tls安全登录认证与客户端tls安全连接tlsverify
 #6. --log-level -l 日志级别,默认=info(debug|info|warn|error|fatal)
 #7. --version -v 打印版本信息
 $ docker [COMMAND] --help                 # 执行Docker命令:重定向Docker\Server响应输出/如同R语言sink()
@@ -299,8 +299,8 @@ ENTRYPOINT ["/app"]
   docker run --name myweb --network=workgroup --link -d -P redis5:redis5 nginx # 容器之间安全互联 myweb连接redis5:redis5别名
   docker run --name myweb --network bridge --ip 172.18.0.2 --network=***-net ... ...  # 指定子网172.18/255+bridge
 
-  # 构建镜像            # 参数-f 指定Dockerfile路径~默认.当前目录下有Dockerfile
-  docker build --build-arg NODE_ENV=dev -t test-image . # 参数-t --tag [镜像id|name]; 参数-m内存限制
+  # 构建镜像            # 参数-f最后指定Docker工作路径(默认.当前目录下存在Dockerfile)
+  docker build --no-cache --build-arg NODE_ENV=dev -m 1G -t test:1.0 . # 参数-t --tag [镜像id|name+version]; 参数-m内存限制
 
   # 登录^镜像^管理
   docker login -u 用户名 -p 密码 [仓库地址] # 登录Docker镜像仓库,如果未指定,默认官方仓库hub.docker.com

@@ -115,8 +115,20 @@
   $ ss -aup   # udp端口
   # sudo apt -y install netcat-traditional # 手动安装netcat(nc)网络调试和探测工具，被誉为网络安全界的“瑞士军刀”
   $ sudo update-alternatives --config nc   # 替换默认安装的 netcat-OpenBSD < ubuntu >
-  $ nc -help # 开启服务器监听> nc -lnvp 4488 -w 2 ; netstat -anT|grep 4488 < windows >
-  $ nc -vz www.baidu.com 443         # 查询DNS记录
+  $ nc -help # 开启服务器监听$ nc -lnvp 448 -w 2 #=> netstat -anT|grep 448 < windows > download - nmap.org
+  $ nc -vvlkp 5879 -e /bin/bash      # 服务端暴露端口,执行shell命令行
+  $ rm -f /tmp/f; mkfifo /tmp/f; cat /tmp/f | /bin/bash -i 2>&1 | nc -lk 5879 > /tmp/f
+  $ nc -v 192.168.1.20 5879          # 客户端连接至服务端,执行任何shell命令
+  $ nc -l 5879 > filename            # 服务端暴露端口,用于发送文件
+  $ nc -v 192.168.1.20 5879 < f1.7z  # 客户端连接至服务端,发送文件
+  $ nc -l 5879 | tar xfz -           # 服务端暴露端口,用于发送目录
+  $ tar cfz - f1/dir | nc -v 192.168.1.20 5879 # 客户端连接至服务端,发送目录
+  $ nc -vzw 2 192.168.1.20 80-10000  # 扫描主机的开放端口
+  $ ncat -lkp 5879 --sh-exec 'echo -ne "HTTP/1.0 200 OK\r\n\r\nThe date is "; date;' # 时间web服务端
+  # arecord -f cd -c 2 | lame -b128 - - | ncat -u your-ip 6881 | mpg123 -  # 服务端-远程视频服务
+  # arecord -f cd -c 2 | lame -b128 - - | ncat -u -l 6881 | mpg123 -****   # 客户端-远程视频服务
+  $ ssh -oProxyCommand="ssh host1 nc host2 22" host2 # 防火墙穿透
+  $ nc -vz baidu.com 443             # 查询DNS记录
   $ mtr --curses 8.8.8.8             # 跟踪DNS记录+路由地址
   # 域名解析
   $ host localhost

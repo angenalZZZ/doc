@@ -1,9 +1,9 @@
 # [Docker](https://docs.docker.com)
 
 
- * [`k8s`](#Kubernetes) | [`Minikube`](#Minikube) | [`Consul`](#Consul) | [`etcd`](#Etcd)
+ * [`K8S/Kubernetes`](#Kubernetes)/[`Minikube`](#Minikube) | [`Consul`](#Consul) + [`Etcd`](#Etcd)
  * [`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)、[`安全相关思维导图`](https://github.com/phith0n/Mind-Map)
- * [`Docker & Kubernetes 学习笔记`](https://github.com/angenalZZZ/learn-docker-and-k8s)、[`基于GitLab+Docker+K8S的持续集成和交付`](https://github.com/angenalZZZ/gitlab-docker-k8s)
+ * [`Docker+K8S学习笔记`](https://github.com/angenalZZZ/learn-docker-and-k8s)、[`GitLab+Docker+K8S集成系统`](https://github.com/angenalZZZ/gitlab-docker-k8s)
 
 
 #### 安装、[配置](#配置)、[构建镜像](#构建镜像)、[容器命令](#容器命令)、[容器编排](#容器编排)

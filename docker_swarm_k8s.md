@@ -690,6 +690,9 @@ services:
   　  　前后端*`高IO型`的`Web`应用程序 (8核16G;IP3+IP4) k8s-master1,k8s-master2 <br>
   　  　长时间*`可水平扩展`的`分布式计算型`任务 (16核64G;IP5+IP6) k8s-node1,k8s-node2 <br>
 
+![](https://github.com/angenalZZZ/doc/blob/master/screenshots/BorgDesign.png)
+![](https://github.com/angenalZZZ/doc/blob/master/screenshots/K8sDesign.png)
+
 > [安装](https://kubernetes.io/zh/docs/setup/)
 
 * 步骤:  1-8 (除了4) 在所有节点执行
@@ -1179,11 +1182,18 @@ $ sudo kubeadm reset #[重置]
 
 > [`etcd`](https://coreos.com/etcd/docs/latest/demo.html) 分布式、可靠的KV存储，用于分布式系统中共享配置和服务发现。 [`install`](https://www.jianshu.com/p/e892997b387b)  [`download`](https://github.com/etcd-io/etcd/releases)  [`play...`](http://play.etcd.io/install)
  * 简单: 良好定义的HTTP接口，面向用户的API(gRPC)，易理解；👍支持消息发布与订阅；
+
  * 安全: 支持SSL客户端安全认证；数据持久化(默认数据更新就进行持久化)；
+
  * 快速: 每秒1w/qps；版本高速迭代和开发中，这既是一个优点，也是一个缺点；
+
  * 可靠: 使用Raft一致性算法来管理高可用复制(分布式存储)
+
+![](https://github.com/angenalZZZ/doc/blob/master/screenshots/EtcdVer.png)
+![](https://github.com/angenalZZZ/doc/blob/master/screenshots/EtcdDesign.png)
+
 ~~~shell
-# 版本: 默认API版本为2(修改参数ETCDCTL_API=3)；
+# 版本: 默认API版本为2(修改参数ETCDCTL_API=3)；K8S v1.11 以后默认使用 Etcd v3 弃用 v2
 # 端口: 默认2379为客户端通讯，2380进行服务器间通讯；
 # <本地简单运行>----------------------------------------------------
  > nssm install EtcdServer etcd.exe --config-file etcd.conf.yml # 以管理员运行服务

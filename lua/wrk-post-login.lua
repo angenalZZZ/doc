@@ -1,7 +1,8 @@
 -- curl -sw' %{time_total}s ' -4LXPOST 'http://localhost:7312/token' -H'Origin: http://localhost:7312' -H'Content-Type: application/x-www-form-urlencoded' -H'Authorization: Basic NzY2NDFhZGYtMzRiMC00YzVhLWIzOWQtMjMzNzBhYWFkODdkOjExMTExMQ==' -d'UserName=13028500025' --data-urlencode 'PassWord={"AccountPwd":"96e79218965eb72c92a549dd5a330112","ValidateCode":"111111","ValidateId":"111111"}' -d'grant_type=password'
 
--- wrk -t2 -c2 -d2s -s ./wrk-post-login.lua 'http://localhost:7312/token' -H'Origin: http://localhost:7312' -H'Content-Type: application/x-www-form-urlencoded' -H'Authorization: Basic NzY2NDFhZGYtMzRiMC00YzVhLWIzOWQtMjMzNzBhYWFkODdkOjExMTExMQ==' wrk-user-login.txt 2
--- wrk -t16 -c100 -d1m -T3s --latency -s ./wrk-post-login.lua 'http://localhost:7312/' wrk-user-login.txt 2
+-- wrk -t2 -c8 -d10s -T2s -s ./wrk-post-login.lua 'http://localhost:7312/token' -H'Origin: http://localhost:7312' -H'Content-Type: application/x-www-form-urlencoded' -H'Authorization: Basic NzY2NDFhZGYtMzRiMC00YzVhLWIzOWQtMjMzNzBhYWFkODdkOjExMTExMQ==' wrk-user-login.txt 2
+
+-- wrk -t16 -c64 -d10s -T2s --latency -s ./wrk-post-login.lua 'http://localhost:7312/token' -H'Origin: http://localhost:7312' -H'Content-Type: application/x-www-form-urlencoded' -H'Authorization: Basic NzY2NDFhZGYtMzRiMC00YzVhLWIzOWQtMjMzNzBhYWFkODdkOjExMTExMQ==' wrk-user-login.txt 16
 
 local threadI = 0
 local threads = {}
@@ -54,7 +55,7 @@ response = function(status, headers, body)
     responseN = responseN + 1
     -- print('response.status='..status..', response.body=', body)
     if status ~= 200 or not string.find(body, "token") then
-        print('--', status, body)
+        print('-- error status:', status, body)
         if status == 500 then
             wrk.thread:stop()
         end

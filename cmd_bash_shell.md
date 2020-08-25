@@ -654,6 +654,7 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ ./bootstrap.sh && ./configure --without-go --without-java --without-nodejs --without-nodets --without-swift
   $ make && make install
   #2、NATS高性能通讯、消息中间件: docs.nats.io 远程过程调用（RPC）通讯框架
+  > nssm install nats-server %GOPATH%\bin\nats\nats-server.exe --auth=HGJ766GR767FKJU0  #安装Windows服务
   > sc create nats-server binPath= "%GOPATH%\bin\nats\nats-server.exe -a=0.0.0.0 -p=4222 --auth=HGJ766GR767FKJU0"
   > sc start nats-server  # 启动服务
   > nats-server.exe --signal reload|reopen|stop # reload加载配置|reopen重新打开日志文件以进行日志轮换|stop停止服务器

@@ -788,7 +788,7 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ cat /etc/mysql/debian.cnf          # 查看系统密码
   $ mysql -u debian-sys-maint -p       # 准备修改密码
   > use mysql;
-  > update mysql.user set authentication_string=password('root') where user='root' and Host ='localhost';
+  > update mysql.user set authentication_string=password('root') where user='root'; // and Host ='localhost';
   > update user set plugin="mysql_native_password";
   > flush privileges; quit;
   $ sudo service mysql restart          # 重启 systemctl restart mysql
@@ -799,7 +799,7 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   > grant select,insert,update,delete,create,drop,index,alter on dbname.* to newuser@192.168.1.* identified by 'root';
   > GRANT ALL PRIVILEGES ON dbname.* TO 'newuser'@'%' IDENTIFIED BY 'root'; # 授权newuser
   > GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY 'root'; # 默认授权
-  > SET PASSWORD FOR 'root'@'%' = PASSWORD('root');    # 设置密码为root
+  > SET PASSWORD FOR 'root'@'%' = PASSWORD('root');     # 设置密码为root
   > mysqladmin -u root password 123456                  # 初始化密码
   > mysqladmin -u root -p 123456 password HGJ766GR767FKJU0 # 修改密码
   > mysqladmin -u root -p shutdown                      # 关闭mysql

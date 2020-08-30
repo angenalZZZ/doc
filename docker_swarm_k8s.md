@@ -26,6 +26,7 @@ $ curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/
 $ systemctl enable docker && systemctl daemon-reload && systemctl restart docker # 安装后,enable开机启动
 # tee /etc/docker/daemon.json <<-'EOF' \ {"registry-mirrors":["https://4txtc8r4.mirror.aliyuncs.com"]} # 手动配置 
 $ systemctl status docker             # 检查Docker运行状态
+$ sudo apt -y install ntpdate && sudo ntpdate cn.pool.ntp.org # 同步时间
 $ apt-get remove docker docker-engine # 卸载Docker最后清理 # rm -rf /var/lib/docker/
 # 安装 Docker Compose (容器编排)
 $ sudo curl -L https://get.daocloud.io/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` \
@@ -680,6 +681,7 @@ services:
   　`Pod`：最小单元、一组容器的集合、同一个Pod内的容器共享网络命名空间、短暂的未存储的(重新发布后会丢失)；<br>
   　`Controllers`： `ReplicaSet`确保预期的Pod副本数量(一般由以下部署产生)，<br>
   　  　`Deployment`无状态的(`website`、`database`...)应用部署( pod应用 x 副本数量 )，<br>
+           `ReplicationController & ReplicaSet & Deployment > HPA (HorizontalPodAutoScale)` <br>
   　  　`StatefulSet`有状态的(网络Id+存储`zk`,`mq`...)应用部署( pod应用 x 副本数量 )，<br>
   　  　`DaemonSet`确保所有节点运行同一个Pod的(监控`monitor`,计划`schedule`system...)服务部署，<br>
   　  　`Job`一次性任务部署，`CronJob`定时任务部署，其它服务部署... ；<br>
@@ -697,18 +699,18 @@ services:
 
 * 步骤:  1-8 (除了4) 在所有节点执行
    * 1.关闭防火墙，配置免密登录
-```
-systemctl stop firewalld #防止端口不开发，k8s集群无法启动(k8s不知道有多少个，运行之后，再开放)
+```bash
+systemctl stop firewalld # 防止端口不开发，k8s集群无法启动(k8s不知道有多少个，运行之后，再开放)
 ```
    * 2.关闭selinux
-```
+```bash
 setenforce 0 
 ```
    * 3.关闭swap
-```
-swapoff -a    临时关闭
-free          可以通过这个命令查看swap是否关闭了
-vim /etc/fstab  永久关闭 注释swap那一行(访问内存分区，k8s无法启动)
+```bash
+swapoff -a    # 临时关闭
+free          # 可以通过这个命令查看swap是否关闭了
+vim /etc/fstab  # 永久关闭 注释swap那一行(访问内存分区 k8s无法启动)
 ```
    * 4.添加主机名与IP对应的关系，免密（这一步可以只在master执行），这一步我为后面传输网络做准备
 ```
@@ -731,7 +733,7 @@ net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 ```
    * 6.安装Docker及同步时间
-```
+```bash
 wget https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo -O/etc/yum.repos.d/docker-ce.repo
 
 yum -y install docker-ce
@@ -757,13 +759,13 @@ gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
 https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 ```
    * 8.安装kubeadm，kubelet和kubectl
-```
+```bash
 yum makecache fast
 
 yum install -y kubectl-1.18.3 kubeadm-1.18.3 kubelet-1.18.3 --nogpgcheck
 ```
    * 9. 部署Kubernetes Master  初始化master（在master执行）
-```
+```bash
 # 第一次初始化比较慢，需要拉取镜像
 kubeadm init --apiserver-advertise-address=192.168.235.145   # 换成自己master的IP
 --image-repository registry.aliyuncs.com/google_containers 
@@ -780,7 +782,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 kubeadm join 192.168.235.145:6443 --token w5rify.gulw6l1yb63zsqsa --discovery-token-ca-cert-hash sha256:4e7f3a03392a7f9277d9f0ea2210f77d6e67ce0367e824ed891f6fefc7dae3c8
 ```
     * 验证状态，发现前两个是pending，get pods 发现是not ready
-```text
+```bash
 kubectl get pods --all-namespaces
 NAMESPACE     NAME                             READY   STATUS   RESTARTS   AGE
 kube-system   coredns-9d85f5447-fhdmx         0/1     Pending   0         100d
@@ -792,7 +794,7 @@ kube-system   kube-proxy-2trv9                 1/1     Running   0         100d
 kube-system   kube-scheduler-local1           1/1     Running   0         100d
 ```
    * 需要安装flannel
-```text
+```bash
 # 安装flannel（在master执行）
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 
@@ -815,18 +817,18 @@ kubeadm init ...
 --ignore-preflight-errors all 跳过之前已安装部分（出问题时，问题解决后加上继续运行）
 ```
    * 查看集群状态，master正常
-```
-[root@local1 ~]# kubectl get cs
+```bash
+#[root@local1 ~]# kubectl get cs
 NAME                 STATUS    MESSAGE             ERROR
 scheduler            Healthy   ok                  
 controller-manager   Healthy   ok                  
 etcd-0               Healthy   {"health":"true"}
 
-[root@local1 ~]# kubectl get nodes
+#[root@local1 ~]# kubectl get nodes
 NAME     STATUS     ROLES    AGE     VERSION
 local1   Ready      master   2m16s   v1.17.3
 
-[root@local1 ~]# kubectl get pods --all-namespaces
+#[root@local1 ~]# kubectl get pods --all-namespaces
 NAMESPACE     NAME                             READY   STATUS    RESTARTS   AGE
 kube-system   coredns-9d85f5447-9s4mc          1/1     Running   0          16m
 kube-system   coredns-9d85f5447-gt2nf          1/1     Running   0          16m
@@ -838,15 +840,15 @@ kube-system   kube-proxy-v4vxg                 1/1     Running   0          16m
 kube-system   kube-scheduler-local1            1/1     Running   0  
 ```
    * 10、node工作节点加载 (node节点执行1-8，如果第五步不执行，会添加失败; 在node节点执行上面初始化时生成的join命令)
-```
+```bash
 kubeadm join 192.168.235.145:6443 --token w5rify.gulw6l1yb63zsqsa --discovery-token-ca-cert-hash sha256:4e7f3a03392a7f9277d9f0ea2210f77d6e67ce0367e824ed891f6fefc7dae3c8
 
-# 输出
-This node has joined the cluster:
-* Certificate signing request was sent to apiserver and a response was received.
-* The Kubelet was informed of the new secure connection details.
+# 输出 
+# This node has joined the cluster:
+# Certificate signing request was sent to apiserver and a response was received.
+# The Kubelet was informed of the new secure connection details.
 
-Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
+# Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
 ```
    * 在master查看
 ```text
@@ -856,7 +858,7 @@ local1   Ready      master   4m58s   v1.18.3
 local2   Ready      <none>   3m36s   v1.18.3
 ```
    * 在node节点查看
-```
+```text
 [root@local3 ~]# kubectl get nodes
 Unable to connect to the server: x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "kubernetes")
 
@@ -877,12 +879,10 @@ local2   Ready    <none>   31s     v1.18.0
 local3   Ready    <none>   5m43s   v1.18.0
 ```
    * 11、如果节点出错，可以移除节点
-```text
-#重置节点
-kubeadm reset
+```bash
+kubeadm reset   # 重置节点
 
-#删除节点，删除后 数据就从etcd中清除了(可运行kubectl的任一节点中执行)
-kubectl delete node node-1
+kubectl delete node node-1 # 删除节点，删除后 数据就从etcd中清除了(可运行kubectl的任一节点中执行)
 ```
    * 12、如果加入节点时，token过期，可以重新生成
 ```text

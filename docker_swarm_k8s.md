@@ -681,7 +681,7 @@ services:
   　`Pod`：最小单元、一组容器的集合、同一个Pod内的容器共享网络命名空间、短暂的未存储的(重新发布后会丢失)；<br>
   　`Controllers`： `ReplicaSet`确保预期的Pod副本数量(一般由以下部署产生)，<br>
   　  　`Deployment`无状态的(`website`、`database`...)应用部署( pod应用 x 副本数量 )，<br>
-           `ReplicationController & ReplicaSet & Deployment > HPA (HorizontalPodAutoScale)` <br>
+  　  　 　 `ReplicationController & ReplicaSet & Deployment > HPA (HorizontalPodAutoScale)` <br>
   　  　`StatefulSet`有状态的(网络Id+存储`zk`,`mq`...)应用部署( pod应用 x 副本数量 )，<br>
   　  　`DaemonSet`确保所有节点运行同一个Pod的(监控`monitor`,计划`schedule`system...)服务部署，<br>
   　  　`Job`一次性任务部署，`CronJob`定时任务部署，其它服务部署... ；<br>

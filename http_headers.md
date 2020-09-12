@@ -42,9 +42,8 @@ X-GitHub-Request-Id: EE0A:452CE:3F6D51:5D1749:5E795F3E
 Date: Tue, 17 Mar 2020 08:55:13 GMT
 ~~~
 
-----
 
-# [HTTP DOCTYPE](https://www.runoob.com/html/html-tutorial.html)
+# [HTML tutorial](https://www.runoob.com/html/html-tutorial.html)
 
 ~~~html
 <!DOCTYPE html>

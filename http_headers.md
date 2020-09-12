@@ -69,11 +69,11 @@ si_ST=new Date
     <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="网站名">
     
     <!-- Favicon Icon -->
-    <link rel="shortcut icon" href="/static/image/favicon.ico" />
-    <link rel="icon" type="image/png" href="/static/image/favicon.png" />
-    <link rel="icon" class="js-site-favicon" type="image/svg+xml" href="https://github.githubassets.com/favicons/favicon.svg">
+    <link rel="shortcut icon" href="https://github.githubassets.com/favicons/favicon.ico">
+    <link rel="icon" type="image/png" href="https://github.githubassets.com/favicons/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="https://github.githubassets.com/favicons/favicon.svg">
+    <link rel="alternate icon" type="image/png" href="https://github.githubassets.com/favicons/favicon.png">
     <link rel="mask-icon" color="#000000" href="https://github.githubassets.com/pinned-octocat.svg">
-    <link rel="alternate icon" class="js-site-favicon" type="image/png" href="https://github.githubassets.com/favicons/favicon.png">
     <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="网站名">
     
     <link rel="dns-prefetch" href="https://github.githubassets.com">

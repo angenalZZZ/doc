@@ -42,3 +42,61 @@ X-GitHub-Request-Id: EE0A:452CE:3F6D51:5D1749:5E795F3E
 Date: Tue, 17 Mar 2020 08:55:13 GMT
 ~~~
 
+----
+
+#### DOCTYPE html
+
+~~~html
+<!DOCTYPE html>
+<html>
+<script type="text/javascript" >//<![CDATA[
+si_ST=new Date
+//]]></script>
+<head>
+    <meta charset="UTF-8">
+    <!-- <meta content="text/html; charset=utf-8" http-equiv="content-type"/> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
+    <meta name="theme-color" content="#4F4F4F" />
+    
+    <!-- Search Engine Settings -->
+    <title>网页标题</title>
+    <meta name="description" content="网页描述" />
+    <meta name="keywords" content="关键词" />
+    <meta name="author" content="网站名" />
+    <meta name="apple-itunes-app" content="app-id=1477376905">
+    <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="网站名">
+    
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" href="/static/image/favicon.ico" />
+    <link rel="icon" type="image/png" href="/static/image/favicon.png" />
+    <link rel="icon" class="js-site-favicon" type="image/svg+xml" href="https://github.githubassets.com/favicons/favicon.svg">
+    <link rel="mask-icon" color="#000000" href="https://github.githubassets.com/pinned-octocat.svg">
+    <link rel="alternate icon" class="js-site-favicon" type="image/png" href="https://github.githubassets.com/favicons/favicon.png">
+    <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="网站名">
+    
+    <link rel="dns-prefetch" href="https://github.githubassets.com">
+    <link rel="dns-prefetch" href="https://avatar.githubusercontent.com">
+    <link rel="dns-prefetch" href="https://images.githubusercontent.com">
+    
+    <link rel="assets" href="https://github.githubassets.com/">
+    <link rel="manifest" href="/manifest.json" crossOrigin="use-credentials">
+    
+    <meta name="request-id" content="7B80:19E4:1DAC41F:286CB30:5F50D10B" data-pjax-transient="true" />
+    <meta name="html-safe-nonce" content="c65b5fdbe6dc5d513ee96d378c084ca168d26166" data-pjax-transient="true" />
+    <meta name="visitor-payload" content="eyJyZWZlcnJlciI6Imh0dHBzOi8vZ2l0aHViLm==" data-pjax-transient="true" />
+    <meta name="visitor-hmac" content="416e097200a3517d05a17f56d3e5e175ccc1a2774079bd3bda9a7e91021e0c60" data-pjax-transient="true" />
+    <meta name="cookie-consent-required" content="false" />
+    <meta name="google-site-verification" content="c1kuD-K2HIVF635lypcsWPoD4kilo5-jA_wBFyT4uMY">
+    <meta name="google-analytics" content="UA-3769691-2">
+    <meta name="userId" content="4f6c9e73602f087580151869b0be93d2" class="js-ga-set">
+    <meta name="enabled-features" content="MARKETPLACE_PENDING_INSTALLATIONS,JS_HTTP_CACHE_HEADERS">
+    <meta name="hostname" content="github.com">
+    <meta name="user-login" content="angenal">
+    
+    <script type="text/javascript" crossorigin="anonymous" src="/rs/nj/SaARcujqfMTKslsX8RYX1fR5N7Q.js">
+    
+    
+~~~
+

@@ -75,8 +75,8 @@ si_ST=new Date
     <link rel="alternate icon" type="image/png" href="https://github.githubassets.com/favicons/favicon.png">
     <link rel="icon" type="image/png" href="https://github.githubassets.com/favicons/favicon.png">
     <link rel="icon" type="image/svg+xml" href="https://github.githubassets.com/favicons/favicon.svg">
-    <link rel="mask-icon" color="#000000" href="https://github.githubassets.com/pinned-octocat.svg">
-    <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="网站名">
+    <link rel="mask-icon" color="#000000" href="https://github.githubassets.com/favicons/pinned-octocat.svg">
+    <link rel="fluid-icon" href="https://github.githubassets.com/favicons/fluidicon.png" title="网站名">
     <link rel="assets" href="https://github.githubassets.com/">
     <link rel="manifest" href="/manifest.json" crossOrigin="use-credentials">
 

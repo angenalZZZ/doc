@@ -44,7 +44,7 @@ Date: Tue, 17 Mar 2020 08:55:13 GMT
 
 ----
 
-#### DOCTYPE html
+# [HTTP DOCTYPE](https://www.runoob.com/html/html-tutorial.html)
 
 ~~~html
 <!DOCTYPE html>
@@ -54,17 +54,17 @@ si_ST=new Date
 //]]></script>
 <head>
     <meta charset="UTF-8">
-    <!-- <meta content="text/html; charset=utf-8" http-equiv="content-type"/> -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="robots" content="noindex,nofollow" />
+    <!-- <meta content="text/html; charset=utf-8" http-equiv="content-type"> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="noindex,nofollow">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
-    <meta name="theme-color" content="#4F4F4F" />
+    <meta name="theme-color" content="#4F4F4F">
     
     <!-- Search Engine Settings -->
     <title>网页标题</title>
-    <meta name="description" content="网页描述" />
-    <meta name="keywords" content="关键词" />
-    <meta name="author" content="网站名" />
+    <meta name="description" content="网页描述">
+    <meta name="keywords" content="关键词">
+    <meta name="author" content="网站名">
     <meta name="apple-itunes-app" content="app-id=1477376905">
     <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="网站名">
     
@@ -83,11 +83,11 @@ si_ST=new Date
     <link rel="assets" href="https://github.githubassets.com/">
     <link rel="manifest" href="/manifest.json" crossOrigin="use-credentials">
     
-    <meta name="request-id" content="7B80:19E4:1DAC41F:286CB30:5F50D10B" data-pjax-transient="true" />
-    <meta name="html-safe-nonce" content="c65b5fdbe6dc5d513ee96d378c084ca168d26166" data-pjax-transient="true" />
-    <meta name="visitor-payload" content="eyJyZWZlcnJlciI6Imh0dHBzOi8vZ2l0aHViLm==" data-pjax-transient="true" />
-    <meta name="visitor-hmac" content="416e097200a3517d05a17f56d3e5e175ccc1a277407" data-pjax-transient="true" />
-    <meta name="cookie-consent-required" content="false" />
+    <meta name="request-id" content="7B80:19E4:1DAC41F:286CB30:5F50D10B" data-pjax-transient="true">
+    <meta name="html-safe-nonce" content="c65b5fdbe6dc5d513ee96d378c084ca168d26166" data-pjax-transient="true">
+    <meta name="visitor-payload" content="eyJyZWZlcnJlciI6Imh0dHBzOi8vZ2l0aHViLm==" data-pjax-transient="true">
+    <meta name="visitor-hmac" content="416e097200a3517d05a17f56d3e5e175ccc1a277407" data-pjax-transient="true">
+    <meta name="cookie-consent-required" content="false">
     <meta name="google-site-verification" content="c1kuD-K2HIVF635lypcsWPoD4kilo5-jA_wBFyT4uMY">
     <meta name="google-analytics" content="UA-3769691-2">
     <meta name="userId" content="4f6c9e73602f087580151869b0be93d2" class="js-ga-set">

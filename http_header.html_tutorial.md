@@ -1,7 +1,6 @@
 # [HTTP specification](https://tools.ietf.org/html/rfc7230)
 
 #### Request headers
-
 ~~~
 Authorization: Bearer eyJhbGciOiJIUzII6IkpXVCJ9.eyJodHRwOi8vc2JjZHpnIn0.kRZsQ8gw0zOn0
 Origin: [*-Origin-Host-Name-*]
@@ -17,7 +16,6 @@ Accept-Language: zh-CN,zh-TW;q=0.9,zh;q=0.8,en;q=0.7
 ~~~
 
 #### Response headers
-
 ~~~
 Content-Type: application/json; charset=utf-8
 Transfer-Encoding: chunked

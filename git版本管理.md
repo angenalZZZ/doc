@@ -345,8 +345,7 @@ echo "完成提交master分支."
 
 #### 安装Gitea Server
 
- [Gitea](https://gitea.io) 是一个自托管Git服务,它类似于GitHub,Bitbucket,Gitlab,最初是基于Gogs上完成,但后来已经分叉并将其命名为Gitea.<br>
-   [官方安装文档](https://docs.gitea.io/zh-cn/install-from-binary/)
+ [Gitea](https://gitea.io) 是一个自托管Git服务,它类似于GitHub,Bitbucket,Gitlab,最初是基于Gogs上完成,但后来已经分叉并将其命名为Gitea. [`官方安装文档`](https://docs.gitea.io/zh-cn/install-from-binary/)
 
 ### Run Gitea service
 

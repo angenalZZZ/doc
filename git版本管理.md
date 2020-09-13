@@ -1,4 +1,4 @@
-# **[安装Git for Mac & Linux](https://gist.github.com/derhuerst/1b15ff4652a867391f03)**、[安装Git for Windows](https://github.com/git-for-windows/git/releases)、[安装Gitea for Server](#安装Gitea for Server)
+# **[安装Git for Mac & Linux](https://gist.github.com/derhuerst/1b15ff4652a867391f03)**、[安装Git for Windows](https://github.com/git-for-windows/git/releases)、**[安装Gitea for Server](#安装gitea-for-server)**
 
 #### Global Config
 ~~~bash

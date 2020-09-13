@@ -1,4 +1,4 @@
-# **[安装Git for Mac & Linux](https://gist.github.com/derhuerst/1b15ff4652a867391f03)**、[安装Git for Windows](https://github.com/git-for-windows/git/releases)、**[安装Gitea for Server](#安装gitea-for-server)**
+# **[安装Git for Mac & Linux](https://gist.github.com/derhuerst/1b15ff4652a867391f03)**、[安装Git for Windows](https://github.com/git-for-windows/git/releases)、**[安装Gitea Server](#安装gitea-server)**
 
 #### Global Config
 ~~~bash
@@ -8,7 +8,8 @@ git config --global user.name "yangzhou"      # 修改全局git用户配置
 git config --global user.email "angenal@hotmail.com"
 
 # 设置SSH-Key: github.com/settings/keys 
-ssh-keygen -t rsa -C "angenal@hotmail.com" #1.创建SSHKey #2.复制文件为Key>id_rsa.pub #3.测试SSHKey>ssh -T git@github.com #4.设置<hosts> 52.74.223.119 github.com
+ssh-keygen -t rsa -C "angenal@hotmail.com"
+# 1.创建SSHKey #2.复制文件为Key>id_rsa.pub #3.测试SSHKey>ssh -T git@github.com #4.设置<hosts> 52.74.223.119 github.com
 
 # 1.通过修改默认配置, 解决网络问题! http限制..
 git config --global http.postBuffer 524288000 # 上传文件大小限制500M=1024*1024*500(默认100M)
@@ -340,9 +341,9 @@ git push https://$GITHUB_USER:$GITHUB_TOKEN@github.com/veggiemonk/awesome-docker
 echo "完成提交master分支."
 ~~~
 
-#### 安装Gitea for Server
+#### 安装Gitea Server
 
-    [Gitea](https://gitea.io) is a painless self-hosted Git service. It is similar to GitHub, Bitbucket or Gitlab. The initial development have been done on Gogs but we have forked it and named it Gitea. If you want to read more about the reasons why we have done that please read this blog post.
+    [Gitea](https://gitea.io) 是一个自托管Git服务, 它类似于GitHub，Bitbucket或Gitlab, 最初是基于Gogs上完成, 但后来已经分叉并将其命名为Gitea.
 
 ### Run Gitea service
 

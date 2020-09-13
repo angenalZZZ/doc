@@ -1,4 +1,4 @@
-# **[安装Git for Mac & Linux](https://gist.github.com/derhuerst/1b15ff4652a867391f03)**、[安装Git for Windows](https://github.com/git-for-windows/git/releases)
+# **[安装Git for Mac & Linux](https://gist.github.com/derhuerst/1b15ff4652a867391f03)**、[安装Git for Windows](https://github.com/git-for-windows/git/releases)、[安装Gitea for Server](#安装Gitea for Server)
 
 #### Global Config
 ~~~bash
@@ -339,4 +339,64 @@ git push https://$GITHUB_USER:$GITHUB_TOKEN@github.com/veggiemonk/awesome-docker
 
 echo "完成提交master分支."
 ~~~
+
+#### 安装Gitea for Server
+
+    [Gitea](https://gitea.io) is a painless self-hosted Git service. It is similar to GitHub, Bitbucket or Gitlab. The initial development have been done on Gogs but we have forked it and named it Gitea. If you want to read more about the reasons why we have done that please read this blog post.
+
+### Run Gitea service
+
+Download Gitea binary from [download page](https://dl.gitea.io/gitea) first.
+
+```sh
+$ wget https://dl.gitea.io/gitea/1.12.4/gitea-1.12.4-linux-amd64 -O gitea
+$ chmod +x gitea
+```
+
+Add `git` user
+
+```sh
+$ useradd -m git
+$ cp gitea /home/git/
+```
+
+Run `gitea` command as `git` user. default port is `3000`.
+
+```sh
+$ su - git
+$ ./gitea web
+```
+
+### Run Caddy service
+
+Download Caddy binary from [github release page](https://github.com/mholt/caddy/releases).
+
+```sh
+$ wget https://github.com/caddyserver/caddy/releases/download/v2.1.1/caddy_2.1.1_linux_amd64.tar.gz -O caddy.tar.gz
+$ mkdir caddy && tar -zxf caddy.tar.gz -C caddy
+```
+Create caddy config file with name as `Caddyfile` and add the following config.
+
+```sh
+example.com {
+  proxy / 127.0.0.1:3000
+}
+```
+
+Update Gitea config file `custom/conf/app.ini`.
+
+```ini
+[server]
+SSH_DOMAIN       = example.com
+HTTP_PORT        = 3000
+ROOT_URL         = https://example.com
+```
+
+### Integrate with Jenkins
+
+Install [Jenkins Gitea Webhook Plugin](https://github.com/jenkinsci/gogs-webhook-plugin).
+
+### Open your browser
+
+https://example.com
 

@@ -774,6 +774,13 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   > redis-benchmark -h 127.0.0.1 -p 6369 -c 30 -d 512 -t set,get -n 1000000 -r 100000000 # SET: 64K, GET: 68K
   > redis-benchmark -n 10000 -q -c 30       # 本机Redis       < SET: 42K, GET: 50K > requests per second
   > buntdb-benchmark -n=10000 -q -r=30 -mem # 本机BuntDB(推荐) < SET:760K,GET:5000K > github.com/tidwall/buntdb
+  
+  # 轻量级高性能的不可变数据库immudb  https://github.com/codenotary/immudb/releases
+  > immudb -d  # run immudb in the background
+  > immudb service install|start|stop|status|uninstall # install immudb service
+  > nssm install immudb ./immudb.exe --config ./immudb.toml # install immudb service
+  > immuclient -a <immudb-host> [command] # CLI client tool, and `IMMUCLIENT_*` environment variables
+  > immuadmin [command] # CLI admin tool, and `IMMUADMIN_*` environment variables
 ~~~
 
 > `MySQL` 关系型数据库

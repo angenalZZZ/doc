@@ -11,7 +11,7 @@ storeFile file('../appname.jks')
 storePassword '111111'
 ~~~
 
-> 应用签名: tools [Windows_sign_tool](http://fs8.ijiami.cn/ijiami/sign/Windows_sign_tool.zip)、[Linux_sign_tool](http://fs8.ijiami.cn/ijiami/sign/Linux_sign_tool.zip)、[ApkSignTool-v3.5-macos](http://fs8.ijiami.cn/ijiami/sign/ApkSignTool-v3.5-macos.zip)
+> 应用签名: [Windows_sign_tool](http://fs8.ijiami.cn/ijiami/sign/Windows_sign_tool.zip)、[Linux_sign_tool](http://fs8.ijiami.cn/ijiami/sign/Linux_sign_tool.zip)、[Macos_ApkSignTool](http://fs8.ijiami.cn/ijiami/sign/ApkSignTool-v3.5-macos.zip)
 
 ~~~bash
 "C:\Program Files (x86)\Java\jdk1.8.0_211\bin\jarsigner.exe" -verbose \
@@ -23,4 +23,3 @@ storePassword '111111'
 ~~~
 
 ----
-

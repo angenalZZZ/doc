@@ -776,9 +776,12 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   > buntdb-benchmark -n=10000 -q -r=30 -mem # 本机BuntDB(推荐) < SET:760K,GET:5000K > github.com/tidwall/buntdb
   
   # 轻量级高性能的不可变数据库immudb  https://github.com/codenotary/immudb/releases
+  $ cd /mnt/a/database/immudb/tools/mtls
+  $ sh generate.sh localhost  #-generate application's ca.cert.pem,key.pem,cert.pem
+  # immudb --help ; immuclient --help ; immuadmin --help
   > immudb -d  # run immudb in the background
-  > immudb service install|start|stop|status|uninstall # install immudb service
-  > nssm install immudb ./immudb.exe --config ./immudb.toml # install immudb service
+  > immudb service install|start|stop|status|uninstall # install immudb windows service
+  > nssm install immudb ./immudb.exe --config ./immudb.toml # install immudb windows service
   > immuclient -a <immudb-host> [command] # CLI client tool, and `IMMUCLIENT_*` environment variables
   > immuadmin [command] # CLI admin tool, and `IMMUADMIN_*` environment variables
 ~~~

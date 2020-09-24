@@ -774,14 +774,16 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   > redis-benchmark -h 127.0.0.1 -p 6369 -c 30 -d 512 -t set,get -n 1000000 -r 100000000 # SET: 64K, GET: 68K
   > redis-benchmark -n 10000 -q -c 30       # 本机Redis       < SET: 42K, GET: 50K > requests per second
   > buntdb-benchmark -n=10000 -q -r=30 -mem # 本机BuntDB(推荐) < SET:760K,GET:5000K > github.com/tidwall/buntdb
-  
-  # 轻量级高性能的不可变数据库immudb  https://github.com/codenotary/immudb/releases
+~~~
+
+> [`immudb`](https://github.com/codenotary/immudb) 轻量级高性能不可变数据库-类似于redis-[下载](https://github.com/codenotary/immudb/releases)
+~~~shell
   $ cd /mnt/a/database/immudb/tools/mtls
    #1.generate application's ca.cert.pem,key.pem,cert.pem
   $ sh generate.sh localhost  # generate localhost certs
    #2.修改immudb.toml,immuadmin.toml,immuclient.toml,替换相对路径"./"为绝对路径"A:/database/immudb/"
   # immudb --help ; immuclient --help ; immuadmin --help
-  > immudb -d # run immudb in the background
+  > immudb -d # run immudb in the background, default 2GB for a database instance
   > immudb service install|start|stop|status|uninstall # install immudb system service (自动复制immudb+配置数据目录)
   > nssm install immudb "A:\database\immudb\immudb.exe" --config "A:\database\immudb\immudb.toml" # windows service
   > immuadmin [command] # CLI admin tool, and `IMMUADMIN_*` environment variables

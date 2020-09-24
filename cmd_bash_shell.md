@@ -663,8 +663,9 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ sudo apt-get install libzmq3-dev # 安装ZeroMQ3
   $ pkg-config --modversion libzmq   # 检查模块版本
   #4、Nanomsg 跨语言通信 nanomsg.org 具备IPC,TCP,WS通信方式 Req/Rep,Pub/Sub,Pair,Bus,Push/Pull,Surveyor/Respondent
-  > go test -bench=. go.nanomsg.org/mangos/v3/test  # 性能检测 
-  $ git clone --depth=1 https://github.com/nanomsg/nanomsg.git # 准备安装Linux
+  > go get -v -u go.nanomsg.org/mangos && cd %GOPATH%/src/go.nanomsg.org/mangos # 下载源码 
+  > go test -bench=. go.nanomsg.org/mangos/v3/test  # 单机性能-压力检测- IPC: ^5千万/Qps + 传输^1GB/s 
+  $ git clone --depth=1 https://github.com/nanomsg/nanomsg.git # 准备安装Linux 
   $ mkdir build && cd build && cmake .. && cmake --build . && sudo cmake --build . --target install && sudo ldconfig # on Linux
   # 1.open CMake-gui 2.set src-dir,build-dir 3.set CMAKE_INSTALL_PREFIX=D:/Program/nanomsg # Select: MinGW Makefiles
   # 3.1set NN_STATIC_LIB=ON, NN_TOOLS=ON, others OFF, then click Configure, Generate.  # on windows build for static lib

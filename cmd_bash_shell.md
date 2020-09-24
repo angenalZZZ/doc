@@ -786,15 +786,16 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
    #2.修改immudb.toml,immuadmin.toml,immuclient.toml,替换相对路径"./"为绝对路径"A:/database/immudb/"
   # immudb --help ; immuclient --help ; immuadmin --help
   > immudb -d # run immudb in the background, default 2GB for a database instance
-  > immudb service install|start|stop|status|uninstall # install immudb system service (自动复制immudb+配置数据目录)
-  > nssm install immudb "A:\database\immudb\immudb.exe" --config "A:\database\immudb\immudb.toml" # windows service
+  > nssm install immudb "A:\database\immudb\immudb.exe" --config A:\database\immudb\immudb.toml  # windows service
+  > immudb service install|start|stop|status|uninstall # install immudb system service (自动配置immudb数据目录)
   > immuadmin [command] # CLI admin tool, and `IMMUADMIN_*` environment variables
   > immuclient [command] # CLI client tool, and `IMMUCLIENT_*` environment variables (参数-a <immudb-host> 指定ip)
-  > immuclient      #1.immuclient>login immudb #Password: immudb #登录
-  > immuclient>help #2.immuclient>quit #退出
+  > immuclient                 # 1.immuclient>login immudb #Password: immudb #登录
+  > immuclient>help            # 2.help command
   > immuclient>set key1 value1 # 记录index:0 hash:64个字符编码 time:时间戳
   > immuclient>set key1 value2 # 记录index:1 ...
   > immuclient>history key1    # 含两个历史记录index:hash:time:按时间倒序展示
+  > immuclient>quit            # 退出
 ~~~
 
 > `MySQL` 关系型数据库

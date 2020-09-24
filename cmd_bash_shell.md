@@ -790,6 +790,9 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   > immuclient [command] # CLI client tool, and `IMMUCLIENT_*` environment variables (参数-a <immudb-host> 指定ip)
   > immuclient      #1.immuclient>login immudb #Password: immudb #登录
   > immuclient>help #2.immuclient>quit #退出
+  > immuclient>set key1 value1 # 记录index:0 hash:64个字符编码 time:时间戳
+  > immuclient>set key1 value2 # 记录index:1 ...
+  > immuclient>history key1    # 含两个历史记录index:hash:time:按时间倒序展示
 ~~~
 
 > `MySQL` 关系型数据库

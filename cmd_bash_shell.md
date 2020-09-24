@@ -777,13 +777,17 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   
   # 轻量级高性能的不可变数据库immudb  https://github.com/codenotary/immudb/releases
   $ cd /mnt/a/database/immudb/tools/mtls
-  $ sh generate.sh localhost  #-generate application's ca.cert.pem,key.pem,cert.pem
+   #1.generate application's ca.cert.pem,key.pem,cert.pem
+  $ sh generate.sh localhost  # generate localhost certs
+   #2.修改immudb.toml,immuadmin.toml,immuclient.toml,替换相对路径"./"为绝对路径"A:/database/immudb/"
   # immudb --help ; immuclient --help ; immuadmin --help
-  > immudb -d  # run immudb in the background
-  > immudb service install|start|stop|status|uninstall # install immudb windows service
-  > nssm install immudb ./immudb.exe --config ./immudb.toml # install immudb windows service
-  > immuclient -a <immudb-host> [command] # CLI client tool, and `IMMUCLIENT_*` environment variables
+  > immudb -d # run immudb in the background
+  > immudb service install|start|stop|status|uninstall # install immudb system service (自动复制immudb+配置数据目录)
+  > nssm install immudb "A:\database\immudb\immudb.exe" --config "A:\database\immudb\immudb.toml" # windows service
   > immuadmin [command] # CLI admin tool, and `IMMUADMIN_*` environment variables
+  > immuclient [command] # CLI client tool, and `IMMUCLIENT_*` environment variables (参数-a <immudb-host> 指定ip)
+  > immuclient      #1.immuclient>login immudb #Password: immudb #登录
+  > immuclient>help #2.immuclient>quit #退出
 ~~~
 
 > `MySQL` 关系型数据库

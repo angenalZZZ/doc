@@ -1709,7 +1709,10 @@ Increase the number of open files on your server, for the error 'too many open f
 `ulimit -n 65535`, or write it in `~/.bashrc`, or update ~limits.conf.
 
 > `最大句柄数`修改 `vi /etc/security/limits.conf`<br>
-    *需要根据服务器的硬件配置和处理能力进行合理设置。如果单个服务器性能不行也可以通过集群的方式实现。*
+    1.需要根据服务器的硬件配置和处理能力进行合理设置。如果单个服务器性能不行也可以通过集群的方式实现。<br>
+    2.在建立TCP连接与断开连接时，不要执行I/O阻塞的任务代码；心跳周期的合理设置范围：idle = 180~300秒。<br>
+    3.尽量使用内存池创建接收缓冲区等对象，合理的动态分配接收和发送缓冲区的内存容量。<br>
+    4.注意对象的动态回收GC问题，以及进程的最大内存限制等。
 ```
 ulimit -suniqe
 -s: stack size (kbytes)             8192

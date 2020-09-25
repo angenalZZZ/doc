@@ -1704,9 +1704,9 @@ umount：卸载已经加载的文件系统
 
 #### 十、Linux下常用命令：内核与性能
 
-Increase the number of open files on your server, for the error 'too many open files', as:
+Increase the number of open files on your server, for the error `too many open files`, as:
 
-`ulimit -n 65535`, or write it in `~/.bashrc`, or update ~limits.conf.
+`ulimit -n 65535`, or write it in `~/.bashrc`, or update `limits.conf`.
 
 > `最大句柄数`修改 `vi /etc/security/limits.conf`<br>
     1.需要根据服务器的硬件配置和处理能力进行合理设置。如果单个服务器性能不行也可以通过集群的方式实现。<br>
@@ -1726,7 +1726,7 @@ ulimit -suniqe
 Suggested `sysctl.conf` parameters for better handling of UDP packets:
 
 ```
-net.core.rmem_max=26214400 // BDP - bandwidth delay product
+net.core.rmem_max=26214400       // BDP - bandwidth delay product
 net.core.rmem_default=26214400
 net.core.wmem_max=26214400
 net.core.wmem_default=26214400

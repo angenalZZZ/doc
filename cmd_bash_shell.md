@@ -1,9 +1,9 @@
 # **系统命令**
 
 # [**windows-cmd**](https://github.com/Awesome-Windows/awesome-windows-command-line) | [windows-tool](https://github.com/Awesome-Windows/Awesome) | [shell](https://github.com/fengyuhetao/shell) | [**linux**](https://wangchujiang.com/linux-command/hot.html) 
-> [`All Linux Command`](https://ss64.com/bash/)、[`All Windows CMD`](https://ss64.com/nt/)、[内核参数与性能指标](#十linux下常用命令内核与性能)<br>
+> [`All Linux Command`](https://ss64.com/bash/)、[`All Windows CMD`](https://ss64.com/nt/)<br>
 > [`《Linux就该这么学》pdf`](https://www.linuxprobe.com/docs/LinuxProbe.pdf)、
-  [`《Linux基础课程》video`](https://www.linuxprobe.com/chapter-01.html)<br>
+  [`《Linux基础课程》video`](https://www.linuxprobe.com/chapter-01.html)、[`内核参数与性能指标`](#十linux下常用命令内核与性能)<br>
 
  * [Linux开发环境及常用安装zsh-ssh-git-redis-mysql-mongodb-pilosa-influxdb-grafana-nsq.kafka.rabbitmq..](#linux开发环境及常用安装)
  * [Linux常用命令ls-find-grep-xargs-sort-uniq-tr-wc-sed-awk-head-tail..](#Linux常用命令)

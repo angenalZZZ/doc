@@ -1,7 +1,7 @@
 # **系统命令**
 
 # [**windows-cmd**](https://github.com/Awesome-Windows/awesome-windows-command-line) | [windows-tool](https://github.com/Awesome-Windows/Awesome) | [shell](https://github.com/fengyuhetao/shell) | [**linux**](https://wangchujiang.com/linux-command/hot.html) 
-> [`All Linux Command`](https://ss64.com/bash/)、[`All Windows CMD`](https://ss64.com/nt/)<br>
+> [`All Linux Command`](https://ss64.com/bash/)、[`All Windows CMD`](https://ss64.com/nt/)、[内核参数与性能指标](#十linux下常用命令内核与性能)<br>
 > [`《Linux就该这么学》pdf`](https://www.linuxprobe.com/docs/LinuxProbe.pdf)、
   [`《Linux基础课程》video`](https://www.linuxprobe.com/chapter-01.html)<br>
 
@@ -1707,7 +1707,7 @@ Increase the number of open files on your server, for the error 'too many open f
 
 `ulimit -n 65535`, or write it in `~/.bashrc`, or update ~limits.conf.
 
-> `最大句柄数`修改 `vi /etc/security/limits.conf`
+> `最大句柄数`修改 `vi /etc/security/limits.conf`<br>
     *需要根据服务器的硬件配置和处理能力进行合理设置。如果单个服务器性能不行也可以通过集群的方式实现。*
 ```
 ulimit -suniqe

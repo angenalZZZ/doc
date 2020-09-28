@@ -32,7 +32,7 @@
 .woff2  application/x-font-woff
 ```
 
-> `反向代理` `url重写` `设置Web.config` [`Install url-rewrite`](https://www.iis.net/downloads/microsoft/url-rewrite) [Download Samples](https://download.microsoft.com/download/3/9/E/39E30671-7AD2-4902-B56B-C300D862595E/RewriteExtensibility.msi)
+> `反向代理` `url重写` `设置Web.config` [`Install url-rewrite`](https://www.iis.net/downloads/microsoft/url-rewrite) [`Download samples`](https://download.microsoft.com/download/3/9/E/39E30671-7AD2-4902-B56B-C300D862595E/RewriteExtensibility.msi)
 ~~~xml
   <system.webServer>
     <rewrite>

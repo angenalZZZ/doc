@@ -11,7 +11,8 @@
 > reg add HKLM\System\CurrentControlSet\Services\HTTP\Parameters /v MaxConnections /t REG_DWORD /d 100000
 :: 4.调整-应用程序池/队列长度: 65535 (单个进程最大值)
 :: 5.选项-应用程序池/最大工作进程数: 多进程(5=1GB内存消耗)模式下,可提升服务器性能; 但是,依赖进程的Session和Cache等对象不再适用
-:: 6.重启服务
+:: 6.调整-回收/固定时间间隔(分钟): 0 (禁用应用程序池定期自动回收) 空闲超时操作：Suspend (挂起)
+:: 7.重启服务,设置生效
 > net stop http & net start http & iisreset
 ```
 ~~~xml

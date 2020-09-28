@@ -491,6 +491,16 @@ openssl pkcs8 -topk8 -nocrypt -in server.key -out server.pem
   $ ./server --host="localhost:9159" --token=""    # server token: blank= allowing anyone to access
   > nssm install PostwomanProxyWSLubuntu1804 bash.exe -c postwoman-proxy-server # 启动前设置Windows服务登录账户为Administrator
   
+  # 压测=基准测试benchmark
+  > hey [-c concurrency=50] [-n requests=200] [-q Rate-limit(QPS)] [-cpus 4] [-z Duration=10s] \
+      -H "Accept: */*" -H "token: " -H "X-Requested-With: XMLHttpRequest" \
+      -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36" \
+      [-T "application/json" or "application/x-www-form-urlencoded"] \
+      [-a Basic-Auth=username:password] [-x HTTP-Proxy=host:port] [-h2 Enable-HTTP/2] \
+      [-d DATA] [-D file] [-o Output-Type="csv"] <url>
+  > hey -c 2000 -n 10000 -cpus 4 -z 10s -H "Accept: */*" -H "X-Requested-With: XMLHttpRequest" \
+      http://www.weain.mil.cn/cg_unit/sysarticle/sysarticle/getPv?id=1295626301076480001 # 并发2000，最多请求10000次，压测10秒钟
+  
   # 字体
   $ sudo apt-get install fontconfig                # yum install fontconfig  #<CentOS>
   $ sudo apt-get install ttf-mscorefonts-installer # yum install mkfontscale #安装中文字体

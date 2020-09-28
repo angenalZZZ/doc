@@ -21,7 +21,7 @@
 ```
 ~~~xml
   <system.web>
-    <!--<processModel autoConfig="true" />-->
+    <!-- <processModel autoConfig="true" /> -->
     <processModel autoConfig="false" enable="true" minWorkerThreads="50" maxWorkerThreads="200" requestQueueLimit="100000" />
 ~~~
 
@@ -31,4 +31,24 @@
 .woff   application/x-font-woff
 .woff2  application/x-font-woff
 ```
+
+> `反向代理``url重写` [`Install url-rewrite`](https://www.iis.net/downloads/microsoft/url-rewrite)、[Download Samples](https://download.microsoft.com/download/3/9/E/39E30671-7AD2-4902-B56B-C300D862595E/RewriteExtensibility.msi)
+~~~xml
+  <system.webServer>
+    <rewrite>
+      <rules>
+        <rule name="HTTP to HTTPS redirect" stopProcessing="true">
+          <!-- eg. http://www.demo.com/web [to] https://www.demo.com/web -->
+          <match url="(^web.*)" />
+          <conditions>
+            <add input="{HTTPS}" pattern="off" ignoreCase="true" />
+          </conditions>
+          <action type="Redirect" redirectType="Found" url="https://{HTTP_HOST}/{R:1}" />
+        </rule>
+      </rules>
+    </rewrite>
+  </system.webServer>
+~~~
+
+----
 

@@ -12,7 +12,7 @@
     <processModel autoConfig="false" minWorkerThreads="50" maxWorkerThreads="200" />
 ~~~
 
-> `MIME类型`添加 woff、 svg
+> `MIME类型`添加 svg, woff ...
 ```
 .svg    image/svg+xml
 .woff   application/x-font-woff

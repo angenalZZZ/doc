@@ -3,9 +3,11 @@
 > `应用程序池` 可用线程数 (优化✔并发200~800) 50×4 ~ 200×4 (CPUv4) + 最大连接数 (优化✔并发10万)
 ```cmd
 :: 1.设置-最小可用线程数: minWorkerThreads=50 .NET最大请求队列数限制: requestQueueLimit=10万
-> notepad "%systemroot%\Microsoft.NET\Framework\v4.0.30319\Config\machine.config"
+> notepad "%windir%\Microsoft.NET\Framework\v4.0.30319\Config\machine.config"
+::         C:\Windows\Microsoft.NET\Framework\v4.0.30319\Config\machine.config
+::         C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Config\machine.config
 :: 2.设置-最大并发请求限制: appConcurrentRequestLimit=10万
-> "%systemroot%\System32\inetsrv\appcmd.exe" set config /section:serverRuntime /appConcurrentRequestLimit:100000
+> "C:\Windows\System32\inetsrv\appcmd.exe" set config /section:serverRuntime /appConcurrentRequestLimit:100000
 > notepad "%systemroot%\System32\inetsrv\config\applicationHost.config"
 :: 3.调整-TCP/IP最大连接数: MaxConnections=10万
 > reg add HKLM\System\CurrentControlSet\Services\HTTP\Parameters /v MaxConnections /t REG_DWORD /d 100000
@@ -20,7 +22,7 @@
 > net stop http & net start http & iisreset
 ```
 ~~~xml
-<!-- 1.设置 "%systemroot%\Microsoft.NET\Framework\v4.0.30319\Config\machine.config" -->
+<!-- 1.设置 C:\Windows\Microsoft.NET\Framework\v4.0.30319\Config\machine.config -->
   <system.web>
     <!-- <processModel autoConfig="true" /> -->
     <processModel autoConfig="false" enable="true" minWorkerThreads="50" maxWorkerThreads="200" requestQueueLimit="100000" />

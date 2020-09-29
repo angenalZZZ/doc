@@ -498,8 +498,9 @@ openssl pkcs8 -topk8 -nocrypt -in server.key -out server.pem
   > nssm install PostwomanProxyWSLubuntu1804 bash.exe -c postwoman-proxy-server # 启动前设置Windows服务登录账户为Administrator
   
   # 压测=基准测试benchmark
-  > hey [-c concurrency=50] [-n requests=200] [-q Rate-limit(QPS)] [-cpus 4] [-z Duration=10s] \
-      -H "Accept: */*" -H "token: " -H "X-Requested-With: XMLHttpRequest" \
+  > hey [-c concurrency=100] [-n requests=10000] [-q Rate-limit(QPS)=1000] [-z Duration=10s] [-cpus 4] \
+      -H "Accept: */*" -H "Content-Type: application/json;charset=UTF-8" \  # Accept接受输出格式; Content-Type提交数据格式
+      -H "Authorization: Bearer ${token}" -H "token: ${token}" -H "X-Requested-With: XMLHttpRequest" \ # Token授权; Ajax方式xhr提交数据
       -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36" \
       [-T "application/json" or "application/x-www-form-urlencoded"] \
       [-a Basic-Auth=username:password] [-x HTTP-Proxy=host:port] [-h2 Enable-HTTP/2] \

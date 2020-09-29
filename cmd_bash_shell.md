@@ -499,14 +499,14 @@ openssl pkcs8 -topk8 -nocrypt -in server.key -out server.pem
   
   # 压测=基准测试benchmark
   > hey [-c concurrency=100] [-n requests=10000] [-q Rate-limit(QPS)=1000] [-z Duration=10s] [-cpus 4] \
-      -H "Accept: */*" -H "Content-Type: application/json;charset=UTF-8" \  # Accept接受输出格式; Content-Type提交数据格式
-      -H "Authorization: Bearer ${token}" -H "token: ${token}" -H "X-Requested-With: XMLHttpRequest" \ # Token授权; Ajax方式xhr提交数据
+      -H "Accept: */*" -H "Content-Type: application/json;charset=UTF-8" \  #Accept接受输出格式;Content-Type提交数据格式
+      -H "Authorization: Bearer ${token}" -H "token: ${token}" -H "X-Requested-With: XMLHttpRequest" \ #Token授权;Ajax方式xhr提交数据
       -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36" \
       [-T "application/json" or "application/x-www-form-urlencoded"] \
       [-a Basic-Auth=username:password] [-x HTTP-Proxy=host:port] [-h2 Enable-HTTP/2] \
       [-d DATA] [-D file] [-o Output-Type="csv"] <url>
-  > hey -c 2000 -n 10000 -cpus 4 -z 10s -H "Accept: */*" -H "X-Requested-With: XMLHttpRequest" \
-      http://www.weain.mil.cn/cg_unit/sysarticle/sysarticle/getPv?id=1295626301076480001 # 并发2000，最多请求10000次，压测10秒钟
+  > hey -c 2000 -n 10000 -z 10s -H "X-Requested-With: XMLHttpRequest" \ #并发2000,最多请求10000次,压测10秒钟(QPS未限制频率)
+      http://www.weain.mil.cn/cg_unit/sysarticle/sysarticle/getPv?id=1295626301076480001
   
   # 字体
   $ sudo apt-get install fontconfig                # yum install fontconfig  #<CentOS>

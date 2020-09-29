@@ -1,6 +1,6 @@
 # iis配置
 
-> `应用程序池` 可用线程数 (优化✔并发200~800) 50×4 ~ 200×4 (CPUv4) + 最大连接数 (优化✔并发10万)
+> `应用程序池` 可用线程数 (优化✔并发400~1600) 100×4 ~ 400×4 (CPUv4) + 最大连接数 (优化✔并发10万)
 ```cmd
 :: 1.设置-最小可用线程数: minWorkerThreads=50 .NET最大请求队列数限制: requestQueueLimit=10万
 > notepad "%windir%\Microsoft.NET\Framework\v4.0.30319\Config\machine.config"
@@ -23,9 +23,9 @@
 ```
 ~~~xml
 <!-- 1.设置 C:\Windows\Microsoft.NET\Framework\v4.0.30319\Config\machine.config -->
-  <system.web>
-    <!-- <processModel autoConfig="true" /> -->
-    <processModel autoConfig="false" enable="true" minWorkerThreads="50" maxWorkerThreads="200" requestQueueLimit="100000" />
+<system.web>
+  <!-- <processModel autoConfig="true" /> -->
+  <processModel autoConfig="true" enable="true" maxWorkerThreads="400" maxIoThreads="400" minWorkerThreads="100" minIoThreads="100" requestQueueLimit="100000" />
 ~~~
 
 > `MIME类型` 添加 svg woff ...

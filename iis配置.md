@@ -20,6 +20,7 @@
 > net stop http & net start http & iisreset
 ```
 ~~~xml
+<!-- 1.设置 "%systemroot%\Microsoft.NET\Framework\v4.0.30319\Config\machine.config" -->
   <system.web>
     <!-- <processModel autoConfig="true" /> -->
     <processModel autoConfig="false" enable="true" minWorkerThreads="50" maxWorkerThreads="200" requestQueueLimit="100000" />

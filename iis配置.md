@@ -20,9 +20,13 @@
 ::     进程模型/最大工作进程数: 5 (1GB内存消耗)多进程模式下,可提升服务器性能; 但是,依赖进程的Session和Cache等对象不再适用
 :: 5.重启-设置生效
 > net stop http & net start http & iisreset
+:: 6.最后-压测-benchmark-工具 https://storage.googleapis.com/hey-release/hey_windows_amd64
+> hey -c 200 -z 10s http://10.0.0.11:80/api/test
 ```
 ~~~xml
-<!-- 1.设置 C:\Windows\Microsoft.NET\Framework\v4.0.30319\Config\machine.config -->
+<!-- 1.设置(优化✔并发 CPUv4 => Requests/sec: 6000 以上) -->
+<!-- C:\Windows\Microsoft.NET\Framework\v4.0.30319\Config\machine.config -->
+<!-- C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Config\machine.config -->
 <system.web>
   <!-- <processModel autoConfig="true" /> -->
   <processModel autoConfig="false" enable="true" maxWorkerThreads="500" maxIoThreads="500" minWorkerThreads="100" minIoThreads="100" requestQueueLimit="100000" />

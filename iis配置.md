@@ -20,7 +20,7 @@
 ::     进程模型/最大工作进程数: 5 (1GB内存消耗)多进程模式下,可提升服务器性能; 但是,依赖进程的Session和Cache等对象不再适用
 :: 5.重启-设置生效
 > net stop http & net start http & iisreset
-:: 6.最后-压测-benchmark-工具 https://storage.googleapis.com/hey-release/hey_windows_amd64
+:: 6.最后-压测-benchmark-工具 github.com/rakyll/hey #支持HTTP2 完全可替代ApacheBench(ab) (强力推荐)
 > hey -c 200 -z 10s http://10.0.0.11:80/api/test
 ```
 ~~~xml

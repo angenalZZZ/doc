@@ -41,7 +41,7 @@
   > sc create [服务名称] start= auto binPath= "可执行命令行" # 安装Windows服务
   > nssm install [服务名称] "可执行文件路径" [命令行参数...n] # 安装Windows服务(异常终止后,会自动重启)
   $ [apt-get,yum,pip] install supervisor # 安装Supervisor服务(Python开发) 参考 www.jianshu.com/p/0b9054b33db3
-  $ supervisord -d -c supervisor.conf # 安装Linux服务(Golang实现) github.com/ochinchina/supervisord
+  $ supervisord -d -c supervisor.conf # 安装Linux服务(Golang实现-后台守护进程) github.com/ochinchina/supervisord
   
   # 时间
   > wmic OS Get localdatetime /value # 当前本地时间

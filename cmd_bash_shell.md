@@ -1731,7 +1731,7 @@ Increase the number of open files on your server, for the error `too many open f
     3.尽量使用内存池创建接收缓冲区等对象，合理的动态分配接收和发送缓冲区的内存容量。<br>
     4.注意对象的动态回收GC问题，以及进程的最大内存限制等。
 ```
-ulimit -suniqe (查询访问限制)
+ulimit -suniqe (查询用户访问限制)
 -s: stack size (kbytes)             8192
 -u: processes                       8041
 -n: file descriptors                1024
@@ -1763,7 +1763,7 @@ $ cat /proc/sys/vm/max_map_count    # 查看用户进程-最大内存限制(默�
 $ sysctl -w vm.max_map_count=262144 # 修改用户进程-最大内存限制(可以改成 655360
 $ limit                             # 显示系统底层对shell资源的访问限制
 $ ulimit -a                         # 显示系统用户对shell资源的访问限制
-$ ulimit -u 131072 && ulimit -n 65536  # 修改访问限制******
+$ ulimit -u 131072 && ulimit -n 65536  # 修改用户访问限制******
 $ grep -rin hard /etc/security/limits* # 查找所有hard-硬件使用限制
 $ grep -rin soft /etc/security/limits* # 查找所有soft-软件使用限制
 # nofile:可打开的最大文件数; nproc:进程数限制-即Linux线程数(LWP)

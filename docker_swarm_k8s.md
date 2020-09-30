@@ -499,9 +499,12 @@ ENTRYPOINT ["dotnet", "App.Host.dll"] */
   docker run --name mattermost-preview -d -p 8065:8065 --add-host dockerhost:127.0.0.1 mattermost/mattermost-preview
   
   # 云存储解决方案 minio 参考 docs.min.io/cn  *19.2k (强力推荐)
-  > minio.exe server d:\docker\app\minio\data  # 本地网盘svr：http://127.0.0.1:9000/ : Access-Key & Secret-Key
+  > nssm install MinIO A:/go/bin/minio/minio.exe server ./data # 安装Windows服务[以管理员身份运行]
+  > nssm set MinIO AppDirectory A:/go/bin/minio            # 设置启动/工作目录
+  > nssm set MinIO AppEnvironmentExtra MINIO_ACCESS_KEY=admin MINIO_SECRET_KEY=123456789 # nssm get MinIO AppEnvironmentExtra
+  > nssm start MinIO & start http://127.0.0.1:9000/        # 启动Windows服务&打开浏览器
+  > c:\minio\minio.exe server c:\minio\data            # 本地网盘svr：http://127.0.0.1:9000/ : Access-Key & Secret-Key
   > hidec /w minio.exe server d:\docker\app\minio\data # 隐藏控制台 & 后台运行 & 配置↑ data\.minio.sys\config\config.json
-  > nssm install MinIO minio.exe server A:/go/bin/minio/data  # 安装Windows服务[以管理员身份运行]
   > mc config host add minio http://127.0.0.1:9000 <ACCESS-KEY> <SECRET-KEY> # 客户端 dl.minio.io/client/mc/release
   > mc ls -r minio # 获取所有云存储对象列表
   > mc find minio/img --maxdepth 3 --name "*.png" --path "*" --larger 1KB --smaller 2MB --older-than 0d2h30m --json

@@ -288,19 +288,28 @@ server {
     }
     # http web 反向代理
     location / {
-        proxy_pass       http://web/;  # 代理到上面的地址 upstream web
         proxy_http_version 1.1;
         proxy_set_header Connection keep-alive;
         proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Host $http_host;
+        proxy_set_header REMOTE-HOST $remote_addr;
+        proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-Host $http_host;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header REMOTE-HOST $remote_addr;
+        proxy_set_header Host $http_host;
+        # proxy_redirect off;   # 禁止反转url
+        proxy_pass       http://web/;  # 代理到上面的地址 upstream 负载均衡 http web
         proxy_cache_bypass $http_upgrade;
-        # proxy_redirect  off;   # 禁止反转url
         proxy_read_timeout 600s; # 下载超时-限制
-        client_max_body_size 5m; # 上传文件-限制
+        client_max_body_size 2m; # 上传文件-限制
+    }
+    
+    # http web 反向代理 cloudreve 云存储的云盘系统 https://docs.cloudreve.org/getting-started/install
+    location / {
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:5212;
+        # client_max_body_size 2000m; # 上传文件-限制
     }
 }
 ~~~

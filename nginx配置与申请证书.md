@@ -241,6 +241,16 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
     }
+    
+    # http web 反向代理 cloudreve 云存储的云盘系统 https://docs.cloudreve.org/getting-started/install
+    location / {
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:5212;
+        # client_max_body_size 2000m; # 上传文件-限制
+    }
+    
 }
 ~~~
  * 配置代理 https & 负载均衡 upstream & ws
@@ -302,18 +312,10 @@ server {
         proxy_read_timeout 600s; # 下载超时-限制
         client_max_body_size 2m; # 上传文件-限制
     }
-    
-    # http web 反向代理 cloudreve 云存储的云盘系统 https://docs.cloudreve.org/getting-started/install
-    location / {
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header Host $http_host;
-        proxy_redirect off;
-        proxy_pass http://127.0.0.1:5212;
-        # client_max_body_size 2000m; # 上传文件-限制
-    }
+
 }
 ~~~
-~~~json
+```
 //-配置Nginx响应`头信息`：http.server.add_header, http.server.location.proxy_set_header
 {
     "server": "nginx",
@@ -331,7 +333,7 @@ server {
     "x-rate-limit-remaining": "299", // request: remaining times
     "x-rate-limit-reset": "18"   // request: reset times after 18 seconds
 }
-~~~
+```
 
  * 配置（HA）高可用 Nginx + Keepalived
         <br>Keepalived 以 VRRP 协议为基础来实现高可用性。VRRP（Virtual Router Redundancy Protocol 虚拟路由冗余协议）是用于实现路由器冗余的协议，它将两台或多台路由器设备虚拟成一个设备，对外提供虚拟路由器 IP（一个或多个VIP）<br>

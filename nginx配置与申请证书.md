@@ -214,6 +214,24 @@ http {
     }
 }
 ~~~
+ * 配置代理 http
+~~~nginx
+server {
+    listen *:80; # 绑定ip端口
+    server_name company.com www.company.com; # 绑定域名
+
+    # 反向代理: cloudreve 云存储的云盘系统 https://docs.cloudreve.org/getting-started/install
+    location / {
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+        proxy_redirect off;
+        proxy_pass http://127.0.0.1:5212;
+        # client_max_body_size 2000m; # 上传文件-限制
+    }
+
+    return 301 https://$host$request_uri;
+}
+~~~
  * 配置代理 https
 ~~~nginx
 server {
@@ -229,11 +247,13 @@ server {
     ssl_certificate /etc/nginx/ssl/company-cert.pem;
     ssl_certificate_key /etc/nginx/ssl/company-key.pem;
 
+    # 静态资源: html
     location /  {
       root    /var/www/html;
       expires 1d;
     }
 
+    # 反向代理: api
     location /api {
         proxy_pass http://127.0.0.1:8080; // proxy pass a real host.
         proxy_set_header Host $host;
@@ -241,16 +261,6 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
     }
-    
-    # http web 反向代理 cloudreve 云存储的云盘系统 https://docs.cloudreve.org/getting-started/install
-    location / {
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header Host $http_host;
-        proxy_redirect off;
-        proxy_pass http://127.0.0.1:5212;
-        # client_max_body_size 2000m; # 上传文件-限制
-    }
-    
 }
 ~~~
  * 配置代理 https & 负载均衡 upstream & ws
@@ -312,7 +322,6 @@ server {
         proxy_read_timeout 600s; # 下载超时-限制
         client_max_body_size 2m; # 上传文件-限制
     }
-
 }
 ~~~
 ```

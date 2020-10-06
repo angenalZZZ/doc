@@ -3,8 +3,7 @@
 #### Systemd
 
 ~~~bash
-# 编辑配置文件
-vim /usr/lib/systemd/system/cloudreve.service
+vim /usr/lib/systemd/system/cloudreve.service # 编辑配置文件
 ~~~
 ```
 [Unit]

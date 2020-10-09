@@ -39,7 +39,7 @@
 .woff2  application/x-font-woff
 ```
 
-> `反向代理` `url重写` [`Install url-rewrite`](https://www.iis.net/downloads/microsoft/url-rewrite) [`Download samples`](https://download.microsoft.com/download/3/9/E/39E30671-7AD2-4902-B56B-C300D862595E/RewriteExtensibility.msi) `修改Web.config`
+> `url重定向` [`Install url-rewrite`](https://www.iis.net/downloads/microsoft/url-rewrite) [`Download samples`](https://download.microsoft.com/download/3/9/E/39E30671-7AD2-4902-B56B-C300D862595E/RewriteExtensibility.msi) `修改Web.config`
 ~~~xml
   <appSettings configSource="config\appSetting.config" />
   <system.webServer>
@@ -55,6 +55,7 @@
           <action type="Redirect" redirectType="Found" url="https://{HTTP_HOST}/{R:1}" />
         </rule>
         <rule name="Swagger to Web redirect" patternSyntax="ECMAScript" stopProcessing="true">
+          <!-- eg. http://www.demo.com/swagger/ui/index [to] https://www.demo.com/web/ -->
           <match url="swagger/ui/index$" />
           <action type="Redirect" url="https://{HTTP_HOST}/web/" />
         </rule>
@@ -62,6 +63,13 @@
     </rewrite>
   </system.webServer>
 ~~~
+```
+<!-- eg. http://demo.com/ [to] http://www.demo.com/ -->
+ 添加网站 > 填写 `demo.com` > 指定一个空目录 > 设置Http重定向 `http://www.demo.com/` > 重新启动。
+```
+
+> `反向代理`
+
 
 ----
 

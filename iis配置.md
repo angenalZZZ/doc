@@ -55,15 +55,15 @@
           <action type="Redirect" redirectType="Found" url="https://{HTTP_HOST}/{R:1}" />
         </rule>
         <rule name="Swagger to Web redirect" patternSyntax="ECMAScript" stopProcessing="true">
-          <!-- eg. http://www.demo.com/swagger/ui/index [to] https://www.demo.com/web/ -->
+          <!-- eg. https://www.demo.com/swagger/ui/index [to] https://www.demo.com/web -->
           <match url="swagger/ui/index$" />
-          <action type="Redirect" url="https://{HTTP_HOST}/web/" />
+          <action type="Redirect" url="https://{HTTP_HOST}/web" />
         </rule>
       </rules>
     </rewrite>
   </system.webServer>
 <!-- 重定向www. http://demo.com/ [to] http://www.demo.com/ -->
-<!-- 添加网站 > 填写 `demo.com` > 指定一个`空目录` > 设置`Http重定向`··`http://www.demo.com/` > 重新启动。 -->
+<!-- 添加网站 > 指定一个`空目录` > 填写名称并绑定 `demo.com` > 设置`Http重定向`=`http://www.demo.com/` > 重新启动。 -->
 ~~~
 
 > `反向代理`

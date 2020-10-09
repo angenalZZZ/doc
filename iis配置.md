@@ -62,11 +62,9 @@
       </rules>
     </rewrite>
   </system.webServer>
+<!-- 重定向www. http://demo.com/ [to] http://www.demo.com/ -->
+<!-- 添加网站 > 填写 `demo.com` > 指定一个`空目录` > 设置`Http重定向`··`http://www.demo.com/` > 重新启动。 -->
 ~~~
-```
-<!-- eg. http://demo.com/ [to] http://www.demo.com/ -->
- 添加网站 > 填写 `demo.com` > 指定一个空目录 > 设置Http重定向 `http://www.demo.com/` > 重新启动。
-```
 
 > `反向代理`
 

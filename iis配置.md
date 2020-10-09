@@ -41,9 +41,11 @@
 
 > `url重定向` [`Install url-rewrite`](https://www.iis.net/downloads/microsoft/url-rewrite) [`Download samples`](https://download.microsoft.com/download/3/9/E/39E30671-7AD2-4902-B56B-C300D862595E/RewriteExtensibility.msi) `修改Web.config`
 ~~~xml
-  <appSettings configSource="config\appSetting.config" />
+  <!-- <appSettings configSource="config\appSetting.config" /> -->
+  <!-- ... ... -->
   <system.webServer>
-    <directoryBrowse enabled="false" />
+    <!-- <directoryBrowse enabled="false" /> -->
+    <!-- ... ... -->
     <rewrite>
       <rules>
         <rule name="HTTP to HTTPS redirect" stopProcessing="true">

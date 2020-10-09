@@ -41,16 +41,22 @@
 
 > `反向代理` `url重写` [`Install url-rewrite`](https://www.iis.net/downloads/microsoft/url-rewrite) [`Download samples`](https://download.microsoft.com/download/3/9/E/39E30671-7AD2-4902-B56B-C300D862595E/RewriteExtensibility.msi) `修改Web.config`
 ~~~xml
+  <appSettings configSource="config\appSetting.config" />
   <system.webServer>
+    <directoryBrowse enabled="false" />
     <rewrite>
       <rules>
         <rule name="HTTP to HTTPS redirect" stopProcessing="true">
-          <!-- eg. http://www.demo.com/web [to] https://www.demo.com/web -->
-          <match url="(^web.*)" />
+          <!-- eg. http://www.demo.com/ [to] https://www.demo.com/ -->
+          <match url="(.*)" />
           <conditions>
             <add input="{HTTPS}" pattern="off" ignoreCase="true" />
           </conditions>
           <action type="Redirect" redirectType="Found" url="https://{HTTP_HOST}/{R:1}" />
+        </rule>
+        <rule name="Swagger to Web redirect" patternSyntax="ECMAScript" stopProcessing="true">
+          <match url="swagger/ui/index$" />
+          <action type="Redirect" url="https://{HTTP_HOST}/web/" />
         </rule>
       </rules>
     </rewrite>

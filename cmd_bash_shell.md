@@ -328,6 +328,12 @@
   $ sudo killall -HUP mDNSResponder
   $ sudo dscacheutil -flushcache
   
+  # 开启IPv6隧道(Windows)
+  > netsh interface teredo set state enterpriseclient server=default # 设置Teredo服务器
+  > netsh interface teredo set state server=teredo.remlab.net # 修改Teredo服务器(当测试连接失败时)
+  > ping -6 ipv6.test-ipv6.com  # 测试IPv6连接(访问检测 http://test-ipv6.com 测试项目/无域名IPv6连接测试-成功)
+  > netsh interface ipv6 reset  # 重置IPv6配置(重启系统)
+  
   # 网络共享
   > net share           # 查找
   > net share c         # 添加

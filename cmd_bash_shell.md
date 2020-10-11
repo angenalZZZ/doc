@@ -37,6 +37,9 @@
   $ cat /etc/issue && lsb_release -cs ; lsb_release -a #Linux发行版本信息+支持的体系结构[amd64,x86_64,arm64]
   $ echo "Linux-x86_64" && echo $(uname -s)-$(uname -m) && echo `uname -s`-`uname -m`
   
+  # 系统性能…测试
+  $ wget -qO- git.io/superbench.sh | bash
+  
   # 系统服务
   $ [apt-get,yum,pip] install supervisor # 安装Supervisor服务(Python开发) 参考 https://www.jianshu.com/p/0b9054b33db3
   $ supervisord -d -c supervisor.conf # 安装Linux服务(Golang实现-后台守护进程) https://github.com/ochinchina/supervisord
@@ -272,6 +275,11 @@
   $ cp -if /mnt/floppy/* ~/floppy                   # [~/floppy 指向 /root/floppy 或 /home/floppy]
   $ cp -if /mnt/d/Docker/App/ubuntu/usr/local/bin/* /usr/local/bin # [i覆盖文件时,询问?]
   $ cp -fr /usr/local/bin/* /mnt/d/Docker/App/ubuntu/usr/local/bin # [r复制文件目录!]
+  # scp跨服务器文件复制: www.vpser.net/manage/scp.html
+  $ scp -P 2222 root@www.vpser.net:/root/lnmp0.4.tar.gz /home/lnmp0.4.tar.gz  # 获取远程服务器上的文件
+  $ scp -P 2222 -r root@www.vpser.net:/root/lnmp0.4/ /home/lnmp0.4/           # 获取远程服务器上的目录
+  $ scp -P 2222 /home/lnmp0.4.tar.gz root@www.vpser.net:/root/lnmp0.4.tar.gz  # 将本地文件上传到服务器上
+  $ scp -P 2222 -r /home/lnmp0.4/ root@www.vpser.net:/root/lnmp0.4/           # 将本地目录上传到服务器上
   
   > mklink /d "来源目录" "目标目录"  # 创建目录的`符号链接(软链接)`
   $ ln -s '来源目录' '目标目录'

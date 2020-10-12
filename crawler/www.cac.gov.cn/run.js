@@ -24,7 +24,8 @@
     div0.append(btn1);
 
     // create ajax request
-    let getItemById = function (id, idMax, fn0, fn1) {
+    var urlItems = [];
+    let getItemById = function (id, idMax, fn0, fn1, fn2) {
         // alert($);
         var channelCode = 'A0905';
         var width = '', height = '';
@@ -45,7 +46,7 @@
                     if(topic.length>120) topic = topic.substring(0,120);
                     var pubtime = item.pubtime;
                     var filltime = item.filltime;
-                    var infourl = item.infourl;
+                    var infourl = item.infourl; urlItems.push(infourl);
                     var coverurl = item.coverurl;
                     var description = item.description;
                     if(coverurl==""){
@@ -68,7 +69,9 @@
 
                 // 循环下一页
                 if (id++ <= idMax) {
-                    getItemById(id, idMax, fn0, fn1);
+                    getItemById(id, idMax, fn0, fn1, fn2);
+                } else {
+                    fn2(); // 结束循环
                 }
             },
             error: function(xhr, type){
@@ -76,11 +79,27 @@
             }
         });
     };
+    let getItemContentByUrl = function (url, cb) {
+        $.get(url, function (html, status) {
+            // alert(htm);
+            let s = html.substring(html.indexOf('<div class="main">'));
+            s = s.substring(0, s.indexOf('<div id="check">'));
+            s = jQuery(s).find('#content').html();
+            cb(s);
+        });
+    };
 
     // do ajax request
     getItemById(1, 3, function (id, t) {
-        loadHtml(`<p style="color:#3e3">成功: pagenum: ${id} </p><p><ul style="background:#eeeeee;">${t}</ul></p>`, id > 1);
+        loadHtml(`<p style="color:#3e3">抓取成功: pagenum: ${id} </p><p><ul style="background:#ddd">${t}</ul></p>`, id > 1);
     }, function (id, t) {
-        loadHtml(`<p style="color:#e39">失败: pagenum: ${id} <b>${t}</b></p>`, id > 1);
+        loadHtml(`<p style="color:#e39">抓取失败: pagenum: ${id} <b>${t}</b></p>`, id > 1);
+    }, function () {
+        if (urlItems.length == 0) return;
+        let url = urlItems[0];
+        // alert(url);
+        getItemContentByUrl(url, function (htm) {
+            loadHtml(`<p style="color:#3e3">抓取第一条内容页(1/${urlItems.length}): ${url} </p><p><div style="background:#ddd">${htm}</div></p>`, true);
+        });
     });
 })();

@@ -13,6 +13,8 @@
 ~~~bash
   # 帮助
   > help cmd
+  > chcp 65001 # 编码切换: UTF-8
+  > chcp 936   # 编码切换: GBK (ANSI/OEM - 简体中文GBK)
   $ info       # 系统菜单信息: Basics,Compression,Editors,Screen.…… 菜单导航&帮助文档;
   # 系统菜单信息: GNU Utilities,Individual utilities,Libraries,Math,Network applications,Text manipulation
   $ man        # 在线帮助说明

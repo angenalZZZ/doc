@@ -45,8 +45,9 @@
   # 系统服务
   $ [apt-get,yum,pip] install supervisor # 安装Supervisor服务(Python开发) 参考 https://www.jianshu.com/p/0b9054b33db3
   $ supervisord -d -c supervisor.conf # 安装Linux服务(Golang实现-后台守护进程) https://github.com/ochinchina/supervisord
-  $ nohup <可执行文件路径+参数> &  # 后台运行\可执行程序
-  > sc create <服务名称> start= auto binPath= "可执行命令行" # 安装Windows服务(cmd命令行)
+  $ nohup <可执行文件路径+参数> &         # 后台运行-可执行程序(linux)
+  > start /min <可执行文件路径> <参数>... # 后台运行-可执行程序(windows) > start /min java -jar spider.jar
+  > sc create <服务名称> start= auto binPath= "可执行命令行" # 安装Windows服务(cmd命令行,注意等号后面的空格)
   > nssm install <服务名称> <可执行文件路径> <参数>...    # 安装Windows服务(异常终止后,会自动重启) 参考 https://nssm.cc/commands
   > nssm install Crawlab bash.exe -c GIN_MODE=release /mnt/a/go/bin/crawlab/backend/crawlab # 安装Windows服务
   > nssm install MinIO C:/minio/minio.exe server ./data # 安装Windows服务[以管理员身份运行] # nssm get MinIO AppEnvironmentExtra

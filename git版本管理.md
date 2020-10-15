@@ -2,40 +2,50 @@
 
 #### Global Config
 ~~~bash
-git config --global --list
-git config --global user.name                 # 查询全局git用户配置
-git config --global user.name "yangzhou"      # 修改全局git用户配置
-git config --global user.email "angenal@hotmail.com" # 修改全局git用户账号邮箱
-> git config --global alias.adog "log --all --decorate --oneline --graph" # 修改全局git用户的快捷键
-> git config --global alias.ls "log --oneline" # 一行展示日志+show详情 > git ls ; git show <commit-head-id>
+> git config --global --list
+> git config --global user.name                 # 查询全局git用户配置
+> git config --global user.name "yangzhou"      # 修改全局git用户配置
+> git config --global user.email "angenal@hotmail.com" # 修改全局git用户账号邮箱
+
+> git config --global alias.co "checkout"       # 修改全局git用户的快捷键
+> git config --global alias.br "branch"
+> git config --global alias.ci "commit"
+> git config --global alias.st "status"
+> git config --global alias.dog "log --all --decorate --oneline --graph" # 方便查看日志的快捷键 > git dog
+> git config --global alias.ls "log --oneline"  # 一行展示日志+show详情 > git ls ; git show <commit-head-id>
 > git config --global alias.hist "log --graph --date-order --date=short \ # git hist --all [--branches]
   --pretty=format:'%C(auto)%h%d %C(reset)%s %C(bold blue)%ce %C(reset)%C(green)%cr (%cd)'"
-> notepad %USERPROFILE%\.gitconfig             # 直接编辑\快捷键 $ vim ~/.gitconfig
-[alias]  # 参考: https://stackoverflow.com/questions/1057564/pretty-git-branch-graphs
-lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) \
-  - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
-lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) \
-  - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''  \
-  %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-lg = !"git lg1"
-tree = "forest --pretty=format:\"%C(red)%h %C(magenta)(%ar) %C(blue)%an %C(reset)%s\" --style=15 --reverse"
 
-git config --system -l # show windows system config
+> notepad %USERPROFILE%\.gitconfig              # 直接编辑\快捷键 $ vim ~/.gitconfig
+[alias]  # 参考: https://stackoverflow.com/questions/1057564/pretty-git-branch-graphs
+  lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) \
+    - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+  lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) \
+    - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''  \
+    %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+  lg = !"git lg1"
+  tree = "forest --pretty=format:\"%C(red)%h %C(magenta)(%ar) %C(blue)%an %C(reset)%s\" --style=15 --reverse"
+[http]
+  proxy = http://127.0.0.1:1087
+[https]
+  proxy = http://127.0.0.1:1087
+
+> git config --system -l # show windows system config
 # http.sslbackend=openssl
 # http.sslcainfo=C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt
 # credential.helper=manager
 
 # 设置SSH-Key: github.com/settings/keys 
-ssh-keygen -t rsa -C "angenal@hotmail.com"
+> ssh-keygen -t rsa -C "angenal@hotmail.com"
 # 1.创建SSHKey #2.复制文件为Key>id_rsa.pub #3.测试SSHKey>ssh -T git@github.com #4.设置<hosts> 52.74.223.119 github.com
 
 # 1.通过修改默认配置, 解决网络问题! http限制..
-git config --global http.postBuffer 524288000 # 上传文件大小限制500M=1024*1024*500(默认100M)
-git config --global http.sslVerify "false"    # 关闭ssl验证(网络异常)
-git config --global http.lowSpeedLimit 0      # 下载文件限制
-git config --global http.lowSpeedTime 999999  # 下载文件时速
-git clone --depth=1 https://***/***/***.git   # 下载失败时，1.首先浅层clone..
-git fetch --unshallow                         # ..然后更新远程库到本地; 2.或者使用SSH进行下载
+> git config --global http.postBuffer 524288000 # 上传文件大小限制500M=1024*1024*500(默认100M)
+> git config --global http.sslVerify "false"    # 关闭ssl验证(网络异常)
+> git config --global http.lowSpeedLimit 0      # 下载文件限制
+> git config --global http.lowSpeedTime 999999  # 下载文件时速
+> git clone --depth=1 https://***/***/***.git   # 下载失败时，1.首先浅层clone..
+> git fetch --unshallow                         # 下载更快..然后更新远程库到本地; 2.或者使用SSH进行下载
 
 # 2.通过获取以下 DNS Resource Records, 解决网络问题! CDN被屏蔽..
 # fix git clone github project failed /etc/hosts
@@ -300,8 +310,9 @@ git checkout -b [新建分支]
 
 ~~~bash
 git checkout <name-of-branch>
-git merge master
-git merge clean_up        # 合并本地分支
+git merge master          # 合并分支master至当前branch, 可保存日志merge_commit_log（方便跟踪）
+git rebase clean_up       # 合并本地分支, 不保存日志（相当于复制一份分支clean_up至当前branch）
+git merge clean_up --no-commit --no-ff # 合并本地分支 Create a merge commit
 git merge origin/clean_up # 合并远程分支
 ~~~
 

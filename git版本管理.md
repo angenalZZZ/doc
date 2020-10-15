@@ -7,12 +7,16 @@ git config --global user.name                 # 查询全局git用户配置
 git config --global user.name "yangzhou"      # 修改全局git用户配置
 git config --global user.email "angenal@hotmail.com" # 修改全局git用户账号邮箱
 > git config --global alias.adog "log --all --decorate --oneline --graph" # 修改全局git用户的快捷键
+> git config --global alias.ls "log --oneline" # 一行展示日志+show详情 > git ls ; git show <commit-head-id>
 $ git config --global alias.hist "log --graph --date-order --date=short \ # git hist --all [--branches]
   --pretty=format:'%C(auto)%h%d %C(reset)%s %C(bold blue)%ce %C(reset)%C(green)%cr (%cd)'"
 > notepad %USERPROFILE%\.gitconfig            # 直接编辑快捷键 $ vim ~/.gitconfig
 [alias]  # 参考: https://stackoverflow.com/questions/1057564/pretty-git-branch-graphs
-lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
-lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) \
+  - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) \
+  - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''  \
+  %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
 lg = !"git lg1"
 tree = "forest --pretty=format:\"%C(red)%h %C(magenta)(%ar) %C(blue)%an %C(reset)%s\" --style=15 --reverse"
 

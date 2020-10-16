@@ -34,7 +34,7 @@ export DOCKER_HOST=tcp://127.0.0.1:2375
 # docker_k8s: eval $(docker-machine env default)
 # export DOCKER_TLS_VERIFY="1"
 # export DOCKER_HOST="tcp://192.168.1.6:2376"
-# export DOCKER_CERT_PATH="/home/yangzhou/.docker/machine/machines/default"
-# export DOCKER_MACHINE_NAME="default"
+# export DOCKER_CERT_PATH=$HOME/.docker/machine/machines/default
+# export DOCKER_MACHINE_NAME=default
 
 # other

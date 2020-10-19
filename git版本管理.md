@@ -7,7 +7,7 @@
 > git config --global user.name "yangzhou"      # 修改全局git用户配置
 > git config --global user.email "angenal@hotmail.com" # 修改全局git用户账号邮箱
 
-> git config --global alias.co "checkout"       # 修改全局git用户的快捷键
+> git config --global alias.co "checkout"       # 修改全局git用户的快捷键\命令
 > git config --global alias.br "branch"
 > git config --global alias.ci "commit"
 > git config --global alias.st "status"
@@ -15,29 +15,17 @@
 > git config --global alias.ls "log --oneline"  # 一行展示日志+show详情 > git ls ; git show <commit-head-id>
 > git config --global alias.hist "log --graph --date-order --date=short \ # git hist --all [--branches]
   --pretty=format:'%C(auto)%h%d %C(reset)%s %C(bold blue)%ce %C(reset)%C(green)%cr (%cd)'"
+> git config --global alias.lg1 "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
+> git config --global alias.lg2 "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all"
 
-> notepad %USERPROFILE%\.gitconfig              # 直接编辑\快捷键 $ vim ~/.gitconfig
+> git config --global --edit                    # 直接编辑全局配置文件 ~/.gitconfig
 [alias]  # 参考: https://stackoverflow.com/questions/1057564/pretty-git-branch-graphs
-  lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) \
-    - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
-  lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) \
-    - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''  \
-    %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
   lg = !"git lg1"
   tree = "forest --pretty=format:\"%C(red)%h %C(magenta)(%ar) %C(blue)%an %C(reset)%s\" --style=15 --reverse"
-[http]
-  proxy = http://127.0.0.1:1087
-[https]
-  proxy = http://127.0.0.1:1087
-
-> git config --system -l # show windows system config
-# http.sslbackend=openssl
-# http.sslcainfo=C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt
-# credential.helper=manager
-
-# 设置SSH-Key: github.com/settings/keys 
-> ssh-keygen -t rsa -C "angenal@hotmail.com"
-# 1.创建SSHKey #2.复制文件为Key>id_rsa.pub #3.测试SSHKey>ssh -T git@github.com #4.设置<hosts> 52.74.223.119 github.com
+# [http]
+#   proxy = http://127.0.0.1:1087
+# [https]
+#   proxy = http://127.0.0.1:1087
 
 # 1.通过修改默认配置, 解决网络问题! http限制..
 > git config --global http.postBuffer 524288000 # 上传文件大小限制500M=1024*1024*500(默认100M)
@@ -56,6 +44,15 @@
 $ sudo killall -HUP mDNSResponder
 $ sudo dscacheutil -flushcache
 > ipconfig /flushdns
+
+> git config --system -l # show windows system config > git config --system -e [--edit]
+# http.sslbackend=openssl
+# http.sslcainfo=C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt
+# credential.helper=manager
+
+# 设置SSH-Key: github.com/settings/keys
+> ssh-keygen -t rsa -C "angenal@hotmail.com"
+# 1.创建SSHKey #2.复制文件为Key>id_rsa.pub #3.测试SSHKey>ssh -T git@github.com #4.设置<hosts> 52.74.223.119 github.com
 ~~~
 
 #### Create a new repository from your `LAN(local area network)` `origin`.

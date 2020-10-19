@@ -1004,22 +1004,25 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
 > [`InfluxDB`](https://portal.influxdata.com) 时间序列数据库、[SDK文档](https://v2.docs.influxdata.com/v2.0/reference/api/client-libraries/)、[下载](https://portal.influxdata.com/downloads/)
 ~~~shell
   # Ubuntu & Debian => Time-Series Data Storage
-  wget https://dl.influxdata.com/influxdb/releases/influxdb_1.8.0_amd64.deb
-  sudo dpkg -i influxdb_1.8.0_amd64.deb
+  wget https://dl.influxdata.com/influxdb/releases/influxdb_1.8.3_amd64.deb
+  sudo dpkg -i influxdb_1.8.3_amd64.deb
   # RedHat & CentOS
-  wget https://dl.influxdata.com/influxdb/releases/influxdb-1.8.0.x86_64.rpm
-  sudo yum localinstall influxdb-1.8.0.x86_64.rpm
+  wget https://dl.influxdata.com/influxdb/releases/influxdb-1.8.3.x86_64.rpm
+  sudo yum localinstall influxdb-1.8.3.x86_64.rpm
   # Windows (64-bit)
-  https://dl.influxdata.com/influxdb/releases/influxdb-1.8.0_windows_amd64.zip
-  unzip influxdb-1.8.0_windows_amd64.zip
+  https://dl.influxdata.com/influxdb/releases/influxdb-1.8.3_windows_amd64.zip
+  unzip influxdb-1.8.3_windows_amd64.zip
   
   # Beta version 2.0.0 => Time-Series Data Storage : docker pull quay.io/influxdb/influxdb:2.0.0-beta
   $ curl -LO https://dl.influxdata.com/influxdb/releases/influxdb_2.0.0-beta.12_linux_amd64.tar.gz
   $ tar xfz influxdb_2.0.0-beta.12_linux_amd64.tar.gz
   $ sudo cp influxdb_2.0.0-beta.12_linux_amd64/{influx,influxd} /usr/local/bin
   # 配置TCP port 9999  |  https://v2.docs.influxdata.com/v2.0/reference/api
-  # 启动 > influxd [--reporting-disabled]  |  https://v2.docs.influxdata.com/v2.0/get-started
+  # 启动  |  https://v2.docs.influxdata.com/v2.0/get-started
+  > influxd -config influxdb.conf --reporting-disabled
   > nssm install InfluxDbWSLubuntu1804 bash.exe -c influxd # 启动前设置Windows服务登录账户为Administrator
+  $ CMD="influxd -pidfile influxd.pid -config influxdb.conf --reporting-disabled >>/dev/null 2>>influxd.log &"
+  $ su -s /bin/sh -c "$CMD" $USER
   # 安装 http://localhost:9999   <打开website或者cli> influx setup
   # 配置 Usr: default ; Pwd: HGJ766GR767FKJU0 ; Org: angenalZ ; Bucket: default  # 结束安装与初始化设置
   # #初始化Bucket -> 设置数据源Collector + 监听跟踪数据Dashboard + 分析数据使用Flux -> 管理Tasks

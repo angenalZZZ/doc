@@ -609,8 +609,10 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ lsb_release -c                    # 获取系统代号,更新软件源sources.list
   $ sudo vim /etc/apt/sources.list    # 更新软件源
   $ sudo apt-get update && sudo apt-get upgrade # 更新升级apt
-  $ sudo apt -y install language-pack-zh-hans # 中文语言包
-  $ sudo apt install --no-install-recommends wget gnupg ca-certificates libfreetype6-dev libssl-dev # 安装ca/freetype/openssl
+  $ sudo apt install -y gnupg libfreetype6-dev language-pack-zh-hans # 安装freetype/中文语言包
+  $ sudo apt install -y apt-transport-https ca-certificates     # 安装ca/https
+  $ sudo apt install -y --no-install-recommends wget libssl-dev # 安装wget/openssl
+  
   $ sudo apt install openssh-server   # 安装SSH
   $ sudo apt install build-essential  # 安装gcc/g++/gdb/make工具链
   $ sudo apt install clang cmake zlib1g-dev libboost-dev libboost-thread-dev  # 安装clang/cmake/boost工具链
@@ -618,8 +620,12 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ sudo apt install autoconf automake pkg-config libtool gnome-core  # 安装automake/glib/gnome桌面开发
   $ sudo apt-get install libgtk-3-dev libcairo2-dev libglib2.0-dev --fix-missing   # 安装桌面开发gtk3工具链
   $ sudo apt-get install libwebkit2gtk-4.0-dev javascriptcoregtk-3.0 --fix-missing # 安装桌面开发webkit2gtk
-  $ sudo apt install default-jre      # 安装jre > java -version
-  $ sudo apt install openjdk-8-jdk    # 安装OpenJDK
+  
+  $ sudo apt-get clean && apt-get update --fix-missing
+  $ sudo apt install -y --fix-missing default-jre      # 安装jre > java -version  (安装java选项1)
+  $ sudo apt install -y --fix-missing default-jdk      # 安装jdk > java -version  (安装java选项2)
+  $ sudo apt install -y --fix-missing openjdk-8-jdk    # 安装OpenJDK              (安装java选项3)
+  $ sudo ln -s /usr/bin/java /usr/local/bin/java       # 创建快捷方式
   $ sudo add-apt-repository ppa:webupd8team/java && sudo apt-get update
   $ sudo apt-get install oracle-java8-installer   # 在线安装, 离线下载 download.oracle.com/otn/java/jdk
   $ sudo apt-get install oracle-java8-set-default # 使用默认版本jdk1.8
@@ -628,7 +634,8 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ wget -q https://packages.microsoft.com/config/ubuntu/19.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
   $ sudo dpkg -i packages-microsoft-prod.deb
   $ sudo apt-get update
-  $ sudo apt-get install dotnet-sdk-3.0           # 安装 .NET Core SDK  > dotnet -h
+  $ sudo apt-get install dotnet-runtime-3.1 aspnetcore-runtime-3.1  # 仅安装 .NET Core Runtime
+  $ sudo apt-get install dotnet-sdk-3.1                # 安装 .NET Core SDK  > dotnet -h
   
   $ sudo apt-get update
   $ sudo apt-get -y install r-recommended --fix-broken # 安装 R 语言(用于统计计算) > /usr/bin/R --help # 大写R
@@ -644,8 +651,8 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ sudo update-alternatives --config python  # 手动配置/切换版本: python --version ; pip --version
   $ sudo ln -sf /usr/bin/python2.7 /usr/bin/python # 将Python2(恢复)默认
   
-  $ sudo add-apt-repository ppa:ondrej/php  && sudo apt-get update # 安装php (PPA源)
-  $ sudo apt-get -y install php7.2-fpm php7.2-mysql php7.2-curl php7.2-gd php7.2-mbstring php7.2-xml php7.2-xmlrpc php7.2-zip php7.2-opcache
+  $ sudo add-apt-repository ppa:ondrej/php && sudo apt-get update # 安装php (PPA源)
+  $ sudo apt install -y php7.2-fpm php7.2-mysql php7.2-curl php7.2-gd php7.2-mbstring php7.2-xml php7.2-xmlrpc php7.2-zip php7.2-opcache
   $ sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/' /etc/php/7.2/fpm/php.ini # 设置php 替换 ;cgi.fix_pathinfo=1 为 cgi.fix_pathinfo=0
   $ sudo systemctl restart php7.2-fpm  # 重启php
   $ sudo systemctl status php7.2-fpm   # 检查php状态
@@ -676,6 +683,7 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   #-config>>  /usr/local/openresty/nginx/conf/nginx.conf
   $ sudo systemctl restart openresty  # 重启; 开始HelloWorld  openresty.org/cn/getting-started.html
   
+  
   $ sudo apt install nodejs # 安装Nodejs(此安装方式版本太低; 推荐wget安装方式-如下)
   $ wget https://npm.taobao.org/mirrors/node/v13.6.0/node-v13.6.0-linux-x64.tar.gz
   $ sudo tar -zxf node-v13.6.0-linux-x64.tar.gz -C /usr/local/
@@ -684,6 +692,43 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ export PATH=/usr/local/node/bin:$PATH # 配置环境变量,如下 01-locale-profile.sh (替代选项)设置软链接 ln
   $ sudo ln -sf /usr/local/node/bin/node /usr/local/bin/node
   $ sudo ln -sf /usr/local/node/bin/npm /usr/local/bin/npm
+  
+  $ su - root                             # 安装 chrome driver
+  $ export DEBIAN_FRONTEND=noninteractive
+  $ apt-get update
+  $ apt-get install unzip
+  $ DL=https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  $ curl -sL "$DL" > /tmp/chrome.deb
+  $ apt install --no-install-recommends --no-install-suggests -y /tmp/chrome.deb
+  $ CHROMIUM_FLAGS='--no-sandbox --disable-dev-shm-usage'
+  $ sed -i '${s/$/'" $CHROMIUM_FLAGS"'/}' /opt/google/chrome/google-chrome
+  $ BASE_URL=https://chromedriver.storage.googleapis.com
+  $ VERSION=$(curl -sL "$BASE_URL/LATEST_RELEASE")
+  $ curl -sL "$BASE_URL/$VERSION/chromedriver_linux64.zip" -o /tmp/driver.zip
+  $ unzip /tmp/driver.zip
+  $ chmod 755 chromedriver
+  $ mv chromedriver /usr/local/bin
+  
+  $ apt-get install -yq libgconf-2-4      # 安装 chromium and puppeteer  https://crbug.com/795759
+  # Install latest chrome dev package and fonts to support major 
+  # charsets (Chinese, Japanese, Arabic, Hebrew, Thai and a few others)
+  # Note: this installs the necessary libs to make the bundled version of Chromium that Puppeteer installs, work.
+  $ apt-get update \
+      && apt-get install -y wget gnupg \
+      && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+      && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
+      && apt-get update \
+      && apt-get -y install xvfb gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 \
+        libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 \
+        libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 \
+        libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 \
+        libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget \
+      && rm -rf /var/lib/apt/lists/* 
+  # install default dependencies for puppeteer
+  PUPPETEER_DOWNLOAD_HOST=https://npm.taobao.org/mirrors
+  npm config set puppeteer_download_host=https://npm.taobao.org/mirrors
+  npm install puppeteer-chromium-resolver crawlab-sdk -g --unsafe-perm=true --registry=https://registry.npm.taobao.org
+  
   
   # 微服务 - 消息中间件 - 跨语言LGPLed - 通信方案
   #0、gRPC通讯协议: grpc.io/docs/ 谷歌开源 HTTP/2 传输更快 http2.golang.org
@@ -725,12 +770,14 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   # dbus-daemon --session --print-address --fork --print-pid --address=unix:abstract=/tmp/dbus-FixedAddress # 指定监听地址
   # dbus-daemon --system --print-address --fork --print-pid    # 启动守护进程
   
+  
   # 安装ffmpeg视频编码/解码libraries: avcodec,avformat,avutil,avfilter,avdevice,swresample,swscale
   sudo apt-get -y install autoconf automake build-essential  # 先安装gcc/g++/gdb/make工具链
   sudo apt-get -y install libass-dev libfreetype6-dev libsdl1.2-dev libtheora-dev libtool libva-dev \
     libvdpau-dev libvorbis-dev libxcb1-dev libxcb-shm0-dev libxcb-xfixes0-dev pkg-config texi2html zlib1g-dev \
     libavdevice-dev libavfilter-dev libswscale-dev libavcodec-dev libavformat-dev libswresample-dev libavutil-dev
   sudo apt-get install yasm
+  
   
   # 环境变量: https://github.com/angenalZZZ/doc/blob/master/sh/01-locale-profile.sh
   # path 系统目录;SHELL搜索目录;

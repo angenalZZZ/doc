@@ -1,4 +1,6 @@
-# vue 前端开发
+# 前端开发
+
+## Vue
 
 ####  简介：[`v2`](https://cn.vuejs.org/v2/guide/)、`v3` <br>
 　`UI库`：[`element`](https://github.com/ElemeFE/element)、[`iview`](https://www.iviewui.com/docs/guide/start)、
@@ -258,9 +260,11 @@ watch: {
 
 > `comments` 开启会扣留注释
 
-# web 前端 cookies, local, session, and db storage.
+# web 前端 cookies, local, session, and db storage, compiler ...
 
 ####  es6：[`Brownies`](https://github.com/franciscop/brownies)
+
+####  compiler: [`webpack`](https://www.webpackjs.com/)、[`esbuild(fastest)推荐`](https://github.com/evanw/esbuild)
 
 ----
 

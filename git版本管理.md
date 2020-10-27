@@ -2,7 +2,7 @@
 
 #### Global Config
 ~~~bash
-> git config --global --list
+> git config --global --list                    # 查询全局所有配置
 > git config --global user.name                 # 查询全局git用户配置
 > git config --global user.name "yangzhou"      # 修改全局git用户配置
 > git config --global user.email "angenal@hotmail.com" # 修改全局git用户账号邮箱
@@ -11,8 +11,9 @@
 > git config --global alias.br "branch"
 > git config --global alias.ci "commit"
 > git config --global alias.st "status"
+> git config --global alias.l "config --local -l" # 查看当前分支remote.origin.url,branch.master.remote=origin
+> git config --global alias.ls "log --oneline"    # 一行展示日志+show详情 > git ls ; git show <commit-head-id>
 > git config --global alias.dog "log --all --decorate --oneline --graph" # 方便查看日志的快捷键 > git dog
-> git config --global alias.ls "log --oneline"  # 一行展示日志+show详情 > git ls ; git show <commit-head-id>
 > git config --global alias.hist "log --graph --date-order --date=short \ # git hist --all [--branches]
   --pretty=format:'%C(auto)%h%d %C(reset)%s %C(bold blue)%ce %C(reset)%C(green)%cr (%cd)'"
 > git config --global alias.lg1 "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"

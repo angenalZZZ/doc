@@ -43,6 +43,7 @@
   $ wget -qO- git.io/superbench.sh | bash
   
   # 系统服务
+  $ [apt,apt-get(在线安装)] + [dpkg(离线安装)] # Linux of Ubuntu
   $ [apt-get,yum,pip] install supervisor # 安装Supervisor服务(Python开发) 参考 https://www.jianshu.com/p/0b9054b33db3
   $ supervisord -d -c supervisor.conf # 安装Linux服务(Golang实现-后台守护进程) https://github.com/ochinchina/supervisord
   $ nohup <可执行文件路径+参数> &         # 后台运行-可执行程序(linux)

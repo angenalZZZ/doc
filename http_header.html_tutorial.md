@@ -39,7 +39,7 @@ Content-Type: text/plain; charset=utf-8  # HTTP 输出的数据类型和字符�
 Transfer-Encoding: chunked
 
 Server: Kestrel  # HTTP Web服务器名称
-Status: 200 OK   # HTTP 状态码
+Status: 200 OK   # HTTP 响应状态码
 
 Vary: Origin
 Vary: Accept-Encoding, Accept, X-Requested-With

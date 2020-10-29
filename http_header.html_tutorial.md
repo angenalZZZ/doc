@@ -33,7 +33,7 @@ Parameter             | Variable
 
 
 #### Response headers
-```text
+```
 Content-Type: text/plain; charset=utf-8  # HTTP 输出的数据类型和字符编码
 # Content-Type: application/json; charset=utf-8
 Transfer-Encoding: chunked
@@ -51,12 +51,12 @@ Access-Control-Allow-Credentials: true # 允许跨域请求凭据
 Access-Control-Allow-Headers: Origin,Content-Type,Accept,User-Agent,Cookie,Authorization,X-Auth-Token,X-Requested-With,X-Request-Id
 Access-Control-Allow-Methods: GET,PUT,POST,DELETE,PATCH,HEAD,CONNECT,OPTIONS,TRACE
 Access-Control-Allow-Origin: *    # 请求来源网址 [*-Origin-Host-Name-*]
-Access-Control-Max-Age: 3628800   # 预检请求凭据有效期（秒） 42天（42×86400(天)）防止*过量的OPTIONS请求
+Access-Control-Max-Age: 3628800   # 预检请求凭据有效期（秒） 42天（42×86400(天)）防止过量的OPTIONS预检请求
 
 X-Content-Type-Options: nosniff   # 开启*内容保护
 X-XSS-Protection: 1; mode=block   # 开启*XSS*保护
 X-Frame-Options: SAMEORIGIN       # 相同域名下*才允许用iframe加载网页
-X-Request-Id: EE0A:452CE:3F6D51:5D1749:5E795F3E  # 防止*重放攻击
+X-Request-Id: EE0A:452CE:3F6D51:5D1749:5E795F3E  # 防止重放攻击
 
 Date: Tue, 17 Mar 2020 08:55:13 GMT
 ```

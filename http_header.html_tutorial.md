@@ -33,7 +33,7 @@ Parameter             | Variable
 
 
 #### Response headers
-```
+```text
 Content-Type: text/plain; charset=utf-8  # HTTP 输出的数据类型和字符编码
 # Content-Type: application/json; charset=utf-8
 Transfer-Encoding: chunked
@@ -51,7 +51,7 @@ Access-Control-Allow-Credentials: true # 允许安全证书
 Access-Control-Allow-Headers: Origin,Content-Type,Accept,User-Agent,Cookie,Authorization,X-Auth-Token,X-Requested-With,X-Request-Id
 Access-Control-Allow-Methods: GET,PUT,POST,DELETE,PATCH,HEAD,CONNECT,OPTIONS,TRACE
 Access-Control-Allow-Origin: *    # 请求来源网址 [*-Origin-Host-Name-*]
-Access-Control-Max-Age: 3628800
+Access-Control-Max-Age: 3628800   # 预检请求有效期（秒） 42天（42×86400(天)）
 
 X-Content-Type-Options: nosniff   # 开启*内容保护
 X-XSS-Protection: 1; mode=block   # 开启*XSS*保护

@@ -3,7 +3,7 @@
 #### Request headers
 ```
 Authorization: Bearer eyJhbGciOiJIUzII6IkpXVCJ9.eyJodHRwOi8vc2JjZHpnIn0.kRZsQ8gw0zOn0
-Origin: [*-Origin-Host-Name-*]
+Origin: www.xxx.com   # 请求来源 [*-Origin-Host-Name-*]
 Cookie: _ga=GA1.1.719053831.1554966534
 Content-Type: application/vnd.ms-excel  [application/json]
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) \
@@ -16,13 +16,30 @@ Accept-Encoding: gzip, deflate, br
 Accept-Language: zh-CN,zh-TW;q=0.9,zh;q=0.8,en;q=0.7
 ```
 
+#### Request data
+
+> 通过网址:Route参数+Query参数+Body数据+Form表单提交
+
+Parameter             | Variable
+---                   |---
+`k=m&k=n`             | `map[k:n]`                   → k=`"n"`
+`k1=m&k2=n`           | `map[k1:m k2:n]`             → k1=`"m"` k2=`"n"`
+`k[]=m&k[]=n`         | `map[k:[m n]]`               → k=`["m","n"]`
+`k[a][]=m&k[a][]=n`   | `map[k:map[a:[m n]]]`        → k=`{"a":["m","n"]}`
+`k[a]=m&k[b]=n`       | `map[k:map[a:m b:n]]`        → k=`{"a":"m","b":"n"}`
+`k[a][a]=m&k[a][b]=n` | `map[k:map[a:map[a:m b:n]]]` → k=`{"a":{"a":"m","b":"n"}}`
+`k=m&k[a]=n`          | `error`                      → k~`无法识别`
+
+
+
 #### Response headers
 ```
-Content-Type: application/json; charset=utf-8
+Content-Type: text/plain; charset=utf-8  # HTTP 输出的数据类型和字符编码
+# Content-Type: application/json; charset=utf-8
 Transfer-Encoding: chunked
 
-Server: Kestrel
-Status: 200 OK
+Server: Kestrel  # HTTP Web服务器名称
+Status: 200 OK   # HTTP 状态码
 
 Vary: Origin
 Vary: Accept-Encoding, Accept, X-Requested-With
@@ -30,16 +47,21 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains; preload
 Set-Cookie: user_session=1OUjiNMkXZPGHlteIdQpWACqfgchWAqLqFFN44SXv1-_tXMn; \
             path=/; expires=Tue, 07 Apr 2020 01:15:43 GMT; secure; HttpOnly
 
-Access-Control-Allow-Credentials: true
-Access-Control-Allow-Origin: [*-Origin-Host-Name-*]
+Access-Control-Allow-Credentials: true # 允许安全证书
+Access-Control-Allow-Headers: Origin,Content-Type,Accept,User-Agent,Cookie,Authorization,X-Auth-Token,X-Requested-With,X-Request-Id
+Access-Control-Allow-Methods: GET,PUT,POST,DELETE,PATCH,HEAD,CONNECT,OPTIONS,TRACE
+Access-Control-Allow-Origin: *    # 请求来源网址 [*-Origin-Host-Name-*]
+Access-Control-Max-Age: 3628800
 
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-X-Frame-Options: SAMEORIGIN
-X-GitHub-Request-Id: EE0A:452CE:3F6D51:5D1749:5E795F3E
+X-Content-Type-Options: nosniff   # 开启*内容保护
+X-XSS-Protection: 1; mode=block   # 开启*XSS*保护
+X-Frame-Options: SAMEORIGIN       # 相同域名下*才允许用iframe加载网页
+X-Request-Id: EE0A:452CE:3F6D51:5D1749:5E795F3E  # 防止*重放攻击
 
 Date: Tue, 17 Mar 2020 08:55:13 GMT
 ```
+
+#### Response data
 
 
 # [HTML tutorial](https://www.runoob.com/html/html-tutorial.html)

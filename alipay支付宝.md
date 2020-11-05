@@ -21,10 +21,10 @@ OpenSSL
 企业开发者若涉及资金类支出接口接入，必须使用公钥证书模式。
 公钥证书签名方式引入了 CA 机构对公钥持有者进行身份识别，保证该证书所属实体的真实性，以实现报文的抗抵赖。
 ```
- - [1.3设置-应用网关+授权回调地址]
+ - [1.3配置应用网关与授权回调地址](https://openhome.alipay.com/platform/appDaily.htm)
  - [1.4下载支付宝"沙箱版",安装后进行开发测试](https://sandbox.alipaydev.com/user/downloadApp.htm)
 
-
+----
 
 
 

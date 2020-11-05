@@ -1,6 +1,6 @@
 # 证书
 
-#### 生成证书
+#### 获取证书
 
 ```
 证书：           CA根证书(服务器身份验证)                                # apiserver.crt <=> apiserver.key
@@ -18,7 +18,7 @@
 *指纹             a79be724538b668fa817e8578d6a8078337fd3ad
 ```
 
- - [Let’s Encrypt 免费证书](https://go-acme.github.io/lego/usage/cli/examples/)
+ - [Let’s Encrypt 免费证书/lego](https://go-acme.github.io/lego/usage/cli/examples/)
 ~~~bash
 $ lego --email="foo@bar.com" --domains="example.com" --http run   # 获取证书 ACME v2 版本支持申请通配符证书了
 $ AWS_REGION=us-east-1 AWS_ACCESS_KEY_ID=my_id AWS_SECRET_ACCESS_KEY=my_key \
@@ -28,7 +28,7 @@ $ lego --email="foo@bar.com" --domains="example.com" --http renew # 续订证书
 $ lego --email="foo@bar.com" --domains="example.com" --http renew --days 45 # 证书在45天内过期时续订证书
 $ lego --email="foo@bar.com" --domains="example.com" --http renew --renew-hook="./myscript.sh" # 续订证书(钩子)
 ~~~
- - [Let’s Encrypt 免费证书/自动化脚本](https://github.com/srvrco/getssl)
+ - [Let’s Encrypt 免费证书/自动化脚本getssl](https://github.com/srvrco/getssl)
 ~~~bash
 $ wget https://raw.githubusercontent.com/srvrco/getssl/master/getssl && chmod 700 getssl  # 下载getssl工具
 $ ./getssl -c yourdomain.com               # init email account
@@ -36,7 +36,7 @@ $ getssl yourdomain.com                    # run ssl service
 $ crontab                                  # auto reboot cron
 23  5 * * * /root/scripts/getssl -u -a -q  # auto update config
 ~~~
- - [Let’s Encrypt 免费证书/自动化工具](https://certbot.eff.org)、[自动续期证书](https://github.com/ywdblog/certbot-letencrypt-wildcardcertificates-alydns-au)
+ - [Let’s Encrypt 免费证书/自动化工具certbot](https://certbot.eff.org)、[自动续期证书](https://github.com/ywdblog/certbot-letencrypt-wildcardcertificates-alydns-au)
 ~~~bash
 $ sudo add-apt-repository universe
 $ sudo add-apt-repository ppa:certbot/certbot
@@ -51,7 +51,7 @@ $ tree /etc/letsencrypt/archive/newyingyong.cn            # 2.2证书申请成�
 $ openssl x509 -in /etc/letsencrypt/archive/newyingyong.cn/cert1.pem -noout -text # 2.3校验证书
 $ certbot-auto certificates                               # 2.4查看机器上有多少证书
 ~~~
- - [OpenSSL管理证书](https://www.openssl.org/docs/manmaster/man1/)
+ - [OpenSSL管理证书docs](https://www.openssl.org/docs/manmaster/man1/)
 ~~~bash
 #创建数字签名认证
 > openssl req -new -nodes -x509 -out server.crt -keyout server.key -days 3650 \
@@ -72,7 +72,7 @@ openssl enc -aes128 -pbkdf2 -d -in file.aes128 -out file.txt -pass pass:<passwor
 openssl enc -aes-256-ctr -pbkdf2 -a -in file.txt -out file.aes256  # 需输入密码<password>
 openssl enc -aes-256-ctr -pbkdf2 -d -a -in file.aes256 -out file.txt -pass file:<passfile> #提供密钥文件
 ~~~
- - *本机开发证书--OpenSSL生成 localhost.crt & localhost.key*
+ - *本机开发证书-- OpenSSL 生成 localhost.crt & localhost.key*
 ~~~bash
 # hosts可指定子域名www等: 127.0.0.1 www.localhost
 > openssl req -x509 -out localhost.crt -keyout localhost.key -newkey rsa:2048 -nodes -sha256 \
@@ -110,9 +110,9 @@ openssl ca -passin pass:123456 -days 3650 -in server.csr -keyfile ca.key -cert c
 openssl rsa -passin pass:123456 -in server.key -out server.key
 openssl pkcs8 -topk8 -nocrypt -in server.key -out server.pem
 ~~~
- - *本机开发证书--工具mkcert,win-acme等*
+ - *本机开发证书-- 工具mkcert,win-acme等 生成 localhost.crt & localhost.key*
 ```bash
-#1.安装mkcert数字签名工具 github.com/FiloSottile/mkcert *22k
+#1.安装mkcert数字签名工具 github.com/FiloSottile/mkcert *26k
 $ sudo apt install libnss3-tools  #or: sudo yum install nss-tools #or: sudo pacman -S nss
 $ git clone github.com/FiloSottile/mkcert && go build -ldflags "-X main.Version=$(git describe --tags)"
 $ mkcert -help    #.用于搭建本地CA数字签名认证: CA, Digital Signature, Key Encipherment, Certificate Signing.
@@ -128,7 +128,7 @@ $ mkcert example.com "*.example.com" localhost 127.0.0.1 ::1 #3.创建证书,指
 #1.3打开PowerShell查询数字签名证书
 > ls Cert:\CurrentUser\Root | where {$_.Subject -eq "CN=Api Cert"}
 
-#2.安装win-acme证书管理windows客户端 github.com/win-acme/win-acme *3.7k
+#2.安装win-acme证书管理windows客户端 github.com/win-acme/win-acme *4k
 
 ```
 

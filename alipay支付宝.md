@@ -5,9 +5,9 @@
  - [1.密钥设置--OpenSSL生成密钥](https://opendocs.alipay.com/open/291/106130)
 ~~~bash
 OpenSSL
-> genrsa -out app_private_key.pem 2048 #生成"应用私钥"--私钥填入源代码中
-> pkcs8 -topk8 -inform PEM -in app_private_key.pem -outform PEM -nocrypt -out app_private_key_pkcs8.pem #仅Java需将私钥转成pkcs8格式
-> rsa -in app_private_key.pem -pubout -out app_public_key.pem #生成普通"应用公钥"--处理格式：去除头尾换行空格，转成一行字符串
+> genrsa -out app_private_key.pem 2048 #生成"应用私钥"--填入源代码中--密钥和应用APPID一一对应;不要泄露;
+> pkcs8 -topk8 -inform PEM -in app_private_key.pem -outform PEM -nocrypt -out app_private_key_pkcs8.pem #仅Java需将私钥转成pkcs8格式;
+> rsa -in app_private_key.pem -pubout -out app_public_key.pem #生成普通"应用公钥"--处理格式：去除头尾换行空格，转成一行字符串;
 > exit #登录开放平台，上传普通"应用公钥"并获取"支付宝公钥"。
 ~~~
  - [1.1普通"公钥"方式--上传"应用公钥"并获取"支付宝公钥"](https://opendocs.alipay.com/open/291/105971)
@@ -17,4 +17,8 @@ OpenSSL
 支付宝公钥：MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAu+Ik9HVN5Y1znbp293JqrdupIaO+UJN/Co1boiNR5gq9wx0VzfxKAX0wl8f0WSHdGBgCV2MHNl0qn+MK/Ulw0u4GuKJW8ynsfJcsXLtYHwjG2sfuOXVb0/SnVDgL2pJq53DbMSDniS9N9Eh5Kki24yQ/X/OfFAhAO0ynH+FMNjcOq/bDInZepXlaWypaODbFf5Op63qiwQ3lXMa7otU3KiFJ0f5h44SO+FnUAtiTTjVvAUy4fpeO9vDG7ydbdw+e5U13+4VT+Mxr+Ez9ipgCuVGtPz7wfH5L0Ko8WqeAb/IrkhoAQ7K9jVE/pLdXjsUduHO5WVIdOWtilgL5+jxCBQIDAQAB
 ```
  - [1.2"公钥证书"方式](https://opendocs.alipay.com/open/291/105971)
+```
+企业开发者若涉及资金类支出接口接入，必须使用公钥证书模式。
+公钥证书签名方式引入了 CA 机构对公钥持有者进行身份识别，保证该证书所属实体的真实性，以实现报文的抗抵赖。
+```
 

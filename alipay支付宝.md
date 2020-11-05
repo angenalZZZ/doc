@@ -1,7 +1,7 @@
 # 支付宝
 
 #### 测试环境/沙箱环境
- - [沙箱环境](https://openhome.alipay.com/platform/appDaily.htm)、[开发文档](https://opendocs.alipay.com/open/200/105311)
+ - [沙箱环境(AppID获取+密钥设置+应用网关+回调地址)](https://openhome.alipay.com/platform/appDaily.htm)、[开发文档](https://opendocs.alipay.com/open/200/105311)
  - [1.密钥设置--OpenSSL生成密钥](https://opendocs.alipay.com/open/291/106130)
 ~~~bash
 OpenSSL
@@ -21,4 +21,10 @@ OpenSSL
 企业开发者若涉及资金类支出接口接入，必须使用公钥证书模式。
 公钥证书签名方式引入了 CA 机构对公钥持有者进行身份识别，保证该证书所属实体的真实性，以实现报文的抗抵赖。
 ```
+ - [1.3设置-应用网关+授权回调地址]
+ - [1.4下载支付宝"沙箱版",安装后进行开发测试](https://sandbox.alipaydev.com/user/downloadApp.htm)
+
+
+
+
 

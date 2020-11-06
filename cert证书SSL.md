@@ -47,18 +47,23 @@ $ crontab                                  # auto reboot cron
 ~~~
  - [Let’s Encrypt 免费证书/自动化工具certbot](https://certbot.eff.org)、[自动续期证书](https://github.com/ywdblog/certbot-letencrypt-wildcardcertificates-alydns-au)
 ~~~bash
-$ sudo add-apt-repository universe
+$ sudo add-apt-repository universe  # sudo apt-get update & sudo apt-get install software-properties-common
 $ sudo add-apt-repository ppa:certbot/certbot
 $ sudo apt-get update
 $ sudo apt-get install certbot
-# certbot-auto -V  # update client version for certbot^0.22.0 # 1.登录域名管理给域名添一个 DNS TXT 记录
+
+$ certbot certonly --standalone -d 申请域名 --staple-ocsp -m 邮箱地址 --agree-tos  # 默认有效期为3个月
+# /etc/letsencrypt/***/fullchain.pem, privkey.pem         # 生产证书(fullchain.pem, privkey.pem)
+0 0 * * * certbot renew --quiet --renew-hook "kill -SIGUSR1 $(pidof 进程名称)" # 使用crontab自动续期
+
+# certbot-auto -V  # update version for certbot^0.22.0    # 1.登录域名管理给域名添一个 DNS TXT 记录
 $ tree /etc/letsencrypt/accounts  # 如何使用 ACME v2 版本?  https://www.jianshu.com/p/c5c9d071e395
 $ certbot-auto certonly -d *.newyingyong.cn --manual --preferred-challenges dns \
-  --server https://acme-v02.api.letsencrypt.org/directory # 2.没有获得 DNS TXT 记录生效前不要回车执行确认
-$ dig -t txt _acme-challenge.newyingyong.cn @8.8.8.8      # 2.1确认获得 DNS TXT 记录是否生效的命令
+  --server https://acme-v02.api.letsencrypt.org/directory # 2.没有获得 DNS TXT 记录生效前【不要回车执行确认】
+$ dig -t txt _acme-challenge.newyingyong.cn @8.8.8.8      # 2.1确认获得 DNS TXT 记录是否生效？
 $ tree /etc/letsencrypt/archive/newyingyong.cn            # 2.2证书申请成功
 $ openssl x509 -in /etc/letsencrypt/archive/newyingyong.cn/cert1.pem -noout -text # 2.3校验证书
-$ certbot-auto certificates                               # 2.4查看机器上有多少证书
+$ certbot-auto certificates                               # 2.4查看机器上有多少证书？
 ~~~
  - [OpenSSL管理证书docs](https://www.openssl.org/docs/manmaster/man1/)
 ~~~bash
@@ -84,7 +89,7 @@ openssl enc -aes-256-ctr -pbkdf2 -d -a -in file.aes256 -out file.txt -pass file:
 # 生成秘钥文件
 openssl genrsa -out server.key 2048                     # 使用常用的RSA算法
 openssl ecparam -genkey -name secp384r1 -out server.key # 也可使用ECDSA算法
-# 根据秘钥生成证书文件                                    # 后端开发使用(server.crt, server.key)
+# 根据秘钥生成证书文件                                    # 开发证书(server.crt, server.key)
 openssl req -new -x509 -key server.key -out server.crt -days 3650
 # 根据秘钥生成公钥文件，该文件用于客户端与服务端通信(可选)
 openssl rsa -in server.key -out server.key.public

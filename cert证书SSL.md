@@ -18,6 +18,15 @@
 *指纹             a79be724538b668fa817e8578d6a8078337fd3ad
 ```
 
+> `SSL免费证书`机构比较多，如：
+1. `腾讯云DV SSL 证书` : https://cloud.tencent.com/product/ssl
+2. `Let’s Encrypt` : https://letsencrypt.org/
+4. `CloudFlare SSL` : https://www.cloudflare.com/
+4. `StartSSL` : https://www.startcomca.com/
+5. `Wosign沃通SSL` : https://www.wosign.com/
+6. `loovit.net AlphaSSL` : https://www.lowendtalk.com/entry/register?Target=discussion%2Fcomment%2F2306096
+
+
  - [Let’s Encrypt 免费证书/lego](https://go-acme.github.io/lego/usage/cli/examples/)
 ~~~bash
 $ lego --email="foo@bar.com" --domains="example.com" --http run   # 获取证书 ACME v2 版本支持申请通配符证书了
@@ -71,6 +80,15 @@ openssl enc -aes128 -pbkdf2 -d -in file.aes128 -out file.txt -pass pass:<passwor
 # AES256加密 (CTR模式&PBKDF2密钥)密码+Salt + base64
 openssl enc -aes-256-ctr -pbkdf2 -a -in file.txt -out file.aes256  # 需输入密码<password>
 openssl enc -aes-256-ctr -pbkdf2 -d -a -in file.aes256 -out file.txt -pass file:<passfile> #提供密钥文件
+
+# 生成秘钥文件
+openssl genrsa -out server.key 2048                     # 使用常用的RSA算法
+openssl ecparam -genkey -name secp384r1 -out server.key # 也可使用ECDSA算法
+# 根据秘钥生成证书文件                                    # 后端开发使用(server.crt, server.key)
+openssl req -new -x509 -key server.key -out server.crt -days 3650
+# 根据秘钥生成公钥文件，该文件用于客户端与服务端通信(可选)
+openssl rsa -in server.key -out server.key.public
+
 ~~~
  - *本机开发证书-- OpenSSL 生成 localhost.crt & localhost.key*
 ~~~bash

@@ -49,9 +49,10 @@ Set-Cookie: user_session=1OUjiNMkXZPGHlteIdQpWACqfgchWAqLqFFN44SXv1-_tXMn; \
 
 Access-Control-Allow-Credentials: true # 允许跨域请求凭据
 Access-Control-Allow-Headers: Origin,Content-Type,Accept,User-Agent,Cookie,Authorization,X-Auth-Token,X-Requested-With,X-Request-Id
-Access-Control-Allow-Methods: GET,PUT,POST,DELETE,PATCH,HEAD,CONNECT,OPTIONS,TRACE
+Access-Control-Allow-Methods: GET,PUT,POST,DELETE,PATCH,HEAD,CONNECT,OPTIONS,TRACE # 可填写*
 Access-Control-Allow-Origin: *    # 请求来源网址 [*-Origin-Host-Name-*]
-Access-Control-Max-Age: 3628800   # 预检请求凭据有效期（秒） 42天（42×86400(天)）防止过量的OPTIONS预检请求
+Access-Control-Expose-Headers: Cache-Control,Content-Disposition,Content-Language,Content-Type,Expires,Last-Modified,Pragma,X- ...
+Access-Control-Max-Age: 3628800   # 预检请求凭据有效期（秒）42天（42×86400(天)）防止过量的OPTIONS预检请求; Expose-Headers让前端js可访问√
 
 X-Content-Type-Options: nosniff   # 开启*内容保护
 X-XSS-Protection: 1; mode=block   # 开启*XSS*保护

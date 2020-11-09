@@ -1180,6 +1180,13 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
   $ xclip -sel clip < ~/.ssh/id_rsa.pub   # GNU/Linux (requires xclip)
   $ pbcopy < ~/.ssh/id_rsa.pub            # <MacOS>
   
+  # windows安装OpenSSH
+  # 下载 https://github.com/PowerShell/Win32-OpenSSH/releases
+  > powershell.exe -ExecutionPolicy Bypass -File install-sshd.ps1  # 安装sshd服务(建议将OpenSSH添加到%path%中)
+  > netsh advfirewall firewall add rule name=sshd dir=in action=allow protocol=TCP localport=22 # 开放端口22
+  > sc config sshd start= auto                                     # 开机启动sshd服务
+  > net start sshd                                                 # 启动ssh服务
+  
   # felix 提供 SSH Web管理后台 + RESTful Api接口<ssh+gin+GORM> github.com/dejavuzhou/felix
   > felix sshw -a :8022 -x 1440 -u admin -p admin -s @Ubr)Vrp~Zoo6Rvrk1PP1*ZXPYby_Z)s  # felix -h
   # WebSsh终端 堡垒机  github.com/huashengdun/webssh

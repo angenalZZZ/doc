@@ -5,7 +5,7 @@
  - [1.0 密钥设置--OpenSSL生成密钥](https://opendocs.alipay.com/open/291/106130)
 ~~~bash
 OpenSSL
-> genrsa -out app_private_key.pem 2048 #生成"应用私钥"--填入源代码中--密钥和应用APPID一一对应;不要泄露;
+> genrsa -out app_private_key.pem 2048 #生成"应用私钥";填入源代码中,跟应用APPID一一对应;不要泄露私钥;
 > pkcs8 -topk8 -inform PEM -in app_private_key.pem -outform PEM -nocrypt -out app_private_key_pkcs8.pem #仅java需将私钥转成pkcs8格式
 > rsa -in app_private_key.pem -pubout -out app_public_key.pem #生成普通"应用公钥"--处理格式：去除头尾换行空格，转成一行字符串;
 > exit #登录开放平台，上传普通"应用公钥"并获取"支付宝公钥"。

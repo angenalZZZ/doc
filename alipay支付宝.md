@@ -1,5 +1,9 @@
 # 支付宝
 
+#### 开发环境/开源SDK
+ * Go语言
+   * [github.com/smartwalle/alipay/v3 支持公钥证书和普通公钥方式](https://github.com/smartwalle/alipay)
+
 #### 测试环境/沙箱环境
  - [沙箱环境(AppID获取+密钥设置+应用网关+回调地址)](https://openhome.alipay.com/platform/appDaily.htm)、[查看开发文档](https://opendocs.alipay.com/open/200/105311)
  - [1.0 密钥设置--OpenSSL生成密钥](https://opendocs.alipay.com/open/291/106130)

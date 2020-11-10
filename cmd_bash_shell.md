@@ -168,8 +168,6 @@
   # 进程详情
   > tasklist
   > wmic process where "caption = 'java.exe' and commandline like '%server-1.properties%'" get processid
-  > netstat -ano | findstr :3000 # 杀死进程使用, 指定占用的端口号
-  # taskkill /F /PID <<PID>>     # PowerShell杀死进程
   $ ps aux                       # 进程列表: USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND
   $ ps -ef                       # 进程列表: UID  PID  PPID  C STIME TTY TIME CMD
   $ ps -eo pid,cmd | grep uuid   # [o输出字段,e依赖的系统环境]
@@ -181,14 +179,20 @@
     > clrthreads ; setthread [线程DBG] ; clrstack ; clrstack -a ; dumpobj 0x00*** # 分析线程/堆栈/内存数据
   $ ps aux | head -1; ps aux | sort -rn -k3 | head -10 # 占用CPU最高的前10个进程
   $ ps -e -o stat,ppid,pid,cmd | grep -e '^[Zz]' | awk '{print $2}' | xargs kill -9 # 批量删除(Z开头)僵尸进程
+  
+  > netstat -ano | findstr :3000 # 杀死进程使用, 指定占用的端口号
+  > taskkill /F /PID <<PID>>     # PowerShell杀死进程
   $ killall -I NAME... # 杀死进程,指定进程名称NAME...
   $ killall -I -s 15 -u `id -un` NAME... # -s 15=TERM结束程序(可以被捕获-阻塞-忽略)+程序内可监听该信号SIG
   $ kill -l            # 查看软件中断SIG [Linux标准信号1~31] (实时信号:32~64) +打印所有支持的信号名称
-  # kill -9 <<PID>>    # -9=KILL无条件结束程序(不能被捕获-阻塞-忽略) 
+  # kill -9 <<PID>>    # 无条件结束程序-9=KILL(不能被捕获-阻塞-忽略) 
+  $ kill -SIGUSR1 <<PID>> # 重启服务-10=USR1   -1     -2     -3      -9      -15
+  $ kill -SIGTERM <<PID>> # 关闭服务           -SIGHUP/SIGINT/SIGQUIT/SIGKILL/SIGTERM
   # 参考: https://gist.github.com/biezhi/74bfe20f9758210c1be18c64e6992a37
   # -1=HUP终端控制进程结束(终端连接断开) -2=INT用户发送INTR字符(Ctrl+C)触发进程结束 -3=QUIT用户发送QUIT字符(Ctrl+/)
   # -18=TSTP暂停进程 -19=CONT继续进程 -17=STOP停止进程(不能被捕获) 
   # -21=TTIN读数据时 -22=TTOU写数据时 -20=CHLD子进程结束(由父进程接收)
+  
   $ lsof | tail        # 系统最近打开的文件(list open files)
   # lsof -p <<PID>>    # 进程打开的文件(包括网络端口等)
   $ lsof -u root       # root最近打开的文件

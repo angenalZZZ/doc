@@ -3,7 +3,7 @@
 
 #### 系统升级
 
-> Windows 10 最新版激活方式，免费升级到20H2
+> Windows 10 最新版激活方式，免费升级到20H2 [Download MediaCreationTool20H2](https://go.microsoft.com/fwlink/?LinkId=691209)
 ~~~
 slmgr /ipk W269N-WFGWX-YVC9B-4J6C9-T83GX
 slmgr /skms kms.03k.org

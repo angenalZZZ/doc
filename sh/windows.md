@@ -16,6 +16,13 @@ Get-AppxPackage *store* | Remove-AppxPackage # 删除原来的 Microsoft Store
 Get-AppxPackage -AllUsers | Select Name, PackageFullName | Select-String "WindowsStore" # 查询并复制<包全名>
 Add-AppxPackage -Register "C:\Program Files\WindowsApps\<包全名>\AppxManifest.xml" -DisableDevelopmentMode #安装
 ~~~
+> 检查系统问题
+~~~
+sfc /SCANNOW                                    # 检查系统组件是否有问题
+DISM.exe /Online /Cleanup-image /Scanhealth     # 检查系统组件是否有问题
+DISM.exe /Online /Cleanup-image /Checkhealth
+DISM.exe /Online /Cleanup-image /Restorehealth  # 恢复系统组件
+~~~
 
 
 #### 注册表

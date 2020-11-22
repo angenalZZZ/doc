@@ -4,10 +4,17 @@
 #### 系统升级
 
 > Windows 10 最新版激活方式，免费升级到20H2 [Download MediaCreationTool20H2](https://go.microsoft.com/fwlink/?LinkId=691209)
-~~~
+~~~cmd
 slmgr /ipk W269N-WFGWX-YVC9B-4J6C9-T83GX
 slmgr /skms kms.03k.org
 slmgr /ato
+~~~
+> Windows 10 重装 Microsoft Store
+~~~bash
+# PowerShell 以管理员方式运行
+Get-AppxPackage *store* | Remove-AppxPackage # 删除原来的 Microsoft Store
+Get-AppxPackage -AllUsers | Select Name, PackageFullName | Select-String "WindowsStore" # 查询并复制<包全名>
+Add-AppxPackage -Register "C:\Program Files\WindowsApps\<包全名>\AppxManifest.xml" -DisableDevelopmentMode #安装
 ~~~
 
 

@@ -41,15 +41,11 @@ REG add "HKLM\SYSTEM\CurrentControlSet\Services\UsoSvc" /v Start /t REG_DWORD /d
 - 用户变量/Path
 ```
 C:\Users\Administrator\AppData\Local\Microsoft\WindowsApps
-C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\Scripts
-C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32
 C:\Users\Administrator\AppData\Local\Programs\Microsoft VS Code\bin
-C:\Users\Administrator\AppData\Roaming\npm
+C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32
+C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\Scripts
 C:\Users\Administrator\.dotnet\tools
-D:\Program Files\JetBrains\GoLand2018\bin
 D:\Program\nodejs\node_global
-D:\Program\v\.bin
-D:\Program\Redis
 A:\Go\bin
 ```
 
@@ -83,6 +79,7 @@ D:\Program\nng\bin
 D:\Program\nanomsg\bin
 D:\Program\nodejs\
 D:\Program\v\.bin
+D:\Program\Redis
 D:\Program\zstd\
 D:\Program\rocksdb\
 ```

@@ -63,8 +63,8 @@ C:\Program Files (x86)\Graphviz2.38\bin
 C:\Program Files (x86)\Lua\5.1
 C:\Program Files (x86)\Lua\5.1\clibs
 C:\Program Files\dotnet\
-C:\Program Files\R\R-3.6.1\bin\
 C:\Program Files\Git\cmd
+C:\Program Files\R\R-3.6.1\bin\
 C:\Program Files\Docker\Docker\resources\bin
 C:\ProgramData\DockerDesktop\version-bin
 D:\Program Files\erl10.5\bin

@@ -45,8 +45,6 @@ C:\Users\Administrator\AppData\Local\Programs\Microsoft VS Code\bin
 C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32
 C:\Users\Administrator\AppData\Local\Programs\Python\Python37-32\Scripts
 C:\Users\Administrator\.dotnet\tools
-D:\Program\nodejs\node_global
-A:\Go\bin
 ```
 
 - 系统变量/Path
@@ -71,17 +69,19 @@ C:\Program Files\Docker\Docker\resources\bin
 C:\ProgramData\DockerDesktop\version-bin
 D:\Program Files\erl10.5\bin
 D:\Tool\SysinternalsSuite\
+A:\go\bin
+D:\Program\Go\bin
 D:\Program\mingw64\bin\
 D:\Program\CMake\bin
 D:\Program\D-Bus\bin
-D:\Program\Go\bin
 D:\Program\nng\bin
 D:\Program\nanomsg\bin
 D:\Program\nodejs\
+D:\Program\nodejs\node_global
 D:\Program\v\.bin
-D:\Program\Redis
 D:\Program\zstd\
 D:\Program\rocksdb\
+D:\Program\Redis
 ```
 
 - 系统变量

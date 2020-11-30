@@ -6,6 +6,8 @@
 > git config --global user.name                 # 查询全局git用户配置
 > git config --global user.name "yangzhou"      # 修改全局git用户配置
 > git config --global user.email "angenal@hotmail.com" # 修改全局git用户账号邮箱
+> git config --global color.ui true             # 在终端中启用彩色输出
+> git config --global core.editor emacs         # 使用emacs文本编辑器(可选)
 
 > git config --global alias.co "checkout"       # 修改全局git用户的快捷键\命令
 > git config --global alias.br "branch"
@@ -53,7 +55,8 @@ $ sudo dscacheutil -flushcache
 
 # 设置SSH-Key: github.com/settings/keys
 > ssh-keygen -t rsa -C "angenal@hotmail.com"
-# 1.创建SSHKey #2.复制文件为Key>id_rsa.pub #3.测试SSHKey>ssh -T git@github.com #4.设置<hosts> 52.74.223.119 github.com
+# 1.创建SSHKey # 2.复制公钥文件 $ pbcopy < ~/.ssh/id_rsa.pub >> github.com/settings/ssh
+# 3.测试SSHKey>ssh -T git@github.com # 4.设置(可选)<hosts> 52.74.223.119 github.com
 ~~~
 
 #### Create a new repository from your `LAN(local area network)` `origin`.

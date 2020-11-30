@@ -76,6 +76,7 @@
   $ SIGNATURE="$(printf "${TIMESTAMP}${TOKEN}"|openssl dgst -sha256 -hmac "${SECRET}" -binary|openssl enc -base64)"
   $ echo "Authorization: signature=${SIGNATURE},secret=${SECRET},token=${TOKEN},timestamp=${TIMESTAMP}"
   $ /usr/share/zoneinfo/localtime -> /etc/localtime  # 本地时间文件
+  $ dpkg-reconfigure tzdata   # 设置本地时区 'Asia/Shanghai'
   $ export TZ='Asia/Shanghai' # 设置本地时区 | 帮助选择时区的命令tzselect |配置文件vi ~/.profile<TZ='Asia/Shanghai'
   $ date "+%Y/%m/%d %X"     # 打印当前本地时间 | 本地日期 date +%Y%m%d | $(Hardware-Clock) hwclock
   $ date --date='TZ="Europe/Paris" 2004-10-31 06:30:00' # 修改时区&时间

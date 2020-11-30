@@ -2,6 +2,7 @@
 
 #### Global Config
 ~~~bash
+# https://kbroman.org/github_tutorial/pages/first_time.html
 > git config --global --list                    # 查询全局所有配置
 > git config --global user.name                 # 查询全局git用户配置
 > git config --global user.name "yangzhou"      # 修改全局git用户配置
@@ -18,8 +19,10 @@
 > git config --global alias.dog "log --all --decorate --oneline --graph" # 方便查看日志的快捷键 > git dog
 > git config --global alias.hist "log --graph --date-order --date=short \ # git hist --all [--branches]
   --pretty=format:'%C(auto)%h%d %C(reset)%s %C(bold blue)%ce %C(reset)%C(green)%cr (%cd)'"
-> git config --global alias.lg1 "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
-> git config --global alias.lg2 "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all"
+> git config --global alias.lg1 "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - \
+  %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
+> git config --global alias.lg2 "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - \
+  %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all"
 
 > git config --global --edit                    # 直接编辑全局配置文件 ~/.gitconfig
 [alias]  # 参考: https://stackoverflow.com/questions/1057564/pretty-git-branch-graphs

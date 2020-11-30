@@ -443,11 +443,22 @@ deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main universe multiver
 deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main universe multiverse restricted
 deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main universe multiverse restricted
 deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main universe multiverse restricted
-$ sudo vi /etc/apt/sources.list  # ubuntu`19.10``eoan` 同上
+$ sudo vi /etc/apt/sources.list  # ubuntu`19.10``eoan` 阿里云源
 deb http://mirrors.aliyun.com/ubuntu/ eoan main universe multiverse restricted
 deb-src http://mirrors.aliyun.com/ubuntu/ eoan main universe multiverse restricted
 deb http://cn.archive.ubuntu.com/ubuntu eoan main universe multiverse restricted
 deb-src http://cn.archive.ubuntu.com/ubuntu eoan main universe multiverse restricted
+$ sudo vi /etc/apt/sources.list  # ubuntu`20.04``focal` 阿里云源
+deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
 $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
 ~~~
 

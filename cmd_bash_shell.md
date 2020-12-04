@@ -580,12 +580,11 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ sudo apt-get -y install --no-install-recommends openresty # 最小化安装,不装推荐的openresty-opm,openresty-restydoc
   #-config>>  /usr/local/openresty/nginx/conf/nginx.conf
   $ sudo systemctl restart openresty  # 重启; 开始HelloWorld  openresty.org/cn/getting-started.html
-  
-  
-  $ sudo apt install nodejs # 安装Nodejs(此安装方式版本太低; 推荐wget安装方式-如下)
-  $ wget https://npm.taobao.org/mirrors/node/v13.6.0/node-v13.6.0-linux-x64.tar.gz
-  $ sudo tar -zxf node-v13.6.0-linux-x64.tar.gz -C /usr/local/
-  $ sudo mv /usr/local/node-v13.6.0-linux-x64 /usr/local/node
+   
+  $ sudo apt install nodejs           # 安装Nodejs(此安装方式版本太低; 推荐wget安装方式-如下)
+  $ wget https://npm.taobao.org/mirrors/node/v12.16.3/node-v12.16.3-linux-x64.tar.gz
+  $ sudo tar -zxf node-v12.16.3-linux-x64.tar.gz -C /usr/local/
+  $ sudo mv /usr/local/node-v12.16.3-linux-x64 /usr/local/node
   $ sudo chown `id -un`:`id -gn` /usr/local/node -R  # 设置目录
   $ export PATH=/usr/local/node/bin:$PATH # 配置环境变量,如下 01-locale-profile.sh (替代选项)设置软链接 ln
   $ sudo ln -sf /usr/local/node/bin/node /usr/local/bin/node

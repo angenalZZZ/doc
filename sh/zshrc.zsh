@@ -1,4 +1,15 @@
-# zsh: cp zshrc.zsh ~/.zshrc ; /root/.zshrc
+# First copy zshrc: cp /mnt/a/git/doc/sh/zshrc.zsh ~/.zshrc
+# First copy zshrc: cp /mnt/a/git/doc/sh/02-bash_aliases.sh ~/.bash_aliases
+
+# User local config
+[ -f "$HOME/.local/etc/config.zsh" ] && source "$HOME/.local/etc/config.zsh" 
+[ -f "$HOME/.local/etc/local.zsh" ] && source "$HOME/.local/etc/local.zsh"
+# User local profile
+[ -f "$HOME/.bash_profile" ] && source "$HOME/.bash_profile"
+[ -f "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
+[ -f "$HOME/.profile" ] && source "$HOME/.profile"
+
+
 # Antigen: https://github.com/zsh-users/antigen
 ANTIGEN="$HOME/.local/bin/antigen.zsh"
 
@@ -115,13 +126,6 @@ ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]=fg=009
 ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]=fg=009
 ZSH_HIGHLIGHT_STYLES[assign]=none
 
-# load local config
-[ -f "$HOME/.local/etc/config.zsh" ] && source "$HOME/.local/etc/config.zsh" 
-[ -f "$HOME/.local/etc/local.zsh" ] && source "$HOME/.local/etc/local.zsh"
-# load local profile & .bash_aliases <- 02-bash_aliases.sh
-[ -f "$HOME/.profile" ] && source "$HOME/.profile"
-[ -f "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
-# [ -f "$HOME/.bash_profile" ] && source "$HOME/.bash_profile"
 
 # enable syntax highlighting
 antigen bundle zsh-users/zsh-syntax-highlighting

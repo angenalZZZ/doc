@@ -93,6 +93,9 @@
   $ echo -e "$USER\n$HOME\n$SHELL\n$PATH\n$LOGNAME\n$MAIL" # 当前用户环境 [-e允许反斜杠转义字符]
   $ id            # 返回 uid=0(root) gid=0(root) groups=0(root)  ; root登录:  su root ; su - ;目录不变
   $ id -u         # 返回 uid          添加用户(-d=$home)      (-G=附加用户组)       例如(用户名=admin)
+  $ sudo passwd   # 当切换root时异常 su: authentication failure $ su - root (su输入指定用户的密码;sudo输入当前用户密码)
+  [sudo] password for [your name]: 你当前的密码
+  New password: 这个是root的密码; 修改命令 sudo passwd
   $ mkdir -p /home/admin & chmod 777 /home/admin 
   # 新建用户-默认值: useradd -D  |  cat /etc/default/useradd ;修改默认shell: useradd -D -s /bin/zsh
   $ useradd -m -d /home/admin -G adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare,libvirt admin # -m管理员

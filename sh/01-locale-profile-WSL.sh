@@ -3,10 +3,7 @@
 ##Windows10/Linux(WSL) 
 
 ##系统环境变量
-export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
-export PATH=$PATH:~/.antigen/bundles/robbyrussell/oh-my-zsh/lib:~/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/pip:~/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/svn-fast-info:~/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/colorize:~/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/github:~/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/python:~/.antigen/bundles/zsh-users/zsh-autosuggestions:~/.antigen/bundles/zsh-users/zsh-completions:~/.antigen/bundles/Vifon/deer:~/.antigen/bundles/willghatch/zsh-cdr:~/.antigen/bundles/zsh-users/zaw:~/.antigen/bundles/zsh-users/zaw/functions:~/.antigen/bundles/zsh-users/zsh-syntax-highlighting
-export PATH=$PATH:/mnt/c/WINDOWS:/mnt/c/WINDOWS/system32:/mnt/e/Tool/SysinternalsSuite
-export PATH=$PATH:/mnt/a/go/bin
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:~/.antigen/bundles/robbyrussell/oh-my-zsh/lib:~/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/pip:~/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/svn-fast-info:~/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/colorize:~/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/github:~/.antigen/bundles/robbyrussell/oh-my-zsh/plugins/python:~/.antigen/bundles/zsh-users/zsh-autosuggestions:~/.antigen/bundles/zsh-users/zsh-completions:~/.antigen/bundles/Vifon/deer:~/.antigen/bundles/willghatch/zsh-cdr:~/.antigen/bundles/zsh-users/zaw:~/.antigen/bundles/zsh-users/zaw/functions:~/.antigen/bundles/zsh-users/zsh-syntax-highlighting:/mnt/c/WINDOWS:/mnt/c/WINDOWS/system32:/mnt/e/Tool/SysinternalsSuite:/mnt/a/go/bin"
 
 ##本地时区设置
 export TZ='Asia/Shanghai'

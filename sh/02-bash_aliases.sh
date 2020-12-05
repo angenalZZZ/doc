@@ -1,5 +1,5 @@
 ##文件的路径: cat ~/.bash_aliases
-##进行软链结: ln -s /a/git/doc/sh/02-bash_aliases.sh $HOME/.bash_aliases
+##进行软链结: ln -s /mnt/a/git/doc/sh/02-bash_aliases.sh $HOME/.bash_aliases
 ## alias：添加由alias定义的命令别名
 ## unalias：取消由alias定义的命令别名
 

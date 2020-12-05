@@ -1,5 +1,4 @@
-##文件的路径: cat /etc/profile.d/01-locale-profile-WSL.sh  =>  /etc/profile
-##进行软链结: ln -s /a/git/doc/sh/01-locale-profile-WSL.sh /etc/profile.d/01-locale-profile-WSL.sh
+##进行软链结: ln -s /mnt/a/git/doc/sh/01-locale-profile-WSL.sh /etc/profile.d/01-locale-profile-WSL.sh
 
 ##Windows10/Linux(WSL) 
 

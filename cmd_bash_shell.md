@@ -478,9 +478,9 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ i=https://raw.githubusercontent.com/angenalZZZ/doc/master/sh/zshrc.zsh # 个人备份zshrc
   $ curl -L $i > ~/.zshrc  # Or copy as follows
   $ cp /mnt/a/git/doc/sh/zshrc.zsh ~/.zshrc
-  $ ln -s /a/git/doc/sh/02-bash_aliases.sh $HOME/.bash_aliases
-  $ ln -s /a/git/doc/sh/01-locale-profile.sh /etc/profile.d/01-locale-profile.sh
-  $ ln -s /a/git/doc/sh/01-locale-profile-WSL.sh /etc/profile.d/01-locale-profile-WSL.sh
+  $ ln -s /mnt/a/git/doc/sh/02-bash_aliases.sh $HOME/.bash_aliases
+  $ ln -s /mnt/a/git/doc/sh/01-locale-profile.sh /etc/profile.d/01-locale-profile.sh
+  $ ln -s /mnt/a/git/doc/sh/01-locale-profile-WSL.sh /etc/profile.d/01-locale-profile-WSL.sh
   
   ##配置zsh(2)为一般用户 
   #1->config shell init: ~/.zshrc

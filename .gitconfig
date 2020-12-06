@@ -1,9 +1,22 @@
 [user]
 	name = yangzhou
 	email = angenal@hotmail.com
+[alias]
+	co = checkout
+	br = branch
+	ci = commit
+	st = status
+	l = config --local -l
+	ls = log --oneline
+	dog = log --all --decorate --oneline --graph
+	hist = log --graph --date-order --date=short --pretty=format:'%C(auto)%h%d %C(reset)%s %C(bold blue)%ce %C(reset)%C(green)%cr (%cd)'
+	lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
 [http]
 	postBuffer = 524288000
 	sslVerify = false
+	lowSpeedLimit = 0
+	lowSpeedTime = 999999
 [credential]
 	helper = store
 	protocol = https

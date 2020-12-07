@@ -1,5 +1,7 @@
-# First copy zshrc: cp /mnt/a/git/doc/sh/zshrc.zsh ~/.zshrc
-# First copy zshrc: cp /mnt/a/git/doc/sh/02-bash_aliases.sh ~/.bash_aliases
+
+# copy ~/.bash_aliases, ~/.zshrc
+# cp /mnt/a/git/doc/sh/02-bash_aliases.sh ~/.bash_aliases
+# cp /mnt/a/git/doc/sh/zshrc.zsh ~/.zshrc
 
 
 # Antigen: https://github.com/zsh-users/antigen
@@ -88,16 +90,6 @@ if [[ -o login ]]; then
 	[ -f "$HOME/.local/etc/login.zsh" ] && source "$HOME/.local/etc/login.zsh"
 fi
 
-
-# User local config
-[ -f "$HOME/.local/etc/config.zsh" ] && source "$HOME/.local/etc/config.zsh" 
-[ -f "$HOME/.local/etc/local.zsh" ] && source "$HOME/.local/etc/local.zsh"
-# User local profile
-[ -f "$HOME/.bash_profile" ] && source "$HOME/.bash_profile"
-[ -f "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
-# [ -f "$HOME/.profile" ] && source "$HOME/.profile"
-
-
 # syntax color definition
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 
@@ -127,6 +119,16 @@ ZSH_HIGHLIGHT_STYLES[double-quoted-argument]=fg=063
 ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]=fg=009
 ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]=fg=009
 ZSH_HIGHLIGHT_STYLES[assign]=none
+
+
+# load local config
+[ -f /etc/profile.d/01-locale-profile.sh ] && source /etc/profile.d/01-locale-profile.sh
+[ -f /etc/profile.d/01-locale-profile-WSL.sh ] && source /etc/profile.d/01-locale-profile-WSL.sh
+[ -f "$HOME/.local/etc/config.zsh" ] && source "$HOME/.local/etc/config.zsh" 
+[ -f "$HOME/.local/etc/local.zsh" ] && source "$HOME/.local/etc/local.zsh"
+[ -f "$HOME/.profile" ] && source "$HOME/.profile"
+[ -f "$HOME/.bash_profile" ] && source "$HOME/.bash_profile"
+[ -f "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
 
 
 # enable syntax highlighting
@@ -174,9 +176,13 @@ setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history 
 setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
 setopt HIST_VERIFY # Don't execute immediately upon history expansion.
 
+
 # source function.sh if it exists
 [ -f "$HOME/.local/etc/function.sh" ] && . "$HOME/.local/etc/function.sh"
+
 
 # ignore complition
 zstyle ':completion:*:complete:-command-:*:*' ignored-patterns '*.pdf|*.exe|*.dll'
 zstyle ':completion:*:*sh:*:' tag-order files
+
+

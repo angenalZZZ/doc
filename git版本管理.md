@@ -7,8 +7,10 @@
 > git config --global user.name                 # 查询全局git用户配置
 > git config --global user.name "yangzhou"      # 修改全局git用户配置
 > git config --global user.email "angenal@hotmail.com" # 修改全局git用户账号邮箱
-> git config --global credential.helper store   # 提交时不用输入用户名密码的方法(删除参数--global会只对当前仓库生效)
-> git credential-manager uninstall              # 有时需要把项目的用户名和密码删掉>存储用户名和密码的文件.git-credentials
+
+# 保存用户名密码和仓库链接在硬盘中(~/.git-credentials)，而不用在每次push时都输入密码。
+> git config --global credential.helper store   # 提交push时不用每次都输入用户名密码的方法(删除参数--global会只对当前仓库生效)
+> git credential-manager uninstall              # 有时需要把项目的用户名和密码删掉>存储用户名和密码的文件记录~/.git-credentials
 
 > git config --global color.ui true             # 在终端中启用彩色输出
 > git config --global core.editor emacs         # 使用emacs文本编辑器(可选)

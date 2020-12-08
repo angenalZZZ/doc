@@ -39,7 +39,7 @@
 .woff2  application/x-font-woff
 ```
 
-> `url重定向` [`Install url-rewrite`](https://www.iis.net/downloads/microsoft/url-rewrite) [`Download samples`](https://download.microsoft.com/download/3/9/E/39E30671-7AD2-4902-B56B-C300D862595E/RewriteExtensibility.msi) `修改Web.config`
+> `url重定向` [`Install IIS URL Rewrite`](https://www.iis.net/downloads/microsoft/url-rewrite) [`Download samples`](https://download.microsoft.com/download/3/9/E/39E30671-7AD2-4902-B56B-C300D862595E/RewriteExtensibility.msi) `修改Web.config`
 ~~~xml
   <!-- <appSettings configSource="config\appSetting.config" /> -->
   <!-- ... ... -->
@@ -68,8 +68,35 @@
 <!-- 添加网站 > 指定一个`空目录` > 填写名称并绑定 `demo.com` > 设置`Http重定向`=`http://www.demo.com/` > 重新启动。 -->
 ~~~
 
-> `反向代理`
-
+> `反向代理` [Install IIS Application Request Routing](https://www.iis.net/downloads/microsoft/application-request-routing) `修改Web.config`
+~~~xml
+  <!-- ... ... -->
+  <system.webServer>
+      <rewrite>
+          <!-- eg. http://other.demo.com/ [to] http://127.0.0.1:8080/ -->
+          <rules>
+              <rule name="ReverseProxyInboundRule1" stopProcessing="true">
+                  <match url="(.*)" />
+                  <conditions>
+                      <add input="{CACHE_URL}" pattern="^(https?)://" />
+                  </conditions>
+                  <action type="Rewrite" url="{C:1}://127.0.0.1:8080/{R:1}" />
+              </rule>
+          </rules>
+          <outboundRules>
+              <rule name="ReverseProxyOutboundRule1" preCondition="ResponseIsHtml1" stopProcessing="true">
+                  <match filterByTags="A, Form, Img" pattern="^http(s)?://127.0.0.1:8080/(.*)" />
+                  <action type="Rewrite" value="http{R:1}://other.demo.com/{R:2}" />
+              </rule>
+              <preConditions>
+                  <preCondition name="ResponseIsHtml1">
+                      <add input="{RESPONSE_CONTENT_TYPE}" pattern="^text/html" />
+                  </preCondition>
+              </preConditions>
+          </outboundRules>
+      </rewrite>
+  </system.webServer>
+~~~
 
 ----
 

@@ -51,7 +51,7 @@
   </system.webServer>
 ~~~
 
-> `url重定向` [`Install IIS URL Rewrite`](https://www.iis.net/downloads/microsoft/url-rewrite) [`Download samples`](https://download.microsoft.com/download/3/9/E/39E30671-7AD2-4902-B56B-C300D862595E/RewriteExtensibility.msi) `修改Web.config`
+> `URL重定向` [`1.Install IIS URL Rewrite`](https://www.iis.net/downloads/microsoft/url-rewrite) [`Download samples`](https://download.microsoft.com/download/3/9/E/39E30671-7AD2-4902-B56B-C300D862595E/RewriteExtensibility.msi) `2.修改Web.config`
 ~~~xml
   <!-- <appSettings configSource="config\appSetting.config" /> -->
   <!-- ... ... -->
@@ -80,7 +80,7 @@
 <!-- 添加网站 > 指定一个`空目录` > 填写名称并绑定 `demo.com` > 设置`Http重定向`=`http://www.demo.com/` > 重新启动。 -->
 ~~~
 
-> `反向代理` [Install IIS Application Request Routing](https://www.iis.net/downloads/microsoft/application-request-routing) `修改Web.config`
+> `反向代理` [1.Install IIS Application Request Routing](https://www.iis.net/downloads/microsoft/application-request-routing) [2.Enable proxy](https://techcommunity.microsoft.com/t5/iis-support-blog/application-request-routing-part-2-reverse-proxy-and/ba-p/347937) `3.修改Web.config`
 ~~~xml
   <!-- ... ... -->
   <system.webServer>

@@ -39,6 +39,18 @@
 .woff2  application/x-font-woff
 ```
 
+> `上传限制` [Upload Large Files to IIS / .NET](https://www.webdavsystem.com/server/documentation/large_files_iis_asp_net)
+~~~xml
+  <system.webServer>
+    <security>
+      <requestFiltering>
+        <!-- 请求限制：2GB -->
+        <requestLimits maxAllowedContentLength="2147483648" />
+      </requestFiltering>
+    </security>
+  </system.webServer>
+~~~
+
 > `url重定向` [`Install IIS URL Rewrite`](https://www.iis.net/downloads/microsoft/url-rewrite) [`Download samples`](https://download.microsoft.com/download/3/9/E/39E30671-7AD2-4902-B56B-C300D862595E/RewriteExtensibility.msi) `修改Web.config`
 ~~~xml
   <!-- <appSettings configSource="config\appSetting.config" /> -->

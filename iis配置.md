@@ -42,6 +42,7 @@
 > `上传限制` [Upload Large Files to IIS / .NET](https://www.webdavsystem.com/server/documentation/large_files_iis_asp_net)
 ~~~xml
   <system.webServer>
+    <directoryBrowse enabled="false" />
     <security>
       <requestFiltering>
         <!-- 请求限制：2GB -->
@@ -56,8 +57,7 @@
   <!-- <appSettings configSource="config\appSetting.config" /> -->
   <!-- ... ... -->
   <system.webServer>
-    <!-- <directoryBrowse enabled="false" /> -->
-    <!-- ... ... -->
+    <directoryBrowse enabled="false" />
     <rewrite>
       <rules>
         <rule name="HTTP to HTTPS redirect" stopProcessing="true">
@@ -84,6 +84,7 @@
 ~~~xml
   <!-- ... ... -->
   <system.webServer>
+      <directoryBrowse enabled="false" />
       <rewrite>
           <!-- eg. http://other.demo.com/ [to] http://127.0.0.1:8080/ -->
           <rules>

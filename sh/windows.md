@@ -13,8 +13,16 @@ slmgr /ato
 ~~~bash
 # PowerShell 以管理员方式运行
 Get-AppxPackage *store* | Remove-AppxPackage # 删除原来的 Microsoft Store
-Get-AppxPackage -AllUsers | Select Name, PackageFullName | Select-String "WindowsStore" # 查询并复制<包全名>
+Get-AppxPackage -AllUsers | Select Name, PackageFullName | Select-String "WindowsStore" # 查询并复制<包名>
 Add-AppxPackage -Register "C:\Program Files\WindowsApps\<包全名>\AppxManifest.xml" -DisableDevelopmentMode #安装
+~~~
+> Windows 10 重装 [WSL - Ubuntu 20.04](https://docs.microsoft.com/en-au/windows/wsl/install-manual)、[Update to WSL 2](https://docs.microsoft.com/en-au/windows/wsl/install-win10#step-2---update-to-wsl-2)
+~~~bash
+# PowerShell 以管理员方式运行
+Get-AppxPackage -AllUsers | Select Name, PackageFullName | Select-String "Ubuntu" # 查询并复制<包名>
+Get-AppxPackage CanonicalGroupLimited.UbuntuonWindows | Remove-AppxPackage #卸载
+curl.exe -L -o ubuntu-2004.appx https://aka.ms/wslubuntu2004 #下载
+Add-AppxPackage .\ubuntu-2004.appx #安装
 ~~~
 > Windows 10 系统问题排查
 ~~~bash

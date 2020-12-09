@@ -1,6 +1,5 @@
 # 帮助文档
 
-----
 
 ## 百度网盘
 - [baiduwp JavaScript 版](https://github.com/TkzcM/baiduwp "GitHub 项目")

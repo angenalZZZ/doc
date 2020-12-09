@@ -477,10 +477,12 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   # 下载zshrc (执行zsh时,会加载.zshrc) github.com/zsh-users
   $ i=https://raw.githubusercontent.com/angenalZZZ/doc/master/sh/zshrc.zsh # 个人备份zshrc
   $ curl -L $i > ~/.zshrc  # Or copy as follows
-  $ cp /mnt/a/git/doc/sh/zshrc.zsh ~/.zshrc
-  $ ln -s /mnt/a/git/doc/sh/02-bash_aliases.sh $HOME/.bash_aliases
-  $ ln -s /mnt/a/git/doc/sh/01-locale-profile.sh /etc/profile.d/01-locale-profile.sh
-  $ ln -s /mnt/a/git/doc/sh/01-locale-profile-WSL.sh /etc/profile.d/01-locale-profile-WSL.sh
+  $ cp /mnt/a/git/doc/sh/zshrc.zsh ~/.zshrc  # > dos2unix ~/.zshrc ~/.local/bin/antigen.zsh
+  $ cp /mnt/a/git/doc/sh/antigen.zsh ~/.local/bin/antigen.zsh   # ERROR: downloading antigen.zsh (http://git.io/antigen)
+  $ ln -s /mnt/a/git/doc/sh/02-bash_aliases.sh $HOME/.bash_aliases  # > dos2unix $HOME/.bash_aliases
+  $ ln -s /mnt/a/git/doc/sh/01-locale-profile.sh /etc/profile.d/01-locale-profile.sh # only on linux (not wsl)
+  $ ln -s /mnt/a/git/doc/sh/01-locale-profile-WSL.sh /etc/profile.d/01-locale-profile-WSL.sh # only on wsl
+  $ source ~/.zshrc  # 执行脚本,使配置生效.
   
   ##配置zsh(2)为一般用户 
   #1->config shell init: ~/.zshrc

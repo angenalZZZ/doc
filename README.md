@@ -1,5 +1,9 @@
 # 帮助文档
 
+## 文档模板
+- [PPT超级市场](http://ppt.sotary.com/web/wxapp/index.html "超多PPT模板下载")
+
+----
 
 ## 百度网盘
 - [baiduwp JavaScript 版](https://github.com/TkzcM/baiduwp "GitHub 项目")

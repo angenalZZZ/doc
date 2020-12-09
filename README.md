@@ -3,12 +3,10 @@
 ## 文档模板
 - [PPT超级市场](http://ppt.sotary.com/web/wxapp/index.html "超多PPT模板下载")
 
-----
 
 ## 网站工具
 - [Vue驱动的静态网站生成器](https://vuepress.vuejs.org/zh/)
 
-----
 
 ## 百度网盘
 - [baiduwp JavaScript 版](https://github.com/TkzcM/baiduwp "GitHub 项目")
@@ -17,4 +15,3 @@
 - [PNL 下载方式](https://www.lanzous.com/u/pnl "PNL 下载方式")
 - [LC 优化版](https://github.com/lc6464 "LC")
 
-----

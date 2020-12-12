@@ -9,20 +9,50 @@ slmgr /ipk W269N-WFGWX-YVC9B-4J6C9-T83GX  # 专业版 or 企业版: 96YNV-9X4RP-
 slmgr /skms kms.03k.org
 slmgr /ato
 ~~~
-> Windows 10 重装 Microsoft Store
+> Windows 10 Microsoft Store
 ~~~bash
 # PowerShell 以管理员方式运行
 Get-AppxPackage *store* | Remove-AppxPackage # 删除原来的 Microsoft Store
 Get-AppxPackage -AllUsers | Select Name, PackageFullName | Select-String "WindowsStore" # 查询并复制<包名>
 Add-AppxPackage -Register "C:\Program Files\WindowsApps\<包全名>\AppxManifest.xml" -DisableDevelopmentMode #安装
 ~~~
-> Windows 10 重装 [WSL - Ubuntu 20.04](https://docs.microsoft.com/en-au/windows/wsl/install-manual)、[Update to WSL 2](https://docs.microsoft.com/en-au/windows/wsl/install-win10#step-2---update-to-wsl-2)
+> Windows 10 [WSL - Ubuntu 20.04](https://docs.microsoft.com/en-au/windows/wsl/install-manual)、[Update to WSL 2](https://docs.microsoft.com/en-au/windows/wsl/install-win10#step-2---update-to-wsl-2)、[Ubuntu开发环境及常用安装](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#linux开发环境及常用安装)
 ~~~bash
-# PowerShell 以管理员方式运行
+# PowerShell 以管理员方式运行, 安装 WSL - Ubuntu 20.04
 Get-AppxPackage -AllUsers | Select Name, PackageFullName | Select-String "Ubuntu" # 查询并复制<包名>
-Get-AppxPackage CanonicalGroupLimited.UbuntuonWindows | Remove-AppxPackage #卸载
-curl.exe -L -o ubuntu-2004.appx https://aka.ms/wslubuntu2004 #下载
-Add-AppxPackage .\ubuntu-2004.appx #安装
+Get-AppxPackage CanonicalGroupLimited.UbuntuonWindows | Remove-AppxPackage # 卸载
+curl.exe -L -o ubuntu-2004.appx https://aka.ms/wslubuntu2004 # 下载
+Add-AppxPackage .\ubuntu-2004.appx # 安装 WSL - Ubuntu 20.04
+# 进入 Ubuntu 为root账户设置密码
+$ sudo passwd
+# 更新软件源
+$ sudo vi /etc/apt/sources.list    # ubuntu`20.04``focal` 阿里云源 (按 :wq! 保存)
+deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+$ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
+# Python 安装配置 python3为默认终端
+sudo apt-get install python-pip    # 安装python2和pip
+sudo apt-get install python3-pip   # 安装适用于python3的pip
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 100
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 150
+pip3 install ipython
+# MySQL 安装配置
+sudo apt-get install mysql-server
+sudo apt-get isntall mysql-client
+sudo apt-get install libmysqlclient-dev
+sudo pip3 install PyMySQL          # 使用python操作MySQL
+mysql>                             # 连接mysql
+set password =password('密码');
+flush privileges;                  # 刷新系统权限表, 或重启mysql服务 service MySQL restart
+mysql -uroot -p                    # 输入密码(-p)
 ~~~
 > Windows 10 系统问题排查
 ~~~bash

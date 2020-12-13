@@ -154,8 +154,51 @@
   $ ssh -oProxyCommand="ssh host1 nc host2 22" host2 # 防火墙穿透
   $ nc -vz baidu.com 443             # 查询DNS记录
   $ mtr --curses 8.8.8.8             # 跟踪DNS记录+路由地址
-  # 域名解析
+  
+  # 网络地址 - inet&inet6
+  > ipconfig /?
+  > hostname     # `主机名`
+  $ hostname -i  # 127.0.1.1
+  $ ifconfig |grep inet
+  $ ifconfig |grep 'inet ' |head -5  # 获取前5条ipV4
+  $ ifconfig |grep 'inet6' |head -5  # 获取前5条ipV6
+  # 科学上网 - 代理设置 (解决网络问题)  蓝灯: https://github.com/getlantern/lantern
+  $ sudo vim /etc/profile [全局|用户配置：~/.profile] # 填写如下VPN转发PORT
+  export FTP_PROXY=http://<proxy hostname:port>      # 临时使用
+  export HTTP_PROXY=http://<proxy hostname:port>
+  export HTTPS_PROXY=https://<proxy hostname:port>
+  export NO_PROXY=localhost,127.0.0.1,10.96.0.0/12,192.168.99.0/24,192.168.39.0/24
+  # 主机环境 - 解析设置 github.com/googlehosts/hosts
+  > notepad C:\Windows\System32\drivers\etc\hosts
+  > set                 # 查看系统环境变量windows
+  $ export              # 查看系统环境变量linux
+  $ cat /etc/hosts      # 一次显示整个文件
+  $ cat > /etc/hosts    # 从键盘创建一个文件
+  $ sudo killall -HUP mDNSResponder
+  $ sudo dscacheutil -flushcache
+
+  # 开启IPv6 隧道·开通(Windows)
+  > netsh interface teredo set state enterpriseclient server=default # 设置Teredo服务器
+  > netsh interface teredo set state server=teredo.remlab.net # 修改Teredo服务器(当测试连接失败时)
+  > ping -6 ipv6.test-ipv6.com       # 测试IPv6连接(访问检测 http://test-ipv6.com 测试项目/无域名IPv6连接测试-成功)
+  > netsh interface ipv6 reset       # 重置IPv6配置(重启系统)
+
+  # 网络IP和ＭＡＣ地址
   $ host localhost
+  > ipconfig                         # 本机网络IP
+  > ipconfig /all                    # 本机网络IP和ＭＡＣ地址
+  > ipconfig /flushdns               # 刷新dns缓存
+  > nslookup > www.baidu.com         # 查询DNS记录，查看域名解析是否正常
+  > tracert 182.61.200.6             # 网络路由跟踪，查询服务商DNS记录缓存
+  > ping 182.61.200.6                # 下载 https://download.elifulkerson.com/files/tcping
+  # 当机房禁PING(服务器禁PING)也可以通过tcping监控服务器情况
+  > tcping 182.61.200.6 # -d显示发送包日期 -h使用http模式 -u显示目标源url -i发送数据包间隔0.1s -w等待数据包间隔0.1s
+  > tcping -d -h -u -n 10 -i 0.1 -w 0.1 www.baidu.com 80 # 默认为80端口
+  $ tcping -t 10 -c 6 www.baidu.com -p 80 # -t超时10s -c探测6次; 快捷安装: pip install tcping
+  > netsh wlan show profile          # 查看WIFI网络配置
+  > netsh wlan export profile
+
+  # 域名解析
   $ nslookup www.baidu.com           # 查询DNS记录，查看域名解析是否正常
   $ dig -h                           # 查询DNS包括A记录，MX记录，NS记录等信息
   $ dig @server [解析域名] 
@@ -168,7 +211,12 @@
   $ dig yahoo.com ANY +noall +answer # 查询上面所有的记录
   $ dig www.baidu.com +short         # 查询快速回答
   $ dig baidu.com ANY +noall +answer +nocmd +multiline # 查询详细回答
-  
+
+  # 网络共享
+  > net share           # 查找
+  > net share c         # 添加
+  > net share c /delete # 删除
+
   # 进程详情
   > tasklist
   > wmic process where "caption = 'java.exe' and commandline like '%server-1.properties%'" get processid
@@ -318,41 +366,7 @@
   > rd /s /q %windir%\temp & md %windir%\temp [删除临时文件]
   $ rm -f -r [r删除目录,否则删除文件] [f强制]
   $ rmdir   [移除空目录]
-  
-  # 网络地址 - inet&inet6
-  > ipconfig /?
-  > hostname     # `主机名`
-  $ hostname -i  # 127.0.1.1
-  $ ifconfig |grep inet
-  $ ifconfig |grep 'inet ' |head -5  # 获取前5条ipV4
-  $ ifconfig |grep 'inet6' |head -5  # 获取前5条ipV6
-  # 科学上网 - 代理设置 (解决网络问题)  蓝灯: https://github.com/getlantern/lantern
-  $ sudo vim /etc/profile [全局|用户配置：~/.profile] # 填写如下VPN转发PORT
-  export FTP_PROXY=http://<proxy hostname:port>      # 临时使用
-  export HTTP_PROXY=http://<proxy hostname:port>
-  export HTTPS_PROXY=https://<proxy hostname:port>
-  export NO_PROXY=localhost,127.0.0.1,10.96.0.0/12,192.168.99.0/24,192.168.39.0/24
-  # 主机环境 - 解析设置 github.com/googlehosts/hosts
-  > notepad C:\Windows\System32\drivers\etc\hosts
-  > set                 # 查看系统环境变量windows
-  $ export              # 查看系统环境变量linux
-  $ cat /etc/hosts      # 一次显示整个文件
-  $ cat > /etc/hosts    # 从键盘创建一个文件
-  > ipconfig /flushdns  # 刷新dns缓存
-  $ sudo killall -HUP mDNSResponder
-  $ sudo dscacheutil -flushcache
-  
-  # 开启IPv6 隧道·开通(Windows)
-  > netsh interface teredo set state enterpriseclient server=default # 设置Teredo服务器
-  > netsh interface teredo set state server=teredo.remlab.net # 修改Teredo服务器(当测试连接失败时)
-  > ping -6 ipv6.test-ipv6.com  # 测试IPv6连接(访问检测 http://test-ipv6.com 测试项目/无域名IPv6连接测试-成功)
-  > netsh interface ipv6 reset  # 重置IPv6配置(重启系统)
-  
-  # 网络共享
-  > net share           # 查找
-  > net share c         # 添加
-  > net share c /delete # 删除
-  
+
   # 关机命令
   > sleep 9000; shutdown -s
   > at 03:30:00PM shutdown -s

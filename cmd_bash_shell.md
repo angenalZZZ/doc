@@ -195,8 +195,9 @@
   > tcping 182.61.200.6 # -d显示发送包日期 -h使用http模式 -u显示目标源url -i发送数据包间隔0.1s -w等待数据包间隔0.1s
   > tcping -d -h -u -n 10 -i 0.1 -w 0.1 www.baidu.com 80 # 默认为80端口
   $ tcping -t 10 -c 6 www.baidu.com -p 80 # -t超时10s -c探测6次; 快捷安装: pip install tcping
-  > netsh wlan show profile          # 查看WIFI网络配置
-  > netsh wlan export profile
+  
+  > netsh wlan show profile          # 查看WiFi配置信息
+  > netsh wlan export profile folder=C:\ key=clear # 查看WiFi密码<XML>/WLANProfile/MSM/security/sharedKey/keyMaterial
 
   # 域名解析
   $ nslookup www.baidu.com           # 查询DNS记录，查看域名解析是否正常

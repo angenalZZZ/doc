@@ -9,7 +9,7 @@
 # 文件列表
 alias ll='ls -alF'
 alias la='ls -A'
-alias l='ls -CF'
+# alias l='ls -CF'
 # 文件列表-按时间倒序
 alias lht='ls -lht'
 # 文件列表-按大小倒序

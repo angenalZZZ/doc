@@ -543,6 +543,10 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ sudo apt-get install libgtk-3-dev libcairo2-dev libglib2.0-dev --fix-missing   # 安装桌面开发gtk3工具链
   $ sudo apt-get install libwebkit2gtk-4.0-dev javascriptcoregtk-3.0 --fix-missing # 安装桌面开发webkit2gtk
   
+  $ sudo add-apt-repository universe                   # 安装java运行时(当报错提示无法下载时需启用universe)
+  $ sudo apt-get update && sudo apt-get upgrade        # 安装java运行时之前
+  $ sudo apt-get install apt-transport-https openjdk-8-jre-headless uuid-runtime pwgen # 最小化安装jre-8(推荐)
+  
   $ sudo apt-get clean && apt-get update --fix-missing
   $ sudo apt install -y --fix-missing default-jre      # 安装jre > java -version  (安装java选项1)
   $ sudo apt install -y --fix-missing default-jdk      # 安装jdk > java -version  (安装java选项2)
@@ -876,12 +880,16 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
 
 > [`Mongodb`](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu) NoSql数据库
 ~~~shell
+  $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
+  $ echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
+  $ sudo apt-get update && apt-get install -y mongodb-org                # 安装4.0.*最新版
+  # 安装4.2.*新版本
   $ wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
   $ sudo apt-get install gnupg
   $ echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.2 multiverse" \
     | sudo tee /etc/apt/sources.list.d/mongodb-org-4.2.list
   $ sudo apt-get update
-  $ sudo apt-get install -y mongodb-org                                  # 安装最新版
+  $ sudo apt-get install -y mongodb-org                                  # 安装4.2.*最新版
   $ sudo apt-get install -y mongodb-org=4.2.2 mongodb-org-server=4.2.2 \ # 安装指定的版本(推荐)
     mongodb-org-shell=4.2.2 mongodb-org-mongos=4.2.2 mongodb-org-tools=4.2.2
   $ echo "mongodb-org hold" | sudo dpkg --set-selections         # 阻止升级，将包固定在当前版本
@@ -890,13 +898,28 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   $ echo "mongodb-org-mongos hold" | sudo dpkg --set-selections  # 包含mongos守护进程
   $ echo "mongodb-org-tools hold" | sudo dpkg --set-selections   # 工具: mongoimport bsondump, mongodump 等
   $ sudo service mongod status,start,stop,restart         # 查服务状态,启动,停止等
+  $ sudo systemctl daemon-reload                          # 加载新的服务及配置
   $ sudo systemctl enable mongod.service                  # 开机启动,WSL> sudo /etc/init.d/mongodb status,start..
+  $ sudo systemctl --type=service --state=active | grep mongod # 查看运行中的服务
   > mongo --eval 'db.runCommand({ connectionStatus: 1 })' # 诊断服务,正在运行
   $ sudo apt-get purge mongodb-org*                       # 卸载 rm -rf /var/log/mongodb /var/lib/mongodb
 ~~~
 
 > [`Elasticsearch`](https://www.elastic.co/guide/cn/elasticsearch/guide/current/index.html) 你知道的, 为了搜索。[中文社区](https://elasticsearch.cn)、[下载](https://www.elastic.co/downloads/elasticsearch)
 ~~~shell
+  $ wget -q https://artifacts.elastic.co/GPG-KEY-elasticsearch -O myKey
+  $ sudo apt-key add myKey
+  $ echo "deb https://artifacts.elastic.co/packages/oss-7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
+  $ sudo apt-get update && sudo apt-get install elasticsearch-oss
+  $ sudo tee -a /etc/elasticsearch/elasticsearch.yml > /dev/null <<EOT
+cluster.name: graylog
+action.auto_create_index: false
+EOT
+
+  $ sudo systemctl daemon-reload                 # 加载新的服务及配置
+  $ sudo systemctl enable elasticsearch.service  # 开机启动,WSL> sudo /etc/init.d/elasticsearch status,start..
+  $ sudo systemctl --type=service --state=active | grep elasticsearch
+
   $ sudo dpkg -i elasticsearch-7.5.1-amd64.deb   # 安装Es,WSL> sudo /etc/init.d/elasticsearch status,start..
   $ cd /usr/share/elasticsearch/                 # 进入Es目录
   $ bin/elasticsearch --help
@@ -957,6 +980,21 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   > docker run --name cerebro --network elk7 --network-alias cerebro \
       --restart=always -itd -p 19201:9000 \      # 网址 http://localhost:19201 < http://elasticsearch:9200
       lmenezes/cerebro:0.8.5                     # 安装 elasticsearch 管理工具 cerebro
+~~~
+
+> [`Graylog`](https://docs.graylog.org) 一个开源的日志聚合、分析、审计、展现和预警工具，比ELK简单。
+~~~shell
+# install Graylog on Linux
+$ wget https://packages.graylog2.org/repo/packages/graylog-4.0-repository_latest.deb
+$ sudo dpkg -i graylog-4.0-repository_latest.deb
+$ sudo apt-get update && sudo apt-get install graylog-server graylog-enterprise-plugins graylog-integrations-plugins graylog-enterprise-integrations-plugins
+# edit the configuration file  /etc/graylog/server/server.conf
+echo -n "Enter Password: " && head -1 </dev/stdin | tr -d '\n' | sha256sum | cut -d" " -f1 # create root_password_sha2
+# use NGINX or Apache as a reverse proxy docs.graylog.org/en/4.0/pages/configuration/web_interface.html#configuring-webif-nginx
+$ sudo systemctl daemon-reload
+$ sudo systemctl enable graylog-server.service
+$ sudo systemctl start graylog-server.service
+$ sudo systemctl --type=service --state=active | grep graylog
 ~~~
 
 > [`Pilosa`](https://www.pilosa.com) 分布式位图索引数据库

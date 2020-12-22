@@ -881,7 +881,8 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
 > [`Mongodb`](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu) NoSql数据库
 ~~~shell
   $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
-  $ echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
+  $ echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse" \
+    | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
   $ sudo apt-get update && apt-get install -y mongodb-org                # 安装4.0.*最新版
   # 安装4.2.*新版本
   $ wget -qO - https://www.mongodb.org/static/pgp/server-4.2.asc | sudo apt-key add -
@@ -988,13 +989,13 @@ EOT
 $ wget https://packages.graylog2.org/repo/packages/graylog-4.0-repository_latest.deb
 $ sudo dpkg -i graylog-4.0-repository_latest.deb
 $ sudo apt-get update && sudo apt-get install graylog-server graylog-enterprise-plugins graylog-integrations-plugins graylog-enterprise-integrations-plugins
-# edit the configuration file  /etc/graylog/server/server.conf
-echo -n "Enter Password: " && head -1 </dev/stdin | tr -d '\n' | sha256sum | cut -d" " -f1 # create root_password_sha2
-# use NGINX or Apache as a reverse proxy docs.graylog.org/en/4.0/pages/configuration/web_interface.html#configuring-webif-nginx
+# edit configuration file  /etc/graylog/server/server.conf < 添加以下密码到配置文件中
+$ pwgen -N 1 -s 96                 # 安装完成后，先生成password_secret密码; 编辑http_bind_address
+$ echo -n "Enter Password: " && head -1 </dev/stdin | tr -d '\n' | sha256sum | cut -d" " -f1 #再生成root_password_sha2 Web登录
+# use NGINX or Apache as reverse proxy docs.graylog.org/en/4.0/pages/configuration/web_interface.html#configuring-webif-nginx
 $ sudo systemctl daemon-reload
-$ sudo systemctl enable graylog-server.service
-$ sudo systemctl start graylog-server.service
-$ sudo systemctl --type=service --state=active | grep graylog
+$ sudo systemctl enable graylog-server.service && systemctl start graylog-server.service
+$ sudo systemctl --type=service --state=active | grep graylog # 访问 http://localhost:9000
 ~~~
 
 > [`Pilosa`](https://www.pilosa.com) 分布式位图索引数据库

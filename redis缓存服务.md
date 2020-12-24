@@ -13,25 +13,43 @@ docker > docker pull redis;docker run --name redis-server -d -p6379:6379 redis;d
 ####  1.配置Redis 
   * > 非集群 普通模式
 ~~~
-# 配置文件路径: /etc/redis/redis.conf
+# 配置文件路径: /etc/redis/6379.conf
 --------------------------------------------------------------------
 # ***限制redis只能本地访问***
-  # bind 127.0.0.1
+  bind 127.0.0.1 ::1 # bind 192.168.1.100 10.0.0.1 # 不限制本地访问,需要指定外网RemoteIP
 # ***指定访问端口号***
   port 6379
-# ***守护线程的方式启动***
-  daemonize no
+  tcp-keepalive 300  # TCP keepalive. On Linux, specified value (seconds) is the period used to send ACKs.
+# ***守护进程的方式启动***
+  daemonize yes  # By default Redis does not run as a daemon. Redis will write a pid file when daemonized.
+  supervised no  # If you run Redis from upstart or systemd
+  pidfile /var/run/redis_6379.pid  # writes it at startup and removes it at exit. specified when daemonize yes.
 # ***日志跟踪级别***
-  loglevel notice
+  loglevel notice # warning, error
 # ***日志跟踪文件***
-  logfile ""
+  logfile "/var/log/redis_6379.log"
+# ***限制客户端连接数***
+  maxclients 100
 # ***设置密码***
   requirepass 123456
 # ***数据持久化到本地磁盘***
   appendonly yes
 # ***数据持久化路径: /data/appendonly.aof
   appendfilename "appendonly.aof"
+# save <seconds> <changes>  # Save the DB on disk:
+  save 900 1
+  save 300 10
+  save 60 10000
+# The working directory.
+  dir /var/lib/redis/6379
 
+################# REPLICATION #################
+#
+#   +------------------+      +---------------+
+#   |      Master      | ---> |    Replica    |
+#   | (receive writes) |      |  (exact copy) |
+#   +------------------+      +---------------+
+#
 ~~~
   * > 集群 普通主从模式
     提供了复制（replication）功能，能较好地避免单独故障问题，以及提出了读写分离，降低了Master节点的压力。
@@ -42,9 +60,9 @@ redis-server --port 6379 --slaveof masterIp masterPort
 ~~~
   * > 集群 哨兵模式(全量存储，即每台redis存储相同的内容，比较消耗内存资源)
     高可用架构：当主数据库遇到异常中断服务后，开发者可以通过手动的方式选择一个从数据库来升格为主数据库，以使得系统能够继续提供服务。
-    Redis 2.8开始提供了哨兵工具来实现自动化的系统监控和故障恢复功能。
-    （1）监控主数据库和从数据库是否正常运行。
-    （2）主数据库出现故障时自动将从数据库转换为主数据库。
+    Redis 2.8 开始提供哨兵工具实现自动化的系统监控和故障恢复。
+    (1)监控主数据库和从数据库是否正常运行。
+    (2)主数据库出现故障时自动将从数据库转换为主数据库。
 ~~~
 redis-server --port 6379
 redis-server --port 6380 --slaveof 192.168.1.8 6379

@@ -1,14 +1,13 @@
 
 # **[安装redis - Remote Dictionary Service](http://redis.io)** 
-> [#.安装](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#redis)、[1.配置Redis](#3配置Redis)、[2.查询服务信息](#1查询服务信息)、[3.基础数据结构](#2基础数据结构)、[4.命令参考](http://doc.redisfans.com)、[`教程`](http://www.runoob.com/redis/redis-tutorial.html)
+> [`安装`](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#redis)、[`配置`](#3配置Redis)、[`查询服务信息`](#1查询服务信息)、[`基础数据结构`](#2基础数据结构)、[`命令参考`](http://doc.redisfans.com)、[`教程`](http://www.runoob.com/redis/redis-tutorial.html)
 
 ~~~
 mac    > brew install redis 
 ubuntu > apt-get install redis 
 redhat > yum install redis 
 windows> https://github.com/tporadowski/redis/releases > https://github.com/MicrosoftArchive/redis/releases 
-github > git clone --branch 2.8 --depth 1 git@github.com:antirez/redis.git;cd redis;make;cd src;./redis-server --daemonize yes;./redis-cli
-docker > docker pull redis;docker run --name redis-server -d -p6379:6379 redis;docker exec -it redis-server redis-cli
+docker > docker pull redis;docker run --name redis-server -d -p6379:6379 redis;docker exec -it redis-server redis-cli 
 ~~~
 
 ####  1.配置Redis 

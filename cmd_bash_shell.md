@@ -764,7 +764,8 @@ $ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
   > sc create gitea start= auto binPath= "D:\Program\Git\Server\gitea\gitea.exe web --config \"D:\Program\Git\Server\gitea\custom\conf\app.ini\""
 ~~~
 
-> [`Redis`](http://www.redis.cn) 内存数据库
+#### Redis
+> [`Redis高性能内存数据库`](http://www.redis.cn)
 ~~~shell
   $ wget http://download.redis.io/releases/redis-stable.tar.gz # 下载源码 # cd ~
   $ tar xzf redis-stable.tar.gz                                # 解压源码

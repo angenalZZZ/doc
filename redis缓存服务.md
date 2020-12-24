@@ -1,17 +1,77 @@
 
-# **[安装redis - Remote Dictionary Service](http://redis.io)**
-> [1.查询服务信息](#1查询服务信息)、[2.基础数据结构](#2基础数据结构)、[3.配置Redis](#3配置Redis)、[4.命令参考](http://doc.redisfans.com)、[`教程`](http://www.runoob.com/redis/redis-tutorial.html)
+# **[安装redis - Remote Dictionary Service](http://redis.io)** 
+> [#.安装](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#redis)、[1.配置Redis](#3配置Redis)、[2.查询服务信息](#1查询服务信息)、[3.基础数据结构](#2基础数据结构)、[4.命令参考](http://doc.redisfans.com)、[`教程`](http://www.runoob.com/redis/redis-tutorial.html)
 
 ~~~
-mac    > brew install redis
-ubuntu > apt-get install redis
-redhat > yum install redis
-windows> https://github.com/MicrosoftArchive/redis/releases
+mac    > brew install redis 
+ubuntu > apt-get install redis 
+redhat > yum install redis 
+windows> https://github.com/tporadowski/redis/releases > https://github.com/MicrosoftArchive/redis/releases 
 github > git clone --branch 2.8 --depth 1 git@github.com:antirez/redis.git;cd redis;make;cd src;./redis-server --daemonize yes;./redis-cli
 docker > docker pull redis;docker run --name redis-server -d -p6379:6379 redis;docker exec -it redis-server redis-cli
 ~~~
 
-####  1.查询服务信息
+####  1.配置Redis 
+  * > 非集群 普通模式
+~~~
+# 配置文件路径: /etc/redis/redis.conf
+--------------------------------------------------------------------
+# ***限制redis只能本地访问***
+  # bind 127.0.0.1
+# ***指定访问端口号***
+  port 6379
+# ***守护线程的方式启动***
+  daemonize no
+# ***日志跟踪级别***
+  loglevel notice
+# ***日志跟踪文件***
+  logfile ""
+# ***设置密码***
+  requirepass 123456
+# ***数据持久化到本地磁盘***
+  appendonly yes
+# ***数据持久化路径: /data/appendonly.aof
+  appendfilename "appendonly.aof"
+
+~~~
+  * > 集群 普通主从模式
+    提供了复制（replication）功能，能较好地避免单独故障问题，以及提出了读写分离，降低了Master节点的压力。
+    数据库分为两类，一类是主数据库（master），另一类是从数据库（slave）。
+    主数据库可以进行读写操作，当写操作导致数据变化时会自动将数据同步给从数据库。
+~~~
+redis-server --port 6379 --slaveof masterIp masterPort
+~~~
+  * > 集群 哨兵模式(全量存储，即每台redis存储相同的内容，比较消耗内存资源)
+    高可用架构：当主数据库遇到异常中断服务后，开发者可以通过手动的方式选择一个从数据库来升格为主数据库，以使得系统能够继续提供服务。
+    Redis 2.8开始提供了哨兵工具来实现自动化的系统监控和故障恢复功能。
+    （1）监控主数据库和从数据库是否正常运行。
+    （2）主数据库出现故障时自动将从数据库转换为主数据库。
+~~~
+redis-server --port 6379
+redis-server --port 6380 --slaveof 192.168.1.8 6379
+redis-server --port 6381 --slaveof 192.168.1.8 6379
+#->config(sentinel.conf): 
+  sentinel monitor mymaster 192.168.0.167 6379 1 
+~~~
+  * > [集群 cluster架构](https://redis.io/topics/cluster-tutorial)(分布式存储，即每台redis存储不同的内容，最大化利用内存)
+    高可用架构：最小配置为三主三从的redis-cluster架构，
+    其中A、B、C节点都是redis-master节点，A1、B1、C1节点都是对应的redis-slave节点。
+~~~
+#->config(redis.conf): 
+  port 7000
+  daemonize yes                   # 后台运行
+  cluster-enabled yes             # 启用集群
+  cluster-config-file nodes.conf  # 集群nodes配置
+  cluster-node-timeout 5000       # 配置集群节点的超时时间，主节点超过指定的时间不可达进行故障切换
+  cluster-slave-validity-factor 0 # 如果设置为0，无论主设备和从设备之间的链路保持断开连接的时间长短，从设备都将尝试故障切换主设备；如果该值为正值，则计算最大断开时间作为节点超时值乘以此选项提供的系数，如果该节点是从节点，则在主链路断开连接的时间超过指定的超时值时，它不会尝试启动故障切换。
+  cluster-migration-barrier 1     # 主设备将保持连接的最小从设备数量，以便另一个从设备迁移到不受任何从设备覆盖的主设备。
+  cluster-require-full-coverage no
+  readonly no                     # 选填，默认master节点可读写；#readonly yes 当启用slave节点读时；
+  appendonly yes                  # 启动AOF增量持久化策略
+  appendfsync always              # 发生改变就记录日志
+~~~
+
+####  2.查询服务信息
 > [try redis-cli](http://try.redis.io)
 > redis://user:pass@host:port/db
 ~~~
@@ -68,7 +128,7 @@ redis-cli -r 10000 RPUSH queue:myqueue '{"class":"MyClass","args":["hello","worl
 > debug object [key]            # 调试输出 key of object: { Value at: 指针地址, refcount: 引用计数, encoding: 数据类型, serializedlength..}
 ~~~
 
-####  2.基础数据结构
+####  3.基础数据结构
 > [Redis核心原理与应用实践](https://juejin.im/book/5afc2e5f6fb9a07a9b362527)
 
 ~~~
@@ -291,66 +351,6 @@ struct zslnode {
  # 压力测试工具(dev)
  > redis-benchmark -t set -P 2 -q # 管道提升性能: 成功返回SET:51975.05 requests per second, 慎用 参数-P越大QPS越高,但可能CPU已100%了.
 
-~~~
-
-####  3.配置Redis 
-  * > 非集群 普通模式
-~~~
-# 配置文件路径: /etc/redis/redis.conf
---------------------------------------------------------------------
-# ***限制redis只能本地访问***
-  # bind 127.0.0.1
-# ***指定访问端口号***
-  port 6379
-# ***守护线程的方式启动***
-  daemonize no
-# ***日志跟踪级别***
-  loglevel notice
-# ***日志跟踪文件***
-  logfile ""
-# ***设置密码***
-  requirepass 123456
-# ***数据持久化到本地磁盘***
-  appendonly yes
-# ***数据持久化路径: /data/appendonly.aof
-  appendfilename "appendonly.aof"
-
-~~~
-  * > 集群 普通主从模式
-    提供了复制（replication）功能，能较好地避免单独故障问题，以及提出了读写分离，降低了Master节点的压力。
-    数据库分为两类，一类是主数据库（master），另一类是从数据库（slave）。
-    主数据库可以进行读写操作，当写操作导致数据变化时会自动将数据同步给从数据库。
-~~~
-redis-server --port 6379 --slaveof masterIp masterPort
-~~~
-  * > 集群 哨兵模式(全量存储，即每台redis存储相同的内容，比较消耗内存资源)
-    高可用架构：当主数据库遇到异常中断服务后，开发者可以通过手动的方式选择一个从数据库来升格为主数据库，以使得系统能够继续提供服务。
-    Redis 2.8开始提供了哨兵工具来实现自动化的系统监控和故障恢复功能。
-    （1）监控主数据库和从数据库是否正常运行。
-    （2）主数据库出现故障时自动将从数据库转换为主数据库。
-~~~
-redis-server --port 6379
-redis-server --port 6380 --slaveof 192.168.1.8 6379
-redis-server --port 6381 --slaveof 192.168.1.8 6379
-#->config(sentinel.conf): 
-  sentinel monitor mymaster 192.168.0.167 6379 1 
-~~~
-  * > [集群 cluster架构](https://redis.io/topics/cluster-tutorial)(分布式存储，即每台redis存储不同的内容，最大化利用内存)
-    高可用架构：最小配置为三主三从的redis-cluster架构，
-    其中A、B、C节点都是redis-master节点，A1、B1、C1节点都是对应的redis-slave节点。
-~~~
-#->config(redis.conf): 
-  port 7000
-  daemonize yes                   # 后台运行
-  cluster-enabled yes             # 启用集群
-  cluster-config-file nodes.conf  # 集群nodes配置
-  cluster-node-timeout 5000       # 配置集群节点的超时时间，主节点超过指定的时间不可达进行故障切换
-  cluster-slave-validity-factor 0 # 如果设置为0，无论主设备和从设备之间的链路保持断开连接的时间长短，从设备都将尝试故障切换主设备；如果该值为正值，则计算最大断开时间作为节点超时值乘以此选项提供的系数，如果该节点是从节点，则在主链路断开连接的时间超过指定的超时值时，它不会尝试启动故障切换。
-  cluster-migration-barrier 1     # 主设备将保持连接的最小从设备数量，以便另一个从设备迁移到不受任何从设备覆盖的主设备。
-  cluster-require-full-coverage no
-  readonly no                     # 选填，默认master节点可读写；#readonly yes 当启用slave节点读时；
-  appendonly yes                  # 启动AOF增量持久化策略
-  appendfsync always              # 发生改变就记录日志
 ~~~
 
 

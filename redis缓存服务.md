@@ -74,13 +74,15 @@ redis-server --port 6381 --slaveof 192.168.1.8 6379
     高可用架构：最小配置为三主三从的redis-cluster架构，
     其中A、B、C节点都是redis-master节点，A1、B1、C1节点都是对应的redis-slave节点。
 ~~~
-#->config(redis.conf): 
+#->config(/etc/redis/redis.conf): 
   port 7000
   daemonize yes                   # 后台运行
   cluster-enabled yes             # 启用集群
   cluster-config-file nodes.conf  # 集群nodes配置
   cluster-node-timeout 5000       # 配置集群节点的超时时间，主节点超过指定的时间不可达进行故障切换
-  cluster-slave-validity-factor 0 # 如果设置为0，无论主设备和从设备之间的链路保持断开连接的时间长短，从设备都将尝试故障切换主设备；如果该值为正值，则计算最大断开时间作为节点超时值乘以此选项提供的系数，如果该节点是从节点，则在主链路断开连接的时间超过指定的超时值时，它不会尝试启动故障切换。
+  cluster-slave-validity-factor 0 # 如果设置为0，无论主设备和从设备之间的链路保持断开连接的时间长短，从设备都将尝试故障切换主设备；
+    # 如果该值为正值，则计算最大断开时间作为节点超时值乘以此选项提供的系数，如果该节点是从节点，
+    # 则在主链路断开连接的时间超过指定的超时值时，它不会尝试启动故障切换。
   cluster-migration-barrier 1     # 主设备将保持连接的最小从设备数量，以便另一个从设备迁移到不受任何从设备覆盖的主设备。
   cluster-require-full-coverage no
   readonly no                     # 选填，默认master节点可读写；#readonly yes 当启用slave节点读时；
@@ -140,9 +142,9 @@ redis-cli -r 10000 RPUSH queue:myqueue '{"class":"MyClass","args":["hello","worl
 > flushall  # 清空一个Redis实例中所有数据库中的数据：Redis默认支持16个数据库（可以通过配置文件支持更多，无上限）
 # 性能测试
 > redis-benchmark -n 10000 -q
-> info stats | grep ops         # 每秒操作数:instantaneous_ops_per_sec:***
-> monitor                       # 如果 qps 过高，快速观察究竟是哪些 key 访问比较频繁，从而在业务上进行优化，减少 IO 次数(执行后立即ctrl+c中断)
-> debug object [key]            # 调试输出 key of object: { Value at: 指针地址, refcount: 引用计数, encoding: 数据类型, serializedlength..}
+> info stats | grep ops  # 每秒操作数:instantaneous_ops_per_sec:***
+> monitor               # 如果 qps 过高，快速观察究竟是哪些 key 访问比较频繁，从而在业务上进行优化，减少 IO 次数(执行后立即ctrl+c中断)
+> debug object [key]   # 调试输出 key of object: { Value at: 指针地址, refcount: 引用计数, encoding: 数据类型, serializedlength..}
 ~~~
 
 ####  3.基础数据结构

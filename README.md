@@ -42,3 +42,14 @@
 - [PNL 下载方式](https://www.lanzous.com/u/pnl "PNL 下载方式")
 - [LC 优化版](https://github.com/lc6464 "LC")
 
+
+## 其它
+
+> `批量清空代码注释`
+```
+# Visual Studio Code
+  # 打开项目代码目录 > Ctrl+Shift+F
+  > 搜索：\/\*[\s\S]*\*\/|\/\/.*  # 使用正则表达式(Alt+R)
+  > 要包含的文件：*.cs *.c *.cpp *.h *.js *.ts ...
+```
+

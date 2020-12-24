@@ -61,6 +61,13 @@ DISM.exe /Online /Cleanup-image /Scanhealth     # 扫描系统组件问题
 DISM.exe /Online /Cleanup-image /Checkhealth    # 检查系统组件问题
 DISM.exe /Online /Cleanup-image /Restorehealth  # 恢复系统组件
 ~~~
+> Windows 10 网络问题排查
+~~~bash
+#.开始菜单->设置->更新和案例->疑难解答->其他疑难解答->Internet连接->运行疑难解答
+#.或者重置->当前的WinHTTP代理服务器设置->以管理员身份运行CMD
+netsh winhttp reset proxy
+netsh winhttp import proxy source=ie
+~~~
 
 
 #### 注册表

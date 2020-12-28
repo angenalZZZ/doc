@@ -34,6 +34,8 @@
   > shell:startup    # [开始]菜单/启动/添加*.vbs
   $ uname -a         # 系统信息: $(uname -s)=系统'Linux'; $(uname -m)=CPU架构'x86_64';
   $ egrep -c ' lm ' /proc/cpuinfo  &&  egrep -c '(vmx|svm)' /proc/cpuinfo
+  $ cat /proc/cpuinfo & cat /proc/meminfo      # 查看CPU&MEM信息
+  $ cat /proc/mounts & cat /proc/filesystems   # 查看/mnt/&fs信息
   # 系统版本号'发行版本'*** Linux-redhat > cat /etc/redhat-release
   $ cat /etc/os-release # 系统完整信息
   $ cat /etc/issue && lsb_release -cs ; lsb_release -a #Linux发行版本信息+支持的体系结构[amd64,x86_64,arm64]
@@ -221,6 +223,7 @@
   # 进程详情
   > tasklist
   > wmic process where "caption = 'java.exe' and commandline like '%server-1.properties%'" get processid
+  $ free
   $ ps aux                       # 进程列表: USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND
   $ ps -ef                       # 进程列表: UID  PID  PPID  C STIME TTY TIME CMD
   $ ps -eo pid,cmd | grep uuid   # [o输出字段,e依赖的系统环境]

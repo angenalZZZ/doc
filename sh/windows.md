@@ -54,6 +54,28 @@ set password =password('密码');
 flush privileges;                  # 刷新系统权限表, 或重启mysql服务 service MySQL restart
 mysql -uroot -p                    # 输入密码(-p)
 ~~~
+> Windows 服务管理工具
+  - `nssm` [`download`](https://nssm.cc/download) [`commands`](https://nssm.cc/commands)
+~~~cmd
+# installation
+nssm install <servicename>
+nssm install <servicename> <program>
+nssm install <servicename> <program> [<arguments>]
+nssm set <servicename> AppDirectory <path>
+nssm set <servicename> Description <description>
+nssm set <servicename> DependOnService "Remote Procedure Call (RPC)" LanmanWorkstation
+nssm set <servicename> Start SERVICE_AUTO_START|SERVICE_DELAYED_START|SERVICE_DEMAND_START|SERVICE_DISABLED
+# system environment variable
+nssm get <servicename> AppEnvironmentExtra
+nssm set <servicename> AppEnvironmentExtra CLASSPATH=C:\Classes TEMP=C:\Temp
+# specifying the user which will run the service
+nssm get <servicename> ObjectName
+nssm set <servicename> ObjectName <username> <password>
+# management
+nssm start|stop|restart|pause|continue|status <servicename>
+# uninstall
+nssm remove <servicename>
+~~~
 > Windows 10 系统问题排查
 ~~~bash
 sfc /SCANNOW                                    # 检查系统组件是否有问题？

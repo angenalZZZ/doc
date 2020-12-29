@@ -161,6 +161,8 @@
   > ipconfig /?
   > hostname     # `主机名`
   $ hostname -i  # 127.0.1.1
+  $ ip a
+  $ ifconfig -a
   $ ifconfig |grep inet
   $ ifconfig |grep 'inet ' |head -5  # 获取前5条ipV4
   $ ifconfig |grep 'inet6' |head -5  # 获取前5条ipV6

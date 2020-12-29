@@ -1,7 +1,7 @@
 # [Docker](https://docs.docker.com)
 
 
- * [`K8S/Kubernetes`](#Kubernetes)/[`Minikube`](#Minikube) + [完整文档](https://github.com/angenalZZZ/follow-me-install-kubernetes-cluster) | [`Consul`](#Consul) + [`Etcd`](#Etcd)
+ * [`K8S/Kubernetes`](#Kubernetes)/[`Minikube`](#Minikube) + [完整文档参考](https://github.com/angenalZZZ/follow-me-install-kubernetes-cluster) | [`Consul`](#Consul) + [`Etcd`](#Etcd)
  * [`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)、[`安全相关思维导图`](https://github.com/phith0n/Mind-Map)
  * [`Docker+K8S学习笔记`](https://github.com/angenalZZZ/learn-docker-and-k8s)、[`GitLab+Docker+K8S集成系统`](https://github.com/angenalZZZ/gitlab-docker-k8s)
 
@@ -679,7 +679,7 @@ services:
 
 # [**Kubernetes**](https://kubernetes.io)
 
-> [`k8s`是一个流行的容器管理编排平台，集中式管理数个服务的容器集群](https://www.kubernetes.org.cn)、[`k8s`从上手到实践](https://juejin.cn/book/6844733753063915533)<br>
+> [`k8s`是一个流行的容器管理编排平台，集中式管理数个服务的容器集群](https://www.kubernetes.org.cn)、[`k8s`从上手到实践](https://juejin.cn/book/6844733753063915533)(搭建一个生产可用的集群)<br>
   　参数文档[Project-based-k8s](https://github.com/groovemonkey/project-based-kubernetes)  [Aliyun-Istio](https://github.com/AliyunContainerService/k8s-for-docker-desktop)  [kubeadm-ha](https://github.com/cookeem/kubeadm-ha)、安装[docker-desktop](https://www.docker.com/products/docker-desktop)已集成compose和k8s<br>
   　`Pod`：最小单元、一组容器的集合、同一个Pod内的容器共享网络命名空间、短暂的未存储的(重新发布后会丢失)；<br>
   　`Controllers`： `ReplicaSet`确保预期的Pod副本数量(一般由以下部署产生)，<br>

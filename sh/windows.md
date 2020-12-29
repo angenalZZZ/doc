@@ -61,15 +61,18 @@ mysql -uroot -p                    # 输入密码(-p)
 nssm install <servicename>
 nssm install <servicename> <program>
 nssm install <servicename> <program> [<arguments>]
+:: installation options
 nssm set <servicename> AppDirectory <path>
 nssm set <servicename> Description <description>
 nssm set <servicename> DependOnService "Remote Procedure Call (RPC)" LanmanWorkstation
 nssm set <servicename> Start SERVICE_AUTO_START|SERVICE_DELAYED_START|SERVICE_DEMAND_START|SERVICE_DISABLED
-nssm get <servicename> AppEnvironmentExtra :: system environment variable
+:: installation options - system environment variable
+nssm get <servicename> AppEnvironmentExtra
 nssm set <servicename> AppEnvironmentExtra CLASSPATH=C:\Classes TEMP=C:\Temp
-nssm get <servicename> ObjectName :: specifying the user which will run the service
+:: installation options - specifying the user which will run the service
+nssm get <servicename> ObjectName
 nssm set <servicename> ObjectName <username> <password>
-:: management
+:: management services
 nssm start|stop|restart|pause|continue|status <servicename>
 :: uninstall
 nssm remove <servicename>

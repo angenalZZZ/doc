@@ -703,19 +703,20 @@ services:
 * 步骤:  1-8 (除了4) 在所有节点执行
    * 1.关闭防火墙，配置免密登录
 ```bash
-systemctl stop firewalld # 防止端口不开发，k8s集群无法启动(k8s不知道有多少个，运行之后，再开放)
+systemctl stop firewalld # 防止端口不开放，k8s集群无法启动(k8s运行之后再开放firewalld)
 ```
    * 2.关闭selinux
 ```bash
-setenforce 0 
+setenforce 0
 ```
    * 3.关闭swap
 ```bash
 swapoff -a    # 临时关闭
-free          # 可以通过这个命令查看swap是否关闭了
-vim /etc/fstab  # 永久关闭 注释swap那一行(访问内存分区 k8s无法启动)
+blkid | lsblk # 查看blk设备,注释swap的每一行(查找带有swap字样的信息)
+vim /etc/fstab # 查找fs挂载点,注释swap的每一行(开启swap内存分区,会导致k8s无法启动)
+free          # 查看swap是否关闭 Swap: 0  0  0
 ```
-   * 4.添加主机名与IP对应的关系，免密（这一步可以只在master执行），这一步我为后面传输网络做准备
+   * 4.添加主机名与IP对应的关系（这一步可以只在master执行），这一步我为后面传输网络做准备
 ```
 vim /etc/hosts
 192.168.235.145       k8s-master
@@ -727,8 +728,11 @@ chmod 600 .ssh/authorized_keys
 
 # 可以在master生成，然后拷贝到node节点
 scp -r .ssh root@192.168.44.5:/root
+
+# 查看这些端口是否被占用(如果被占用,请手动释放)
+netstat -ntlp |grep -E '6443|23[79,80]|1025[0,1,2]' # 使用netstat: apt install net-tools
 ```
-   * 5.将桥接的IPV4流量传递到iptables的链
+   * 5.将桥接的IPV4流量传递到iptables
 ```text
 vi /etc/sysctl.d/k8s.conf
 
@@ -971,6 +975,7 @@ $ kubectl apply -f $kd
 # 编排web应用 kubernetes deployment
 $ docker-compose build && kubectl apply -f /path/to/kube-deployment.yml  # 1 deploy of apply config
 $ docker stack deploy -c /path/to/docker-compose.yml mystack             # 2 deploy stack with compose
+
 # 查看集群
 $ kubectl cluster-info
 # 查看节点[IP&状态等]

@@ -1,10 +1,11 @@
 
 ## [导航主页](https://vip.jokerps.com/sites)
-- [KIM主页](https://kim.plopco.com/ "主页从未如此惊艳")、[小呆导航](https://www.webjike.com/ "可自定义的简洁网址导航")、[青柠起始页](https://a.maorx.cn/ "简洁美观实用的浏览器起始页")、[牛站导航](https://www.niuzdh.com/ "精选最好的网站服务平台")、[Seeseed](https://www.seeseed.com/ "无穷尽设计可能")、[设计导航](http://hao.shejidaren.com/ "精选最好的设计网站大全")、[addog](https://www.addog.vip/ "广告创意、设计、文案、PPT模板")、[更多](https://vip.jokerps.com/favorites/page)
+- [KIM主页](https://kim.plopco.com/ "主页从未如此惊艳")、[小呆导航](https://www.webjike.com/ "可自定义的简洁网址导航")、[青柠起始页](https://a.maorx.cn/ "简洁美观实用的浏览器起始页")、[牛站导航](https://www.niuzdh.com/ "精选最好的网站服务平台")、[Seeseed](https://www.seeseed.com/ "无穷尽设计可能")、[设计导航](http://hao.shejidaren.com/ "精选最好的设计网站大全")、[addog](https://www.addog.vip/ "广告创意、设计、文案、PPT模板")、[运营工具大全](https://xiaomark.com/tool "收录优秀好用的运营工具")、[更多](https://vip.jokerps.com/favorites/page)
 
- * [运营工具大全](https://xiaomark.com/tool "收录优秀好用的运营工具")
-    * [石墨文档](https://shimo.im/)、[腾讯文档](https://docs.qq.com/)、[语雀](https://www.yuque.com/)、[幕布](https://mubu.com/)、[GitMind](https://gitmind.cn/)、[畅写OFFICE[(http://www.51changxie.com/)、[ZhiMap](https://zhimap.com/)、[凹脑图](https://aonaotu.com/)、[一起写](https://yiqixie.com/)、[金山文档](https://www.kdocs.cn/)、[百度脑图](https://naotu.baidu.com/)、[ProcessOn](https://www.processon.com/)
-
+ * `在线文档`
+    * [石墨文档](https://shimo.im/)、[腾讯文档](https://docs.qq.com/)、[语雀](https://www.yuque.com/)、[幕布](https://mubu.com/)、[GitMind](https://gitmind.cn/)、[畅写OFFICE](http://www.51changxie.com/)、[ZhiMap](https://zhimap.com/)、[凹脑图](https://aonaotu.com/)、[一起写](https://yiqixie.com/)、[金山文档](https://www.kdocs.cn/)、[百度脑图](https://naotu.baidu.com/)、[ProcessOn](https://www.processon.com/)
+ * `知识付费`
+    * [面包多](https://mianbaoduo.com/)、
 
 ## [热点资讯](https://vip.jokerps.com/favorites/hotspot)
 - [BiliOB观测者](https://www.biliob.com/ "B站历史数据统计分析站点")、[Killed by Google](https://killedbygoogle.com/ "被谷歌淘汰的产品")、[今日热榜](https://tophub.today/ "追踪全网热点、简单高效阅读")、[果汁排行榜](http://guozhivip.com/rank/ "各类榜单排名大全")、[知微事见](https://ef.zhiweidata.com/ "最全的互联网社会热点聚合平台")、[更多](https://vip.jokerps.com/favorites/hotspot)

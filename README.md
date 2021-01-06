@@ -5,7 +5,7 @@
  * `在线文档`
     * [石墨文档](https://shimo.im/)、[腾讯文档](https://docs.qq.com/)、[语雀](https://www.yuque.com/)、[幕布](https://mubu.com/)、[GitMind](https://gitmind.cn/)、[畅写OFFICE](http://www.51changxie.com/)、[ZhiMap](https://zhimap.com/)、[凹脑图](https://aonaotu.com/)、[一起写](https://yiqixie.com/)、[金山文档](https://www.kdocs.cn/)、[百度脑图](https://naotu.baidu.com/)、[ProcessOn](https://www.processon.com/)
  * `知识付费`
-    * [面包多](https://mianbaoduo.com/)、
+    * [面包多](https://mianbaoduo.com/)、[千聊](https://pc.qlchat.com/)、[小鹅通](https://www.xiaoe-tech.com/)、[CCtalk](https://www.cctalk.com/)、[微学伴](https://www.vlearn.cn/)、[知识星球](https://zsxq.com/)、[好智学](https://www.hzxue.com/)、[小红圈](https://www.red-ring.cn/)、[美阅教育](https://upnet.beautifulreading.com/)、[荔枝微课](https://www.lizhiweike.com/)、[短书](https://www.duanshu.com/)
 
 ## [热点资讯](https://vip.jokerps.com/favorites/hotspot)
 - [BiliOB观测者](https://www.biliob.com/ "B站历史数据统计分析站点")、[Killed by Google](https://killedbygoogle.com/ "被谷歌淘汰的产品")、[今日热榜](https://tophub.today/ "追踪全网热点、简单高效阅读")、[果汁排行榜](http://guozhivip.com/rank/ "各类榜单排名大全")、[知微事见](https://ef.zhiweidata.com/ "最全的互联网社会热点聚合平台")、[更多](https://vip.jokerps.com/favorites/hotspot)

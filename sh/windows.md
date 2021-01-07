@@ -16,6 +16,13 @@ Get-AppxPackage *store* | Remove-AppxPackage # 删除原来的 Microsoft Store
 Get-AppxPackage -AllUsers | Select Name, PackageFullName | Select-String "WindowsStore" # 查询并复制<包名>
 Add-AppxPackage -Register "C:\Program Files\WindowsApps\<包全名>\AppxManifest.xml" -DisableDevelopmentMode #安装
 ~~~
+> Windows 10 WSL & chocolatey
+~~~bash
+# PowerShell 以管理员方式运行, 打开 WSL 程序和功能
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
+# 安装 chocolatey
+Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+~~~
 > Windows 10 [WSL - Ubuntu 20.04](https://docs.microsoft.com/en-au/windows/wsl/install-manual)、[Update to WSL 2](https://docs.microsoft.com/en-au/windows/wsl/install-win10#step-2---update-to-wsl-2)、[Ubuntu开发环境及常用安装](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#linux开发环境及常用安装)
 ~~~bash
 # PowerShell 以管理员方式运行, 安装 WSL - Ubuntu 20.04
@@ -53,6 +60,17 @@ mysql>                             # 连接mysql
 set password =password('密码');
 flush privileges;                  # 刷新系统权限表, 或重启mysql服务 service MySQL restart
 mysql -uroot -p                    # 输入密码(-p)
+~~~
+> Windows 10 WSL - [Centos 7 下载](https://pan.baidu.com/disk/home#/all?path=%2FCentos&vmode=list)
+~~~bash
+# 下载 centos 的 docker 镜像, 参考 https://github.com/RoliSoft/WSL-Distribution-Switcher 
+# 安装 chocolatey
+# 安装 LxRunOffline
+choco install lxrunoffline
+# 部署 centos7 到 WSL
+LxRunOffline.exe install -n centos7 -d A:\centos7 -f  A:\centos7\centos-7-docker.tar.xz
+# 开启 centos7
+LxRunOffline run -n centos7
 ~~~
 > Windows 后台服务管理工具
   - `nssm`>[`download`](https://nssm.cc/download)>[`commands`](https://nssm.cc/commands)

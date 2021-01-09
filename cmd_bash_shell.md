@@ -467,11 +467,6 @@ deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main universe multiver
 deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main universe multiverse restricted
 deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main universe multiverse restricted
 deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main universe multiverse restricted
-$ sudo vi /etc/apt/sources.list  # ubuntu`19.10``eoan` 阿里云源
-deb http://mirrors.aliyun.com/ubuntu/ eoan main universe multiverse restricted
-deb-src http://mirrors.aliyun.com/ubuntu/ eoan main universe multiverse restricted
-deb http://cn.archive.ubuntu.com/ubuntu eoan main universe multiverse restricted
-deb-src http://cn.archive.ubuntu.com/ubuntu eoan main universe multiverse restricted
 $ sudo vi /etc/apt/sources.list  # ubuntu`20.04``focal` 阿里云源
 deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
 deb-src http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
@@ -483,7 +478,13 @@ deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe mu
 deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
 deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
-$ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
+$ sudo apt-get update && sudo apt-get upgrade # ubuntu更新软件源
+$ yum install -y wget                         # CentOS 7 阿里镜像源
+$ wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+$ yum clean all & yum makecache               # 更新镜像源缓存
+$ cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+$ vi /etc/yum.repos.d/CentOS-Base.repo        # 将所有http改为https
+$ yum update                                  # 更新yum
 ~~~
 
 > `zsh`是一款强大的虚拟终端，推荐使用 [oh my zsh](https://github.com/robbyrussell/oh-my-zsh) 配置管理终端

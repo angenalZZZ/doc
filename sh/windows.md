@@ -5,9 +5,10 @@
 
 > Windows 10 最新版激活方式，免费升级到20H2 [Download MediaCreationTool20H2](https://go.microsoft.com/fwlink/?LinkId=691209)
 ~~~bash
+#slmgr /upk                                # 卸载密钥(当无法激活时) www.win7zhijia.cn/win10jc/win10_29118.html
 slmgr /ipk W269N-WFGWX-YVC9B-4J6C9-T83GX  # 专业版 or 企业版: 96YNV-9X4RP-2YYKB-RMQH4-6Q72D
-slmgr /skms kms.03k.org
-slmgr /ato
+slmgr /skms kms.03k.org                   # 修改kms源
+slmgr /ato                                # 执行激活
 ~~~
 > Windows 10 Microsoft Store
 ~~~bash

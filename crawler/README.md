@@ -5,7 +5,7 @@
 
 #### 2. [`PhantomJS`](https://phantomjs.org/) is a headless web browser scriptable with [JavaScript](http://phantomjs.org/api/)
     phantomjs [options] example.js [arg1 [arg2 [...]]]
-~~~bash
+~~~js
 // 参考: https://www.jianshu.com/p/1530061334a3
 phantom.outputEncoding = "gbk"; // 设置网页编码 (防止输出中文时出现乱码)
 

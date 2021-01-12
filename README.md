@@ -33,6 +33,7 @@
 
 ## [系统工具](https://vip.jokerps.com/software)
 - [Windows绿色软件推荐](https://vip.jokerps.com/software/windows)
+- [系统安全工具(堡垒机OSM、终端检测EDR、安全评估TSS、数据库审计DAS、行为管理AC、基线核查BVT等)](https://bbs.sangfor.com.cn/plugin.php?id=service:download)
 
 
 ## [网站工具](http://chenapp.com/chrome/developtools)

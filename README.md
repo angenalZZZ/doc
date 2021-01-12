@@ -37,6 +37,7 @@
 
 ## [网站工具](http://chenapp.com/chrome/developtools)
 - [Vue驱动的静态网站生成器](https://vuepress.vuejs.org/zh/)
+  - [USB Bootable ISOs (Windows, Linux, UEFI, etc.)](https://rufus.ie/)
 
 
 ## 百度网盘

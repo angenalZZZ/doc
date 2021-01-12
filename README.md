@@ -39,7 +39,7 @@
 ## [网站工具](http://chenapp.com/chrome/developtools)
 - [Vue驱动的静态网站生成器](https://vuepress.vuejs.org/zh/)
   - [USB启动盘-支持ISOs(Windows,Linux,UEFI,etc.)](https://rufus.ie/)
-  - [frp内网穿透-支持(Windows,Linux,macOS.)](https://gofrp.org/docs/)
+  - [frp内网穿透](https://gofrp.org/docs/)、[ZeroTier内网穿透](https://www.zerotier.com/download/)
 
 
 ## 百度网盘

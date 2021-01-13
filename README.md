@@ -1,7 +1,7 @@
 
 ## [系统工具](https://vip.jokerps.com/software)
 - [Windows绿色软件✨](https://vip.jokerps.com/software/windows) `推荐`
-- [USB启动盘-支持ISOs(Windows,Linux,UEFI,etc.)](https://rufus.ie/)
+- [rufus_USB启动盘_支持ISOs(Windows,Linux,UEFI,etc.)](https://rufus.ie/)
 - [frp内网穿透](https://gofrp.org/docs/)、[ZeroTier内网穿透](https://www.zerotier.com/download/)
 - [System安全(堡垒机OSM、终端检测EDR、安全评估TSS、数据库审计DAS、行为管理AC、基线核查BVT等)](https://bbs.sangfor.com.cn/plugin.php?id=service:download)
 

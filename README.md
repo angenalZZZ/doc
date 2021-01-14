@@ -7,7 +7,7 @@
 
 
 ## [网站工具](http://chenapp.com/chrome/developtools)
-- [Vue驱动的静态网站生成器](https://vuepress.vuejs.org/zh/)
+- [Vue驱动的静态网站生成器](https://vuepress.vuejs.org/zh/)、[新榜/榜单/排名](http://newrank.cn/)
 
 
 ## [导航主页](https://vip.jokerps.com/sites)

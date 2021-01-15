@@ -30,8 +30,7 @@ choco install lxrunoffline
 LxRunOffline install -n centos7 -d A:\centos7 -f A:\centos7\centos-7-docker.tar.xz
 # 开启 CentOS
 LxRunOffline run -n centos7
-# 进入 CentOS 为root账户设置密码
-sudo passwd root
+passwd root                                 # 进入 CentOS 为root账户设置密码
 yum install -y wget                         # 获取 CentOS 7 阿里镜像源
 wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
 cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup

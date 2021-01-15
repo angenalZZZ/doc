@@ -34,19 +34,17 @@ LxRunOffline run -n centos7
 wsl --set-default-version 2 # Update to WSL 2
 wsl -l -v                   # 查看<linux>是否为 WSL 2
 wsl --set-version <linux> 2 # 修改<linux>为 WSL 2
-# 设置root用户的密码
-sudo passwd root
-# 安装K8s集成到Ubuntu 参考 https://blog.csdn.net/weixin_43168190/article/details/107179715
+# 安装K8s集成到WSL Ubuntu20.04 参考 https://blog.csdn.net/weixin_43168190/article/details/107179715
 ~~~
 > Windows 10 [WSL - Ubuntu 20.04](https://docs.microsoft.com/en-au/windows/wsl/install-manual)、[Update to WSL 2](https://docs.microsoft.com/en-au/windows/wsl/install-win10#step-2---update-to-wsl-2)、[Ubuntu开发环境及常用安装](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#linux开发环境及常用安装)
 ~~~bash
-# PowerShell 以管理员方式运行, 安装 WSL - Ubuntu 20.04
+# PowerShell 以管理员方式运行, 安装WSL Ubuntu20.04
 Get-AppxPackage -AllUsers | Select Name, PackageFullName | Select-String "Ubuntu" # 查询并复制<包名>
 Get-AppxPackage CanonicalGroupLimited.UbuntuonWindows | Remove-AppxPackage # 卸载
 curl.exe -L -o ubuntu-2004.appx https://aka.ms/wslubuntu2004 # 下载
-Add-AppxPackage .\ubuntu-2004.appx # 安装 WSL - Ubuntu 20.04
+Add-AppxPackage .\ubuntu-2004.appx # 离线安装WSL Ubuntu 20.04 至指定路径
 # 进入 Ubuntu 为root账户设置密码
-$ sudo passwd
+$ sudo passwd root
 # 更新软件源
 $ sudo vi /etc/apt/sources.list    # ubuntu`20.04``focal` 阿里云源 (按 :wq! 保存)
 deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse

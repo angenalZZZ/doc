@@ -17,13 +17,26 @@ Get-AppxPackage *store* | Remove-AppxPackage # 删除原来的 Microsoft Store
 Get-AppxPackage -AllUsers | Select Name, PackageFullName | Select-String "WindowsStore" # 查询并复制<包名>
 Add-AppxPackage -Register "C:\Program Files\WindowsApps\<包全名>\AppxManifest.xml" -DisableDevelopmentMode #安装
 ~~~
-> Windows 10 WSL & Chocolatey
+> Windows 10 WSL & Chocolatey & Centos
 ~~~bash
 # PowerShell 以管理员方式运行, 打开 WSL 程序和功能
+Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform
 Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
 # 安装 Chocolatey
 Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-choco /?
+# 安装 LxRunOffline for run centos7
+choco install lxrunoffline
+# 部署 centos7 到 WSL (下载Docker镜像) https://github.com/RoliSoft/WSL-Distribution-Switcher
+LxRunOffline install -n centos7 -d A:\centos7 -f A:\centos7\centos-7-docker.tar.xz
+# 开启 centos7
+LxRunOffline run -n centos7
+# 设置 WSL 默认版本为 2
+wsl --set-default-version 2 # Update to WSL 2
+wsl -l -v                   # 查看<linux>是否为 WSL 2
+wsl --set-version <linux> 2 # 修改<linux>为 WSL 2
+# 设置root用户的密码
+sudo passwd root
+# 安装K8s集成到Ubuntu 参考 https://blog.csdn.net/weixin_43168190/article/details/107179715
 ~~~
 > Windows 10 [WSL - Ubuntu 20.04](https://docs.microsoft.com/en-au/windows/wsl/install-manual)、[Update to WSL 2](https://docs.microsoft.com/en-au/windows/wsl/install-win10#step-2---update-to-wsl-2)、[Ubuntu开发环境及常用安装](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#linux开发环境及常用安装)
 ~~~bash
@@ -62,17 +75,6 @@ mysql>                             # 连接mysql
 set password =password('密码');
 flush privileges;                  # 刷新系统权限表, 或重启mysql服务 service MySQL restart
 mysql -uroot -p                    # 输入密码(-p)
-~~~
-> Windows 10 WSL - Centos 7 [Download from pan.baidu.com](https://pan.baidu.com/disk/home#/all?path=%2FCentos&vmode=list)
-~~~bash
-# 下载 Centos 的 Docker 镜像 https://github.com/RoliSoft/WSL-Distribution-Switcher
-# 安装 Chocolatey (choco.exe)
-# 安装 LxRunOffline
-choco install lxrunoffline
-# 部署 centos7 到 WSL
-LxRunOffline install -n centos7 -d A:\centos7 -f A:\centos7\centos-7-docker.tar.xz
-# 开启 centos7
-LxRunOffline run -n centos7
 ~~~
 > Windows 后台服务管理工具
   - `nssm`>[`download`](https://nssm.cc/download)>[`commands`](https://nssm.cc/commands)

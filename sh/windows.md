@@ -32,8 +32,8 @@ LxRunOffline install -n centos7 -d A:\centos7 -f A:\centos7\centos-7-docker.tar.
 LxRunOffline run -n centos7
 passwd root                                 # 进入 CentOS 为root账户设置密码
 yum install -y wget                         # 获取 CentOS 7 阿里镜像源
+cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak # 先备份repo
 wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
-cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 sed -i 's/http:/https:/g' /etc/yum.repos.d/CentOS-Base.repo # 批量替换http为https
 yum clean all & yum makecache               # 更新镜像源缓存
 # 设置 WSL 默认版本为 2

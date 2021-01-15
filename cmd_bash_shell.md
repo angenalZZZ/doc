@@ -481,10 +481,9 @@ deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted univer
 $ sudo apt-get update && sudo apt-get upgrade # ubuntu更新软件源
 $ yum install -y wget                         # CentOS 7 阿里镜像源
 $ wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
-$ yum clean all & yum makecache               # 更新镜像源缓存
 $ cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
-$ vi /etc/yum.repos.d/CentOS-Base.repo        # 将所有http改为https
-$ yum update                                  # 更新yum
+$ sed -i 's/http:/https:/g' /etc/yum.repos.d/CentOS-Base.repo # 批量替换http为https
+$ yum clean all & yum makecache               # 更新镜像源缓存
 ~~~
 
 > `zsh`是一款强大的虚拟终端，推荐使用 [oh my zsh](https://github.com/robbyrussell/oh-my-zsh) 配置管理终端
@@ -1481,13 +1480,13 @@ cat file.txt | tr [:lower:] [:upper:]    # 小写转大写
 find . -type f -name "*.java" -print0 |xargs -0 wc -l # 统计代码行数, wc -w file单词数, wc -c file字符数
 # 文本替换利器sed--------------------------------------------------------------
 echo 'ABC' | sed 's/[[:upper:]]*/\L&/' # 大写转小写 echo 'ABC' | tr A-Z a-z
-PATH=`echo $PATH |sed 's#/mnt/d#/mnt/x#g'` # 批量替换-环境变量PATH-> sed 's#原始值#替换值#g'
 sed '/^$/d' file                       # 移除空白行
-seg 's/text/replace_text/' file        # 替换每一行的第一处匹配的 text
-seg 's/text/replace_text/g' file       # 全局替换
-seg -i 's/text/repalce_text/g' file    # -i直接替换原文件
+sed 's/text/replace_text/' file        # 替换每一行的第一处匹配 text
+sed 's/text/replace_text/g' file       # 全局替换 text 为 replace_text
+sed -i 's/text/repalce_text/g' file    # -i直接替换原文件file
 sed -i -e 's,image: vitess/lite,image: yourname/vitess:latest,' *.yaml # 修改所有yaml文件
 p=patten && r=replaced && echo "a patten" | sed "s/$p/$r/g" # "双引号"会对表达式求值
+PATH=`echo $PATH |sed 's#/mnt/c#/mnt/a#g'` # 批量替换-环境变量-PATH-> sed 's#原始值#替换值#g'
 # 数据流处理awk----------------------------------------------------------------
 #  NR:表示记录数量 NF:表示字段数量 $0:当前行的文本 $1:第一个字段的文本 ...
 echo -e "line1 line2" |awk 'BEGIN{print "start"} {print NR" ["NF"]: "$0} END{print "end"}'

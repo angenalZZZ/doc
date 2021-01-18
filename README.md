@@ -5,6 +5,8 @@
 - [frp内网穿透](https://gofrp.org/docs/)、[ZeroTier内网穿透](https://www.zerotier.com/download/)
 - [System安全(堡垒机OSM、终端检测EDR、安全评估TSS、数据库审计DAS、行为管理AC、基线核查BVT等)](https://bbs.sangfor.com.cn/plugin.php?id=service:download)
 
+## [开发工具](https://www.jb51.net/softs/)
+- [Visual Studio Code](https://code.visualstudio.com/)、[Kite](https://www.kite.com/)、[JetBrains IDE](https://www.jetbrains.com/)
 
 ## [网站工具](http://chenapp.com/chrome/developtools)
 - [Vue驱动的静态网站生成器](https://vuepress.vuejs.org/zh/)、[新榜/榜单/排名](http://newrank.cn/)

@@ -86,22 +86,29 @@
   <system.webServer>
       <directoryBrowse enabled="false" />
       <rewrite>
-          <!-- eg. http://other.demo.com/ [to] http://127.0.0.1:8080/ -->
+          <!-- eg. http://www.demo.com/ [to] http://127.0.0.1:{3000,8080}/ -->
           <rules>
               <rule name="ReverseProxyInboundRule1" stopProcessing="true">
+                  <match url="^api/(.*)" />
+                  <conditions>
+                      <add input="{CACHE_URL}" pattern="^(https?)://" />
+                  </conditions>
+                  <action type="Rewrite" url="{C:1}://127.0.0.1:3000/api/{R:1}" />
+              </rule>
+              <rule name="ReverseProxyInboundRule1" stopProcessing="true">
                   <match url="(.*)" />
-                <!-- <match url="^api/(.*)" /> -->
                   <conditions>
                       <add input="{CACHE_URL}" pattern="^(https?)://" />
                   </conditions>
                   <action type="Rewrite" url="{C:1}://127.0.0.1:8080/{R:1}" />
               </rule>
           </rules>
+          <!-- (可选)输出结果-内容替换 -->
           <outboundRules>
               <rule name="ReverseProxyOutboundRule1" preCondition="ResponseIsHtml1" stopProcessing="true">
                   <match filterByTags="A, Form, Img" pattern="^http(s)?://127.0.0.1:8080/(.*)" />
-                  <action type="Rewrite" value="http{R:1}://other.demo.com/{R:2}" />
-                <!-- <action type="Rewrite" value="http{R:1}://{HTTP_HOST}/{R:2}" /> -->
+                  <action type="Rewrite" value="http{R:1}://www.demo.com/{R:2}" />
+              <!-- <action type="Rewrite" value="http{R:1}://{HTTP_HOST}/{R:2}" /> -->
               </rule>
               <preConditions>
                   <preCondition name="ResponseIsHtml1">

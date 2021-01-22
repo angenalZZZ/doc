@@ -85,12 +85,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
   <system.webServer>
-    	<directoryBrowse enabled="false" />
-	    <security>
-		      <requestFiltering>
-		          <requestLimits maxAllowedContentLength="2147483648" />
-		      </requestFiltering>
-	    </security>
+			<directoryBrowse enabled="false" />
+  		<security>
+	  		<requestFiltering>
+		  		<requestLimits maxAllowedContentLength="2147483648" />
+	  		</requestFiltering>
+    	</security>
       <rewrite>
           <!-- eg. http://www.demo.com/ [to] http://127.0.0.1:{3000,8080}/ -->
           <rules>

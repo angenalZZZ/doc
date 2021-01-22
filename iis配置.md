@@ -90,6 +90,7 @@
           <rules>
               <rule name="ReverseProxyInboundRule1" stopProcessing="true">
                   <match url="(.*)" />
+                <!-- <match url="^api/(.*)" /> -->
                   <conditions>
                       <add input="{CACHE_URL}" pattern="^(https?)://" />
                   </conditions>
@@ -100,6 +101,7 @@
               <rule name="ReverseProxyOutboundRule1" preCondition="ResponseIsHtml1" stopProcessing="true">
                   <match filterByTags="A, Form, Img" pattern="^http(s)?://127.0.0.1:8080/(.*)" />
                   <action type="Rewrite" value="http{R:1}://other.demo.com/{R:2}" />
+                <!-- <action type="Rewrite" value="http{R:1}://{HTTP_HOST}/{R:2}" /> -->
               </rule>
               <preConditions>
                   <preCondition name="ResponseIsHtml1">

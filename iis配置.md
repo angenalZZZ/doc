@@ -84,43 +84,43 @@
 ~~~xml
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-  <system.webServer>
-			<directoryBrowse enabled="false" />
-  		<security>
-	  		<requestFiltering>
-		  		<requestLimits maxAllowedContentLength="2147483648" />
-	  		</requestFiltering>
-    	</security>
-      <rewrite>
-          <!-- eg. http://www.demo.com/ [to] http://127.0.0.1:{3000,8080}/ -->
-          <rules>
-              <rule name="ReverseProxyInboundRule1" stopProcessing="true">
-                  <match url="^api/(.*)" />
-                  <action type="Rewrite" url="http://127.0.0.1:3000/api/{R:1}" />
-              </rule>
-              <rule name="ReverseProxyInboundRule2" stopProcessing="true">
-                  <match url="(.*)" />
-                  <conditions>
-                      <add input="{CACHE_URL}" pattern="^(https?)://" />
-                  </conditions>
-                  <action type="Rewrite" url="{C:1}://127.0.0.1:8080/{R:1}" />
-              </rule>
-          </rules>
-          <!-- (可选)替换输出内容 -->
-          <outboundRules>
-              <rule name="ReverseProxyOutboundRule1" preCondition="ResponseIsHtml1" stopProcessing="true">
-                  <match filterByTags="A, Form, Img" pattern="^http(s)?://127.0.0.1:8080/(.*)" />
-                  <action type="Rewrite" value="http{R:1}://www.demo.com/{R:2}" />
-              <!-- <action type="Rewrite" value="http{R:1}://{HTTP_HOST}/{R:2}" /> -->
-              </rule>
-              <preConditions>
-                  <preCondition name="ResponseIsHtml1">
-                      <add input="{RESPONSE_CONTENT_TYPE}" pattern="^text/html" />
-                  </preCondition>
-              </preConditions>
-          </outboundRules>
-      </rewrite>
-  </system.webServer>
+    <system.webServer>
+        <directoryBrowse enabled="false" />
+        <security>
+            <requestFiltering>
+                <requestLimits maxAllowedContentLength="2147483648" />
+            </requestFiltering>
+        </security>
+        <rewrite>
+            <!-- eg. http://www.demo.com/ [to] http://127.0.0.1:{3000,8080}/ -->
+            <rules>
+                <rule name="ReverseProxyInboundRule1" stopProcessing="true">
+                    <match url="^api/(.*)" />
+                    <action type="Rewrite" url="http://127.0.0.1:3000/api/{R:1}" />
+                </rule>
+                <rule name="ReverseProxyInboundRule2" stopProcessing="true">
+                    <match url="(.*)" />
+                    <conditions>
+                        <add input="{CACHE_URL}" pattern="^(https?)://" />
+                    </conditions>
+                    <action type="Rewrite" url="{C:1}://127.0.0.1:8080/{R:1}" />
+                </rule>
+            </rules>
+            <!-- (可选)替换输出内容 -->
+            <outboundRules>
+                <rule name="ReverseProxyOutboundRule1" preCondition="ResponseIsHtml1" stopProcessing="true">
+                    <match filterByTags="A, Form, Img" pattern="^http(s)?://127.0.0.1:8080/(.*)" />
+                    <action type="Rewrite" value="http{R:1}://www.demo.com/{R:2}" />
+                <!-- <action type="Rewrite" value="http{R:1}://{HTTP_HOST}/{R:2}" /> -->
+                </rule>
+                <preConditions>
+                    <preCondition name="ResponseIsHtml1">
+                        <add input="{RESPONSE_CONTENT_TYPE}" pattern="^text/html" />
+                    </preCondition>
+                </preConditions>
+            </outboundRules>
+        </rewrite>
+    </system.webServer>
 </configuration>
 ~~~
 

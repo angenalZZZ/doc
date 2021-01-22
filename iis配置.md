@@ -82,20 +82,23 @@
 
 > `反向代理` [`1.Install IIS Application Request Routing`](https://www.iis.net/downloads/microsoft/application-request-routing) [`2.Enable proxy`](https://techcommunity.microsoft.com/t5/iis-support-blog/application-request-routing-part-2-reverse-proxy-and/ba-p/347937) `3.修改Web.config`
 ~~~xml
-  <!-- ... ... -->
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
   <system.webServer>
-      <directoryBrowse enabled="false" />
+    	<directoryBrowse enabled="false" />
+	    <security>
+		      <requestFiltering>
+		          <requestLimits maxAllowedContentLength="2147483648" />
+		      </requestFiltering>
+	    </security>
       <rewrite>
           <!-- eg. http://www.demo.com/ [to] http://127.0.0.1:{3000,8080}/ -->
           <rules>
               <rule name="ReverseProxyInboundRule1" stopProcessing="true">
                   <match url="^api/(.*)" />
-                  <conditions>
-                      <add input="{CACHE_URL}" pattern="^(https?)://" />
-                  </conditions>
-                  <action type="Rewrite" url="{C:1}://127.0.0.1:3000/api/{R:1}" />
+                  <action type="Rewrite" url="http://127.0.0.1:3000/api/{R:1}" />
               </rule>
-              <rule name="ReverseProxyInboundRule1" stopProcessing="true">
+              <rule name="ReverseProxyInboundRule2" stopProcessing="true">
                   <match url="(.*)" />
                   <conditions>
                       <add input="{CACHE_URL}" pattern="^(https?)://" />
@@ -103,7 +106,7 @@
                   <action type="Rewrite" url="{C:1}://127.0.0.1:8080/{R:1}" />
               </rule>
           </rules>
-          <!-- (可选)输出结果-内容替换 -->
+          <!-- (可选)替换输出内容 -->
           <outboundRules>
               <rule name="ReverseProxyOutboundRule1" preCondition="ResponseIsHtml1" stopProcessing="true">
                   <match filterByTags="A, Form, Img" pattern="^http(s)?://127.0.0.1:8080/(.*)" />
@@ -118,6 +121,7 @@
           </outboundRules>
       </rewrite>
   </system.webServer>
+</configuration>
 ~~~
 
 ----

@@ -37,12 +37,13 @@
   $ cat /proc/cpuinfo & cat /proc/meminfo      # 查看CPU&MEM信息
   $ cat /proc/mounts & cat /proc/filesystems   # 查看/mnt/&fs信息
   # 系统版本号'发行版本'*** Linux-redhat > cat /etc/redhat-release
-  $ cat /etc/os-release # 系统完整信息
+  $ cat /etc/os-release # 系统完整信息  NAME="Ubuntu"  VERSION="18.04.3 LTS (Bionic Beaver)" ...
+  $ cat /etc/system-release # CentOS Linux release 7.6.1810 (Core)
   $ cat /etc/issue && lsb_release -cs ; lsb_release -a #Linux发行版本信息+支持的体系结构[amd64,x86_64,arm64]
   $ echo "Linux-x86_64" && echo $(uname -s)-$(uname -m) && echo `uname -s`-`uname -m`
   
-  # 系统性能…测试
-  $ wget -qO- git.io/superbench.sh | bash
+  # 系统…性能测试
+  $ wget -qO- https://git.io/superbench.sh | bash
   
   # 系统服务
   $ [apt,apt-get(在线安装)] + [dpkg(离线安装)] # Linux of Ubuntu
@@ -226,12 +227,13 @@
   > tasklist
   > wmic process where "caption = 'java.exe' and commandline like '%server-1.properties%'" get processid
   $ free
-  $ ps aux                       # 进程列表: USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND
-  $ ps -ef                       # 进程列表: UID  PID  PPID  C STIME TTY TIME CMD
-  $ ps -eo pid,cmd | grep uuid   # [o输出字段,e依赖的系统环境]
+  $ ps aux || ps le             # 进程列表: USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND
+  $ ps -ef                      # 进程列表: UID  PID  PPID  C STIME TTY TIME CMD
+  $ ps -ef | grep dotnet        # 查看dotnet进程id
+  $ ps -eo pid,cmd | grep uuid  # [o输出字段,e依赖的系统环境]
   $ ps -u $USER -o pid,%cpu,tty,cputime,cmd
-  $ ps -ef | grep dotnet         # 查看dotnet进程id
-  $ top -Hp [进程id]             # 进程列表: 内存&CPU占用            # 快捷键：k 杀死进程
+  $ pstree                      # 进程树列表
+  $ top                         # 进程列表: 内存&CPU占用 ( 僵尸进程 0 zombie ) # 快捷键：k 杀死进程(PID to signal/kill)
   $ htop                        # 进程管理:  sudo apt-get install htop
   $ dotnet-dump collect -p [进程id] ; dotnet-dump analyze core_***  # 查找.NET Core 占用CPU 100% 的原因
     > clrthreads ; setthread [线程DBG] ; clrstack ; clrstack -a ; dumpobj 0x00*** # 分析线程/堆栈/内存数据
@@ -240,14 +242,15 @@
   
   > netstat -ano | findstr :3000 # 杀死进程使用, 指定占用的端口号
   > taskkill /F /PID <<PID>>     # PowerShell杀死进程
-  $ killall -I NAME... # 杀死进程,指定进程名称NAME...
-  $ killall -I -s 15 -u `id -un` NAME... # -s 15=TERM结束程序(可以被捕获-阻塞-忽略)+程序内可监听该信号SIG
-  $ kill -l            # 查看软件中断SIG [Linux标准信号1~31] (实时信号:32~64) +打印所有支持的信号名称
-  # kill -9 <<PID>>    # 无条件结束程序-9=KILL(不能被捕获-阻塞-忽略) 
-  $ kill -SIGUSR1 <<PID>> # 重启服务-10=USR1   -1     -2     -3      -9      -15
-  $ kill -SIGTERM <<PID>> # 关闭服务           -SIGHUP/SIGINT/SIGQUIT/SIGKILL/SIGTERM
+  $ kill -l             # 查看软件中断SIG [Linux标准信号1~31] (实时信号:32~64) +打印所有支持的信号名称
+  # kill -9 <<PID>>     # 强制结束程序-9=KILL(不能被捕获-阻塞-忽略) 
+  $ kill -SIGUSR1 <<PID>> # 重启服务-10=USR1   1      2      3       9       15 (default)
+  $ kill -SIGTERM <<PID>> # 关闭服务           SIGHUP/SIGINT/SIGQUIT/SIGKILL/SIGTERM
+  $ pkill -1 -ef <<NAME>> # 等待进程退出,指定进程名称
+  $ killall -I <<NAME>>   # 立即结束程序,指定进程名称
+  $ killall -I -s 15 -u `id -un` <<NAME>> # -s 15 {(default)结束程序}(可以被捕获-阻塞-忽略)+程序内可监听该信号SIG
   # 参考: https://gist.github.com/biezhi/74bfe20f9758210c1be18c64e6992a37
-  # -1=HUP终端控制进程结束(终端连接断开) -2=INT用户发送INTR字符(Ctrl+C)触发进程结束 -3=QUIT用户发送QUIT字符(Ctrl+/)
+  # -1=HUP结束终端控制进程(等待进程退出\平滑重启) -2=INT用户发送INTR字符(Ctrl+C\触发进程结束) -3=QUIT用户发送QUIT字符(Ctrl+/)
   # -18=TSTP暂停进程 -19=CONT继续进程 -17=STOP停止进程(不能被捕获) 
   # -21=TTIN读数据时 -22=TTOU写数据时 -20=CHLD子进程结束(由父进程接收)
   

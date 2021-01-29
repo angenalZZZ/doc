@@ -124,9 +124,9 @@ phantom.exit(); // 退出 PhantomJS (这一行不能少)
 ~~~
 
 
-#### 3. [`Selenium`](https://selenium.dev/) [WebDriver](https://www.selenium.dev/downloads)+[Selenium IDE](https://www.selenium.dev/downloads)+[Selenium Grid](https://www.selenium.dev/downloads) use [Client & WebDriver Language(JavaScript,Java,C#,Python,Ruby)](https://www.selenium.dev/downloads) and [Document](https://www.selenium.dev/documentation/en/grid/grid_3/)
+#### 3. [`Selenium`](https://selenium.dev/) [WebDriver](https://www.selenium.dev/downloads)+[Selenium IDE](https://www.selenium.dev/downloads)+[Selenium Grid](https://www.selenium.dev/downloads) & [Client & WebDriver Language(JavaScript,Java,C#,Python,Ruby)](https://www.selenium.dev/downloads) & [Document](https://www.selenium.dev/documentation/en/grid/grid_3/)
 
-> [Selenium Server (Grid)](https://www.selenium.dev/downloads)
+> [Install Selenium Server (Grid)](https://www.selenium.dev/downloads)
 ~~~bash
 Step 1: Start the Hub 
 # http://localhost:4444/grid/console

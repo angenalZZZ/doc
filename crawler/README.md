@@ -124,3 +124,24 @@ phantom.exit(); // 退出 PhantomJS (这一行不能少)
 ~~~
 
 
+#### 3. [`Selenium`](https://selenium.dev/) [WebDriver](https://www.selenium.dev/downloads)+[Selenium IDE](https://www.selenium.dev/downloads)+[Selenium Grid](https://www.selenium.dev/downloads) use [Client & WebDriver Language(JavaScript,Java,C#,Python,Ruby)](https://www.selenium.dev/downloads) and [Document](https://www.selenium.dev/documentation/en/grid/grid_3/)
+
+> [Selenium Server (Grid)](https://www.selenium.dev/downloads)
+~~~bash
+Step 1: Start the Hub 
+# http://localhost:4444/grid/console
+> java -jar selenium-server-standalone.jar -role hub -port 4444  # undefined configfile
+> java -jar selenium-server-standalone.jar -role hub -debug  # print debug logs to console.
+> java -jar selenium-server-standalone.jar -role hub -log log.txt  # specify a log file.
+> java -jar selenium-server-standalone.jar -role hub -hubConfig hubConfig.json -debug
+
+Step 2: Start the Nodes 
+# If a port is not specified -port flag, a free port will be chosen.
+# For both hub and node, if the -host flag is not specified, 0.0.0.0 will be used by default.
+> java -jar selenium-server-standalone.jar -role node -hub http://localhost:4444  # undefined configfile
+> java -jar selenium-server-standalone.jar -Dwebdriver.chrome.driver=chromedriver.exe -role node -nodeConfig nodeConfig.json
+~~~
+
+
+
+

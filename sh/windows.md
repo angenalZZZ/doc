@@ -140,11 +140,11 @@ pacman --needed -Sy bash pacman pacman-mirrors msys2-runtime  # 更新软件数�
 # 镜像源(/etc/pacman.d/) https://mirrors.tuna.tsinghua.edu.cn/help/msys2
 pacman -Syu  # MSYS2系统更新&重启
 # 开发环境
-pacman -S base-devel git mercurial cvs curl wget p7zip python perl ruby
-pacman -S mingw-w64-i686-toolchain                         # 安装32位Mingw（D:\Program\msys64\mingw32\）
-pacman -S mingw-w64-x86_64-toolchain                       # 安装64位Mingw（D:\Program\msys64\mingw64\）(推荐)
-pacman -S mingw-w64-x86_64-toolchain mingw-w64-x86_64-v8   # 安装64位Mingw+V8 https://github.com/rogchap/v8go
-pacman -Sl|grep gcc                                        # 检查安装gcc,cmake,git...
+pacman -S base-devel git mercurial cvs curl wget p7zip python perl ruby go # 开发语言环境(可选)
+pacman -S mingw-w64-i686-toolchain                         # 安装32位Mingw（D:\Program\msys64\mingw32\）(可选)
+pacman -S mingw-w64-x86_64-toolchain [gcc,make,pkgconfig]  # 安装64位Mingw（D:\Program\msys64\mingw64\）(推荐)
+pacman -S mingw-w64-x86_64-toolchain mingw-w64-x86_64-v8   # 安装64位Mingw(all)+V8 https://github.com/rogchap/v8go
+pacman -Sl|grep lua                                        # 搜索并安装lua,go...
 # 桌面开发Qt5
 pacman -S mingw-w64-x86_64-qt5 mingw-w64-x86_64-qt-creator # 安装64位Qt5 (推荐)
 pacman -S mingw-w64-i686-qt5 mingw-w64-i686-qt-creator     # 安装32位Qt5
@@ -181,7 +181,6 @@ C:\ProgramData\DockerDesktop\version-bin
 D:\Tool\SysinternalsSuite\
 A:\go\bin
 D:\Program\Go\bin
-#D:\Program\mingw64\bin
 D:\Program\msys64\mingw64\bin
 D:\Program\CMake\bin
 D:\Program\D-Bus\bin
@@ -222,7 +221,7 @@ LUA_DEV       D:\Program\Lua\5.1
 LUA_PATH      ;;D:\Program\Lua\5.1\lua\?.luac
 NN_STATIC_LIB   D:\Program\nanomsg\lib
 NODE_PATH       D:\Program\nodejs\node_global\node_modules
-PKG_CONFIG_PATH D:\Program\mingw64\lib\pkgconfig
+PKG_CONFIG_PATH D:\Program\msys64\mingw64\lib\pkgconfig
 SOLR_INSTALL  A:\database\solr
 ZONEINFO      A:\go\bin\zoneinfo.zip
 ```

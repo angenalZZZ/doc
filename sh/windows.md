@@ -130,6 +130,26 @@ REG add "HKLM\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc" /v Start /t REG_DW
 REG add "HKLM\SYSTEM\CurrentControlSet\Services\UsoSvc" /v Start /t REG_DWORD /d 4 /f
 ~~~
 
+
+#### 系统MSYS2+Mingw64+Qt5
+
+> [MSYS2 install](https://www.msys2.org/wiki/MSYS2-installation/)
+~~~bash
+# 运行 msys2_shell.bat
+pacman --needed -Sy bash pacman pacman-mirrors msys2-runtime  # 更新软件数据库
+# 镜像源(/etc/pacman.d/) https://mirrors.tuna.tsinghua.edu.cn/help/msys2
+pacman -Syu  # MSYS2系统更新&重启
+# 开发环境
+pacman -S base-devel git mercurial cvs wget p7zip perl ruby python
+pacman -S mingw-w64-x86_64-toolchain  # 安装64位Mingw（D:\Program\msys64\mingw64\）(推荐)
+pacman -S mingw-w64-i686-toolchain    # 安装32位Mingw（D:\Program\msys64\mingw32\）
+# 桌面开发Qt5
+pacman -S mingw-w64-x86_64-qt5 mingw-w64-x86_64-qt-creator # 安装64位Qt5 (推荐)
+pacman -S mingw-w64-i686-qt5 mingw-w64-i686-qt-creator     # 安装32位Qt5
+# 其它工具
+pacman -S mingw-w64-x86_64-toolchain mingw-w64-x86_64-v8   # 安装64位V8 https://github.com/rogchap/v8go
+~~~
+
 > 系统环境变量
 
 - 用户变量/Path

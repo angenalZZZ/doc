@@ -140,15 +140,14 @@ pacman --needed -Sy bash pacman pacman-mirrors msys2-runtime  # 更新软件数�
 # 镜像源(/etc/pacman.d/) https://mirrors.tuna.tsinghua.edu.cn/help/msys2
 pacman -Syu  # MSYS2系统更新&重启
 # 开发环境
-pacman -S base-devel git mercurial cvs wget p7zip perl ruby python
-pacman -S mingw-w64-x86_64-toolchain                       # 安装64位Mingw（D:\Program\msys64\mingw64\）(推荐)
+pacman -S base-devel git mercurial cvs curl wget p7zip python perl ruby
 pacman -S mingw-w64-i686-toolchain                         # 安装32位Mingw（D:\Program\msys64\mingw32\）
+pacman -S mingw-w64-x86_64-toolchain                       # 安装64位Mingw（D:\Program\msys64\mingw64\）(推荐)
+pacman -S mingw-w64-x86_64-toolchain mingw-w64-x86_64-v8   # 安装64位Mingw+V8 https://github.com/rogchap/v8go
+pacman -Sl|grep gcc                                        # 检查安装gcc,cmake,git...
 # 桌面开发Qt5
 pacman -S mingw-w64-x86_64-qt5 mingw-w64-x86_64-qt-creator # 安装64位Qt5 (推荐)
 pacman -S mingw-w64-i686-qt5 mingw-w64-i686-qt-creator     # 安装32位Qt5
-# 其它工具
-pacman -S mingw-w64-x86_64-toolchain mingw-w64-x86_64-v8   # 安装64位V8 https://github.com/rogchap/v8go
-pacman -Sl|grep gcc                                        # 检查安装gcc,cmake,git...
 ~~~
 
 > 系统环境变量

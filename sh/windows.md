@@ -161,7 +161,8 @@ C:\ProgramData\DockerDesktop\version-bin
 D:\Tool\SysinternalsSuite\
 A:\go\bin
 D:\Program\Go\bin
-D:\Program\mingw64\bin\
+#D:\Program\mingw64\bin
+D:\Program\msys64\mingw64\bin
 D:\Program\CMake\bin
 D:\Program\D-Bus\bin
 D:\Program\erl10.5\bin

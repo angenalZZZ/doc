@@ -3,13 +3,14 @@
 
 #### 系统升级
 
-> Windows 10 最新版激活方式，免费升级到20H2 [Download MediaCreationTool20H2](https://go.microsoft.com/fwlink/?LinkId=691209)
+> Windows 10 最新版激活方式，免费升级到20H2 [Download Update Tool](https://go.microsoft.com/fwlink/?LinkId=691209)
 ~~~bash
 slmgr /ipk W269N-WFGWX-YVC9B-4J6C9-T83GX  # 专业版 or 企业版: 96YNV-9X4RP-2YYKB-RMQH4-6Q72D
 slmgr /skms kms.03k.org                   # 修改kms源
 slmgr /ato                                # 执行激活
 slmgr /upk                                # 卸载密钥(当无法激活时) www.win7zhijia.cn/win10jc
 ~~~
+> Windows 桌面-浏览器 [Google Chrome](https://www.google.com/intl/zh-CN/chrome/?standalone=1)、[Microsoft Edge](https://www.microsoft.com/zh-cn/edge/business/download)、[Yandex Browser](https://browser.yandex.com/)
 > Windows 10 Microsoft Store
 ~~~bash
 # PowerShell 以管理员方式运行

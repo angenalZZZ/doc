@@ -34,6 +34,7 @@
 
 ## [影音媒体](https://vip.jokerps.com/favorites/play)
 - [片库](https://www.pianku.li/ "高清影视资源下载")、[片源网](http://pianyuan.la/ "BT、磁力种子资源分享")、[音范丝](http://www.yinfans.me/ "精选4K蓝光原盘下载")、[蓝调网](http://lcoc.top/ "vip视频解析网站")、[Audio Library](https://www.audiolibrary.com.co/ "无版权音乐下载")、[My Free MP3](http://tool.liumingye.cn/music/ "免费搜索下载无损音乐")、[TuneFind](https://www.tunefind.com/ "从电视和电影中查找音乐")、[果汁音乐](http://guozhivip.com/yinyue/ "音乐免费在线收听下载")、[更多](https://vip.jokerps.com/favorites/play)
+- [IPTV·电视直播源·`按国家、类别、语言`](https://github.com/iptv-org/iptv)、[IPTV·媒体工具](https://github.com/iptv-org/awesome-iptv)
 
 
 ## [休闲娱乐](https://vip.jokerps.com/favorites/play)

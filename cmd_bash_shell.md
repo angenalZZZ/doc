@@ -1180,6 +1180,131 @@ $ sudo systemctl --type=service --state=active | grep graylog # 访问 http://lo
   
 # 聊天机器人 Chat Bots (typescript)服务: github.com/botpress/botpress
   > nssm install Botpress D:\Program\botpress\bp.exe serve  # Windows Service
+
+# 聊天服务器 Rocket.Chat on Ubuntu: computingforgeeks.com/install-rocket-chat-on-ubuntu-with-letsencrypt
+sudo apt-get -y update # Update your Ubuntu
+wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add - # Add MongoDB GPG signing key
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" \
+  | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list  # Add MongoDB repository
+sudo apt-get -y update && sudo apt-get install -y curl && curl -sL https://deb.nodesource.com/setup_12.x \
+  | sudo bash -  # Configure Node.js to be installed through the Ubuntu package manager
+sudo apt-get install -y build-essential mongodb-org nodejs graphicsmagick # Install Node.js, MongoDB, graphicsmagick
+sudo npm install -g inherits n  # Install inherits and n
+sudo ln -s /usr/bin/node /usr/local/bin/node  # Create a symbolic link for the node binary file to
+curl -L https://releases.rocket.chat/latest/download -o /tmp/rocket.chat.tgz # Download Rocket.Chat
+tar -xzf /tmp/rocket.chat.tgz -C /tmp
+cd /tmp/bundle/programs/server && npm install
+sudo mv /tmp/bundle /opt/Rocket.Chat
+sudo useradd -M rocketchat && sudo usermod -L rocketchat # Create Rocketchat system user
+sudo chown -R rocketchat:rocketchat /opt/Rocket.Chat
+ ## Start Create Rocket.Chat service
+cat << EOF |sudo tee /etc/systemd/system/rocketchat.service
+[Unit]
+Description=The Rocket.Chat server
+After=network.target remote-fs.target nss-lookup.target nginx.target mongod.target
+[Service]
+ExecStart=/usr/local/bin/node /opt/Rocket.Chat/main.js
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=rocketchat
+User=rocketchat
+Environment=MONGO_URL=mongodb://localhost:27017/rocketchat?replicaSet=rs01 MONGO_OPLOG_URL=mongodb://localhost:27017/local?replicaSet=rs01 ROOT_URL=http://localhost:3000/ PORT=3000
+[Install]
+WantedBy=multi-user.target
+EOF
+ ## End Create Rocket.Chat service, and Configure the storage engine and replication for MongoDB
+
+sudo sed -i "s/^#  engine:/  engine: mmapv1/"  /etc/mongod.conf 
+sudo sed -i "s/^#replication:/replication:\n  replSetName: rs01/" /etc/mongod.conf
+sudo systemctl enable mongod && sudo systemctl start mongod # Start and enable MongoDB service
+mongo --eval "printjson(rs.initiate())" # Test MongoDB service
+sudo systemctl enable rocketchat && sudo systemctl start rocketchat # Start Rocket.Chat service
+sudo systemctl status rocketchat # Check if the service is running
+
+ ## Configure Nginx Reverse Proxy
+sudo apt install nginx
+sudo nano /etc/nginx/conf.d/rocketchat.conf
+
+upstream rocket_backend {
+  server 127.0.0.1:3000;
+}
+
+server {
+    listen 80;
+    server_name chat.hirebestengineers.com;
+    access_log /var/log/nginx/rocketchat-access.log;
+    error_log /var/log/nginx/rocketchat-error.log;
+
+    location / {
+        proxy_pass http://rocket_backend/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $http_host;
+
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forward-Proto http;
+        proxy_set_header X-Nginx-Proxy true;
+
+        proxy_redirect off;
+    }
+}
+
+sudo nginx -t  # Check if Nginx configuration is ok
+sudo systemctl restart nginx
+sudo systemctl enable nginx
+
+ ## Setup Let’s Encrypt SSL
+sudo apt install certbot python3-certbot-nginx
+certbot --nginx  # Then run certbot to acquire SSL certificate
+
+upstream rocket_backend {
+  server 127.0.0.1:3000;
+}
+
+server {
+    server_name chat.hirebestengineers.com;
+    access_log /var/log/nginx/rocketchat-access.log;
+    error_log /var/log/nginx/rocketchat-error.log;
+
+    location / {
+        proxy_pass http://rocket_backend/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $http_host;
+
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forward-Proto http;
+        proxy_set_header X-Nginx-Proxy true;
+
+        proxy_redirect off;
+    }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/chat.hirebestengineers.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/chat.hirebestengineers.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+server {
+    if ($host = chat.hirebestengineers.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    server_name chat.hirebestengineers.com;
+    return 404; # managed by Certbot
+}
+
+sudo nginx -t  # Check if Nginx configuration is ok
+sudo systemctl restart nginx # Restart Nginx service
+
 ~~~
 
 > `系统服务` 计划任务管理<br>

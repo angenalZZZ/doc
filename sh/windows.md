@@ -50,22 +50,9 @@ wsl --set-version <linux> 2 # 修改<linux>为 WSL 2
 # 安装数据库 Mysql 8.0
 cd /tmp # 需提前安装依赖glibc
 # sudo wget -O /etc/yum.repos.d/ http://repo.mysql.com/mysql-community-release-el7-7.noarch.rpm #低版本
-wget http://repo.mysql.com/mysql80-community-release-el7.rpm && rpm -ivh mysql80-community-release-el7.rpm
+wget http://repo.mysql.com/mysql80-community-release-el7.rpm 
+rpm -ivh mysql80-community-release-el7.rpm
 yum install mysql-server
-# firewall-cmd --zone=public --add-port=3306/tcp --permanent  # 开放端口3306用于远程连接（centos-7）
-# firewall-cmd --reload
-# vi /etc/my.cnf # 出现远程连接警告时
-[client]
-port = 3306
-socket = /var/lib/mysql/mysql.sock
-default-character-set = utf8mb4
-host = localhost
-user = root
-password = root
-......
-init-connect = 'SET NAMES utf8mb4'
-character-set-server = utf8mb4
-......
 ~~~
 > Windows 10 [WSL - Ubuntu 20.04](https://docs.microsoft.com/en-au/windows/wsl/install-manual)、[Update to WSL 2](https://docs.microsoft.com/en-au/windows/wsl/install-win10#step-2---update-to-wsl-2)、[Ubuntu开发环境及常用安装](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#linux开发环境及常用安装)、[系统设置工具dotfiles](https://github.com/nickjj/dotfiles)
 ~~~bash
@@ -95,11 +82,12 @@ sudo apt-get install python3-pip   # 安装适用于python3的pip
 sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 100
 sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 150
 pip3 install ipython
-# MySQL 安装配置
+# MySQL 安装
 sudo apt-get install mysql-server
 sudo apt-get isntall mysql-client
 sudo apt-get install libmysqlclient-dev
 sudo pip3 install PyMySQL          # 使用python操作MySQL
+# MySQL 配置
 mysql -u root                      # 重置密码前，首先无密码登录
 # sudo chown -R `id -un`:`id -gn` /usr/lib/mysql # 设置目录权限(当上面mysql登录执行失败时)
 mysql>                             # 连接进入mysql命令行界面
@@ -111,6 +99,22 @@ mysql> update user set password =password('密码') where user='root';
 mysql> GRANT ALL PRIVILEGES ON *.* TO root@'%' IDENTIFIED BY 'root'; #授权外网通过root登录
 show variables like '%char%';
 set names utf8; # set names utf8mb4 # 设置编码
+# 远程连接-开放端口3306（centos-7）
+# firewall-cmd --zone=public --add-port=3306/tcp --permanent
+# firewall-cmd --reload
+# 远程连接-出现警告时
+# vi /etc/my.cnf << EOF 
+[client]
+port = 3306
+socket = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+host = localhost
+user = root
+password = root
+... ...
+init-connect = 'SET NAMES utf8mb4'
+character-set-server = utf8mb4
+EOF
 ~~~
 > Windows 后台服务管理工具
   - `nssm`>[`download`](https://nssm.cc/download)>[`commands`](https://nssm.cc/commands)

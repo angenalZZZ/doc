@@ -484,7 +484,7 @@ deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe mu
 deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
 deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
-$ sudo apt-get update && sudo apt-get upgrade # ubuntu更新软件源
+$ sudo apt-get update && sudo apt-get upgrade # ubuntu更新软件源完成
 $ yum install -y wget                         # CentOS 7 阿里镜像源
 $ wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
 $ cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
@@ -537,8 +537,8 @@ $ yum clean all & yum makecache               # 更新镜像源缓存
 
 > `开发环境搭建` 安装gcc/g++/gdb/make, gtk/glib/gnome, java, dot.NET Core, R, python, nodejs等
 ~~~shell
-  # < Windows Subsystem for Linux | WSL >---------------------------
-  $ sudo do-release-upgrade -d        # 升级至18.04LTS ( 如果是16.04? > cat /etc/issue )
+  # < Windows Subsystem for Linux WSL - ubuntu >---------------------------
+  $ sudo do-release-upgrade -d        # 升级至ubuntu18.04LTS ( 如果是16.04? > cat /etc/issue )
   $ lsb_release -c                    # 获取系统代号,更新软件源sources.list
   $ sudo vim /etc/apt/sources.list    # 更新软件源
   $ sudo apt-get update && sudo apt-get upgrade # 更新升级apt
@@ -622,14 +622,15 @@ $ yum clean all & yum makecache               # 更新镜像源缓存
    
   $ sudo apt install nodejs           # 安装Nodejs(此安装方式版本太低; 推荐wget安装方式-如下)
   $ wget https://npm.taobao.org/mirrors/node/v12.16.3/node-v12.16.3-linux-x64.tar.gz
-  $ sudo tar -zxf node-v12.16.3-linux-x64.tar.gz -C /usr/local/
-  $ sudo mv /usr/local/node-v12.16.3-linux-x64 /usr/local/node
-  $ sudo chown `id -un`:`id -gn` /usr/local/node -R  # 设置目录
-  $ export PATH=/usr/local/node/bin:$PATH # 配置环境变量,如下 01-locale-profile.sh (替代选项)设置软链接 ln
-  $ sudo ln -sf /usr/local/node/bin/node /usr/local/bin/node
+  $ sudo tar -zxf node-v12.16.3-linux-x64.tar.gz -C /usr/local/ # 解压目录
+  $ sudo mv /usr/local/node-v12.16.3-linux-x64 /usr/local/node # 重命名目录
+  $ sudo chown `id -un`:`id -gn` /usr/local/node -R            # 设置目录权限
+  $ sudo ln -sf /usr/local/node/bin/node /usr/local/bin/node   # 设置软链接,如下
   $ sudo ln -sf /usr/local/node/bin/npm /usr/local/bin/npm
+  $ sudo ln -sf /usr/local/node/bin/npx /usr/local/bin/npx
+  $ export PATH=/usr/local/node/bin:$PATH # 配置环境变量/etc/profile.d/nodejs.sh(可替代软链接)
   
-  $ su - root                             # 安装 chrome driver
+  $ su - root                         # 安装 chrome driver
   $ export DEBIAN_FRONTEND=noninteractive
   $ apt-get update
   $ apt-get install unzip

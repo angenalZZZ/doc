@@ -39,21 +39,33 @@ wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-
 sed -i 's/http:/https:/g' /etc/yum.repos.d/CentOS-Base.repo # 批量替换http为https
 yum clean all & yum makecache               # 更新镜像源缓存
 yum install -y epel-release                 # 安装epel软件源
-yum install -y gcc-c++ make                 # 安装gcc/make
-yum install -y glibc glibc.i686             # 安装glibc
+yum install -y gcc-c++ make net-tools       # 安装gcc/make/net-tools
+yum install -y glibc glibc.i686             # 安装glibc*x86_64,i686
 yum install -y GraphicsMagick
 # 设置 WSL 默认版本为 2
 wsl --set-default-version 2 # Update to WSL 2
 wsl -l -v                   # 查看<linux>是否为 WSL 2
 wsl --set-version <linux> 2 # 修改<linux>为 WSL 2
 # 安装K8s集成到WSL Ubuntu20.04 参考 https://blog.csdn.net/weixin_43168190/article/details/107179715
-# 安装数据库 Mysql 5.7
-cd /tmp
-yum install -y glibc glibc.i686 # 安装依赖glibc
+# 安装数据库 Mysql 8.0
+cd /tmp # 需提前安装依赖glibc
+# sudo wget -O /etc/yum.repos.d/ http://repo.mysql.com/mysql-community-release-el7-7.noarch.rpm #低版本
 wget http://repo.mysql.com/mysql80-community-release-el7.rpm && rpm -ivh mysql80-community-release-el7.rpm
 yum install mysql-server
-yum install mysql-client
-yum install libmysqlclient-dev
+# firewall-cmd --zone=public --add-port=3306/tcp --permanent  # 开放端口3306用于远程连接（centos-7）
+# firewall-cmd --reload
+# vi /etc/my.cnf # 出现远程连接警告时
+[client]
+port = 3306
+socket = /var/lib/mysql/mysql.sock
+default-character-set = utf8mb4
+host = localhost
+user = root
+password = root
+......
+init-connect = 'SET NAMES utf8mb4'
+character-set-server = utf8mb4
+......
 ~~~
 > Windows 10 [WSL - Ubuntu 20.04](https://docs.microsoft.com/en-au/windows/wsl/install-manual)、[Update to WSL 2](https://docs.microsoft.com/en-au/windows/wsl/install-win10#step-2---update-to-wsl-2)、[Ubuntu开发环境及常用安装](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#linux开发环境及常用安装)、[系统设置工具dotfiles](https://github.com/nickjj/dotfiles)
 ~~~bash

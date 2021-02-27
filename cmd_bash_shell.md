@@ -628,7 +628,7 @@ $ yum clean all & yum makecache               # 更新镜像源缓存
   $ sudo ln -sf /usr/local/node/bin/node /usr/local/bin/node   # 设置软链接,如下
   $ sudo ln -sf /usr/local/node/bin/npm /usr/local/bin/npm
   $ sudo ln -sf /usr/local/node/bin/npx /usr/local/bin/npx
-  $ export PATH=/usr/local/node/bin:$PATH # 配置环境变量/etc/profile.d/nodejs.sh(可替代软链接)
+  $ export PATH=/usr/local/node/bin:$PATH # 配置环境变量/etc/profile.d/nodejs.sh(推荐替代软链接)
   
   $ su - root                         # 安装 chrome driver
   $ export DEBIAN_FRONTEND=noninteractive
@@ -665,6 +665,15 @@ $ yum clean all & yum makecache               # 更新镜像源缓存
   PUPPETEER_DOWNLOAD_HOST=https://npm.taobao.org/mirrors
   npm config set puppeteer_download_host=https://npm.taobao.org/mirrors
   npm install puppeteer-chromium-resolver crawlab-sdk -g --unsafe-perm=true --registry=https://registry.npm.taobao.org
+  
+  
+  # < Windows Subsystem for Linux WSL - CentOS 7 >---------------------------
+  $ sudo vim /etc/yum.repos.d/CentOS-Base.repo  # 更新软件源
+  $ sudo yum -y check-update && yum clean all & yum makecache # 更新升级yum及镜像源缓存
+  $ sudo yum install -y epel-release            # 安装epel软件源
+  $ sudo yum install -y gcc-c++ make            # 安装gcc/make
+  $ sudo yum install -y gnupg ca-certificates curl wget openssl # 安装ca/wget/openssl
+  $ sudo yum install -y GraphicsMagick
   
   
   # 微服务 - 消息中间件 - 跨语言LGPLed - 通信方案

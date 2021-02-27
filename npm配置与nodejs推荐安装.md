@@ -9,7 +9,7 @@ sudo chown `id -un`:`id -gn` /usr/local/node -R            # 设置目录权限
 sudo ln -sf /usr/local/node/bin/node /usr/local/bin/node   # 设置软链接,如下
 sudo ln -sf /usr/local/node/bin/npm /usr/local/bin/npm
 sudo ln -sf /usr/local/node/bin/npx /usr/local/bin/npx
-export PATH=/usr/local/node/bin:$PATH # 配置环境变量/etc/profile.d/nodejs.sh(可替代软链接)
+export PATH=/usr/local/node/bin:$PATH # 配置环境变量/etc/profile.d/nodejs.sh(推荐替代软链接)
 ~~~
 
 # npm 配置

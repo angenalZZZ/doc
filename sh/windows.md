@@ -33,16 +33,27 @@ LxRunOffline install -n centos7 -d A:\centos7 -f A:\centos7\centos-7-docker.tar.
 # 开启 CentOS
 LxRunOffline run -n centos7
 passwd root                                 # 进入 CentOS 为root账户设置密码
-yum install -y wget                         # 获取 CentOS 7 阿里镜像源
+yum install -y gnupg ca-certificates curl wget openssl # 安装ca/wget/openssl
 cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak # 先备份repo
-wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo #获取阿里镜像源
 sed -i 's/http:/https:/g' /etc/yum.repos.d/CentOS-Base.repo # 批量替换http为https
 yum clean all & yum makecache               # 更新镜像源缓存
+yum install -y epel-release                 # 安装epel软件源
+yum install -y gcc-c++ make                 # 安装gcc/make
+yum install -y glibc glibc.i686             # 安装glibc
+yum install -y GraphicsMagick
 # 设置 WSL 默认版本为 2
 wsl --set-default-version 2 # Update to WSL 2
 wsl -l -v                   # 查看<linux>是否为 WSL 2
 wsl --set-version <linux> 2 # 修改<linux>为 WSL 2
 # 安装K8s集成到WSL Ubuntu20.04 参考 https://blog.csdn.net/weixin_43168190/article/details/107179715
+# 安装数据库 Mysql 5.7
+cd /tmp
+yum install -y glibc glibc.i686 # 安装依赖glibc
+wget http://repo.mysql.com/mysql80-community-release-el7.rpm && rpm -ivh mysql80-community-release-el7.rpm
+yum install mysql-server
+yum install mysql-client
+yum install libmysqlclient-dev
 ~~~
 > Windows 10 [WSL - Ubuntu 20.04](https://docs.microsoft.com/en-au/windows/wsl/install-manual)、[Update to WSL 2](https://docs.microsoft.com/en-au/windows/wsl/install-win10#step-2---update-to-wsl-2)、[Ubuntu开发环境及常用安装](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#linux开发环境及常用安装)、[系统设置工具dotfiles](https://github.com/nickjj/dotfiles)
 ~~~bash
@@ -77,10 +88,17 @@ sudo apt-get install mysql-server
 sudo apt-get isntall mysql-client
 sudo apt-get install libmysqlclient-dev
 sudo pip3 install PyMySQL          # 使用python操作MySQL
-mysql>                             # 连接mysql
+mysql -u root                      # 重置密码前，首先无密码登录
+# sudo chown -R `id -un`:`id -gn` /usr/lib/mysql # 设置目录权限(当上面mysql登录执行失败时)
+mysql>                             # 连接进入mysql命令行界面
 set password =password('密码');
 flush privileges;                  # 刷新系统权限表, 或重启mysql服务 service MySQL restart
 mysql -uroot -p                    # 输入密码(-p)
+mysql> use mysql;
+mysql> update user set password =password('密码') where user='root';
+mysql> GRANT ALL PRIVILEGES ON *.* TO root@'%' IDENTIFIED BY 'root'; #授权外网通过root登录
+show variables like '%char%';
+set names utf8; # set names utf8mb4 # 设置编码
 ~~~
 > Windows 后台服务管理工具
   - `nssm`>[`download`](https://nssm.cc/download)>[`commands`](https://nssm.cc/commands)

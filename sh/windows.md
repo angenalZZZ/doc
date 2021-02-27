@@ -103,7 +103,7 @@ set names utf8; # set names utf8mb4 # 设置编码
 # firewall-cmd --zone=public --add-port=3306/tcp --permanent
 # firewall-cmd --reload
 # 远程连接-出现警告时
-# vi /etc/my.cnf << EOF -> https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html
+# vi /etc/my.cnf << EOF -参考- http://dev.mysql.com/doc/refman/8.0/en/server-configuration-defaults.html
 [client]
 port = 3306
 socket = /var/lib/mysql/mysql.sock

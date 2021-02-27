@@ -49,10 +49,10 @@ wsl --set-version <linux> 2 # 修改<linux>为 WSL 2
 # 安装K8s集成到WSL Ubuntu20.04 参考 https://blog.csdn.net/weixin_43168190/article/details/107179715
 # 安装数据库 Mysql 8.0
 cd /tmp # 需提前安装依赖glibc
-# sudo wget -O /etc/yum.repos.d/ http://repo.mysql.com/mysql-community-release-el7-7.noarch.rpm #低版本
+# sudo wget -O /etc/yum.repos.d/ http://repo.mysql.com/mysql-community-release-el7-7.noarch.rpm #低版本MySQL
 wget http://repo.mysql.com/mysql80-community-release-el7.rpm 
 rpm -ivh mysql80-community-release-el7.rpm
-yum install mysql-server
+yum install mysql-server   # 安装 MySQL 配置如下
 ~~~
 > Windows 10 [WSL - Ubuntu 20.04](https://docs.microsoft.com/en-au/windows/wsl/install-manual)、[Update to WSL 2](https://docs.microsoft.com/en-au/windows/wsl/install-win10#step-2---update-to-wsl-2)、[Ubuntu开发环境及常用安装](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#linux开发环境及常用安装)、[系统设置工具dotfiles](https://github.com/nickjj/dotfiles)
 ~~~bash
@@ -103,7 +103,7 @@ set names utf8; # set names utf8mb4 # 设置编码
 # firewall-cmd --zone=public --add-port=3306/tcp --permanent
 # firewall-cmd --reload
 # 远程连接-出现警告时
-# vi /etc/my.cnf << EOF 
+# vi /etc/my.cnf << EOF -> https://dev.mysql.com/doc/refman/8.0/en/server-system-variables.html
 [client]
 port = 3306
 socket = /var/lib/mysql/mysql.sock
@@ -114,7 +114,7 @@ password = root
 ... ...
 init-connect = 'SET NAMES utf8mb4'
 character-set-server = utf8mb4
-EOF
+# EOF
 ~~~
 > Windows 后台服务管理工具
   - `nssm`>[`download`](https://nssm.cc/download)>[`commands`](https://nssm.cc/commands)

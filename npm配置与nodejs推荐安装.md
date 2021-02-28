@@ -1,15 +1,14 @@
 # nodejs [安装v12.16.3](https://npm.taobao.org/mirrors/node/v12.16.3/node-v12.16.3-x64.msi)
 
 ~~~bash
-sudo apt install nodejs           # 安装Nodejs(此安装方式版本太低; 推荐wget安装方式-如下)
-wget https://npm.taobao.org/mirrors/node/v12.16.3/node-v12.16.3-linux-x64.tar.gz
-sudo tar -zxf node-v12.16.3-linux-x64.tar.gz -C /usr/local/ # 解压目录
-sudo mv /usr/local/node-v12.16.3-linux-x64 /usr/local/node # 重命名目录
-sudo chown `id -un`:`id -gn` /usr/local/node -R            # 设置目录权限
-sudo ln -sf /usr/local/node/bin/node /usr/local/bin/node   # 设置软链接,如下
+sudo apt install nodejs               # 安装Nodejs(此安装方式node版本较低; 推荐wget安装node新版本-如下)
+wget -O node-linux-x64.tar.gz https://npm.taobao.org/mirrors/node/v12.18.4/node-v12.18.4-linux-x64.tar.gz
+sudo tar -zxf node-linux-x64.tar.gz -C /usr/local/         # 解压目录
+sudo mv /usr/local/node-v12.18.4-linux-x64 /usr/local/node # 重命名安装目录
+sudo chown -R `id -un`:`id -gn` /usr/local/node            # 设置目录权限
+export PATH=/usr/local/node/bin:$PATH # 环境配置 /etc/profile.d/nodejs-profile.sh (推荐)
+sudo ln -sf /usr/local/node/bin/node /usr/local/bin/node   # 设置软链接 (不推荐)
 sudo ln -sf /usr/local/node/bin/npm /usr/local/bin/npm
-sudo ln -sf /usr/local/node/bin/npx /usr/local/bin/npx
-export PATH=/usr/local/node/bin:$PATH # 配置环境变量/etc/profile.d/nodejs.sh(推荐替代软链接)
 ~~~
 
 # npm 配置

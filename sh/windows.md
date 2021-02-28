@@ -53,6 +53,10 @@ cd /tmp # 需提前安装依赖 # yum install -y epel-release glibc glibc.i686 g
 # sudo wget -O /etc/yum.repos.d/ http://repo.mysql.com/mysql-community-release-el7-7.noarch.rpm #低版本MySQL
 wget http://repo.mysql.com/mysql80-community-release-el7.rpm && rpm -ivh mysql80-community-release-el7.rpm
 yum install mysql-server # 安装 MySQL 配置如下 https://dev.mysql.com/doc/refman/8.0/en/server-configuration.html
+> systemctl start mysqld # 启动 MySQL (如果失败时,参考如下 > D-Bus connection Operation not permitted)
+mv /usr/bin/systemctl /usr/bin/systemctl.old
+wget -O /usr/bin/systemctl https://github.com/gdraheim/docker-systemctl-replacement/blob/master/files/docker/systemctl.py
+chmod +x /usr/bin/systemctl
 ~~~
 > Windows 10 [WSL - Ubuntu 20.04](https://docs.microsoft.com/en-au/windows/wsl/install-manual)、[Update to WSL 2](https://docs.microsoft.com/en-au/windows/wsl/install-win10#step-2---update-to-wsl-2)、[Ubuntu开发环境及常用安装](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#linux开发环境及常用安装)、[系统设置工具dotfiles](https://github.com/nickjj/dotfiles)
 ~~~bash

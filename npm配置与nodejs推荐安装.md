@@ -1,4 +1,4 @@
-# nodejs [安装v12.16.3](https://npm.taobao.org/mirrors/node/v12.16.3/node-v12.16.3-x64.msi)
+# nodejs [下载windows安装包](https://npm.taobao.org/mirrors/node/v12.18.4/node-v12.18.4-x64.msi)
 
 ~~~bash
 sudo apt install nodejs               # 安装Nodejs(此安装方式node版本较低; 推荐wget安装node新版本-如下)

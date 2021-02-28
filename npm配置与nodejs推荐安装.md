@@ -35,11 +35,13 @@ sudo ln -sf /usr/local/node/bin/npm /usr/local/bin/npm
  npm i npm@latest -g                                      [建议]
  npm i --proxy=http://localhost:23547                     [建议] [不建议 npm config set proxy]
  npm i --registry=https://registry.npm.taobao.org         [建议] [不建议 npm config set registry]
- # install cnpm
+ # install cnpm                                           [包管理器cnpm]
  npm i -g cnpm --registry=https://registry.npm.taobao.org [代理taobao]
- npm i -g nrm	                                           [代理切换]
+ npm i -g cnpm --unsafe-perm=true --allow-root            [如果root安装时]
+ yarn global add cnpm --registry=https://registry.npm.taobao.org [当 npm i -g cnpm 无法安装时]
+ npm i -g nrm	                                            [代理切换nrm]
  # install yarn from https://yarn.bootcss.com/docs/install/
- npm i -g yarn > yarn | yarnpkg                           [包管理器]
+ npm i -g yarn > yarn | yarnpkg                           [包管理器yarn]
 ~~~
 
  # npm 如何安装 (npm|yarn)

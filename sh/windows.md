@@ -32,7 +32,8 @@ choco install lxrunoffline
 LxRunOffline install -n centos7 -d A:\centos7 -f A:\centos7\centos-7-docker.tar.xz
 # 开启 CentOS
 LxRunOffline run -n centos7
-passwd root                                 # 进入 CentOS 为root账户设置密码
+cat /etc/system-release && cat /usr/lib/os-release # CentOS Linux release 7.9.2009 (Core) 系统完整信息
+passwd root                                 # 设置root账户的密码
 yum install -y gnupg ca-certificates curl wget openssl # 安装ca/wget/openssl
 cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak # 先备份repo
 wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo #获取阿里镜像源
@@ -47,12 +48,12 @@ wsl --set-default-version 2 # Update to WSL 2
 wsl -l -v                   # 查看<linux>是否为 WSL 2
 wsl --set-version <linux> 2 # 修改<linux>为 WSL 2
 # 安装K8s集成到WSL Ubuntu20.04 参考 https://blog.csdn.net/weixin_43168190/article/details/107179715
-# 安装数据库 Mysql 8.0
+# 安装数据库 Mysql 8.0 参考 https://dev.mysql.com/doc/refman/8.0/en/installing.html
 cd /tmp # 需提前安装依赖glibc
 # sudo wget -O /etc/yum.repos.d/ http://repo.mysql.com/mysql-community-release-el7-7.noarch.rpm #低版本MySQL
-wget http://repo.mysql.com/mysql80-community-release-el7.rpm 
+wget http://repo.mysql.com/mysql80-community-release-el7.rpm
 rpm -ivh mysql80-community-release-el7.rpm
-yum install mysql-server   # 安装 MySQL 配置如下
+yum install mysql-server # 安装 MySQL 配置如下 https://dev.mysql.com/doc/refman/8.0/en/server-configuration.html
 ~~~
 > Windows 10 [WSL - Ubuntu 20.04](https://docs.microsoft.com/en-au/windows/wsl/install-manual)、[Update to WSL 2](https://docs.microsoft.com/en-au/windows/wsl/install-win10#step-2---update-to-wsl-2)、[Ubuntu开发环境及常用安装](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#linux开发环境及常用安装)、[系统设置工具dotfiles](https://github.com/nickjj/dotfiles)
 ~~~bash

@@ -930,6 +930,8 @@ $ yum clean all & yum makecache               # 更新镜像源缓存
   $ echo "mongodb-org-shell hold" | sudo dpkg --set-selections   # 包含mongo外壳shell
   $ echo "mongodb-org-mongos hold" | sudo dpkg --set-selections  # 包含mongos守护进程
   $ echo "mongodb-org-tools hold" | sudo dpkg --set-selections   # 工具: mongoimport bsondump, mongodump 等
+  $ mkdir -p /var/run/mongodb && chown mongod:mongod /var/run/mongodb && chmod 0755 /var/run/mongodb
+  $ chown -R mongod:mongod /var/lib/mongo /var/log/mongodb
   $ sudo service mongod status,start,stop,restart         # 查服务状态,启动,停止等
   $ sudo systemctl daemon-reload                          # 加载新的服务及配置
   $ sudo systemctl enable mongod.service                  # 开机启动,WSL> sudo /etc/init.d/mongodb status,start..
@@ -1202,12 +1204,13 @@ echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb
   | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list  # Add MongoDB repository
 sudo apt-get -y update && sudo apt-get install -y curl && curl -sL https://deb.nodesource.com/setup_12.x \
   | sudo bash -  # Configure Node.js to be installed through the Ubuntu package manager
-sudo apt-get install -y build-essential mongodb-org nodejs graphicsmagick # Install Node.js, MongoDB, graphicsmagick
-sudo npm install -g inherits n  # Install inherits and n
+sudo apt-get install -y build-essential graphicsmagick # Install graphicsmagick
+sudo apt-get install -y mongodb-org nodejs             # Install MongoDB, Node.js
+sudo npm install -g inherits n                # Install inherits and n
 sudo ln -s /usr/bin/node /usr/local/bin/node  # Create a symbolic link for the node binary file to
 curl -L https://releases.rocket.chat/latest/download -o /tmp/rocket.chat.tgz # Download Rocket.Chat
 tar -xzf /tmp/rocket.chat.tgz -C /tmp
-cd /tmp/bundle/programs/server && npm install
+cd /tmp/bundle/programs/server && npm install # 参考 npm配置与nodejs推荐安装.md
 sudo mv /tmp/bundle /opt/Rocket.Chat
 sudo useradd -M rocketchat && sudo usermod -L rocketchat # Create Rocketchat system user
 sudo chown -R rocketchat:rocketchat /opt/Rocket.Chat
@@ -1379,6 +1382,8 @@ EOF
 > vi /etc/mongod.conf # 启动 MongoDB 前
 sed -i "s/^#  engine:/  engine: mmapv1/" /etc/mongod.conf
 sed -i "s/^#replication:/replication:\n  replSetName: rs01/" /etc/mongod.conf
+mkdir -p /var/run/mongodb && chown mongod:mongod /var/run/mongodb && chmod 0755 /var/run/mongodb
+chown -R mongod:mongod /var/lib/mongo /var/log/mongodb
 systemctl status mongod && systemctl enable mongod && systemctl start mongod
 mongo --eval "printjson(rs.initiate())"
 systemctl status rocketchat && systemctl enable rocketchat && systemctl start rocketchat

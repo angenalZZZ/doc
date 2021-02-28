@@ -1187,11 +1187,15 @@ $ sudo systemctl --type=service --state=active | grep graylog # 访问 http://lo
   $ unzip gotify-linux-amd64.zip && chmod +x gotify-linux-amd64
   $ sudo ./gotify-linux-amd64  # 配置文件config.yml: gotify.net/docs/config
   > nssm install Gotify %gopath%\bin\gotify\server\gotify.exe
-  
+
 # 聊天机器人 Chat Bots (typescript)服务: github.com/botpress/botpress
   > nssm install Botpress D:\Program\botpress\bp.exe serve  # Windows Service
 
-# 聊天服务器 Rocket.Chat on Ubuntu: computingforgeeks.com/install-rocket-chat-on-ubuntu-with-letsencrypt
+~~~
+
+> `聊天平台` [Rocket.Chat](https://docs.rocket.chat/)
+~~~shell
+# Rocket.Chat on Ubuntu: computingforgeeks.com/install-rocket-chat-on-ubuntu-with-letsencrypt
 sudo apt-get -y update # Update your Ubuntu
 wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add - # Add MongoDB GPG signing key
 echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" \
@@ -1315,7 +1319,7 @@ server {
 sudo nginx -t  # Check if Nginx configuration is ok
 sudo systemctl restart nginx # Restart Nginx service
 
-# 聊天服务器 Rocket.Chat on CentOS-7: docs.rocket.chat/installation/manual-installation/centos
+# Rocket.Chat on CentOS-7: docs.rocket.chat/installation/manual-installation/centos
 cat /etc/system-release && cat /usr/lib/os-release # CentOS Linux release 7.9.2009 (Core) 系统完整信息
 passwd root                                 # 设置root账户的密码
 useradd -M rocketchat && usermod -L rocketchat # 添加账户rocketchat (切换当前用户 su - rocketchat)

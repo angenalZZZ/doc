@@ -43,6 +43,8 @@ yum install -y epel-release                 # 安装epel软件源
 yum install -y gcc-c++ make net-tools       # 安装gcc/make/net-tools
 yum install -y glibc glibc.i686             # 安装glibc*x86_64,i686
 yum install -y GraphicsMagick
+sudo useradd -M <name> && sudo usermod -L <name> # 创建user <name>
+sudo chown -R <name>:<name> /opt/<dir>  # 指定目录<dir>权限为user
 # 设置 WSL 默认版本为 2
 wsl --set-default-version 2 # Update to WSL 2
 wsl -l -v                   # 查看<linux>是否为 WSL 2

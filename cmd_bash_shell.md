@@ -37,9 +37,9 @@
   $ cat /proc/cpuinfo & cat /proc/meminfo      # 查看CPU&MEM信息
   $ cat /proc/mounts & cat /proc/filesystems   # 查看/mnt/&fs信息
   # 系统版本号'发行版本'*** Linux-redhat > cat /etc/redhat-release
-  $ cat /etc/os-release # 系统完整信息  NAME="Ubuntu"  VERSION="18.04.3 LTS (Bionic Beaver)" ...
-  $ cat /etc/system-release # CentOS Linux release 7.6.1810 (Core)
-  $ cat /etc/issue && lsb_release -cs ; lsb_release -a #Linux发行版本信息+支持的体系结构[amd64,x86_64,arm64]
+  $ cat /etc/os-release # 系统完整信息 NAME="Ubuntu" VERSION="18.04.3 LTS (Bionic Beaver)" 
+  $ cat /etc/system-release && cat /usr/lib/os-release # CentOS Linux release 7.9.2009 (Core)
+  $ cat /etc/issue && lsb_release -cs && lsb_release -a #Linux发行版本信息+支持的体系结构[amd64,x86_64,arm64]
   $ echo "Linux-x86_64" && echo $(uname -s)-$(uname -m) && echo `uname -s`-`uname -m`
   
   # 系统…性能测试

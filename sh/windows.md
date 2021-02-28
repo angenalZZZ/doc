@@ -48,11 +48,10 @@ wsl --set-default-version 2 # Update to WSL 2
 wsl -l -v                   # 查看<linux>是否为 WSL 2
 wsl --set-version <linux> 2 # 修改<linux>为 WSL 2
 # 安装K8s集成到WSL Ubuntu20.04 参考 https://blog.csdn.net/weixin_43168190/article/details/107179715
-# 安装数据库 Mysql 8.0 参考 https://dev.mysql.com/doc/refman/8.0/en/installing.html
-cd /tmp # 需提前安装依赖glibc
+# 安装数据库 Mysql 8.0 参考 https://dev.mysql.com/doc/refman/8.0/en/linux-installation-yum-repo.html
+cd /tmp # 需提前安装依赖 # yum install -y epel-release glibc glibc.i686 gcc-c++ wget net-tools
 # sudo wget -O /etc/yum.repos.d/ http://repo.mysql.com/mysql-community-release-el7-7.noarch.rpm #低版本MySQL
-wget http://repo.mysql.com/mysql80-community-release-el7.rpm
-rpm -ivh mysql80-community-release-el7.rpm
+wget http://repo.mysql.com/mysql80-community-release-el7.rpm && rpm -ivh mysql80-community-release-el7.rpm
 yum install mysql-server # 安装 MySQL 配置如下 https://dev.mysql.com/doc/refman/8.0/en/server-configuration.html
 ~~~
 > Windows 10 [WSL - Ubuntu 20.04](https://docs.microsoft.com/en-au/windows/wsl/install-manual)、[Update to WSL 2](https://docs.microsoft.com/en-au/windows/wsl/install-win10#step-2---update-to-wsl-2)、[Ubuntu开发环境及常用安装](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#linux开发环境及常用安装)、[系统设置工具dotfiles](https://github.com/nickjj/dotfiles)
@@ -83,7 +82,7 @@ sudo apt-get install python3-pip   # 安装适用于python3的pip
 sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 100
 sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 150
 pip3 install ipython
-# MySQL 安装
+# MySQL 安装 参考 https://dev.mysql.com/doc/refman/8.0/en/linux-installation.html
 sudo apt-get install mysql-server
 sudo apt-get isntall mysql-client
 sudo apt-get install libmysqlclient-dev

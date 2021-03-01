@@ -18,16 +18,6 @@
 *指纹             a79be724538b668fa817e8578d6a8078337fd3ad
 ```
 
-> `SSL免费证书`机构比较多，如：
-1. `腾讯云DV SSL 证书` : https://cloud.tencent.com/product/ssl
-2. `Let’s Encrypt` : https://letsencrypt.org/
-4. `CloudFlare SSL` : https://www.cloudflare.com/
-4. `StartSSL` : https://www.startcomca.com/
-5. `Wosign沃通SSL` : https://www.wosign.com/
-6. `loovit.net AlphaSSL` : https://www.lowendtalk.com/entry/register?Target=discussion%2Fcomment%2F2306096
-
-> [`SSH 远程登录Linux 软件操作指南`](https://cloud.tencent.com/document/product/1207/44578)
-> [`SSH for Connect to GitHub Help`](https://help.github.com/en/articles/connecting-to-github-with-ssh)
 > `证书密钥常用后缀`
 ```
   证书(Certificate)：.cer (windows),  .crt 
@@ -42,6 +32,18 @@
   Java Tomcat 下的数字证书格式一般为 .jks 或 .store
   Apache 和 Nginx 一般是 .pem
 ```
+
+> [`SSH 远程登录Linux 软件操作指南`](https://cloud.tencent.com/document/product/1207/44578)
+
+> [`SSH for Connect to GitHub Help`](https://help.github.com/en/articles/connecting-to-github-with-ssh)
+
+> `SSL免费证书`机构比较多，如：
+1. `腾讯云DV SSL 证书` : https://cloud.tencent.com/product/ssl
+2. `Let’s Encrypt` : https://letsencrypt.org/
+4. `CloudFlare SSL` : https://www.cloudflare.com/
+4. `StartSSL` : https://www.startcomca.com/
+5. `Wosign沃通SSL` : https://www.wosign.com/
+6. `loovit.net AlphaSSL` : https://www.lowendtalk.com/entry/register?Target=discussion%2Fcomment%2F2306096
 
  - [Let’s Encrypt 免费证书/lego](https://go-acme.github.io/lego/usage/cli/examples/)
 ~~~bash

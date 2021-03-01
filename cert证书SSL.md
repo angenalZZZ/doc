@@ -3,7 +3,7 @@
 #### 获取证书
 
 ```
-证书：           CA根证书(服务器身份验证)                                # apiserver.crt <=> apiserver.key
+证书：           CA根证书(服务器身份验证)                               # apiserver.crt <=> apiserver.key
 *版本            V1
 *颁发者          acme                                                  # CN = acme
 *使用者          acme-apiserver                                        # CN = acme-apiserver
@@ -26,6 +26,22 @@
 5. `Wosign沃通SSL` : https://www.wosign.com/
 6. `loovit.net AlphaSSL` : https://www.lowendtalk.com/entry/register?Target=discussion%2Fcomment%2F2306096
 
+> [`SSH 远程登录Linux 软件操作指南`](https://cloud.tencent.com/document/product/1207/44578)
+> [`SSH for Connect to GitHub Help`](https://help.github.com/en/articles/connecting-to-github-with-ssh)
+> `证书密钥常用后缀`
+```
+  证书(Certificate)：.cer (windows),  .crt 
+  私钥(Private Key)：.key (windows) 
+  证书签名请求(Certificate Sign Request)：.csr 
+
+  至于pem和der是编码方式, 以上三类均可用以下两种编码方式：
+  pem  base64编码 Linux 工具通常使用 base64 编码的文本格式
+  der  二进制编码
+
+  Windows IIS 下的数字证书格式一般为 .pfx
+  Java Tomcat 下的数字证书格式一般为 .jks 或 .store
+  Apache 和 Nginx 一般是 .pem
+```
 
  - [Let’s Encrypt 免费证书/lego](https://go-acme.github.io/lego/usage/cli/examples/)
 ~~~bash

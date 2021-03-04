@@ -67,6 +67,8 @@ Get-AppxPackage -AllUsers | Select Name, PackageFullName | Select-String "Ubuntu
 Get-AppxPackage CanonicalGroupLimited.UbuntuonWindows | Remove-AppxPackage # 卸载
 curl.exe -L -o ubuntu-2004.appx https://aka.ms/wslubuntu2004 # 下载
 Add-AppxPackage .\ubuntu-2004.appx # 离线安装WSL Ubuntu 20.04 至指定路径
+# cat /etc/os-release # 查看系统信息
+$ sudo apt-get update && sudo apt-get dist-upgrade # 更新系统apt包管理工具
 # 进入 Ubuntu 为root账户设置密码
 $ sudo passwd root
 # 更新软件源
@@ -81,18 +83,151 @@ deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe mu
 deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
 deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
-$ sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
-# Python 安装配置 python3为默认终端
+sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
+
+sudo apt install -y gnupg libfreetype6-dev language-pack-zh-hans # 安装freetype/中文语言包
+sudo apt install -y apt-transport-https ca-certificates x509-util # 安装ca/https/X.509
+sudo apt install -y acmetool lecm # 安装 Let's Encrypt Certificate 自动化证书获取工具/管理工具
+sudo apt install -y --no-install-recommends git curl wget libssl-dev # 安装git/curl/wget/ssl-toolkit
+sudo apt install -y --no-install-recommends openssl ssl-cert tcl-tls openvpn # 安装openssl/openvpn
+
+sudo apt install openssh-server   # 安装SSH
+sudo apt install build-essential  # 安装gcc/g++/gdb/make工具链
+sudo apt install clang cmake zlib1g-dev libboost-dev libboost-thread-dev  # 安装clang/cmake/boost工具链
+sudo apt install cmake cmake-data cmake-doc cmake-curses-gui cmake-qt-gui # 安装ccmake/qt-gui桌面开发
+sudo apt install autoconf automake pkg-config libtool gnome-core  # 安装automake/glib/gnome桌面开发
+sudo apt-get install libgtk-3-dev libcairo2-dev libglib2.0-dev --fix-missing   # 安装桌面开发gtk3工具链
+sudo apt-get install libwebkit2gtk-4.0-dev javascriptcoregtk-3.0 --fix-missing # 安装桌面开发webkit2gtk
+
+sudo add-apt-repository universe                   # 安装java运行时(当报错提示无法下载时需启用universe)
+sudo apt-get update && sudo apt-get upgrade        # 安装java运行时之前
+sudo apt-get install apt-transport-https openjdk-8-jre-headless uuid-runtime pwgen # 最小化安装jre-8(推荐)
+
+sudo apt-get clean && apt-get update --fix-missing
+sudo apt install -y --fix-missing default-jre      # 安装jre > java -version  (安装java选项1)
+sudo apt install -y --fix-missing default-jdk      # 安装jdk > java -version  (安装java选项2)
+sudo apt install -y --fix-missing openjdk-8-jdk    # 安装OpenJDK              (安装java选项3)
+sudo ln -s /usr/bin/java /usr/local/bin/java       # 创建快捷方式
+sudo add-apt-repository ppa:webupd8team/java && sudo apt-get update
+sudo apt-get install oracle-java8-installer   # 在线安装, 离线下载 download.oracle.com/otn/java/jdk
+sudo apt-get install oracle-java8-set-default # 使用默认版本jdk1.8
+sudo update-alternatives –config java         # 多版本JDK之间切换
+
+# 安装 .NET Core 语言
+wget -q https://packages.microsoft.com/config/ubuntu/19.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+sudo dpkg -i packages-microsoft-prod.deb
+sudo apt-get update
+sudo apt-get install dotnet-runtime-3.1 aspnetcore-runtime-3.1  # 仅安装 .NET Core Runtime
+sudo apt-get install dotnet-sdk-3.1                # 安装 .NET Core SDK  > dotnet -h
+
+# 安装 R 语言(用于统计计算) > /usr/bin/R --help # 大写R
+sudo apt-get -y install r-recommended --fix-broken 
+
+# 安装 erlang 语言
+sudo apt install -f libncurses5-dev freeglut3-dev fop m4 tk unixodbc unixodbc-dev xsltproc socat 
+wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_22.1-1~ubuntu~xenial_amd64.deb
+sudo dpkg -i esl-erlang_22.1-1~ubuntu~xenial_amd64.deb # 安装 erlang 语言(支持CSP消息模型的并发编程语言)
+
+# 安装 Python 语言 (python3为默认终端)
+sudo apt install python-minimal build-essential # 安装Python及gcc/g++/gdb/make工具链
 sudo apt-get install python-pip    # 安装python2和pip
 sudo apt-get install python3-pip   # 安装适用于python3的pip
 sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 100
 sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 150
+sudo update-alternatives --config python  # 手动配置/切换版本: python --version ; pip --version
+sudo ln -sf /usr/bin/python2.7 /usr/bin/python # 将Python2(恢复)默认
 pip3 install ipython
+
+# 安装 Apache & PHP 环境
+sudo add-apt-repository ppa:ondrej/php && sudo apt-get update # 安装php (PPA源)
+sudo apt install -y php7.2-fpm php7.2-mysql php7.2-curl php7.2-gd php7.2-mbstring php7.2-xml php7.2-xmlrpc php7.2-zip php7.2-opcache
+sed -i 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/' /etc/php/7.2/fpm/php.ini # 设置php 替换 ;cgi.fix_pathinfo=1 为 cgi.fix_pathinfo=0
+sudo systemctl restart php7.2-fpm  # 重启php
+sudo systemctl status php7.2-fpm   # 检查php状态
+sudo apt-get -y install apache2    # 安装apache2
+sudo apt-get -y install libapache2-mod-php7.2  # 让apache识别php
+#-config>>  /etc/apache2/apache2.conf, ports.conf, sites-enabled/000-default.conf 等配置文件处理
+sudo systemctl [status|restart] apache2  # 然后检查|重启apache2
+sudo /etc/init.d/apache2 [status|restart] 
+
+# 安装 Nginx
+sudo apt install nginx        # 安装Nginx
+sudo systemctl status nginx   # 检查状态
+sudo ufw allow 'Nginx Full'   # 配置防火墙
+sudo ufw status               # 验证更改
+sudo systemctl restart nginx  # 重启Nginx服务
+sudo systemctl disable nginx  # 禁止开机启动
+sudo systemctl reload nginx   # 修改配置后，需要重新加载Nginx服务
+ls /etc/nginx/sites-available # 设置Nginx服务器模块(类似Apache虚拟主机) www.linuxidc.com/Linux/2018-05/152258.htm
+sudo apt install certbot      # 使用Let's Encrypt保护Nginx  www.linuxidc.com/Linux/2018-05/152259.htm
+runuser -l yangzhou -s /bin/sh -m -c "/usr/local/nginx/sbin/nginx" # 启动(可用 su+目标用户的密码; sudo+自己的密码)
+
+# 安装 OpenResty
+sudo systemctl disable nginx && sudo systemctl stop nginx # 安装OpenResty > cd /tmp
+sudo apt-get -y install --no-install-recommends wget gnupg ca-certificates software-properties-common
+wget -O - https://openresty.org/package/pubkey.gpg | sudo apt-key add -  # 导入GPG密钥
+sudo add-apt-repository -y "deb http://openresty.org/package/ubuntu $(lsb_release -sc) main" # 添加官方APT仓库
+sudo apt-get update  # 更新APT索引
+sudo apt-get -y install openresty # 安装OpenResty 参考 openresty.org/cn/linux-packages.html
+sudo apt-get -y install --no-install-recommends openresty # 最小化安装,不装推荐的openresty-opm,openresty-restydoc
+#-config>>  /usr/local/openresty/nginx/conf/nginx.conf
+sudo systemctl restart openresty  # 重启; 开始HelloWorld  openresty.org/cn/getting-started.html
+
+# 安装 Nodejs 语言
+sudo apt install nodejs           # 安装Nodejs(此安装方式版本太低; 推荐wget安装方式-如下)
+wget https://npm.taobao.org/mirrors/node/v12.16.3/node-v12.16.3-linux-x64.tar.gz
+sudo tar -zxf node-v12.16.3-linux-x64.tar.gz -C /usr/local/ # 解压目录
+sudo mv /usr/local/node-v12.16.3-linux-x64 /usr/local/node # 重命名目录
+sudo chown `id -un`:`id -gn` /usr/local/node -R            # 设置目录权限
+sudo ln -sf /usr/local/node/bin/node /usr/local/bin/node   # 设置软链接,如下
+sudo ln -sf /usr/local/node/bin/npm /usr/local/bin/npm
+sudo ln -sf /usr/local/node/bin/npx /usr/local/bin/npx
+export PATH=/usr/local/node/bin:$PATH # 配置环境变量/etc/profile.d/nodejs.sh(推荐替代软链接)
+
+# 安装 chrome driver
+su - root
+export DEBIAN_FRONTEND=noninteractive
+apt-get update
+apt-get install unzip
+DL=https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+curl -sL "$DL" > /tmp/chrome.deb
+apt install --no-install-recommends --no-install-suggests -y /tmp/chrome.deb
+CHROMIUM_FLAGS='--no-sandbox --disable-dev-shm-usage'
+sed -i '${s/$/'" $CHROMIUM_FLAGS"'/}' /opt/google/chrome/google-chrome
+BASE_URL=https://chromedriver.storage.googleapis.com
+VERSION=$(curl -sL "$BASE_URL/LATEST_RELEASE")
+curl -sL "$BASE_URL/$VERSION/chromedriver_linux64.zip" -o /tmp/driver.zip
+unzip /tmp/driver.zip
+chmod 755 chromedriver
+mv chromedriver /usr/local/bin
+
+# 安装 chromium and puppeteer  https://crbug.com/795759
+sudo apt-get install -yq libgconf-2-4 
+# Install latest chrome dev package and fonts to support major 
+# charsets (Chinese, Japanese, Arabic, Hebrew, Thai and a few others)
+# Note: this installs the necessary libs to make the bundled version of Chromium that Puppeteer installs, work.
+sudo apt-get update \
+  && apt-get install -y wget gnupg \
+  && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+  && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
+  && apt-get update \
+  && apt-get -y install xvfb gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 \
+    libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 \
+    libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 \
+    libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 \
+    libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget \
+  && rm -rf /var/lib/apt/lists/* 
+# install default dependencies for puppeteer
+PUPPETEER_DOWNLOAD_HOST=https://npm.taobao.org/mirrors
+npm config set puppeteer_download_host=https://npm.taobao.org/mirrors
+npm install puppeteer-chromium-resolver crawlab-sdk -g --unsafe-perm=true --registry=https://registry.npm.taobao.org
+
 # MySQL 安装 参考 https://dev.mysql.com/doc/refman/8.0/en/linux-installation.html
 sudo apt-get install mysql-server
 sudo apt-get isntall mysql-client
 sudo apt-get install libmysqlclient-dev
 sudo pip3 install PyMySQL          # 使用python操作MySQL
+
 # MySQL 配置
 mysql -u root                      # 重置密码前，首先无密码登录
 # sudo chown -R `id -un`:`id -gn` /usr/lib/mysql # 设置目录权限(当上面mysql登录执行失败时)

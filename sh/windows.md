@@ -67,9 +67,10 @@ Get-AppxPackage -AllUsers | Select Name, PackageFullName | Select-String "Ubuntu
 Get-AppxPackage CanonicalGroupLimited.UbuntuonWindows | Remove-AppxPackage # 卸载
 curl.exe -L -o ubuntu-2004.appx https://aka.ms/wslubuntu2004 # 下载
 Add-AppxPackage .\ubuntu-2004.appx # 离线安装WSL Ubuntu 20.04 至指定路径
-# cat /etc/os-release # 查看系统信息
-$ sudo apt-get update && sudo apt-get dist-upgrade # 更新系统apt包管理工具
-# 进入 Ubuntu 为root账户设置密码
+$ cat /etc/os-release  # 查看系统详细信息
+$ sudo apt-get update && sudo apt-get dist-upgrade # 更新apt软件管理工具
+$ sudo apt-get clean && sudo apt-get update --fix-missing
+# 设置root账户密码
 $ sudo passwd root
 # 更新软件源
 $ sudo vi /etc/apt/sources.list    # ubuntu`20.04``focal` 阿里云源 (按 :wq! 保存)
@@ -85,12 +86,12 @@ deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe m
 deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
 sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
 
+# 安装开发环境
 sudo apt install -y gnupg libfreetype6-dev language-pack-zh-hans # 安装freetype/中文语言包
 sudo apt install -y apt-transport-https ca-certificates x509-util # 安装ca/https/X.509
 sudo apt install -y acmetool lecm # 安装 Let's Encrypt Certificate 自动化证书获取工具/管理工具
 sudo apt install -y --no-install-recommends git curl wget libssl-dev # 安装git/curl/wget/ssl-toolkit
 sudo apt install -y --no-install-recommends openssl ssl-cert tcl-tls openvpn # 安装openssl/openvpn
-
 sudo apt install openssh-server   # 安装SSH
 sudo apt install build-essential  # 安装gcc/g++/gdb/make工具链
 sudo apt install clang cmake zlib1g-dev libboost-dev libboost-thread-dev  # 安装clang/cmake/boost工具链
@@ -99,10 +100,10 @@ sudo apt install autoconf automake pkg-config libtool gnome-core  # 安装automa
 sudo apt-get install libgtk-3-dev libcairo2-dev libglib2.0-dev --fix-missing   # 安装桌面开发gtk3工具链
 sudo apt-get install libwebkit2gtk-4.0-dev javascriptcoregtk-3.0 --fix-missing # 安装桌面开发webkit2gtk
 
+# 安装 Java 语言
 sudo add-apt-repository universe                   # 安装java运行时(当报错提示无法下载时需启用universe)
 sudo apt-get update && sudo apt-get upgrade        # 安装java运行时之前
 sudo apt-get install apt-transport-https openjdk-8-jre-headless uuid-runtime pwgen # 最小化安装jre-8(推荐)
-
 sudo apt-get clean && apt-get update --fix-missing
 sudo apt install -y --fix-missing default-jre      # 安装jre > java -version  (安装java选项1)
 sudo apt install -y --fix-missing default-jdk      # 安装jdk > java -version  (安装java选项2)

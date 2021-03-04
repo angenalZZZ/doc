@@ -543,8 +543,10 @@ $ yum clean all & yum makecache               # 更新镜像源缓存
   $ sudo vim /etc/apt/sources.list    # 更新软件源
   $ sudo apt-get update && sudo apt-get upgrade # 更新升级apt
   $ sudo apt install -y gnupg libfreetype6-dev language-pack-zh-hans # 安装freetype/中文语言包
-  $ sudo apt install -y apt-transport-https ca-certificates     # 安装ca/https
-  $ sudo apt install -y --no-install-recommends wget libssl-dev # 安装wget/openssl
+  $ sudo apt install -y apt-transport-https ca-certificates x509-util # 安装ca/https/X.509
+  $ sudo apt install -y acmetool lecm # 安装 Let's Encrypt Certificate 自动化证书获取工具/管理工具
+  $ sudo apt install -y --no-install-recommends git curl wget libssl-dev # 安装git/curl/wget/ssl-toolkit
+  $ sudo apt install -y --no-install-recommends openssl ssl-cert tcl-tls openvpn # 安装openssl/openvpn
   
   $ sudo apt install openssh-server   # 安装SSH
   $ sudo apt install build-essential  # 安装gcc/g++/gdb/make工具链
@@ -581,6 +583,7 @@ $ yum clean all & yum makecache               # 更新镜像源缓存
   $ wget https://packages.erlang-solutions.com/erlang/debian/pool/esl-erlang_22.1-1~ubuntu~xenial_amd64.deb
   $ sudo dpkg -i esl-erlang_22.1-1~ubuntu~xenial_amd64.deb # 安装 erlang 语言(支持CSP消息模型的并发编程语言)
   
+  $ sudo apt install python-minimal build-essential # 安装Python及gcc/g++/gdb/make工具链
   $ sudo apt install python3          # 安装Python3
   $ sudo apt install python3-pip      # 安装pip3         #将Python3设为默认?参考如下
   $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 100

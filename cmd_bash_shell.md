@@ -1198,7 +1198,7 @@ $ sudo systemctl --type=service --state=active | grep graylog # 访问 http://lo
 
 ~~~
 
-> `聊天平台` [Rocket.Chat](https://docs.rocket.chat/)
+> `聊天平台` [Rocket.Chat](https://docs.rocket.chat/)、[Manual-Install](https://docs.rocket.chat/installation/manual-installation)
 ~~~shell
 # Rocket.Chat on Ubuntu: computingforgeeks.com/install-rocket-chat-on-ubuntu-with-letsencrypt
 sudo apt-get -y update # Update your Ubuntu

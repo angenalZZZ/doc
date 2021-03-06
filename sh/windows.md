@@ -73,6 +73,17 @@ $ sudo apt-get clean && sudo apt-get update --fix-missing
 # 设置root账户密码
 $ sudo passwd root
 # 更新软件源
+$ sudo vi /etc/apt/sources.list    # ubuntu`18.04``bionic` 腾讯云源 (按 :wq! 保存)
+deb http://mirrors.tencentyun.com/ubuntu/ bionic main restricted universe multiverse
+deb http://mirrors.tencentyun.com/ubuntu/ bionic-security main restricted universe multiverse
+deb http://mirrors.tencentyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+#deb http://mirrors.tencentyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+#deb http://mirrors.tencentyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+deb-src http://mirrors.tencentyun.com/ubuntu/ bionic main restricted universe multiverse
+deb-src http://mirrors.tencentyun.com/ubuntu/ bionic-security main restricted universe multiverse
+deb-src http://mirrors.tencentyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+#deb-src http://mirrors.tencentyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+#deb-src http://mirrors.tencentyun.com/ubuntu/ bionic-backports main restricted universe multiverse
 $ sudo vi /etc/apt/sources.list    # ubuntu`20.04``focal` 阿里云源 (按 :wq! 保存)
 deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
 deb-src http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse

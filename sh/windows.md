@@ -234,6 +234,56 @@ PUPPETEER_DOWNLOAD_HOST=https://npm.taobao.org/mirrors
 npm config set puppeteer_download_host=https://npm.taobao.org/mirrors
 npm install puppeteer-chromium-resolver crawlab-sdk -g --unsafe-perm=true --registry=https://registry.npm.taobao.org
 
+
+# 微服务 - 消息中间件 - 跨语言LGPLed - 通信方案
+#0、gRPC通讯协议: grpc.io/docs/ 谷歌开源 HTTP/2 传输更快 http2.golang.org
+#1、Thrift通讯协议: thrift.apache.org  一个远程过程调用（RPC）框架，由Facebook为大规模跨语言服务而开发。
+#  1.安装环境：Thrift是一种接口描述语言和二进制通讯协议，它被用来定义和创建跨语言的服务。
+$ sudo apt-get -y install automake bison flex g++ git libboost-all-dev libevent-dev libssl-dev libtool make pkg-config
+#  2.从源代码构建：http://thrift.apache.org/docs/BuildingFromSource
+#  2.1下载源码 http://thrift.apache.org/download  #!src: git clone https://github.com/apache/thrift.git
+$ ./bootstrap.sh && ./configure --without-go --without-java --without-nodejs --without-nodets --without-swift
+$ make && make install
+#2、NATS高性能通讯、消息中间件: docs.nats.io 远程过程调用（RPC）通讯框架
+> nssm install nats-server %GOPATH%\bin\nats\nats-server.exe --auth=HGJ766GR767FKJU0  #安装Windows服务
+> sc create nats-server binPath= "%GOPATH%\bin\nats\nats-server.exe -a=0.0.0.0 -p=4222 --auth=HGJ766GR767FKJU0"
+> sc start nats-server  # 启动服务
+> nats-server.exe --signal reload|reopen|stop # reload加载配置|reopen重新打开日志文件以进行日志轮换|stop停止服务器
+> nats-top [-s server] [-m monitor] [-n num_conns=1024] [-d delay_secs=1] [-sort by=subs|msgs_to|bytes_to|msgs_from|bytes_from]
+#3、ZeroMQ 跨语言LGPLed方案: zeromq.org 特点:Universal、Smart、High-speed、Multi-Transport、Community、The Guide
+$ sudo apt-get install libzmq3-dev # 安装ZeroMQ3
+$ pkg-config --modversion libzmq   # 检查模块版本
+#4、Nanomsg 跨语言通信 nanomsg.org 具备IPC,TCP,WS通信方式 Req/Rep,Pub/Sub,Pair,Bus,Push/Pull,Surveyor/Respondent
+> go get -v -u go.nanomsg.org/mangos && cd %GOPATH%/src/go.nanomsg.org/mangos # 下载源码 
+> go test -bench=. go.nanomsg.org/mangos/v3/test  # 单机性能-压力检测- IPC: ^5千万/Qps + 传输^1GB/s 
+$ git clone --depth=1 https://github.com/nanomsg/nanomsg.git # 准备安装Linux 
+$ mkdir build && cd build && cmake .. && cmake --build . && sudo cmake --build . --target install && sudo ldconfig # on Linux
+# 1.open CMake-gui 2.set src-dir,build-dir 3.set CMAKE_INSTALL_PREFIX=D:/Program/nanomsg # Select: MinGW Makefiles
+# 3.1set NN_STATIC_LIB=ON, NN_TOOLS=ON, others OFF, then click Configure, Generate.  # on windows build for static lib
+# 3.2set NN_STATIC_LIB=OFF, NN_TOOLS=ON, others OFF, then click Configure, Generate. # on windows build for ddl
+> cd build-dir && cmake --build . --target install # to build after 3.1 and 3.2 #or if CMAKE_AR=MSVC [--config Release]
+# set PKG_CONFIG_PATH=D:\Program\mingw64\lib\pkgconfig && set NN_STATIC_LIB=D:\Program\nanomsg\lib # set windows-env/nanomsg.pc
+# cp lib/pkgconfig/*.pc %PKG_CONFIG_PATH% && cp lib/*.a /mingw64/lib && cp *.h /mingw64/include/nanomsg # set gcc lib env
+$ git clone --depth=1 https://github.com/nanomsg/nng.git # Nanomsg下一代通信"Scalablilty Protocols"
+$ mkdir build && cd build && cmake -G Ninja .. && ninja && ninja install # on Linux or windows, use Ninja build
+> nngcat --rep --bind=ipc://host1 --insecure --silent --compat --count=0 --format=raw --data=<reponse> # 响应输出
+> nngcat --req --connect=ipc://host1 --raw --data=<request-payload> # 请求输入
+#5、D-Bus 应用程序间通信的消息总线系统, 用于进程之间的通信。
+$ sudo apt-get install dbus  # 安装D-Bus,然后启动dbus-launch
+# dbus-daemon --session --print-address --nofork --print-pid # 启动普通进程
+# dbus-daemon --session --print-address --fork --print-pid   # 启动后台进程
+# dbus-daemon --session --print-address --fork --print-pid --address=unix:abstract=/tmp/dbus-FixedAddress # 指定监听地址
+# dbus-daemon --system --print-address --fork --print-pid    # 启动守护进程
+
+
+# 安装ffmpeg视频编码/解码libraries: avcodec,avformat,avutil,avfilter,avdevice,swresample,swscale
+sudo apt-get -y install autoconf automake build-essential  # 先安装gcc/g++/gdb/make工具链
+sudo apt-get -y install libass-dev libfreetype6-dev libsdl1.2-dev libtheora-dev libtool libva-dev \
+  libvdpau-dev libvorbis-dev libxcb1-dev libxcb-shm0-dev libxcb-xfixes0-dev pkg-config texi2html zlib1g-dev \
+  libavdevice-dev libavfilter-dev libswscale-dev libavcodec-dev libavformat-dev libswresample-dev libavutil-dev
+sudo apt-get install yasm
+
+
 # MySQL 安装 参考 https://dev.mysql.com/doc/refman/8.0/en/linux-installation.html
 sudo apt-get install mysql-server
 sudo apt-get isntall mysql-client
@@ -268,6 +318,35 @@ password = root
 init-connect = 'SET NAMES utf8mb4'
 character-set-server = utf8mb4
 # EOF
+
+
+# 环境变量: https://github.com/angenalZZZ/doc/blob/master/sh/01-locale-profile.sh
+# path 系统目录;SHELL搜索目录;
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+# java 开发环境;java,javaw,javaws,jdb,jps,jrunscript,keytool等
+export JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk/jre # export JAVA_HOME=/usr/local/java/jdk1.8.0_221
+export JAVA_BIN=$JAVA_HOME/bin
+export JRE_HOME=$JAVA_HOME/jre
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib
+export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
+export JAVA_VERSION=8u212
+export SCALA_VERSION=2.12
+export GLIBC_VERSION=2.29-r0
+# ffmpeg 视频编码/解码/开发环境
+export FFMPEG_ROOT=$HOME/ffmpeg
+export CGO_LDFLAGS="-L$FFMPEG_ROOT/lib/ -lavcodec -lavformat -lavutil -lswscale -lswresample -lavdevice -lavfilter"
+export CGO_CFLAGS="-I$FFMPEG_ROOT/include"
+export LD_LIBRARY_PATH=$HOME/ffmpeg/lib
+# go get -u github.com/giorgisio/goav  # 提供开发 go sdk
+# https://github.com/shimberger/gohls  # 提供点播 gohls -h ?目录中自动转码> HTTP Live Streaming (HLS)
+# https://github.com/MattMcManis/Axiom # 提供视频转码/格式转换 c# gui windows
+
+# 快捷命令: https://github.com/angenalZZZ/doc/blob/master/sh/02-bash_aliases.sh
+alias lht='ls -lht'  # 文件列表-按时间倒序
+alias lhs='ls -lhS'  # 文件列表-按大小倒序
+alias start-pg='sudo service postgresql start'
+alias run-pg='sudo -u postgres psql'
+
 ~~~
 > Windows 后台服务管理工具
   - `nssm`>[`download`](https://nssm.cc/download)>[`commands`](https://nssm.cc/commands)

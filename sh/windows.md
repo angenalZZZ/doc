@@ -345,13 +345,15 @@ export GOROOT=/usr/local/go
 export GOTOOLS=$GOROOT/pkg/tool
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 # java 开发环境;java,javaw,javaws,jdb,jps,jrunscript,keytool等
-export JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk/jre # export JAVA_HOME=/usr/local/java/jdk1.8.0_221
+export JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk/jre
+# export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre
+# export JAVA_HOME=/usr/local/java/jdk1.8.0_221  # 安装指定版本时
 export JAVA_BIN=$JAVA_HOME/bin
 export JRE_HOME=$JAVA_HOME/jre
 export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib
 export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
-export JAVA_VERSION=8u212
-export SCALA_VERSION=2.12
+export JAVA_VERSION=8u212   # 指定版本
+export SCALA_VERSION=2.12   # 指定版本
 export GLIBC_VERSION=2.29-r0
 # nodejs
 export PATH=/usr/local/node/bin:$PATH

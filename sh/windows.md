@@ -191,19 +191,18 @@ sudo apt install nodejs           # 安装Nodejs(此安装方式版本太低; �
 wget -O node-linux-x64.tar.gz https://npm.taobao.org/mirrors/node/v12.18.4/node-v12.18.4-linux-x64.tar.gz
 sudo tar -zxf node-linux-x64.tar.gz -C /usr/local/ # 解压目录
 sudo mv /usr/local/node-v12.18.4-linux-x64 /usr/local/node # 重命名目录
-sudo chown `id -un`:`id -gn` /usr/local/node -R            # 设置目录权限
+sudo chown -R `id -un`:`id -gn` /usr/local/node            # 设置目录权限
 sudo ln -sf /usr/local/node/bin/node /usr/local/bin/node   # 设置软链接,如下
 sudo ln -sf /usr/local/node/bin/npm /usr/local/bin/npm
 sudo ln -sf /usr/local/node/bin/npx /usr/local/bin/npx
-export PATH=/usr/local/node/bin:$PATH # 配置环境变量/etc/profile.d/nodejs.sh(推荐替代软链接)
+export PATH=/usr/local/node/bin:$PATH # 配置环境变量/etc/profile.d/01-locale-profile.sh(推荐替代软链接)
 npm config ls -l
 npm i -g inherits n
+sudo chown -R `id -un`:`id -gn` /usr/local/n
 n 12.18.4 # 安装指定node版本v12.18.4
-npm i -g node-gyp
-npm i -g node-pre-gyp
-npm i -g yarn
+npm i -g yarn # 管理工具yarn
 yarn global add cnpm --registry=https://registry.npm.taobao.org
-cnpm i -g node-sass # 配置nodejs完成
+cnpm i -g node-gyp node-pre-gyp node-sass # 配置nodejs完成
 
 # 安装 chrome driver
 su - root
@@ -330,6 +329,7 @@ character-set-server = utf8mb4
 
 
 # 环境变量: https://github.com/angenalZZZ/doc/blob/master/sh/01-locale-profile.sh
+sudo vi /etc/profile.d/01-locale-profile.sh
 # path 系统目录;SHELL搜索目录;
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 # java 开发环境;java,javaw,javaws,jdb,jps,jrunscript,keytool等

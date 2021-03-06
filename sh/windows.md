@@ -329,9 +329,21 @@ character-set-server = utf8mb4
 
 
 # 环境变量: https://github.com/angenalZZZ/doc/blob/master/sh/01-locale-profile.sh
-sudo vi /etc/profile.d/01-locale-profile.sh
+##进行软链结: ln -s /git/doc/sh/01-locale-profile.sh /etc/profile.d/01-locale-profile.sh
+> vi /etc/profile.d/01-locale-profile.sh
 # path 系统目录;SHELL搜索目录;
-export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+# export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+# local time
+export TZ='Asia/Shanghai'
+##开发环境设置
+# go
+export GO111MODULE=auto
+export GOSUMDB=sum.golang.google.cn
+export GOPROXY=https://goproxy.io
+export GOPATH=/a/go
+export GOROOT=/usr/local/go
+export GOTOOLS=$GOROOT/pkg/tool
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 # java 开发环境;java,javaw,javaws,jdb,jps,jrunscript,keytool等
 export JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk/jre # export JAVA_HOME=/usr/local/java/jdk1.8.0_221
 export JAVA_BIN=$JAVA_HOME/bin
@@ -341,11 +353,24 @@ export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
 export JAVA_VERSION=8u212
 export SCALA_VERSION=2.12
 export GLIBC_VERSION=2.29-r0
+# nodejs
+export PATH=/usr/local/node/bin:$PATH
+# docker
+export DOCKER_HOST=tcp://127.0.0.1:2375
+# eval $(docker-machine env default)
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://127.0.0.1:2376"
+export DOCKER_CERT_PATH="/home/yangzhou/.docker/machine/machines/default"
+export DOCKER_MACHINE_NAME="default"
 # ffmpeg 视频编码/解码/开发环境
 export FFMPEG_ROOT=$HOME/ffmpeg
 export CGO_LDFLAGS="-L$FFMPEG_ROOT/lib/ -lavcodec -lavformat -lavutil -lswscale -lswresample -lavdevice -lavfilter"
 export CGO_CFLAGS="-I$FFMPEG_ROOT/include"
 export LD_LIBRARY_PATH=$HOME/ffmpeg/lib
+##使以上配置立即生效
+> source /etc/profile
+
+# 点播/直播/视频转码
 # go get -u github.com/giorgisio/goav  # 提供开发 go sdk
 # https://github.com/shimberger/gohls  # 提供点播 gohls -h ?目录中自动转码> HTTP Live Streaming (HLS)
 # https://github.com/MattMcManis/Axiom # 提供视频转码/格式转换 c# gui windows

@@ -291,6 +291,205 @@ sudo apt-get -y install libass-dev libfreetype6-dev libsdl1.2-dev libtheora-dev 
   libavdevice-dev libavfilter-dev libswscale-dev libavcodec-dev libavformat-dev libswresample-dev libavutil-dev
 sudo apt-get install yasm
 
+##聊天平台[Rocket.Chat] https://docs.rocket.chat/ 
+# [Manual-Install] https://docs.rocket.chat/installation/manual-installation
+# [Rocket.Chat on Ubuntu] https://computingforgeeks.com/install-rocket-chat-on-ubuntu-with-letsencrypt
+sudo apt-get -y update # Update your Ubuntu
+wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add - # Add MongoDB GPG signing key
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" \
+  | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list  # Add MongoDB repository
+sudo apt-get -y update && sudo apt-get install -y curl && curl -sL https://deb.nodesource.com/setup_12.x \
+  | sudo bash -  # Configure Node.js to be installed through the Ubuntu package manager
+sudo apt-get install -y build-essential graphicsmagick # Install graphicsmagick
+sudo apt-get install -y mongodb-org nodejs             # Install MongoDB, Node.js
+sudo npm install -g inherits n                # Install inherits and n
+sudo ln -s /usr/bin/node /usr/local/bin/node  # Create a symbolic link for the node binary file to
+curl -L https://releases.rocket.chat/latest/download -o /tmp/rocket.chat.tgz # Download Rocket.Chat
+tar -xzf /tmp/rocket.chat.tgz -C /tmp
+cd /tmp/bundle/programs/server && npm install # 参考 npm配置与nodejs推荐安装.md
+sudo mv /tmp/bundle /opt/Rocket.Chat
+sudo useradd -M rocketchat && sudo usermod -L rocketchat # Create Rocketchat system user
+sudo chown -R rocketchat:rocketchat /opt/Rocket.Chat
+ ## Start Create Rocket.Chat service
+cat << EOF |sudo tee /etc/systemd/system/rocketchat.service
+[Unit]
+Description=The Rocket.Chat server
+After=network.target remote-fs.target nss-lookup.target nginx.target mongod.target
+[Service]
+ExecStart=/usr/local/bin/node /opt/Rocket.Chat/main.js
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=rocketchat
+User=rocketchat
+Environment=MONGO_URL=mongodb://localhost:27017/rocketchat?replicaSet=rs01 MONGO_OPLOG_URL=mongodb://localhost:27017/local?replicaSet=rs01 ROOT_URL=http://localhost:3000/ PORT=3000
+[Install]
+WantedBy=multi-user.target
+EOF
+ ## End Create Rocket.Chat service, and Configure the storage engine and replication for MongoDB
+
+sudo sed -i "s/^#  engine:/  engine: mmapv1/"  /etc/mongod.conf 
+sudo sed -i "s/^#replication:/replication:\n  replSetName: rs01/" /etc/mongod.conf
+sudo systemctl enable mongod && sudo systemctl start mongod # Start and enable MongoDB service
+mongo --eval "printjson(rs.initiate())" # Test MongoDB service
+sudo systemctl enable rocketchat && sudo systemctl start rocketchat # Start Rocket.Chat service
+sudo systemctl status rocketchat # Check if the service is running
+
+ ## Configure Nginx Reverse Proxy
+sudo apt install nginx
+sudo nano /etc/nginx/conf.d/rocketchat.conf
+
+upstream rocket_backend {
+  server 127.0.0.1:3000;
+}
+
+server {
+    listen 80;
+    server_name chat.hirebestengineers.com;
+    access_log /var/log/nginx/rocketchat-access.log;
+    error_log /var/log/nginx/rocketchat-error.log;
+
+    location / {
+        proxy_pass http://rocket_backend/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $http_host;
+
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forward-Proto http;
+        proxy_set_header X-Nginx-Proxy true;
+
+        proxy_redirect off;
+    }
+}
+
+sudo nginx -t  # Check if Nginx configuration is ok
+sudo systemctl restart nginx
+sudo systemctl enable nginx
+
+ ## Setup Let’s Encrypt SSL
+sudo apt install certbot python3-certbot-nginx
+certbot --nginx  # Then run certbot to acquire SSL certificate
+
+upstream rocket_backend {
+  server 127.0.0.1:3000;
+}
+
+server {
+    server_name chat.hirebestengineers.com;
+    access_log /var/log/nginx/rocketchat-access.log;
+    error_log /var/log/nginx/rocketchat-error.log;
+
+    location / {
+        proxy_pass http://rocket_backend/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $http_host;
+
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forward-Proto http;
+        proxy_set_header X-Nginx-Proxy true;
+
+        proxy_redirect off;
+    }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/chat.hirebestengineers.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/chat.hirebestengineers.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+server {
+    if ($host = chat.hirebestengineers.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    server_name chat.hirebestengineers.com;
+    return 404; # managed by Certbot
+}
+
+sudo nginx -t  # Check if Nginx configuration is ok
+sudo systemctl restart nginx # Restart Nginx service
+
+##聊天平台[Rocket.Chat] on CentOS-7: docs.rocket.chat/installation/manual-installation/centos
+cat /etc/system-release && cat /usr/lib/os-release # CentOS Linux release 7.9.2009 (Core) 系统完整信息
+passwd root                                 # 设置root账户的密码
+useradd -M rocketchat && usermod -L rocketchat # 添加账户rocketchat (切换当前用户 su - rocketchat)
+mkdir -p /home/rocketchat && cd /home/rocketchat && chmod rocketchat:rocketchat /home/rocketchat
+yum install -y gnupg ca-certificates curl wget openssl # 安装ca/wget/openssl
+cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak # 先备份repo
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo #获取阿里镜像源
+sed -i 's/http:/https:/g' /etc/yum.repos.d/CentOS-Base.repo # 批量替换http为https
+yum clean all & yum makecache               # 更新镜像源缓存
+yum install -y epel-release                 # 安装epel软件源
+yum install -y gcc-c++ make net-tools       # 安装gcc/make/net-tools
+yum install -y glibc glibc.i686             # 安装glibc*x86_64,i686
+yum install -y GraphicsMagick
+wget -O node-linux-x64.tar.gz https://npm.taobao.org/mirrors/node/v12.18.4/node-v12.18.4-linux-x64.tar.gz
+sudo tar -zxf node-linux-x64.tar.gz -C /usr/local/         # 解压目录
+sudo mv /usr/local/node-v12.18.4-linux-x64 /usr/local/node # 重命名安装目录
+sudo chown -R `id -un`:`id -gn` /usr/local/node            # 设置目录权限
+export PATH=/usr/local/node/bin:$PATH # 环境配置 /etc/profile.d/nodejs-profile.sh (推荐)
+npm config ls -l
+npm i -g inherits n
+n 12.18.4 # 安装指定node版本v12.18.4
+npm i -g node-gyp
+npm i -g node-pre-gyp
+npm i -g yarn
+yarn global add cnpm --registry=https://registry.npm.taobao.org
+cnpm i -g node-sass # 配置nodejs完成;开始安装mongodb
+cat << EOF | sudo tee -a /etc/yum.repos.d/mongodb-org-4.0.repo
+[mongodb-org-4.0]
+name=MongoDB Repository
+baseurl=https://repo.mongodb.org/yum/redhat/7/mongodb-org/4.0/x86_64/
+gpgcheck=1
+enabled=1
+gpgkey=https://www.mongodb.org/static/pgp/server-4.0.asc
+EOF
+cd /tmp
+yum install -y mongodb-org # 安装mongodb
+wget -O /tmp/rocket.chat.tgz https://releases.rocket.chat/latest/download # 下载最新版Rocket.Chat
+tar -xzf /tmp/rocket.chat.tgz -C /tmp # 下面开始构建
+cd /tmp/bundle/programs/server
+npm install --proxy=http://localhost:10810 --unsafe-perm=true --allow-root # 构建Rocket.Chat(需科学上网)
+mv /tmp/bundle /opt/Rocket.Chat  # 构建成功后,移动为安装目录
+chown -R rocketchat:rocketchat /opt/Rocket.Chat  # 授权后,备份安装目录 rocket.chat.installed.tgz
+cat << EOF |sudo tee -a /lib/systemd/system/rocketchat.service
+[Unit]
+Description=The Rocket.Chat server
+After=network.target remote-fs.target nss-lookup.target nginx.service mongod.service
+[Service]
+ExecStart=/usr/local/bin/node /opt/Rocket.Chat/main.js
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=rocketchat
+User=rocketchat
+Environment=MONGO_URL=mongodb://localhost:27017/rocketchat?replicaSet=rs01 MONGO_OPLOG_URL=mongodb://localhost:27017/local?replicaSet=rs01 ROOT_URL=http://localhost:3000/ PORT=3000
+[Install]
+WantedBy=multi-user.target
+EOF
+> vi /etc/mongod.conf # 启动 MongoDB 前
+sed -i "s/^#  engine:/  engine: mmapv1/" /etc/mongod.conf
+sed -i "s/^#replication:/replication:\n  replSetName: rs01/" /etc/mongod.conf
+mkdir -p /var/run/mongodb && chown mongod:mongod /var/run/mongodb && chmod 0755 /var/run/mongodb
+chown -R mongod:mongod /var/lib/mongo /var/log/mongodb
+systemctl status mongod && systemctl enable mongod && systemctl start mongod
+mongo --eval "printjson(rs.initiate())"
+systemctl status rocketchat && systemctl enable rocketchat && systemctl start rocketchat
+# ZLIB version problem ! not found 系统兼容问题
+> vi /usr/lib/systemd/system/rocketchat.service # 添加运行时环境变量LD_PRELOAD
+Environment=LD_PRELOAD=/opt/Rocket.Chat/programs/server/npm/node_modules/sharp/vendor/lib/libz.so
+# 防火墙 https://docs.rocket.chat/installation/manual-installation/optional-configurations
+# 反向代理 https://docs.rocket.chat/installation/manual-installation/configuring-ssl-reverse-proxy
+# 访问 ROOT_URL http://localhost:3000/
+
 
 # MySQL 安装 参考 https://dev.mysql.com/doc/refman/8.0/en/linux-installation.html
 sudo apt-get install mysql-server

@@ -19,21 +19,35 @@ Get-AppxPackage *store* | Remove-AppxPackage # 删除原来的 Microsoft Store
 Get-AppxPackage -AllUsers | Select Name, PackageFullName | Select-String "WindowsStore" # 查询并复制<包名>
 Add-AppxPackage -Register "C:\Program Files\WindowsApps\<包全名>\AppxManifest.xml" -DisableDevelopmentMode #安装
 ~~~
-> Windows 10 WSL & Chocolatey & Centos
+> Windows 10 WSL & Chocolatey & LxRunOffline、[Update to WSL 2](https://docs.microsoft.com/en-au/windows/wsl/install-win10#step-2---update-to-wsl-2)
 ~~~bash
 # PowerShell 以管理员方式运行, 打开 WSL 程序和功能
 Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform
 Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
 # 安装 Chocolatey
 Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-# 安装 LxRunOffline for run centos7
+# 安装 LxRunOffline
 choco install lxrunoffline
+# 获取安装包 <system-install.tar.xz> 1.修改[wsl]*.appx后缀为.zip 2.解压得到install.tar.gz 3.安装[执行LxRunOffline]
+# LxRunOffline install -n <system-name> -d <system-rootfsdir> -f <system-install.tar.xz>
+# LxRunOffline su -n <system-name> -v 1000 # 以指定用户(id=1000)运行(默认为用户root=0)[先进入系统添加用户后再执行该命令]
+# 设置 WSL 默认版本为 2 (独立运行<linux>需内存多)
+wsl --set-default-version 2 # Update to WSL 2
+wsl -l -v                   # 查看<linux>是否为 WSL 2
+wsl --set-version <linux> 2 # 修改<linux>为 WSL 2
+wsl --set-default <linux>   # 设置<linux>为默认
+wsl -u root -d <linux>      # 以指定用户运行(默认为用户root)[先进入系统添加用户后再执行该命令]
+~~~
+> Windows 10 [WSL - Centos](https://github.com/RoliSoft/WSL-Distribution-Switcher)、[系统设置工具dotfiles](https://github.com/nickjj/dotfiles)
+~~~bash
 # 部署 centos7 到 WSL (下载Docker镜像) https://github.com/RoliSoft/WSL-Distribution-Switcher
 LxRunOffline install -n centos7 -d A:\centos7 -f A:\centos7\centos-7-docker.tar.xz
 # 开启 CentOS
 LxRunOffline run -n centos7
 cat /etc/system-release && cat /usr/lib/os-release # CentOS Linux release 7.9.2009 (Core) 系统完整信息
 passwd root                                 # 设置root账户的密码
+sudo useradd -M <name> && sudo usermod -L <name> # 创建user <name>
+sudo chown -R <name>:<name> /<dir>  # 指定目录<dir>权限为user
 yum install -y gnupg ca-certificates curl wget openssl # 安装ca/wget/openssl
 cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak # 先备份repo
 wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo #获取阿里镜像源
@@ -43,13 +57,7 @@ yum install -y epel-release                 # 安装epel软件源
 yum install -y gcc-c++ make net-tools       # 安装gcc/make/net-tools
 yum install -y glibc glibc.i686             # 安装glibc*x86_64,i686
 yum install -y GraphicsMagick
-sudo useradd -M <name> && sudo usermod -L <name> # 创建user <name>
-sudo chown -R <name>:<name> /opt/<dir>  # 指定目录<dir>权限为user
-# 设置 WSL 默认版本为 2
-wsl --set-default-version 2 # Update to WSL 2
-wsl -l -v                   # 查看<linux>是否为 WSL 2
-wsl --set-version <linux> 2 # 修改<linux>为 WSL 2
-# 安装K8s集成到WSL Ubuntu20.04 参考 https://blog.csdn.net/weixin_43168190/article/details/107179715
+# 安装K8s集成到WSL(需修改<linux>为 WSL 2) Ubuntu20.04 参考 https://blog.csdn.net/weixin_43168190/article/details/107179715
 # 安装数据库 Mysql 8.0 参考 https://dev.mysql.com/doc/refman/8.0/en/linux-installation-yum-repo.html
 cd /tmp # 需提前安装依赖 # yum install -y epel-release glibc glibc.i686 gcc-c++ wget net-tools
 # sudo wget -O /etc/yum.repos.d/ http://repo.mysql.com/mysql-community-release-el7-7.noarch.rpm #低版本MySQL
@@ -60,11 +68,12 @@ mv /usr/bin/systemctl /usr/bin/systemctl.old
 wget -O /usr/bin/systemctl https://github.com/gdraheim/docker-systemctl-replacement/blob/master/files/docker/systemctl.py
 chmod +x /usr/bin/systemctl
 ~~~
-> Windows 10 [WSL - Ubuntu 20.04](https://docs.microsoft.com/en-au/windows/wsl/install-manual)、[Update to WSL 2](https://docs.microsoft.com/en-au/windows/wsl/install-win10#step-2---update-to-wsl-2)、[Ubuntu开发环境及常用安装](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#linux开发环境及常用安装)、[系统设置工具dotfiles](https://github.com/nickjj/dotfiles)
+> Windows 10 [WSL - Ubuntu](https://www.microsoft.com/zh-cn/p/ubuntu-1804-lts/9n9tngvndl3q?activetab=pivot:overviewtab)、[Ubuntu开发环境及常用安装](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#linux开发环境及常用安装)
 ~~~bash
-# PowerShell 以管理员方式运行, 安装WSL Ubuntu20.04
+# PowerShell 以管理员方式运行, 安装WSL Ubuntu
 Get-AppxPackage -AllUsers | Select Name, PackageFullName | Select-String "Ubuntu" # 查询并复制<包名>
 Get-AppxPackage CanonicalGroupLimited.UbuntuonWindows | Remove-AppxPackage # 卸载
+# curl.exe -L -o ubuntu-1804.appx https://aka.ms/wslubuntu1804 # 下载
 curl.exe -L -o ubuntu-2004.appx https://aka.ms/wslubuntu2004 # 下载
 Add-AppxPackage .\ubuntu-2004.appx # 离线安装WSL Ubuntu 20.04 至指定路径
 $ cat /etc/os-release  # 查看系统详细信息
@@ -72,6 +81,8 @@ $ sudo apt-get update && sudo apt-get dist-upgrade # 更新apt软件管理工具
 $ sudo apt-get clean && sudo apt-get update --fix-missing
 # 设置root账户密码[第一步]
 $ sudo passwd root
+sudo useradd -M <name> && sudo usermod -L <name> # 创建user <name>
+sudo chown -R <name>:<name> /<dir>  # 指定目录<dir>权限为user
 # 更新软件源[第二步][腾讯云阿里云CVM跳过]
 $ sudo vi /etc/apt/sources.list    # ubuntu`18.04``bionic` 腾讯云源 (esc-vi按 :wq! 保存)
 deb http://mirrors.tencentyun.com/ubuntu/ bionic main restricted universe multiverse

@@ -28,8 +28,9 @@ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-L
 Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 # 安装 LxRunOffline
 choco install lxrunoffline
-# 获取安装包 <system-install.tar.xz> 1.修改[wsl]*.appx后缀为.zip 2.解压得到install.tar.gz 3.安装[执行LxRunOffline]
+# 获取离线安装包 <system-install.tar.xz> 1.修改[wsl]*.appx后缀为.zip 2.解压得到install.tar.gz 3.安装[执行LxRunOffline]
 # LxRunOffline install -n <system-name> -d <system-rootfsdir> -f <system-install.tar.xz>
+PS> LxRunOffline install -n Ubuntu-18.04 -d C:\ubuntu1804 -f .\install.tar.gz # 离线安装Ubuntu-18.04
 # LxRunOffline su -n <system-name> -v 1000 # 以指定用户(id=1000)运行(默认为用户root=0)[先进入系统添加用户后再执行该命令]
 # 设置 WSL 默认版本为 2 (独立运行<linux>需内存多)
 wsl --set-default-version 2 # Update to WSL 2
@@ -38,7 +39,7 @@ wsl --set-version <linux> 2 # 修改<linux>为 WSL 2
 wsl --set-default <linux>   # 设置<linux>为默认
 wsl -u root -d <linux>      # 以指定用户运行(默认为用户root)[先进入系统添加用户后再执行该命令]
 ~~~
-> Windows 10 [WSL - Centos](https://github.com/RoliSoft/WSL-Distribution-Switcher)、[系统设置工具dotfiles](https://github.com/nickjj/dotfiles)
+> Windows 10 [WSL - Centos](https://github.com/RoliSoft/WSL-Distribution-Switcher)、[系统设置工具推荐dotfiles](https://github.com/nickjj/dotfiles)
 ~~~bash
 # 部署 centos7 到 WSL (下载Docker镜像) https://github.com/RoliSoft/WSL-Distribution-Switcher
 LxRunOffline install -n centos7 -d A:\centos7 -f A:\centos7\centos-7-docker.tar.xz

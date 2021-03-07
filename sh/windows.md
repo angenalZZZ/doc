@@ -70,31 +70,31 @@ Add-AppxPackage .\ubuntu-2004.appx # 离线安装WSL Ubuntu 20.04 至指定路�
 $ cat /etc/os-release  # 查看系统详细信息
 $ sudo apt-get update && sudo apt-get dist-upgrade # 更新apt软件管理工具
 $ sudo apt-get clean && sudo apt-get update --fix-missing
-# 设置root账户密码
+# 设置root账户密码[第一步]
 $ sudo passwd root
-# 更新软件源
-$ sudo vi /etc/apt/sources.list    # ubuntu`18.04``bionic` 腾讯云源 (按 :wq! 保存)
+# 更新软件源[第二步][腾讯云阿里云CVM跳过]
+$ sudo vi /etc/apt/sources.list    # ubuntu`18.04``bionic` 腾讯云源 (esc-vi按 :wq! 保存)
 deb http://mirrors.tencentyun.com/ubuntu/ bionic main restricted universe multiverse
 deb http://mirrors.tencentyun.com/ubuntu/ bionic-security main restricted universe multiverse
 deb http://mirrors.tencentyun.com/ubuntu/ bionic-updates main restricted universe multiverse
-#deb http://mirrors.tencentyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
-#deb http://mirrors.tencentyun.com/ubuntu/ bionic-backports main restricted universe multiverse
 deb-src http://mirrors.tencentyun.com/ubuntu/ bionic main restricted universe multiverse
 deb-src http://mirrors.tencentyun.com/ubuntu/ bionic-security main restricted universe multiverse
 deb-src http://mirrors.tencentyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+#deb http://mirrors.tencentyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
 #deb-src http://mirrors.tencentyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+#deb http://mirrors.tencentyun.com/ubuntu/ bionic-backports main restricted universe multiverse
 #deb-src http://mirrors.tencentyun.com/ubuntu/ bionic-backports main restricted universe multiverse
-$ sudo vi /etc/apt/sources.list    # ubuntu`20.04``focal` 阿里云源 (按 :wq! 保存)
+$ sudo vi /etc/apt/sources.list    # ubuntu`20.04``focal` 阿里云源 (esc-vi按 :wq! 保存)
 deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
 deb-src http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
 deb-src http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
 deb-src http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+#deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
+#deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
+#deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+#deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
 sudo apt-get update && sudo apt-get upgrade # 更新软件源-操作完毕!
 
 # 安装开发环境
@@ -102,9 +102,9 @@ sudo apt install -y gnupg libfreetype6-dev language-pack-zh-hans # 安装freetyp
 sudo apt install -y apt-transport-https ca-certificates x509-util # 安装ca/https/X.509
 sudo apt install -y acmetool lecm # 安装 Let's Encrypt Certificate 自动化证书获取工具/管理工具
 sudo apt install -y --no-install-recommends git curl wget libssl-dev # 安装git/curl/wget/ssl-toolkit
-sudo apt install -y --no-install-recommends openssl ssl-cert tcl-tls openvpn # 安装openssl/openvpn
-sudo apt install openssh-server   # 安装SSH
-sudo apt install build-essential  # 安装gcc/g++/gdb/make工具链
+sudo apt install -y --no-install-recommends openssl ssl-cert tcl-tls # 安装openssl/tls
+sudo apt install -y --no-install-recommends openssh-server openvpn # 安装SSH/openvpn
+sudo apt install -y build-essential graphicsmagick  # 安装gcc/g++/gdb/make工具链/graphics库
 sudo apt install clang cmake zlib1g-dev libboost-dev libboost-thread-dev  # 安装clang/cmake/boost工具链
 sudo apt install cmake cmake-data cmake-doc cmake-curses-gui cmake-qt-gui # 安装ccmake/qt-gui桌面开发
 sudo apt install autoconf automake pkg-config libtool gnome-core  # 安装automake/glib/gnome桌面开发
@@ -200,9 +200,9 @@ npm config ls -l
 npm i -g inherits n
 sudo chown -R `id -un`:`id -gn` /usr/local/n
 n 12.18.4 # 安装指定node版本v12.18.4
-npm i -g yarn # 管理工具yarn
-yarn global add cnpm --registry=https://registry.npm.taobao.org
-cnpm i -g node-gyp node-pre-gyp node-sass # 配置nodejs完成
+npm i -g yarn # 工具yarn 及 node-gyp, node-sass...
+npm i -g node-gyp node-pre-gyp node-sass --registry=https://registry.npm.taobao.org
+yarn global add cnpm --registry=https://registry.npm.taobao.org # 工具cnpm 配置nodejs完成
 
 # 安装 chrome driver
 su - root
@@ -292,8 +292,9 @@ sudo apt-get -y install libass-dev libfreetype6-dev libsdl1.2-dev libtheora-dev 
 sudo apt-get install yasm
 
 ##聊天平台[Rocket.Chat] https://docs.rocket.chat/ 
-# [Manual-Install] https://docs.rocket.chat/installation/manual-installation
-# [Rocket.Chat on Ubuntu] https://computingforgeeks.com/install-rocket-chat-on-ubuntu-with-letsencrypt
+# [Manual-Install All OS] docs.rocket.chat/installation/manual-installation
+# [Ubuntu 18.04, 19.04, 20.04] docs.rocket.chat/installation/manual-installation/ubuntu
+# [Rocket.Chat on Ubuntu Doc] computingforgeeks.com/install-rocket-chat-on-ubuntu-with-letsencrypt
 sudo apt-get -y update # Update your Ubuntu
 wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add - # Add MongoDB GPG signing key
 echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" \
@@ -301,9 +302,7 @@ echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb
 sudo apt-get -y update && sudo apt-get install -y curl && curl -sL https://deb.nodesource.com/setup_12.x \
   | sudo bash -  # Configure Node.js to be installed through the Ubuntu package manager
 sudo apt-get install -y build-essential graphicsmagick # Install graphicsmagick
-sudo apt-get install -y mongodb-org nodejs             # Install MongoDB, Node.js
-sudo npm install -g inherits n                # Install inherits and n
-sudo ln -s /usr/bin/node /usr/local/bin/node  # Create a symbolic link for the node binary file to
+sudo apt-get install -y mongodb-org           # Install MongoDB, Node.js[参考上面的`安装 Nodejs 语言`]
 curl -L https://releases.rocket.chat/latest/download -o /tmp/rocket.chat.tgz # Download Rocket.Chat
 tar -xzf /tmp/rocket.chat.tgz -C /tmp
 cd /tmp/bundle/programs/server && npm install # 参考 npm配置与nodejs推荐安装.md
@@ -436,15 +435,14 @@ wget -O node-linux-x64.tar.gz https://npm.taobao.org/mirrors/node/v12.18.4/node-
 sudo tar -zxf node-linux-x64.tar.gz -C /usr/local/         # 解压目录
 sudo mv /usr/local/node-v12.18.4-linux-x64 /usr/local/node # 重命名安装目录
 sudo chown -R `id -un`:`id -gn` /usr/local/node            # 设置目录权限
-export PATH=/usr/local/node/bin:$PATH # 环境配置 /etc/profile.d/nodejs-profile.sh (推荐)
+export PATH=/usr/local/node/bin:$PATH # 环境配置(推荐)[参考下面的`环境变量`]
 npm config ls -l
 npm i -g inherits n
+sudo chown -R `id -un`:`id -gn` /usr/local/n
 n 12.18.4 # 安装指定node版本v12.18.4
-npm i -g node-gyp
-npm i -g node-pre-gyp
-npm i -g yarn
-yarn global add cnpm --registry=https://registry.npm.taobao.org
-cnpm i -g node-sass # 配置nodejs完成;开始安装mongodb
+npm i -g yarn # 工具yarn 及 node-gyp, node-sass...
+npm i -g node-gyp node-pre-gyp node-sass --registry=https://registry.npm.taobao.org
+yarn global add cnpm --registry=https://registry.npm.taobao.org # 工具cnpm 配置nodejs完成;开始安装mongodb
 cat << EOF | sudo tee -a /etc/yum.repos.d/mongodb-org-4.0.repo
 [mongodb-org-4.0]
 name=MongoDB Repository

@@ -47,8 +47,9 @@ LxRunOffline install -n centos7 -d A:\centos7 -f A:\centos7\centos-7-docker.tar.
 LxRunOffline run -n centos7
 cat /etc/system-release && cat /usr/lib/os-release # CentOS Linux release 7.9.2009 (Core) 系统完整信息
 passwd root                                 # 设置root账户的密码
-sudo useradd -M <name> && sudo usermod -L <name> # 创建user <name>
-sudo chown -R <name>:<name> /<dir>  # 指定目录<dir>权限为user
+useradd -mM <name> -d /home/admin -s /bin/bash -G adm,cdrom,sudo,dip,plugdev admin # -m管理员 <name>
+useradd -M <name> -d /home/<name> -s /bin/bash && sudo usermod -L <name> # 创建user <name>
+chown -R <name>:<name> /<dir>  # 指定目录<dir>权限为user
 yum install -y gnupg ca-certificates curl wget openssl # 安装ca/wget/openssl
 cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak # 先备份repo
 wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo #获取阿里镜像源
@@ -82,8 +83,41 @@ $ sudo apt-get update && sudo apt-get dist-upgrade # 更新apt软件管理工具
 $ sudo apt-get clean && sudo apt-get update --fix-missing
 # 设置root账户密码[第一步]
 $ sudo passwd root
-sudo useradd -M <name> && sudo usermod -L <name> # 创建user <name>
+sudo useradd -M <name> /home/<name> -s /bin/bash -G adm,cdrom,sudo,dip,plugdev # 创建user <name>
+sudo usermod -L <name> # 创建user <name>
 sudo chown -R <name>:<name> /<dir>  # 指定目录<dir>权限为user
+whoami && w && id  # 当前用户信息
+echo -e "$USER\n$HOME\n$SHELL\n$PATH\n$LOGNAME\n$MAIL" # 当前用户环境 [-e允许反斜杠转义字符]
+id            # 返回 uid=0(root) gid=0(root) groups=0(root)  ; root登录:  su root ; su - ;目录不变
+id -u         # 返回 uid          添加用户(-d=$home)      (-G=附加用户组)       例如(用户名=admin)
+sudo passwd usr # 当切换root时异常 su: authentication failure $ su - root (su输入指定用户的密码;sudo输入当前用户密码)
+[sudo] password for [your name]: 你当前的密码
+New password: 这个是root的密码; 修改命令 sudo passwd
+mkdir -p /home/admin & chmod 777 /home/admin 
+# 新建用户-默认值: useradd -D  |  cat /etc/default/useradd ;修改默认shell: useradd -D -s /bin/zsh
+useradd -m -d /home/admin -G adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare,libvirt admin # -m管理员
+useradd -d /home/test  -s /bin/bash test # 新建普通用户test
+man newusers    # 批量更新和创建新用户
+userdel -r test # 删除用户
+cat /etc/passwd # 查看所有用户 ; 统计用户数 cat /etc/passwd | wc -l
+cat /etc/passwd |grep `id -un` # 查看当前登录用户
+cat /etc/shadow # 用户列表
+cat /etc/group  # 用户组列表
+groups          # 用户所在组
+groupadd        # 添加用户组
+passwd admin    # 修改密码
+login           # 用户登录
+# 修改用户多选组-G=groups   # 查用户组${id -g 用户名} $ groups yangzhou
+id -gn && id -Gn         # 返回用户组: sudo grep $USER /etc/group /etc/gshadow
+usermod -G yangzhou,adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare,docker,mysql,mongodb,libvirt,rabbitmq yangzhou
+usermod -aG adm,cdrom,sudo,dip,plugdev,mongodb,ubuntu ubuntu
+usermod -aG rabbitmq yangzhou # 添加组给用户,方便操作.
+# 查询用户更多信息
+sudo grep $USER /etc/passwd /etc/shadow /etc/group /etc/gshadow
+su - root      # 切换用户至root (并切换到用户主目录/root；超级用户提示符结尾 # 普通用户$ 主目录/home/*)
+su - admin     # 切换用户至admin
+exit           # 退出登录
+
 # 更新软件源[第二步][腾讯云阿里云CVM跳过]
 $ sudo vi /etc/apt/sources.list    # ubuntu`18.04``bionic` 腾讯云源 (esc-vi按 :wq! 保存)
 deb http://mirrors.tencentyun.com/ubuntu/ bionic main restricted universe multiverse
@@ -322,6 +356,8 @@ sudo apt-get -y install mongodb-org
 sudo sed -i "s/^#  engine:/  engine: mmapv1/"  /etc/mongod.conf 
 sudo sed -i "s/^#replication:/replication:\n  replSetName: rs01/" /etc/mongod.conf
 sudo systemctl enable mongod && sudo systemctl start mongod # 开机启动 MongoDB service
+usermod -aG adm,cdrom,sudo,dip,plugdev,mongodb,ubuntu ubuntu # 给用户ubuntu添加角色
+su - ubuntu && id -gn && id -Gn # 切换用户ubuntu检查角色
 mongo --eval "printjson(rs.initiate())" # Test MongoDB service status(不要用root)
 
 

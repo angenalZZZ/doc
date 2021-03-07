@@ -319,6 +319,10 @@ echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb
   | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list  # Add MongoDB repository
 sudo apt-get -y update
 sudo apt-get -y install mongodb-org
+sudo sed -i "s/^#  engine:/  engine: mmapv1/"  /etc/mongod.conf 
+sudo sed -i "s/^#replication:/replication:\n  replSetName: rs01/" /etc/mongod.conf
+sudo systemctl enable mongod && sudo systemctl start mongod # 开机启动 MongoDB service
+mongo --eval "printjson(rs.initiate())" # Test MongoDB service status(不要用root)
 
 
 ##聊天平台[Rocket.Chat] https://docs.rocket.chat/ 
@@ -351,10 +355,6 @@ WantedBy=multi-user.target
 EOF
  ## End Create Rocket.Chat service, and Configure the storage engine and replication for MongoDB
 
-sudo sed -i "s/^#  engine:/  engine: mmapv1/"  /etc/mongod.conf 
-sudo sed -i "s/^#replication:/replication:\n  replSetName: rs01/" /etc/mongod.conf
-sudo systemctl enable mongod && sudo systemctl start mongod # Start and enable MongoDB service
-mongo --eval "printjson(rs.initiate())" # Test MongoDB service
 sudo systemctl enable rocketchat && sudo systemctl start rocketchat # Start Rocket.Chat service
 sudo systemctl status rocketchat # Check if the service is running
 

@@ -29,7 +29,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.We
 # 安装 LxRunOffline
 choco install lxrunoffline
 # 获取离线安装包 <system-install.tar.xz> 1.修改[wsl]*.appx后缀为.zip 2.解压得到install.tar.gz 3.安装[执行LxRunOffline]
-# LxRunOffline install -n <system-name> -d <system-rootfsdir> -f <system-install.tar.xz>
+# LxRunOffline install -n <system-name> -d <system-rootfsdir> -f <system-install.tar.xz> # 复制appx解压目录/启动程序*.exe
 PS> LxRunOffline install -n Ubuntu-18.04 -d C:\ubuntu1804 -f .\install.tar.gz # 离线安装Ubuntu-18.04
 # LxRunOffline su -n <system-name> -v 1000 # 以指定用户(id=1000)运行(默认为用户root=0)[先进入系统添加用户后再执行该命令]
 # 设置 WSL 默认版本为 2 (独立运行<linux>需内存多)

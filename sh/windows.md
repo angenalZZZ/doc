@@ -47,8 +47,8 @@ LxRunOffline install -n centos7 -d A:\centos7 -f A:\centos7\centos-7-docker.tar.
 LxRunOffline run -n centos7
 cat /etc/system-release && cat /usr/lib/os-release # CentOS Linux release 7.9.2009 (Core) 系统完整信息
 passwd root                                 # 设置root账户的密码
-useradd -mM <name> -d /home/admin -s /bin/bash -G adm,cdrom,sudo,dip,plugdev admin # -m管理员 <name>
-useradd -M <name> -d /home/<name> -s /bin/bash && sudo usermod -L <name> # 创建user <name>
+useradd -M centos && usermod -L centos      # 创建centos
+usermod -d /home/admin centos && usermod -s /bin/bash centos && usermod -aG adm centos # 修改centos
 chown -R <name>:<name> /<dir>  # 指定目录<dir>权限为user
 yum install -y gnupg ca-certificates curl wget openssl # 安装ca/wget/openssl
 cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak # 先备份repo
@@ -83,8 +83,8 @@ $ sudo apt-get update && sudo apt-get dist-upgrade # 更新apt软件管理工具
 $ sudo apt-get clean && sudo apt-get update --fix-missing
 # 设置root账户密码[第一步]
 $ sudo passwd root
-sudo useradd -M <name> /home/<name> -s /bin/bash -G adm,cdrom,sudo,dip,plugdev # 创建user <name>
-sudo usermod -L <name> # 创建user <name>
+useradd -M ubuntu && usermod -L ubuntu      # 创建ubuntu
+usermod -d /home/ubuntu ubuntu && usermod -s /bin/bash ubuntu && usermod -aG adm ubuntu # 修改ubuntu
 sudo chown -R <name>:<name> /<dir>  # 指定目录<dir>权限为user
 whoami && w && id  # 当前用户信息
 echo -e "$USER\n$HOME\n$SHELL\n$PATH\n$LOGNAME\n$MAIL" # 当前用户环境 [-e允许反斜杠转义字符]

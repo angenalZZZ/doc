@@ -48,7 +48,7 @@ LxRunOffline run -n centos7
 cat /etc/system-release && cat /usr/lib/os-release # CentOS Linux release 7.9.2009 (Core) 系统完整信息
 passwd root                                 # 设置root账户的密码
 useradd -M centos && usermod -L centos      # 创建centos
-usermod -d /home/admin centos && usermod -s /bin/bash centos && usermod -aG adm centos # 修改centos
+usermod -d /home/centos centos && usermod -s /bin/bash centos && usermod -aG adm centos # 修改centos
 chown -R <name>:<name> /<dir>  # 指定目录<dir>权限为user
 yum install -y gnupg ca-certificates curl wget openssl # 安装ca/wget/openssl
 cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak # 先备份repo
@@ -219,6 +219,24 @@ sudo systemctl reload nginx   # 修改配置后，需要重新加载Nginx服务
 ls /etc/nginx/sites-available # 设置Nginx服务器模块(类似Apache虚拟主机) www.linuxidc.com/Linux/2018-05/152258.htm
 sudo apt install certbot      # 使用Let's Encrypt保护Nginx  www.linuxidc.com/Linux/2018-05/152259.htm
 runuser -l yangzhou -s /bin/sh -m -c "/usr/local/nginx/sbin/nginx" # 启动(可用 su+目标用户的密码; sudo+自己的密码)
+sudo rm /etc/nginx/sites-enabled/default # 删除默认网站,新创建一个如下:
+> vi /etc/nginx/sites-available/mysite.conf
+server {
+    listen 80;
+    server_name example.com;
+    location / {
+        proxy_pass http://localhost:3000/;
+    }
+}
+sudo ln -s /etc/nginx/sites-available/mysite.conf /etc/nginx/sites-enabled/
+sudo nginx -t        # 测试配置是否有误
+sudo nginx -s reload # 重新加载nginx配置
+sudo apt-get install -y software-properties-common # 配置 SSL 证书
+sudo add-apt-repository ppa:certbot/certbot # 安装 Certbot 
+sudo apt-get update
+sudo apt-get install -y python-certbot-nginx # 位置选择 亚洲（也就是 6. Asia） 时区选择 69. Shanghai
+sudo certbot --nginx # 填写和你注册域名时相同的邮箱
+sudo certbot renew --dry-run # 开启证书自动续约(有效期是3个月)
 
 # 安装 OpenResty
 sudo systemctl disable nginx && sudo systemctl stop nginx # 安装OpenResty > cd /tmp
@@ -356,7 +374,7 @@ sudo apt-get -y install mongodb-org
 sudo sed -i "s/^#  engine:/  engine: mmapv1/"  /etc/mongod.conf 
 sudo sed -i "s/^#replication:/replication:\n  replSetName: rs01/" /etc/mongod.conf
 sudo systemctl enable mongod && sudo systemctl start mongod # 开机启动 MongoDB service
-usermod -aG adm,cdrom,sudo,dip,plugdev,mongodb,ubuntu ubuntu # 给用户ubuntu添加角色
+usermod -aG adm,bin,ftp ubuntu # 给用户ubuntu添加角色
 su - ubuntu && id -gn && id -Gn # 切换用户ubuntu检查角色
 mongo --eval "printjson(rs.initiate())" # Test MongoDB service status(不要用root)
 

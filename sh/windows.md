@@ -303,18 +303,31 @@ sudo apt-get -y install libass-dev libfreetype6-dev libsdl1.2-dev libtheora-dev 
   libavdevice-dev libavfilter-dev libswscale-dev libavcodec-dev libavformat-dev libswresample-dev libavutil-dev
 sudo apt-get install yasm
 
+
+# 安装Mongodb 4.0 on Ubuntu
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
+echo "deb [ arch=amd64 ] http://mirrors.aliyun.com/mongodb/apt/ubuntu bionic/mongodb-org/4.0 multiverse" \
+#echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse" \
+  | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
+sudo apt-get -y update
+sudo apt-get -y install mongodb-org
+sudo service mongod start
+ps aux | grep mongod
+# 安装Mongodb 4.4 on Ubuntu
+wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add - # Add MongoDB GPG signing key
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" \
+  | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list  # Add MongoDB repository
+sudo apt-get -y update
+sudo apt-get -y install mongodb-org
+
+
 ##聊天平台[Rocket.Chat] https://docs.rocket.chat/ 
 # [Manual-Install All OS] docs.rocket.chat/installation/manual-installation
 # [Ubuntu 18.04, 19.04, 20.04] docs.rocket.chat/installation/manual-installation/ubuntu
 # [Rocket.Chat on Ubuntu Doc] computingforgeeks.com/install-rocket-chat-on-ubuntu-with-letsencrypt
 sudo apt-get -y update # Update your Ubuntu
-wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add - # Add MongoDB GPG signing key
-echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" \
-  | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list  # Add MongoDB repository
-sudo apt-get -y update && sudo apt-get install -y curl && curl -sL https://deb.nodesource.com/setup_12.x \
-  | sudo bash -  # Configure Node.js to be installed through the Ubuntu package manager
-sudo apt-get install -y build-essential graphicsmagick # Install graphicsmagick
-sudo apt-get install -y mongodb-org           # Install MongoDB, Node.js[参考上面的`安装 Nodejs 语言`]
+# Install gcc/make/graphicsmagick, Node.js[参考上面的`安装 Nodejs 语言`]
+sudo apt-get install -y build-essential graphicsmagick 
 curl -L https://releases.rocket.chat/latest/download -o /tmp/rocket.chat.tgz # Download Rocket.Chat
 tar -xzf /tmp/rocket.chat.tgz -C /tmp
 cd /tmp/bundle/programs/server && npm install # 参考 npm配置与nodejs推荐安装.md

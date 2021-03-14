@@ -26,7 +26,7 @@ nginx -t            # 不运行，而仅仅测试配置文件。Nginx 将检查�
 nginx -v            # 显示 Nginx 的版本
 nginx -V            # 显示 Nginx 的版本、编译器版本和配置参数
 ~~~
-* 检查分析与[✨工具gixy](https://github.com/yandex/gixy)
+* 检查分析与[✨工具gixy](https://github.com/yandex/gixy)、[Lua-Anti-DDoS-Script](https://github.com/C0nw0nk/Nginx-Lua-Anti-DDoS)
 ~~~shell
 # 检查
 cd /etc/nginx
@@ -343,6 +343,90 @@ server {
     "x-rate-limit-reset": "18"   // request: reset times after 18 seconds
 }
 ```
+
+> [聊天平台 Rocket.Chat](https://docs.rocket.chat/installation/manual-installation) : /etc/nginx/conf.d/rocketchat.conf
+~~~nginx
+# Configure Nginx Reverse Proxy
+upstream rocket_backend {
+  server 127.0.0.1:3000;
+}
+
+server {
+    listen 80;
+    server_name chat.hirebestengineers.com;
+    access_log /var/log/nginx/rocketchat-access.log;
+    error_log /var/log/nginx/rocketchat-error.log;
+
+    location / {
+        proxy_pass http://rocket_backend/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $http_host;
+
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forward-Proto http;
+        proxy_set_header X-Nginx-Proxy true;
+
+        proxy_redirect off;
+    }
+}
+~~~
+~~~bash
+# Check if Nginx configuration is ok
+sudo nginx -t 
+sudo systemctl restart nginx
+sudo systemctl enable nginx
+
+# Setup Let’s Encrypt SSL
+sudo apt install certbot python3-certbot-nginx
+certbot --nginx  # Then run certbot to acquire SSL certificate
+~~~
+> After `Setup Let’s Encrypt SSL` 
+~~~nginx
+upstream rocket_backend {
+  server 127.0.0.1:3000;
+}
+
+server {
+    server_name chat.hirebestengineers.com;
+    access_log /var/log/nginx/rocketchat-access.log;
+    error_log /var/log/nginx/rocketchat-error.log;
+
+    location / {
+        proxy_pass http://rocket_backend/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $http_host;
+
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forward-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forward-Proto http;
+        proxy_set_header X-Nginx-Proxy true;
+
+        proxy_redirect off;
+    }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/chat.hirebestengineers.com/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/chat.hirebestengineers.com/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+}
+
+server {
+    if ($host = chat.hirebestengineers.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+    listen 80;
+    server_name chat.hirebestengineers.com;
+    return 404; # managed by Certbot
+}
+~~~
+
 
  * 配置（HA）高可用 Nginx + Keepalived
         <br>Keepalived 以 VRRP 协议为基础来实现高可用性。VRRP（Virtual Router Redundancy Protocol 虚拟路由冗余协议）是用于实现路由器冗余的协议，它将两台或多台路由器设备虚拟成一个设备，对外提供虚拟路由器 IP（一个或多个VIP）<br>

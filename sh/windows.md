@@ -185,12 +185,14 @@ sudo dpkg -i esl-erlang_22.1-1~ubuntu~xenial_amd64.deb # 安装 erlang 语言(�
 
 # 安装 Python 语言 (python3为默认终端)
 sudo apt install python-minimal build-essential # 安装Python及gcc/g++/gdb/make工具链
-sudo apt-get install python-pip    # 安装python2和pip
-sudo apt-get install python3-pip   # 安装适用于python3的pip
+sudo apt-get install python-dev python-pip      # 安装python2和pip or(仅运行环境) install python2-minimal
+sudo apt-get install python3-dev python3-pip    # 安装适用于python3的pip
 sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 100
 sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 150
 sudo update-alternatives --config python  # 手动配置/切换版本: python --version ; pip --version
 sudo ln -sf /usr/bin/python2.7 /usr/bin/python # 将Python2(恢复)默认
+python3 --version && pip3 --version  # 检查版本
+pip3 install -U pip  # 更新python3的pip版本
 pip3 install ipython
 
 # 安装 Apache & PHP 环境

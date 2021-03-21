@@ -19,7 +19,10 @@ docker > docker pull redis;docker run --name redis-server -d -p6379:6379 redis;d
   bind 127.0.0.1 ::1 # bind 192.168.1.100 10.0.0.1 # 不限制本地访问,需要指定外网RemoteIP
 # ***指定访问端口号***
   port 6379
+  protected-mode yes # only accepts from clients connecting from 127.0.0.1 and ::1, No password is configured.
   tcp-keepalive 300  # TCP keepalive. On Linux, specified value (seconds) is the period used to send ACKs.
+  tcp-backlog 511    # In high requests-per-second environments and tcp_max_syn_backlog to get the desired effect.
+  timeout 0
 # ***守护进程的方式启动***
   daemonize yes  # By default Redis does not run as a daemon. Redis will write a pid file when daemonized.
   supervised no  # If you run Redis from upstart or systemd
@@ -36,10 +39,14 @@ docker > docker pull redis;docker run --name redis-server -d -p6379:6379 redis;d
   appendonly yes
 # ***数据持久化路径: /data/appendonly.aof
   appendfilename "appendonly.aof"
-# save <seconds> <changes>  # Save the DB on disk:
+# save <seconds> <changes>  # Save the Real DB on disk:
   save 900 1
   save 300 10
   save 60 10000
+  rdbcompression yes
+  rdbchecksum yes
+  dbfilename dump.rdb
+  dir ./
 # The working directory.
   dir /var/lib/redis/6379
 
@@ -50,13 +57,15 @@ docker > docker pull redis;docker run --name redis-server -d -p6379:6379 redis;d
 #   | (receive writes) |      |  (exact copy) |
 #   +------------------+      +---------------+
 #
+# slaveof <masterip> <masterport>
+# masterauth <master-password>
 ~~~
   * > 集群 普通主从模式
     提供了复制（replication）功能，能较好地避免单独故障问题，以及提出了读写分离，降低了Master节点的压力。
     数据库分为两类，一类是主数据库（master），另一类是从数据库（slave）。
     主数据库可以进行读写操作，当写操作导致数据变化时会自动将数据同步给从数据库。
 ~~~
-redis-server --port 6379 --slaveof masterIp masterPort
+redis-server --port <slavePort> --slaveof <masterIp> <masterPort>
 ~~~
   * > 集群 哨兵模式(全量存储，即每台redis存储相同的内容，比较消耗内存资源)
     高可用架构：当主数据库遇到异常中断服务后，开发者可以通过手动的方式选择一个从数据库来升格为主数据库，以使得系统能够继续提供服务。

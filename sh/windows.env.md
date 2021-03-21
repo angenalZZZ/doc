@@ -73,7 +73,7 @@ ERLANG_HOME   D:\Program\erl10.5
 GO111MODULE   auto
 GOPATH        A:\go
 GOPROXY       https://goproxy.io,direct
-IPFS_PATH     A:\database\ipfs
+IPFS_PATH     A:\database\ipfs\.ipfs
 Include       .;%JAVA_HOME%\lib;
 JAVA_HOME     C:\Program Files (x86)\Java\jdk1.8.0_271
 JAVA_BIN      %JAVA_HOME%/bin

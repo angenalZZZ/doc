@@ -660,6 +660,7 @@ alias run-pg='sudo -u postgres psql'
 
 ~~~
 > Windows 后台服务管理工具
+  - `sc create <服务名> start= auto binPath= "可执行命令行"`
   - `nssm`>[`download`](https://nssm.cc/download)>[`commands`](https://nssm.cc/commands)
 ~~~cmd
 :: installation
@@ -681,6 +682,16 @@ nssm set <servicename> ObjectName <username> <password>
 nssm start|stop|restart|pause|continue|status <servicename>
 :: uninstall
 nssm remove <servicename>
+
+# ipfs init # https://docs.ipfs.io/how-to/command-line-quick-start/
+# ipfs config Addresses.API /ip4/127.0.0.1/tcp/5001
+# ipfs config Addresses.Gateway /ip4/127.0.0.1/tcp/5401
+> sc create ipfs start= auto binPath= "A:\go\bin\ipfs.exe daemon" # 安装Windows服务
+> nssm install Crawlab bash.exe -c GIN_MODE=release /mnt/a/go/bin/crawlab/backend/crawlab # 安装Windows服务
+> nssm install MinIO C:/minio/minio.exe server ./data # 安装Windows服务[以管理员身份运行] # nssm get MinIO AppEnvironmentExtra
+> nssm set MinIO AppDirectory C:/minio                # 设置/工作目录AppDirectory /环境变量AppEnvironmentExtra
+> nssm set MinIO AppEnvironmentExtra MINIO_ACCESS_KEY=admin MINIO_SECRET_KEY=123456789 MINIO_DOMAIN=a.com
+> nssm start MinIO & start http://127.0.0.1:9000/     # 启动Windows服务&打开浏览器
 ~~~
 > Windows 10 系统问题排查
 ~~~bash

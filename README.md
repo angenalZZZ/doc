@@ -11,6 +11,7 @@
 
 ## [开发资源](#)
 - [软件工程师★学习路线](https://github.com/jwasham/coding-interview-university/blob/main/translations/README-cn.md)
+- [软件工程师C++学习《剑指Offer》](https://github.com/zhedahht/CodingInterviewChinese2)
 - [GitMind在线思维导图](https://gitmind.cn/)
 - [Icon](https://shields.io/)
 

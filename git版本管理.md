@@ -8,8 +8,8 @@
 > git config --global user.name "yangzhou"      # 修改全局git用户配置
 > git config --global user.email "angenal@hotmail.com" # 修改全局git用户账号邮箱
 
-# github加速或打不开时，
-# https://github.com/docmirror/dev-sidecar
+# github加速或打不开时，参考 https://github.com/docmirror/dev-sidecar
+# 下载安装 http://dev-sidecar.docmirror.cn/update/DevSidecar-1.4.0.exe
 
 # 保存用户名密码和仓库链接在硬盘中(~/.git-credentials)，而不用在每次push时都输入密码。
 > git config --global credential.helper store   # 提交push时不用每次都输入用户名密码的方法(删除参数--global会只对当前仓库生效)

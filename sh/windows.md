@@ -77,7 +77,23 @@ yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/d
 yum install docker-ce -y
 systemctl start docker   # 手动启动
 systemctl enable docker  # 开机启动
-docker -v
+docker -v  # 查看版本，然后设置 阿里云 容器镜像服务 镜像加速器
+
+# 安装 Jenkins 实现自动化构建
+yum install -y java
+wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+yum install jenkins
+service jenkins start
+firewall-cmd --zone=public --add-port=8080/tcp --permanent
+firewall-cmd --zone=public --add-port=50000/tcp --permanent
+systemctl reload firewalld
+# 访问网页 http://localhost:8080/
+cat /var/lib/jenkins/secrets/initialAdminPassword # 获取初始密码
+# 替换安装源后，再安装推荐的插件
+sed -i 's/http:\/\/updates.jenkins-ci.org\/download/https:\/\/mirrors.tuna.tsinghua.edu.cn\/jenkins/g' /var/lib/jenkins/updates/default.json
+sed -i 's/http:\/\/www.google.com/https:\/\/www.baidu.com/g' /var/lib/jenkins/updates/default.json
+
 ~~~
 > Windows 10 [WSL - Ubuntu](https://www.microsoft.com/zh-cn/p/ubuntu-1804-lts/9n9tngvndl3q?activetab=pivot:overviewtab)、[Ubuntu开发环境及常用安装](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#linux开发环境及常用安装)
 ~~~bash

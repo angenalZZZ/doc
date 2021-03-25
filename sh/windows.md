@@ -69,6 +69,15 @@ yum install mysql-server # 安装 MySQL 配置如下 https://dev.mysql.com/doc/r
 mv /usr/bin/systemctl /usr/bin/systemctl.old
 wget -O /usr/bin/systemctl https://github.com/gdraheim/docker-systemctl-replacement/blob/master/files/docker/systemctl.py
 chmod +x /usr/bin/systemctl
+
+# 安装 Docker 容器
+# 依赖的 device-mapper-persistent-data 是 Linux 下的一个存储驱动， Linux 上的高级存储技术。 Lvm 的作用则是创建逻辑磁盘分区。
+yum install -y yum-utils device-mapper-persistent-data lvm2
+yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+yum install docker-ce -y
+systemctl start docker   # 手动启动
+systemctl enable docker  # 开机启动
+docker -v
 ~~~
 > Windows 10 [WSL - Ubuntu](https://www.microsoft.com/zh-cn/p/ubuntu-1804-lts/9n9tngvndl3q?activetab=pivot:overviewtab)、[Ubuntu开发环境及常用安装](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#linux开发环境及常用安装)
 ~~~bash

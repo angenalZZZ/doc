@@ -51,9 +51,9 @@ useradd -M centos && usermod -L centos      # 创建centos账户
 usermod -d /home/centos centos && usermod -s /bin/bash centos && usermod -aG adm centos # 修改centos的$HOME$SHELL..
 groupadd -g 200 app200 && useradd -m -d /var/lib/app200 -s /bin/false -N -g 200 -u 200 -c app200 app200 # 创建用户及组app200
 gpasswd -a app200 app200 && newgrp app200   # 添加用户进组app200
-cat /etc/passwd |grep app200   # 查看上面创建的用户及组app200
+cat /etc/passwd |grep app200                # 查看上面创建的用户及组app200
 gpasswd -d app200 app200 && userdel app200 && groupdel app200 && rm -rf /var/lib/app200 # 删除用户及组app200
-chown -R <name>:<name> /<dir>  # 指定目录<dir>权限给user:<name>
+chown -R <name>:<name> /<dir>               # 指定目录<dir>权限给user:<name>
 yum install -y gnupg ca-certificates curl wget openssl # 安装ca/wget/openssl
 cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak # 先备份repo
 wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo #获取阿里镜像源
@@ -75,19 +75,21 @@ wget -O /usr/bin/systemctl https://github.com/gdraheim/docker-systemctl-replacem
 chmod +x /usr/bin/systemctl
 
 # 安装 Docker 容器
-# 依赖的 device-mapper-persistent-data 是 Linux 下的一个存储驱动， Linux 上的高级存储技术。 Lvm 的作用则是创建逻辑磁盘分区。
+# 依赖 device-mapper-persistent-data 是linux下的一个存储驱动(一个高级存储技术) lvm 的作用则是创建逻辑磁盘分区
 yum install -y yum-utils device-mapper-persistent-data lvm2
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 yum install docker-ce -y
+groupadd -g 375 docker && newgrp docker # 创建用户组
 systemctl start docker   # 手动启动
 systemctl enable docker  # 开机启动
-docker -v  # 查看版本，然后设置 阿里云 容器镜像服务 镜像加速器
+docker -v                # 查看版本，然后设置docker 阿里云>容器镜像服务>镜像加速器
 
 # 安装 Jenkins 实现自动化构建
 yum install -y java
 wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
 rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
 yum install jenkins
+gpasswd -a jenkins docker && newgrp docker # 添加用户jenkins进入组docker
 service jenkins start
 firewall-cmd --zone=public --add-port=8080/tcp --permanent
 firewall-cmd --zone=public --add-port=50000/tcp --permanent

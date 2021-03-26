@@ -47,9 +47,13 @@ LxRunOffline install -n centos7 -d A:\centos7 -f A:\centos7\centos-7-docker.tar.
 LxRunOffline run -n centos7
 cat /etc/system-release && cat /usr/lib/os-release # CentOS Linux release 7.9.2009 (Core) 系统完整信息
 passwd root                                 # 设置root账户的密码
-useradd -M centos && usermod -L centos   # 创建centos 修改默认值[usermod -d-s-G 等同于 useradd -D -d-s-G]
-usermod -d /home/centos centos && usermod -s /bin/bash centos && usermod -aG adm centos # 修改centos
-chown -R <name>:<name> /<dir>  # 指定目录<dir>权限为user
+useradd -M centos && usermod -L centos      # 创建centos账户
+usermod -d /home/centos centos && usermod -s /bin/bash centos && usermod -aG adm centos # 修改centos的$HOME$SHELL..
+groupadd -g 200 app200 && useradd -m -d /var/lib/app200 -s /bin/false -N -g 200 -u 200 -c app200 app200 # 创建用户及组app200
+gpasswd -a app200 app200 && newgrp app200   # 添加用户进组app200
+cat /etc/passwd |grep app200   # 查看上面创建的用户及组app200
+gpasswd -d app200 app200 && userdel app200 && groupdel app200 && rm -rf /var/lib/app200 # 删除用户及组app200
+chown -R <name>:<name> /<dir>  # 指定目录<dir>权限给user:<name>
 yum install -y gnupg ca-certificates curl wget openssl # 安装ca/wget/openssl
 cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak # 先备份repo
 wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo #获取阿里镜像源

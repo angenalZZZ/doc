@@ -57,20 +57,22 @@
 185.199.109.153 assets-cdn.github.com
 185.199.110.153 assets-cdn.github.com
 185.199.111.153 assets-cdn.github.com
-151.101.184.133 assets-cdn.github.com
-151.101.184.133 raw.githubusercontent.com
-151.101.184.133 gist.githubusercontent.com
-151.101.184.133 cloud.githubusercontent.com
-151.101.184.133 camo.githubusercontent.com
-151.101.184.133 avatars0.githubusercontent.com
-151.101.184.133 avatars1.githubusercontent.com
-151.101.184.133 avatars2.githubusercontent.com
-151.101.184.133 avatars3.githubusercontent.com
-151.101.184.133 avatars4.githubusercontent.com
-151.101.184.133 avatars5.githubusercontent.com
-151.101.184.133 avatars6.githubusercontent.com
-151.101.184.133 avatars7.githubusercontent.com
-151.101.184.133 avatars8.githubusercontent.com
+185.199.108.133 raw.githubusercontent.com  # 查询> https://githubusercontent.com.ipaddress.com/raw.githubusercontent.com
+185.199.109.133 raw.githubusercontent.com
+186.199.110.133 raw.githubusercontent.com
+187.199.111.133 raw.githubusercontent.com
+# 188.101.184.133 gist.githubusercontent.com
+# 189.101.184.133 cloud.githubusercontent.com
+# 190.101.184.133 camo.githubusercontent.com
+# 191.101.184.133 avatars0.githubusercontent.com
+# 192.101.184.133 avatars1.githubusercontent.com
+# 193.101.184.133 avatars2.githubusercontent.com
+# 194.101.184.133 avatars3.githubusercontent.com
+# 195.101.184.133 avatars4.githubusercontent.com
+# 196.101.184.133 avatars5.githubusercontent.com
+# 197.101.184.133 avatars6.githubusercontent.com
+# 198.101.184.133 avatars7.githubusercontent.com
+# 199.101.184.133 avatars8.githubusercontent.com
 
 # 3.刷新dns缓存..
 $ sudo killall -HUP mDNSResponder

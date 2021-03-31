@@ -41,7 +41,7 @@
 # [https]
 #   proxy = http://127.0.0.1:1087
 
-# 1.通过修改默认配置, 解决网络问题! http限制..
+# 1.通过修改默认配置, 解决网络限制问题..
 > git config --global http.postBuffer 524288000 # 上传文件大小限制500M=1024*1024*500(默认100M)
 > git config --global http.sslVerify "false"    # 关闭ssl验证(网络异常)
 > git config --global http.lowSpeedLimit 0      # 下载文件限制
@@ -49,15 +49,19 @@
 > git clone --depth=1 https://***/***/***.git   # 下载失败时，1.首先浅层clone..
 > git fetch --unshallow                         # 下载更快..然后更新远程库到本地; 2.或者使用SSH进行下载
 
-# 2.通过获取以下 DNS Resource Records, 解决网络问题! CDN被屏蔽..
-# fix git clone github project failed /etc/hosts
-151.101.185.194 github.global.ssl.fastly.net  # github.global.ssl.fastly.net.ipaddress.com
-140.82.113.4 github.com                       # github.com.ipaddress.com
+# 2.通过修改hosts, 获取以下 DNS Resource Records, 解决CDN被屏蔽问题..
+# github > fix git clone github project failed > /etc/hosts
+140.82.113.4 github.com                     # 查询> https://github.com.ipaddress.com
+199.232.69.194 github.global.ssl.fastly.net # 查询> https://fastly.net.ipaddress.com/github.global.ssl.fastly.net
+185.199.108.153 assets-cdn.github.com       # 查询> https://github.com.ipaddress.com/assets-cdn.github.com
+185.199.109.153 assets-cdn.github.com
+185.199.110.153 assets-cdn.github.com
+185.199.111.153 assets-cdn.github.com
 
 # 3.刷新dns缓存..
 $ sudo killall -HUP mDNSResponder
 $ sudo dscacheutil -flushcache
-> ipconfig /flushdns
+> ipconfig /flushdns  # on windows
 
 > git config --system -l # show windows system config > git config --system -e [--edit]
 # http.sslbackend=openssl

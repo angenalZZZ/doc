@@ -46,24 +46,30 @@ LxRunOffline install -n centos7 -d A:\centos7 -f A:\centos7\centos-7-docker.tar.
 # 开启 CentOS
 LxRunOffline run -n centos7
 cat /etc/system-release && cat /usr/lib/os-release # CentOS Linux release 7.9.2009 (Core) 系统完整信息
-passwd root                                 # 设置root账户的密码
-useradd -M centos && usermod -L centos      # 创建centos账户
+# 更新软件源[第一步][腾讯云阿里云CVM跳过]
+cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak # 先备份repo
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo #获取阿里镜像源
+sed -i 's/http:/https:/g' /etc/yum.repos.d/CentOS-Base.repo # 批量替换http为https
+yum clean all & yum makecache               # 更新镜像源缓存
+# 基础软件安装[第二步]
+passwd root                                 # 先设置root账户的密码
+useradd -M centos && usermod -L centos      # 然后创建centos普通账户
 usermod -d /home/centos centos && usermod -s /bin/bash centos && usermod -aG adm centos # 修改centos的$HOME$SHELL..
 groupadd -g 200 app200 && useradd -m -d /var/lib/app200 -s /bin/false -N -g 200 -u 200 -c app200 app200 # 创建用户及组app200
 gpasswd -a app200 app200 && newgrp app200   # 添加用户进组app200
 cat /etc/passwd |grep app200                # 查看上面创建的用户及组app200
 gpasswd -d app200 app200 && userdel app200 && groupdel app200 && rm -rf /var/lib/app200 # 删除用户及组app200
 chown -R <name>:<name> /<dir>               # 指定目录<dir>权限给user:<name>
-yum install -y gnupg ca-certificates curl wget openssl # 安装ca/wget/openssl
-cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak # 先备份repo
-wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo #获取阿里镜像源
-sed -i 's/http:/https:/g' /etc/yum.repos.d/CentOS-Base.repo # 批量替换http为https
-yum clean all & yum makecache               # 更新镜像源缓存
-yum install -y epel-release                 # 安装epel软件源
-yum install -y gcc-c++ make net-tools       # 安装gcc/make/net-tools
-yum install -y glibc glibc.i686             # 安装glibc*x86_64,i686
-yum install -y GraphicsMagick
-# 安装K8s集成到WSL(需修改<linux>为 WSL 2) Ubuntu20.04 参考 https://blog.csdn.net/weixin_43168190/article/details/107179715
+yum install -y curl wget vim ntpdate        # 安装*curl/wget/vim/ntpdate(同步时区)
+ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime # 统一时区为上海时区
+echo 'Asia/Shanghai' > /etc/timezone        # touch /etc/timezone
+ntpdate ntp1.aliyun.com                     # 统一使用(阿里云)服务器进行时间同步
+yum install -y gnupg ca-certificates openssl # 安装*gnupg/ca/openssl
+yum install -y epel-release                 # 安装*epel软件源
+yum install -y gcc-c++ make net-tools       # 安装*gcc/make/net-tools
+yum install -y glibc glibc.i686             # 安装*glibc*x86_64,i686
+yum install -y GraphicsMagick               # 安装*GraphicsMagick(2D图库)
+
 # 安装数据库 Mysql 8.0 参考 https://dev.mysql.com/doc/refman/8.0/en/linux-installation-yum-repo.html
 cd /tmp # 需提前安装依赖 # yum install -y epel-release glibc glibc.i686 gcc-c++ wget net-tools
 # sudo wget -O /etc/yum.repos.d/ http://repo.mysql.com/mysql-community-release-el7-7.noarch.rpm #低版本MySQL
@@ -74,15 +80,105 @@ mv /usr/bin/systemctl /usr/bin/systemctl.old
 wget -O /usr/bin/systemctl https://github.com/gdraheim/docker-systemctl-replacement/blob/master/files/docker/systemctl.py
 chmod +x /usr/bin/systemctl
 
+# 安装 K8S/Kubernetes 容器集群化管理
+# 基础软件安装 vim wget ntpdate 然后参考 https://juejin.cn/book/6897616008173846543
+# 关闭防火器(K8S会创建防火器规则,导致防火器规则重复)
+systemctl stop firewalld & systemctl disabled firewalld
+# 关闭Swap分区
+swapoff -a       # 临时关闭swap分区
+vi /etc/fstab    # 永久关闭swap分区,注释**swap
+# 关闭Selinux
+setenforce 0     # 临时关闭selinux
+vi /etc/sysconfig/selinux
+SELINUX=disabled # 永久关闭selinux
 # 安装 Docker 容器
+groupadd -g 375 docker && newgrp docker # 先创建docker用户组
 # 依赖 device-mapper-persistent-data 是linux下的一个存储驱动(一个高级存储技术) lvm 的作用则是创建逻辑磁盘分区
 yum install -y yum-utils device-mapper-persistent-data lvm2
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 yum install docker-ce -y
-groupadd -g 375 docker && newgrp docker # 创建用户组
 systemctl start docker   # 手动启动
 systemctl enable docker  # 开机启动
-docker -v                # 查看版本，然后设置docker 阿里云>容器镜像服务>镜像加速器
+docker -v                # 查看版本
+start https://cr.console.aliyun.com  # 设置docker 阿里云>容器镜像服务>镜像加速器
+vi /etc/docker/daemon.json # 设置镜像库,加速拉取推送images
+vi ~/.docker/daemon.json # 当前用户/设置镜像库>>
+{
+  "registry-mirrors": [
+    "https://{your-id}.mirror.aliyuncs.com" // Or: http://{your-id}.m.daocloud.io
+  ],
+  "insecure-registries": [], // Or: http://[私有库IP]:[私有库Port]
+  "debug": false,
+  "experimental": true, // Enable实验性功能features:eg. DOCKER_BUILDKIT=1
+  "features": {
+    "buildkit": true // # syntax = docker/dockerfile:experimental
+  }
+}
+# 加载配置,重启docker
+systemctl daemon-reload & systemctl restart docker
+# 安装 K8S/Kubernetes 组件
+cat <<EOF > /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=http://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=0
+repo_gpgcheck=0
+gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
+       http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+EOF
+# 安装组件，然后启动 kubelet
+# kubelet 核心组件。它会运行在集群的所有节点上，并负责创建启动服务容器
+# kubectl 命令行工具。它用来管理，删除，创建资源
+# kubeadm 用来初始化集群，管理子节点加入的工具
+yum install -y kubelet kubeadm kubectl
+systemctl enable kubelet && systemctl start kubelet
+# 安装 Master 节点
+hostnamectl set-hostname master # 修改主机名
+vi /etc/hosts # 通过 ip addr 命令，获取本机IP，将其添加到 /etc/hosts
+# xxx.xxx.xxx.xxx master
+# 配置 Kubernetes 初始化文件
+kubeadm config print init-defaults > init-kubeadm.conf # 取得默认配置文件
+vim init-kubeadm.conf  # 修改配置文件>>
+# imageRepository: k8s.gcr.io # 更换k8s镜像仓库
+imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
+# localAPIEndpointc/advertiseAddress改为master的IP, port默认不修改
+localAPIEndpoint:
+  advertiseAddress: 192.168.56.101  # master的IP
+  bindPort: 6443
+# 配置子网络 pod 网络为 flannel 网段
+networking:
+  dnsDomain: cluster.local
+  serviceSubnet: 10.96.0.0/12
+  podSubnet: 10.244.0.0/16	# 添加子网络
+# 修改完配置文件后, 执行命令拉取默认组件镜像
+kubeadm config images pull --config init-kubeadm.conf
+# 在镜像拉取后, 初始化 Kubernetes
+kubeadm init --config init-kubeadm.conf
+# 在 Master 节点, 执行初始化命令
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+# 在 node 节点, 执行初始化命令, 加入到 Master 集群
+kubeadm join 172.16.81.164:6443 --token abcdef.0123456789abcdef \
+ --discovery-token-ca-cert-hash sha256:******
+# 安装 Flannel 组件，创建一个虚拟网络，让不同节点的服务有全局唯一的IP地址 (先下载配置文件)
+wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+docker pull quay.io/coreos/flannel:v0.13.0-rc2 # 拉取 flannel 镜像
+kubectl apply -f kube-flannel.yml  # 使用 kubectl apply 命令加载服务
+kubectl get nodes  # 查看启动情况
+# 安装 Node 节点
+hostnamectl set-hostname node1 # 修改主机名
+scp $HOME/.kube/config root@nodeIP:~/ # 拷贝 Master 节点配置文件
+mkdir -p $HOME/.kube
+sudo mv $HOME/config $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+# 把 Node 节点, 加入 Master 节点
+kubeadm join 172.16.81.164:6443 --token abcdef.0123456789abcdef \
+ --discovery-token-ca-cert-hash sha256:******
+# kubeadm token create --print-join-command # 在 master 机器上, 重新生成加入命令
+# 安装 Flannel 组件，同上。
+
 
 # 安装 Jenkins 实现自动化构建
 yum install -y java
@@ -184,6 +280,8 @@ sudo apt install cmake cmake-data cmake-doc cmake-curses-gui cmake-qt-gui # 安�
 sudo apt install autoconf automake pkg-config libtool gnome-core  # 安装automake/glib/gnome桌面开发
 sudo apt-get install libgtk-3-dev libcairo2-dev libglib2.0-dev --fix-missing   # 安装桌面开发gtk3工具链
 sudo apt-get install libwebkit2gtk-4.0-dev javascriptcoregtk-3.0 --fix-missing # 安装桌面开发webkit2gtk
+
+# 安装K8s集成到WSL(需修改<linux>为 WSL 2) Ubuntu20.04 参考 https://blog.csdn.net/weixin_43168190/article/details/107179715
 
 # 安装 Java 语言
 sudo add-apt-repository universe                   # 安装java运行时(当报错提示无法下载时需启用universe)

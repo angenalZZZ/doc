@@ -1,5 +1,10 @@
 # Windows系统
 
+* [注册表](#注册表)
+* [子系统centos](#子系统centos)
+* [子系统ubuntu](#子系统ubuntu)
+* [GCC开发环境`msys2``mingw64``qt5``v8``gtk``webkit`..](#系统开发环境msys2mingw64qt5)
+
 
 #### 系统升级
 
@@ -39,6 +44,8 @@ wsl --set-version <linux> 2 # 修改<linux>为 WSL 2
 wsl --set-default <linux>   # 设置<linux>为默认
 wsl -u root -d <linux>      # 以指定用户运行(默认为用户root)[先进入系统添加用户后再执行该命令]
 ~~~
+
+#### 子系统centos
 > Windows 10 [WSL - Centos](https://github.com/RoliSoft/WSL-Distribution-Switcher)、[系统设置工具推荐dotfiles](https://github.com/nickjj/dotfiles)
 ~~~bash
 # 部署 centos7 到 WSL (下载Docker镜像) https://github.com/RoliSoft/WSL-Distribution-Switcher
@@ -197,6 +204,8 @@ sed -i 's/http:\/\/updates.jenkins-ci.org\/download/https:\/\/mirrors.tuna.tsing
 sed -i 's/http:\/\/www.google.com/https:\/\/www.baidu.com/g' /var/lib/jenkins/updates/default.json
 
 ~~~
+
+#### 子系统ubuntu
 > Windows 10 [WSL - Ubuntu](https://www.microsoft.com/zh-cn/p/ubuntu-1804-lts/9n9tngvndl3q?activetab=pivot:overviewtab)、[Ubuntu开发环境及常用安装](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#linux开发环境及常用安装)
 ~~~bash
 # PowerShell 以管理员方式运行, 安装WSL Ubuntu

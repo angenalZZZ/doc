@@ -854,8 +854,8 @@ REG add "HKLM\SYSTEM\CurrentControlSet\Services\UsoSvc" /v Start /t REG_DWORD /d
 
 > [MSYS2 install](https://www.msys2.org/wiki/MSYS2-installation/)
 ~~~bash
-# 镜像源(/etc/pacman.d/) https://mirrors.tuna.tsinghua.edu.cn/help/msys2
-## MSYS2 repository mirrorlist > D:\Program\msys64\etc\pacman.d\
+# 先修改软件仓库为国内镜像源(/etc/pacman.d/)参考 https://mirrors.tuna.tsinghua.edu.cn/help/msys2
+## Update MSYS2 repository >> D:\Program\msys64\etc\pacman.d\
 ## Primary >> mirrorlist.mingw32
 Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/i686/
 Server = https://mirrors.sjtug.sjtu.edu.cn/msys2/mingw/i686/
@@ -871,17 +871,23 @@ Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/msys/$arch/
 Server = https://mirrors.sjtug.sjtu.edu.cn/msys2/msys/$arch/
 Server = http://mirrors.ustc.edu.cn/msys2/msys/$arch/
 Server = http://mirror.bit.edu.cn/msys2/msys/$arch/
-# 系统更新&重启
+# 更新系统重启
 > pacman -Syu
-# 运行 msys2_shell.bat
-pacman --needed -Sy bash pacman pacman-mirrors msys2-runtime  # 更新软件数据库
-# 开发环境
-pacman -S base-devel git mercurial cvs curl wget p7zip python perl ruby go # 开发语言环境(可选)
-pacman -S mingw-w64-i686-toolchain                         # 安装32位Mingw（D:\Program\msys64\mingw32\）(可选)
-pacman -S mingw-w64-x86_64-toolchain [gcc,make,pkgconfig]  # 安装64位Mingw（D:\Program\msys64\mingw64\）(推荐)
+# 更新软件仓库
+pacman --needed -Sy bash pacman pacman-mirrors msys2-runtime
+# 安装开发环境 gcc,make,pkgconfig
+pacman -S base-devel git mercurial cvs curl wget p7zip python # perl ruby go # 基础环境(推荐)
+# Win32软件Shell（\Start Menu\Programs\MSYS2 64bit\MSYS2 MinGW 32-bit）
+pacman -S mingw-w64-i686-gcc                               # 安装32位gcc编译环境
+pacman -S mingw-w64-i686-toolchain                         # 安装32位Mingw（D:\Program\msys64\mingw32）
+pacman -S mingw-w64-i686-gtk3 mingw-w64-i686-gtk2          # 安装GTK相关库（同时安装两个版本GTK3+GTK2）
+## gcc -o main.exe /c/src/main.c `pkg-config --libs --cflags gtk+-2.0` # 编译指令（`C盘`路径为`/c`）
+# Win64软件Shell（\Start Menu\Programs\MSYS2 64bit\MSYS2 MinGW 64-bit）
+pacman -S mingw-w64-x86_64-toolchain                       # 安装64位Mingw（D:\Program\msys64\mingw64）
 pacman -S mingw-w64-x86_64-toolchain mingw-w64-x86_64-v8   # 安装64位Mingw(all)+V8 https://github.com/rogchap/v8go
-pacman -Sl|grep lua                                        # 搜索并安装lua,go...
-# 桌面开发Qt5
+pacman -Sl|grep lua                                        # 搜索并安装lua...
+# 桌面开发环境 Qt 
+# Win软件Shell(不需要编译时)（\Start Menu\Programs\MSYS2 64bit\MSYS2 MSYS）
 pacman -S mingw-w64-x86_64-qt5 mingw-w64-x86_64-qt-creator # 安装64位Qt5 (推荐)
 pacman -S mingw-w64-i686-qt5 mingw-w64-i686-qt-creator     # 安装32位Qt5
 ~~~

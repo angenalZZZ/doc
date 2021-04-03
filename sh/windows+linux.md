@@ -3,7 +3,7 @@
 * [注册表](#注册表)
 * [子系统centos](#子系统centos)
 * [子系统ubuntu](#子系统ubuntu)
-* [GCC开发环境 `msys2` `mingw64` `qt5` `v8` `gtk` `webkit`..](#系统开发环境msys2mingw64qt5)
+* [系统GCC开发环境 `msys2` `mingw64` `qt5` `v8` `gtk` `webkit`..](#系统开发环境msys2mingw64qt5)
 
 
 #### 系统升级
@@ -887,6 +887,8 @@ pacman --needed -Sy bash pacman pacman-mirrors msys2-runtime
 
 # 安装开发环境 gcc,make,pkgconfig
 pacman -S base-devel git mercurial cvs curl wget p7zip python # perl ruby go # 基础环境(推荐)
+# 设置系统环境变量 gcc编译环境
+PKG_CONFIG_PATH = D:\Program\msys64\mingw64\lib\pkgconfig
 
 # Win32软件Shell（\Start Menu\Programs\MSYS2 64bit\MSYS2 MinGW 32-bit）
 pacman -S mingw-w64-i686-gcc                               # 安装32位gcc编译环境

@@ -3,7 +3,7 @@
 * [注册表](#注册表)
 * [子系统centos](#子系统centos)
 * [子系统ubuntu](#子系统ubuntu)
-* [GCC开发环境`msys2``mingw64``qt5``v8``gtk``webkit`..](#系统开发环境msys2mingw64qt5)
+* [GCC开发环境 `msys2` `mingw64` `qt5` `v8` `gtk` `webkit`..](#系统开发环境msys2mingw64qt5)
 
 
 #### 系统升级
@@ -858,7 +858,6 @@ REG add "HKLM\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc" /v Start /t REG_DW
 REG add "HKLM\SYSTEM\CurrentControlSet\Services\UsoSvc" /v Start /t REG_DWORD /d 4 /f
 ~~~
 
-
 #### 系统开发环境MSYS2+Mingw64+Qt5+...
 
 > [MSYS2 install](https://www.msys2.org/wiki/MSYS2-installation/)
@@ -880,12 +879,15 @@ Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/msys/$arch/
 Server = https://mirrors.sjtug.sjtu.edu.cn/msys2/msys/$arch/
 Server = http://mirrors.ustc.edu.cn/msys2/msys/$arch/
 Server = http://mirror.bit.edu.cn/msys2/msys/$arch/
+
 # 更新系统重启
 > pacman -Syu
 # 更新软件仓库
 pacman --needed -Sy bash pacman pacman-mirrors msys2-runtime
+
 # 安装开发环境 gcc,make,pkgconfig
 pacman -S base-devel git mercurial cvs curl wget p7zip python # perl ruby go # 基础环境(推荐)
+
 # Win32软件Shell（\Start Menu\Programs\MSYS2 64bit\MSYS2 MinGW 32-bit）
 pacman -S mingw-w64-i686-gcc                               # 安装32位gcc编译环境
 pacman -S mingw-w64-i686-toolchain                         # 安装32位Mingw（D:\Program\msys64\mingw32）
@@ -897,9 +899,11 @@ pacman -Sl|grep lua                                        # 搜索lua相关库
 pacman -Sl|grep gtk                                        # 搜索gtk相关库 github.com/gotk3/gotk3
 pacman -S mingw-w64-i686-gtk2 mingw-w64-i686-gtk3 mingw-w64-i686-gtk4 # 同时装多个版本 gtk2+gtk3+gtk4
 # gcc -o main.exe /c/src/main.c `pkg-config --libs --cflags gtk+-2.0` # 编译指令（`C盘`路径`/c`）
-# pacman -Sl|grep webkit # github.com/sourcegraph/go-webkit2 github.com/sqs/gojs
-# 桌面开发环境 Qt 
-pacman -S mingw-w64-x86_64-qt5 mingw-w64-x86_64-qt-creator # 安装64位Qt5 (推荐) github.com/peterq/pan-light
+# pacman -Sl|grep javascriptcoregtk-3.0 # github.com/sourcegraph/go-webkit2 github.com/sqs/gojs
+# pacman -Sl|grep gio-2.0
+
+# 桌面开发Qt环境
+pacman -S mingw-w64-x86_64-qt5 mingw-w64-x86_64-qt-creator # 安装64位Qt5 # github.com/peterq/pan-light (推荐)
 pacman -S mingw-w64-i686-qt5 mingw-w64-i686-qt-creator     # 安装32位Qt5 # github.com/therecipe/qt
 ~~~
 

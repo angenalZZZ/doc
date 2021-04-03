@@ -880,16 +880,18 @@ pacman -S base-devel git mercurial cvs curl wget p7zip python # perl ruby go # �
 # Win32软件Shell（\Start Menu\Programs\MSYS2 64bit\MSYS2 MinGW 32-bit）
 pacman -S mingw-w64-i686-gcc                               # 安装32位gcc编译环境
 pacman -S mingw-w64-i686-toolchain                         # 安装32位Mingw（D:\Program\msys64\mingw32）
-pacman -S mingw-w64-i686-gtk3 mingw-w64-i686-gtk2          # 安装GTK相关库（同时安装两个版本GTK3+GTK2）
-## gcc -o main.exe /c/src/main.c `pkg-config --libs --cflags gtk+-2.0` # 编译指令（`C盘`路径为`/c`）
 # Win64软件Shell（\Start Menu\Programs\MSYS2 64bit\MSYS2 MinGW 64-bit）
 pacman -S mingw-w64-x86_64-toolchain                       # 安装64位Mingw（D:\Program\msys64\mingw64）
 pacman -S mingw-w64-x86_64-toolchain mingw-w64-x86_64-v8   # 安装64位Mingw(all)+V8 https://github.com/rogchap/v8go
-pacman -Sl|grep lua                                        # 搜索并安装lua...
+# Win软件Shell（\Start Menu\Programs\MSYS2 64bit\MSYS2 MSYS）(不需要编译时)
+pacman -Sl|grep lua                                        # 搜索lua相关库
+pacman -Sl|grep gtk                                        # 搜索gtk相关库 github.com/gotk3/gotk3
+pacman -S mingw-w64-i686-gtk2 mingw-w64-i686-gtk3 mingw-w64-i686-gtk4 # 同时装多个版本 gtk2+gtk3+gtk4
+# gcc -o main.exe /c/src/main.c `pkg-config --libs --cflags gtk+-2.0` # 编译指令（`C盘`路径`/c`）
+# pacman -Sl|grep webkit # github.com/sourcegraph/go-webkit2 github.com/sqs/gojs
 # 桌面开发环境 Qt 
-# Win软件Shell(不需要编译时)（\Start Menu\Programs\MSYS2 64bit\MSYS2 MSYS）
-pacman -S mingw-w64-x86_64-qt5 mingw-w64-x86_64-qt-creator # 安装64位Qt5 (推荐)
-pacman -S mingw-w64-i686-qt5 mingw-w64-i686-qt-creator     # 安装32位Qt5
+pacman -S mingw-w64-x86_64-qt5 mingw-w64-x86_64-qt-creator # 安装64位Qt5 (推荐) github.com/peterq/pan-light
+pacman -S mingw-w64-i686-qt5 mingw-w64-i686-qt-creator     # 安装32位Qt5 # github.com/therecipe/qt
 ~~~
 
 

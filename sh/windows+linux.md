@@ -850,14 +850,31 @@ REG add "HKLM\SYSTEM\CurrentControlSet\Services\UsoSvc" /v Start /t REG_DWORD /d
 ~~~
 
 
-#### 系统开发环境MSYS2+Mingw64+Qt5
+#### 系统开发环境MSYS2+Mingw64+Qt5+...
 
 > [MSYS2 install](https://www.msys2.org/wiki/MSYS2-installation/)
 ~~~bash
+# 镜像源(/etc/pacman.d/) https://mirrors.tuna.tsinghua.edu.cn/help/msys2
+## MSYS2 repository mirrorlist > D:\Program\msys64\etc\pacman.d\
+## Primary >> mirrorlist.mingw32
+Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/i686/
+Server = https://mirrors.sjtug.sjtu.edu.cn/msys2/mingw/i686/
+Server = http://mirrors.ustc.edu.cn/msys2/mingw/i686/
+Server = http://mirror.bit.edu.cn/msys2/mingw/i686/
+## Primary >> mirrorlist.mingw64
+Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/mingw/x86_64/
+Server = https://mirrors.sjtug.sjtu.edu.cn/msys2/mingw/x86_64/
+Server = http://mirrors.ustc.edu.cn/msys2/mingw/x86_64/
+Server = http://mirror.bit.edu.cn/msys2/mingw/x86_64/
+## Primary >> mirrorlist.msys
+Server = https://mirrors.tuna.tsinghua.edu.cn/msys2/msys/$arch/
+Server = https://mirrors.sjtug.sjtu.edu.cn/msys2/msys/$arch/
+Server = http://mirrors.ustc.edu.cn/msys2/msys/$arch/
+Server = http://mirror.bit.edu.cn/msys2/msys/$arch/
+# 系统更新&重启
+> pacman -Syu
 # 运行 msys2_shell.bat
 pacman --needed -Sy bash pacman pacman-mirrors msys2-runtime  # 更新软件数据库
-# 镜像源(/etc/pacman.d/) https://mirrors.tuna.tsinghua.edu.cn/help/msys2
-pacman -Syu  # MSYS2系统更新&重启
 # 开发环境
 pacman -S base-devel git mercurial cvs curl wget p7zip python perl ruby go # 开发语言环境(可选)
 pacman -S mingw-w64-i686-toolchain                         # 安装32位Mingw（D:\Program\msys64\mingw32\）(可选)

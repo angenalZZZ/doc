@@ -87,6 +87,33 @@ mv /usr/bin/systemctl /usr/bin/systemctl.old
 wget -O /usr/bin/systemctl https://github.com/gdraheim/docker-systemctl-replacement/blob/master/files/docker/systemctl.py
 chmod +x /usr/bin/systemctl
 
+
+# 安装数据库 MongoDB 参考 https://www.mongodb.org.cn  https://mongodb.net.cn/manual/tutorial/install-mongodb-on-red-hat/
+# 先创建mongodb-org安装源; MongoDB不支持Linux的Windows子系统（WSL）
+cat <<EOF > /etc/yum.repos.d/mongodb-org-4.2.repo
+[mongodb-org-4.2]
+name=MongoDB Repository
+baseurl=http://mirrors.aliyun.com/mongodb/yum/redhat/7Server/mongodb-org/4.2/x86_64/
+gpgcheck=0
+enabled=1
+#gpgkey=https://www.mongodb.org/static/pgp/server-4.2.asc
+EOF
+# 清空yum缓存
+yum clean all && yum make cache
+yum update # 更新yum源
+yum install -y mongodb-org # 安装MongoDB
+yum install -y mongodb-org-4.2.6 mongodb-org-server-4.2.6 mongodb-org-shell-4.2.6 mongodb-org-mongos-4.2.6 mongodb-org-tools-4.2.6
+# 默认情况下，MongoDB使用mongod用户帐户运行，默认目录：/var/lib/mongo （数据目录） /var/log/mongodb （日志目录）
+mkdir -p /var/lib/mongo && mkdir -p /var/log/mongodb
+chown -R mongod:mongod <directory> # 设置目录的所有者和组
+# 启动MongoDB
+service mongod start
+chkconfig mongod on
+# 配置远程访问 cat /etc/mongod.conf
+# 连接MongoDB 
+mongo 127.0.0.1:27017
+
+
 # 安装 K8S/Kubernetes 容器集群化管理
 # 基础软件安装 vim wget ntpdate 然后参考 https://juejin.cn/book/6897616008173846543
 # 关闭防火器(K8S会创建防火器规则,导致防火器规则重复)

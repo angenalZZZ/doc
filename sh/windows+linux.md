@@ -77,6 +77,7 @@ yum install -y gcc-c++ make net-tools       # 安装*gcc/make/net-tools
 yum install -y glibc glibc.i686             # 安装*glibc*x86_64,i686
 yum install -y GraphicsMagick               # 安装*GraphicsMagick(2D图库)
 
+
 # 安装数据库 Mysql 8.0 参考 https://dev.mysql.com/doc/refman/8.0/en/linux-installation-yum-repo.html
 cd /tmp # 需提前安装依赖 # yum install -y epel-release glibc glibc.i686 gcc-c++ wget net-tools
 # sudo wget -O /etc/yum.repos.d/ http://repo.mysql.com/mysql-community-release-el7-7.noarch.rpm #低版本MySQL
@@ -101,18 +102,29 @@ EOF
 # 清空yum缓存
 yum clean all && yum make cache
 yum update # 更新yum源
-yum install -y mongodb-org # 安装MongoDB
+yum install -y mongodb-org # 安装MongoDB4.2.*最新版;;安装指定的版本(推荐)4.2.6
 yum install -y mongodb-org-4.2.6 mongodb-org-server-4.2.6 mongodb-org-shell-4.2.6 mongodb-org-mongos-4.2.6 mongodb-org-tools-4.2.6
-# 默认情况下，MongoDB使用mongod用户帐户运行，默认目录：/var/lib/mongo （数据目录） /var/log/mongodb （日志目录）
-mkdir -p /var/lib/mongo && mkdir -p /var/log/mongodb
-chown -R mongod:mongod <directory> # 设置目录的所有者和组
-# 启动MongoDB
-service mongod start
-chkconfig mongod on
-# 配置远程访问 cat /etc/mongod.conf
+echo "mongodb-org hold" | sudo dpkg --set-selections         # 阻止升级，将包固定在当前版本
+echo "mongodb-org-server hold" | sudo dpkg --set-selections  # 包含mongod守护程序, 初始化脚本和配置文件
+echo "mongodb-org-shell hold" | sudo dpkg --set-selections   # 包含mongo外壳shell
+echo "mongodb-org-mongos hold" | sudo dpkg --set-selections  # 包含mongos守护进程
+echo "mongodb-org-tools hold" | sudo dpkg --set-selections   # 工具: mongoimport bsondump, mongodump 等
+# 默认情况下使用mongod用户帐户运行，默认目录：/var/lib/mongo（数据目录）/var/log/mongodb（日志目录）
+mkdir -p /var/lib/mongo && mkdir -p /var/log/mongodb # 新建默认目录
+chown -R mongod:mongod /var/lib/mongo /var/log/mongodb # 设置目录所有者和组 chown -R mongod:mongod <directory>
+mkdir -p /var/run/mongodb && chown mongod:mongod /var/run/mongodb && chmod 0755 /var/run/mongodb # 启动前ExecStartPre
+/usr/bin/mongod -f /etc/mongod.conf # 启动(指定conf) /var/run/mongodb/mongod.pid
+service mongod start            # 启动MongoDB /usr/lib/systemd/system/mongod.service
+systemctl enable mongod.service # 开机启动,WSL> sudo /etc/init.d/mongodb status,start..
+systemctl --type=service --state=active | grep mongod # 查看运行中的服务
+service mongod stop # 停止MongoDB
+yum erase $(rpm -qa | grep mongodb-org) # 删除软件包
+rm -r /var/log/mongodb && rm -r /var/lib/mongo # 删除MongoDB数据库和日志文件
+# 配置远程访问 /etc/mongod.conf # https://mongodb.net.cn/manual/reference/configuration-options/#net.bindIp
+systemctl daemon-reload  # 加载新的服务及配置
 # 连接MongoDB 
-mongo 127.0.0.1:27017
-
+mongo 127.0.0.1:27017 
+> mongo --eval 'db.runCommand({ connectionStatus: 1 })' # 诊断服务,正在运行
 
 # 安装 K8S/Kubernetes 容器集群化管理
 # 基础软件安装 vim wget ntpdate 然后参考 https://juejin.cn/book/6897616008173846543

@@ -134,8 +134,8 @@ mongod --slave --source <masterhostname><:<port>> --dbpath /data/slavedb/ # 启�
 # 一个实例集合，包含三类节点角色：①Primary（主节点） ②Secondary（副本节点） ③Arbiter（仲裁者）
 # 可用性大大增强，因为故障时自动恢复的，主节点故障，立马就能选出一个新的 Primary 节点。参与投票节点数要是奇数，这个非常重要。
 # 每两个节点之间互有心跳，这种模式会导致节点的心跳几何倍数增大，单个 Replica Set 集群规模不能太大，一般最大不超过 50 个节点。
-## Sharding 模式
-# 利用分布式技术。解决性能和容量瓶颈，Sharding 模式是 MongoDB 横向扩容的一个架构实现。单个集群是有限的，但 Shard 数量是无限的，能够不断的横向扩容。
+## Sharding 模式 (推荐/分片模式)
+# 利用分布式技术。解决性能和容量瓶颈，Sharding 模式是 MongoDB 横向扩容的一个架构实现。单集群是有限的，Shard数量无限的，能够不断横向扩容。
 # 划分为 3 个大模块：代理层/mongos + 配置中心/副本集群(mongod) + 数据层/Shard集群
 # 代理层：代理层的组件也就是 mongos ，这是个无状态的组件，纯粹是路由功能。
 # 数据层：存储数据的地方。由一个个 Replica Set 集群组成。
@@ -145,16 +145,27 @@ mongod --slave --source <masterhostname><:<port>> --dbpath /data/slavedb/ # 启�
 # MongoDB 支持两种 Sharding Strategy 分片策略：
 # ①Hashed Sharding
 # ①好处是：计算速度快，均衡性好，纯随机。
-# ①坏处是：正因为纯随机，排序列举的性能极差，比如你如果按照 name 这个字段去列举数据，你会发现几乎所有的 Shard 都要参与进来。
+# ①坏处是：正因为纯随机，排序列举的性能极差，比如你如果按照name这个字段去列举数据，你会发现几乎所有的 Shard 都要参与进来。
 # ②Range Sharding
 # ②好处是：对排序列举场景非常友好，因为数据本来就是按照顺序依次放在 Shard 上的，排序列举的时候，顺序读即可，非常快速。
-# ②坏处是：容易导致热点，举个例子，如果 Sharding Key 都有相同前缀，那么大概率会分配到同一个 Shard 上，就盯着这个 Shard 写，其他 Shard 空闲的很，却帮不上忙。
+# ②坏处是：容易导致热点，举个例子，如果Sharding Key都有相同前缀，那么大概率会分配到同一个Shard上，就盯着这个Shard写，其他Shard空闲的很，却帮不上忙。
 ## 怎么保证高可用？
-# 用 Sharding 模式，因为 Sharding 模式下，用户打交道的是 mongos ，这个是一个代理，帮你屏蔽了底层 Replica Set 的细节，主从切换由它帮你做好。
+# 用 Sharding 模式，因为Sharding模式下，用户打交道的是mongos，这个是一个代理，帮你屏蔽了底层Replica Set的细节，主从切换由它帮你做好。
 ## 怎么保证数据的高可靠？
 # 客户端配置写多数成功才算成功。没错，这个权限交由由客户端配置。
 ## 怎么保证数据的强一致性？
-# 写多数成功，才算成功。并且，读使用 strong 模式，也就是只从主节点读。
+# 写多数成功，才算成功。并且，读使用strong模式，也就是只从主节点读。
+
+
+# 安装数据库 ClickHouse 参考 https://clickhouse.tech/docs/zh/getting-started/install
+# CH::column-oriented性能是MySQL的1千倍，教程 https://clickhouse.tech/docs/zh/getting-started/tutorial
+sudo yum install yum-utils
+sudo rpm --import https://repo.clickhouse.tech/CLICKHOUSE-KEY.GPG
+sudo yum-config-manager --add-repo https://repo.clickhouse.tech/rpm/stable/x86_64
+sudo yum install clickhouse-server clickhouse-client
+sudo /etc/init.d/clickhouse-server start  # 日志输出/var/log/clickhouse-server
+clickhouse-server --config-file=/etc/clickhouse-server/config.xml # 日志输出到控制台，便于开发
+clickhouse-client # 客户端连接, 不带密码连接到 --host localhost:9000 终端必须用UTF-8编码
 
 
 # 安装 K8S/Kubernetes 容器集群化管理

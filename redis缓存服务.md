@@ -46,7 +46,7 @@ docker > docker pull redis;docker run --name redis-server -d -p6379:6379 redis;d
   rdbcompression yes
   rdbchecksum yes
   dbfilename dump.rdb
-  dir ./
+  # dir ./
 # The working directory.
   dir /var/lib/redis/6379
 
@@ -59,6 +59,12 @@ docker > docker pull redis;docker run --name redis-server -d -p6379:6379 redis;d
 #
 # slaveof <masterip> <masterport>
 # masterauth <master-password>
+##Redis主从复制的作用
+# 第一点是数据冗余了，实现了数据的热备份，是持久化之外的另一种方式。
+# 第二点是针对单机故障问题。当主节点也就是master出现问题时，可以由从节点来提供服务也就是slave，实现了快速恢复故障，也就是服务冗余。
+# 第三点是读写分离，master服务器主要是写，slave主要用来读数据，可以提高服务器的负载能力。同时可以根据需求的变化，添加从节点的数量。
+# 第四点是负载均衡，配合读写分离，有主节点提供写服务，从节点提供读服务，分担服务器负载，尤其在写少读多的情况下，通过多个从节点分担读负载，可以大大提高redis服务器的并发量和负载。
+# 第五点是高可用的基石，主从复制是哨兵和集群能够实施的基础，因此我们可以说主从复制是高可用的基石。
 ~~~
   * > 集群 普通主从模式
     提供了复制（replication）功能，能较好地避免单独故障问题，以及提出了读写分离，降低了Master节点的压力。
@@ -77,7 +83,7 @@ redis-server --port 6379
 redis-server --port 6380 --slaveof 192.168.1.8 6379
 redis-server --port 6381 --slaveof 192.168.1.8 6379
 #->config(sentinel.conf): 
-  sentinel monitor mymaster 192.168.0.167 6379 1 
+  sentinel monitor mymaster 192.168.1.8 6379 1
 ~~~
   * > [集群 cluster架构](https://redis.io/topics/cluster-tutorial)(分布式存储，即每台redis存储不同的内容，最大化利用内存)
     高可用架构：最小配置为三主三从的redis-cluster架构，
@@ -91,7 +97,7 @@ redis-server --port 6381 --slaveof 192.168.1.8 6379
   cluster-node-timeout 5000       # 配置集群节点的超时时间，主节点超过指定的时间不可达进行故障切换
   cluster-slave-validity-factor 0 # 如果设置为0，无论主设备和从设备之间的链路保持断开连接的时间长短，从设备都将尝试故障切换主设备；
     # 如果该值为正值，则计算最大断开时间作为节点超时值乘以此选项提供的系数，如果该节点是从节点，
-    # 则在主链路断开连接的时间超过指定的超时值时，它不会尝试启动故障切换。
+    # 否则，在主链路断开连接的时间超过指定的超时值时，它不会尝试启动故障切换。
   cluster-migration-barrier 1     # 主设备将保持连接的最小从设备数量，以便另一个从设备迁移到不受任何从设备覆盖的主设备。
   cluster-require-full-coverage no
   readonly no                     # 选填，默认master节点可读写；#readonly yes 当启用slave节点读时；

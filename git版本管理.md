@@ -125,6 +125,7 @@ git push -u origin master
 cd CSharpOpen
 git remote rename origin old-origin  # rename a old-origin to new origin
 git remote add origin https://github.com/angenal/CSharpOpen.git
+# git remote set-url origin https://github.com/angenal/CSharpOpen.git # update remote origin url
 git push -u origin master
 git push -u origin --all
 git push -u origin --tags

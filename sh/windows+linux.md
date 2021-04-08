@@ -17,6 +17,8 @@ slmgr /upk                                # 卸载密钥(当无法激活时) www
 ~~~
 > Windows 10 Browser [Microsoft Edge](https://www.microsoft.com/zh-cn/edge/business/download)、[Google Chrome](https://www.google.com/intl/zh-CN/chrome/?standalone=1)、[Yandex Browser](https://browser.yandex.com/)
 
+> [Microsoft Office, Install, Crack Tool, supports all versions](https://github.com/YerongAI/Office-Tool)
+
 > Windows 10 Microsoft Store
 ~~~bash
 # PowerShell 以管理员方式运行

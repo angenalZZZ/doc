@@ -4,10 +4,15 @@
 ```
 # 预览服务器的地址，必须要服务器能访问第三方服务，或微软官方接口(服务器必须要在外网,且需要域名访问)
 https://view.officeapps.live.com/op/view.aspx?src=
-https://view.officeapps.live.com/op/embed.aspx?src=
 https://docview.mingdao.com/op/view.aspx?src=
 https://owa-box.vips100.com/op/view.aspx?src=
 https://preview.tita.com/op/view.aspx?src=
 ```
 
+#### 项目开发
+> [Gotenberg · API convert HTML Markdown Office to PDF](https://thecodingmachine.github.io/gotenberg/#webhook.timeout)、[Install from Docker](https://github.com/thecodingmachine/gotenberg)
+> [pdf-converter: Docker convert files to PDF using LibreOffice](https://github.com/ymmt2005/pdf-converter)、[下载 LibreOffice and SDK](https://zh-cn.libreoffice.org/download/libreoffice/)
+
+
+----
 

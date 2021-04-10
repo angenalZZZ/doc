@@ -968,18 +968,19 @@ Server = http://mirror.bit.edu.cn/msys2/msys/$arch/
 # 更新软件仓库
 pacman --needed -Sy bash pacman pacman-mirrors msys2-runtime
 
-# 安装开发环境 gcc,make,pkgconfig
-pacman -S base-devel git mercurial cvs curl wget p7zip python # perl ruby go # 基础环境(推荐)
+# 安装开发环境
+pacman -S base-devel git mercurial cvs curl wget zip unzip p7zip python # perl ruby go # 基础环境(推荐)
 # 设置系统环境变量 gcc编译环境
 PKG_CONFIG_PATH = D:\Program\msys64\mingw64\lib\pkgconfig
 
 # Win32软件Shell（\Start Menu\Programs\MSYS2 64bit\MSYS2 MinGW 32-bit）
-pacman -S mingw-w64-i686-gcc                               # 安装32位gcc编译环境
+pacman -S mingw-w64-i686-gcc                               # 安装32位gcc编译环境(推荐安装toolchain)
 pacman -S mingw-w64-i686-toolchain                         # 安装32位Mingw（D:\Program\msys64\mingw32）
 # Win64软件Shell（\Start Menu\Programs\MSYS2 64bit\MSYS2 MinGW 64-bit）
-pacman -S mingw-w64-x86_64-toolchain                       # 安装64位Mingw（D:\Program\msys64\mingw64）
+pacman -S mingw-w64-x86_64-toolchain                       # 安装64位Mingw（D:\Program\msys64\mingw64）gcc,make,pkgconfig
 pacman -S mingw-w64-x86_64-toolchain mingw-w64-x86_64-v8   # 安装64位Mingw(all)+V8 https://github.com/rogchap/v8go
 # Win软件Shell（\Start Menu\Programs\MSYS2 64bit\MSYS2 MSYS）(不需要编译时)
+pacman -S clang mingw-w64-cross-clang                      # 安装跨平台C++环境compiler
 pacman -Sl|grep lua                                        # 搜索lua相关库
 pacman -Sl|grep gtk                                        # 搜索gtk相关库 github.com/gotk3/gotk3
 pacman -S mingw-w64-i686-gtk2 mingw-w64-i686-gtk3 mingw-w64-i686-gtk4 # 同时装多个版本 gtk2+gtk3+gtk4

@@ -936,7 +936,12 @@ netsh winhttp import proxy source=ie
 
 > 系统服务管理
 
-- Windows Update 禁用::服务名 wuauserv & WaaSMedicSvc & UsoSvc
+- Start Timeout 启动:超时::优化 < 2分钟
+~~~cmd
+REG ADD "HKLM\SYSTEM\CurrentControlSet\Control" /v ServicesPipeTimeout /t REG_DWORD /d 120000 /f
+~~~
+
+- Windows Update 禁用::服务 wuauserv & WaaSMedicSvc & UsoSvc
 ~~~cmd
 REG add "HKLM\SYSTEM\CurrentControlSet\Services\wuauserv" /v Start /t REG_DWORD /d 4 /f
 REG add "HKLM\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc" /v Start /t REG_DWORD /d 4 /f

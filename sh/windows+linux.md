@@ -18,6 +18,8 @@ slmgr /upk                                # 卸载密钥(当无法激活时) www
 > Windows 10 Browser [Microsoft Edge](https://www.microsoft.com/zh-cn/edge/business/download)、[Google Chrome](https://www.google.com/intl/zh-CN/chrome/?standalone=1)、[Yandex Browser](https://browser.yandex.com/)
 
 > [Microsoft Office Install](https://github.com/YerongAI/Office-Tool), [Download Crack Tool supports all versions](https://otp.landian.vip/en-us/download.html)
+  * [`resilio`File Sync for Windows, Mac, Linux](https://www.resilio.com/platforms/desktop/)
+  * [`syncthing`File Sync for Windows, Mac, Linux](https://github.com/syncthing/syncthing/releases/latest)、[Document](https://docs.syncthing.net/users/syncthing.html)
 
 > Windows 10 Microsoft Store
 ~~~bash

@@ -1,9 +1,11 @@
 # Windows系统
 
-* [注册表](#注册表)
+
 * [子系统centos](#子系统centos)
 * [子系统ubuntu](#子系统ubuntu)
 * [系统GCC开发环境 `msys2` `mingw64` `qt5` `v8` `gtk` `webkit`..](#系统开发环境msys2mingw64qt5)
+* [系统服务](#系统服务)
+* [注册表](#注册表)
 
 
 #### 系统升级
@@ -20,6 +22,22 @@ slmgr /upk                                # 卸载密钥(当无法激活时) www
 > [Microsoft Office Install](https://github.com/YerongAI/Office-Tool), [Download Crack Tool supports all versions](https://otp.landian.vip/en-us/download.html)
   * [`resilio`File Sync for Windows, Mac, Linux](https://www.resilio.com/platforms/desktop/)、[Tutorials](https://www.resilio.com/tech/sync-tutorials-and-howto/)
   * [`syncthing`File Sync for Windows, Mac, Linux](https://github.com/syncthing/syncthing/releases/latest)、[Document](https://docs.syncthing.net/users/syncthing.html)
+
+> Windows 10 系统问题排查
+~~~bash
+sfc /SCANNOW                                    # 检查系统组件是否有问题？
+DISM.exe /Online /Cleanup-image /Scanhealth     # 扫描系统组件问题
+DISM.exe /Online /Cleanup-image /Checkhealth    # 检查系统组件问题
+DISM.exe /Online /Cleanup-image /Restorehealth  # 恢复系统组件
+~~~
+> Windows 10 网络问题排查
+~~~bash
+#.开始菜单->设置->更新和案例->疑难解答->其他疑难解答->Internet连接->运行疑难解答
+#.或者重置->当前的WinHTTP代理服务器设置->以管理员身份运行CMD
+netsh winhttp reset proxy
+netsh winhttp import proxy source=ie
+~~~
+
 
 > Windows 10 Microsoft Store
 ~~~bash
@@ -882,6 +900,10 @@ alias start-pg='sudo service postgresql start'
 alias run-pg='sudo -u postgres psql'
 
 ~~~
+
+
+#### 系统服务
+
 > Windows 后台服务管理工具
   - `sc create <服务名> start= auto binPath= "可执行命令行"`
   - `nssm`>[`download`](https://nssm.cc/download)>[`commands`](https://nssm.cc/commands)
@@ -916,19 +938,51 @@ nssm remove <servicename>
 > nssm set MinIO AppEnvironmentExtra MINIO_ACCESS_KEY=admin MINIO_SECRET_KEY=123456789 MINIO_DOMAIN=a.com
 > nssm start MinIO & start http://127.0.0.1:9000/     # 启动Windows服务&打开浏览器
 ~~~
-> Windows 10 系统问题排查
-~~~bash
-sfc /SCANNOW                                    # 检查系统组件是否有问题？
-DISM.exe /Online /Cleanup-image /Scanhealth     # 扫描系统组件问题
-DISM.exe /Online /Cleanup-image /Checkhealth    # 检查系统组件问题
-DISM.exe /Online /Cleanup-image /Restorehealth  # 恢复系统组件
-~~~
-> Windows 10 网络问题排查
-~~~bash
-#.开始菜单->设置->更新和案例->疑难解答->其他疑难解答->Internet连接->运行疑难解答
-#.或者重置->当前的WinHTTP代理服务器设置->以管理员身份运行CMD
-netsh winhttp reset proxy
-netsh winhttp import proxy source=ie
+
+> Windows 计划任务管理工具
+~~~cmd
+:: ==> 创建计划任务“doc” 启动 notepad 在远程主机“ABC” 
+:: 	每小时运行，以账户名/U 密码/P 
+SCHTASKS /Create /S ABC /U user /P password /RU runasuser
+		 /RP runaspassword /SC HOURLY /TN doc /TR notepad
+
+:: ==> 创建计划任务“accountant” 启动 calc.exe 在远程主机“ABC” 
+:: 	从指定的开始时间到结束时间，在开始日期和结束日期之间每五分钟一次。
+SCHTASKS /Create /S ABC /U domain\user /P password /SC MINUTE
+		 /MO 5 /TN accountant /TR calc.exe /ST 12:00 /ET 14:00
+		 /SD 06/06/2006 /ED 06/06/2006 /RU runasuser /RP userpassword
+
+:: ==> 创建计划任务“gametime” 启动 freecell
+:: 	每个月的第一个星期天
+SCHTASKS /Create /SC MONTHLY /MO first /D SUN /TN gametime
+		 /TR c:\windows\system32\freecell
+
+:: ==> 创建计划任务“report” 启动 notepad.exe 在远程主机“ABC” 
+:: 	每周运行
+SCHTASKS /Create /S ABC /U user /P password /RU runasuser
+		 /RP runaspassword /SC WEEKLY /TN report /TR notepad.exe
+
+:: ==> 创建计划任务“logtracker” 启动 notepad.exe 在远程主机“ABC” 
+:: 	从指定的开始时间18:30，每五分钟运行，以账户名/U 密码/P 
+SCHTASKS /Create /S ABC /U domain\user /P password /SC MINUTE
+		 /MO 5 /TN logtracker
+		 /TR c:\windows\system32\notepad.exe /ST 18:30
+		 /RU runasuser /RP
+
+:: ==> 创建计划任务“gaming” 启动 freecell.exe
+:: 	每天12:00开始，14:00自动终止
+SCHTASKS /Create /SC DAILY /TN gaming /TR c:\freecell /ST 12:00
+		 /ET 14:00 /K
+
+:: ==> 创建计划任务“EventLog” 启动 wevtvwr.msc 每当系统频道发布事件101时
+SCHTASKS /Create /TN EventLog /TR wevtvwr.msc /SC ONEVENT
+		 /EC System /MO *[System/EventID=101]
+
+:: ==> 文件路径中的空格可以使用两组引号，一个设置为CMD.exe 一个用于SchTasks.exe
+:: CMD的外部引号需要双引号；内部引号可以是单引号或转义双引号。
+SCHTASKS /Create
+   /tr "'c:\program files\internet explorer\iexplorer.exe'
+   \"c:\log data\today.xml\"" ...
 ~~~
 
 

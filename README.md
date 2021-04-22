@@ -13,9 +13,12 @@
 - [Visual Studio Code](https://code.visualstudio.com/)、[Kite](https://www.kite.com/)、[JetBrains IDE](https://www.jetbrains.com/)
 
 ## [开发资源](#)
+- [`好例子网`开发实例大全|源码下载](https://www.haolizi.net/)
+- [`后端技术`](https://ldqk.org/cat/34)[.NET控件库`DevExpress`](https://ldqk.org/1849)
+
+## [学习资源](#)
 - [软件工程师★学习路线](https://github.com/jwasham/coding-interview-university/blob/main/translations/README-cn.md)
 - [软件工程师C++学习《剑指Offer》](https://github.com/zhedahht/CodingInterviewChinese2)
-- [`好例子网`开发实例大全|源码下载](https://www.haolizi.net/)
 - [GitMind在线思维导图](https://gitmind.cn/)
 - [Icon](https://shields.io/)
 

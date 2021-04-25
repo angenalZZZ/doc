@@ -61,7 +61,7 @@ C:\tools\lxrunoffline;
 
 - 系统变量
 ```
-_JAVA_OPTIONS -Xms256m -Xmx2048m -Dfile.encoding=utf-8
+_JAVA_OPTIONS -Xms512m -Xmx512m
 JAVA_OPTS     -Xms256m -Xmx2048m -Dfile.encoding=utf-8
 android       F:\Program\Android\sdk\platform-tools
 ANT_HOME      F:\Program\Android\apache-ant-1.10.5

@@ -877,7 +877,7 @@ export GOPATH=/a/go
 export GOROOT=/usr/local/go
 export GOTOOLS=$GOROOT/pkg/tool
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-# java 开发环境;java,javaw,javaws,jdb,jps,jrunscript,keytool等
+# java 开发环境;java,javaw,javaws,jdb,jps,jrunscript,keytool,maven等
 # export JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk
 # export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
 export JAVA_HOME=/usr/local/java/jdk1.8.0_221  # 安装指定JAVA版本

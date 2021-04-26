@@ -32,8 +32,6 @@
 > git config --global alias.lg2 "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - \
   %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all"
 
-> git config --global http.https://github.com.proxy '' # 网络代理github.com设置清空
-
 > git config --global --edit                    # 直接编辑全局配置文件 ~/.gitconfig
 [alias]  # 参考: https://stackoverflow.com/questions/1057564/pretty-git-branch-graphs
   lg = !"git lg1"
@@ -44,6 +42,7 @@
 #   proxy = http://127.0.0.1:1087
 
 # 1.通过修改默认配置, 解决网络限制问题..
+> git config --global http.https://github.com.proxy '' # 网络代理github.com设置(先清空代理)
 > git config --global http.postBuffer 524288000 # 上传文件大小限制500M=1024*1024*500(默认100M)
 > git config --global http.sslVerify "false"    # 关闭ssl验证(网络异常)
 > git config --global http.lowSpeedLimit 0      # 下载文件限制

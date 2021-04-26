@@ -73,8 +73,9 @@ GO111MODULE   auto
 GOPATH        A:\go
 GOPROXY       https://goproxy.io,direct
 IPFS_PATH     A:\database\ipfs\.ipfs
+CATALINA_HOME D:\Program\apache-tomcat-8.5.65
+CLASSPATH     .;%JAVA_HOME%\lib\dt.jar:%JAVA_HOME%\lib\tools.jar;%CATALINA_HOME%\lib\servlet-api.jar;
 Include       .;%JAVA_HOME%\lib;
-CLASSPATH     .;%JAVA_HOME%\lib\dt.jar:%JAVA_HOME%\lib\tools.jar;
 JAVA_HOME     C:\Program Files (x86)\Java\jdk1.8.0_271
 JRE_HOME      %JAVA_HOME%\jre
 JAVA_BIN      %JAVA_HOME%\bin

@@ -861,16 +861,21 @@ export GOROOT=/usr/local/go
 export GOTOOLS=$GOROOT/pkg/tool
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 # java 开发环境;java,javaw,javaws,jdb,jps,jrunscript,keytool等
-export JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk/jre
-# export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64/jre
-# export JAVA_HOME=/usr/local/java/jdk1.8.0_221  # 安装指定版本时
-export JAVA_BIN=$JAVA_HOME/bin
+# export JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk
+# export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
+export JAVA_HOME=/usr/local/java/jdk1.8.0_221  # 安装指定JAVA版本
 export JRE_HOME=$JAVA_HOME/jre
+export JAVA_BIN=$JAVA_HOME/bin
+export JAVA_OPTS=-Dfile.encoding=utf-8 -Xms512m -Xmx1024m -XX:PermSize=256M # JAVA文本编码与内存限制
+export JAVA_VERSION=8u212                  # 指定JAVA版本
+# export _RUNJAVA=$JRE_HOME\bin\javaw.exe  # 启动时隐藏CMD窗口
+export M2_HOME=/usr/local/apache-maven-3.8.1 # 安装Maven > mvn -version
+export MAVEN_HOME=$M2_HOME # vim配置repository目录: ~/.m2/, $JRE_HOME/conf/setting.xml
+# Maven项目(阿里云镜像库)/pom.xml, /conf/setting.xml > mirror.url: https://maven.aliyun.com/nexus/content/groups/public
 export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib
-export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
-export JAVA_VERSION=8u212   # 指定版本
-export SCALA_VERSION=2.12   # 指定版本
-export GLIBC_VERSION=2.29-r0
+export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin:$M2_HOME/bin
+export SCALA_VERSION=2.12    # 指定SCALA版本
+export GLIBC_VERSION=2.29-r0 # 指定GLIBC版本
 # nodejs
 export PATH=/usr/local/node/bin:$PATH
 # docker

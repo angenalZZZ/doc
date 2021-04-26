@@ -32,6 +32,8 @@
 > git config --global alias.lg2 "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - \
   %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all"
 
+> git config --global http.https://github.com.proxy '' # 网络代理github.com设置清空
+
 > git config --global --edit                    # 直接编辑全局配置文件 ~/.gitconfig
 [alias]  # 参考: https://stackoverflow.com/questions/1057564/pretty-git-branch-graphs
   lg = !"git lg1"

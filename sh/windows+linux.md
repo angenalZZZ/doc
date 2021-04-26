@@ -869,8 +869,8 @@ export JAVA_BIN=$JAVA_HOME/bin
 export JAVA_OPTS=-Dfile.encoding=utf-8 -Xms512m -Xmx1024m -XX:PermSize=256M # JAVA文本编码与内存限制
 export JAVA_VERSION=8u212                  # 指定JAVA版本
 # export _RUNJAVA=$JRE_HOME\bin\javaw.exe  # 启动时隐藏CMD窗口
-export M2_HOME=/usr/local/apache-maven-3.8.1 # 安装Maven > mvn -version
-export MAVEN_HOME=$M2_HOME # vim配置repository目录: ~/.m2/, $JRE_HOME/conf/setting.xml
+export M2_HOME=/usr/local/apache-maven-3.8.1 # 安装Maven: mvn -version
+export MAVEN_HOME=$M2_HOME # vim配置repository目录: ~/.m2/, $M2_HOME/conf/setting.xml
 # Maven项目(阿里云镜像库)/pom.xml, /conf/setting.xml > mirror.url: https://maven.aliyun.com/nexus/content/groups/public
 export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib
 export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin:$M2_HOME/bin

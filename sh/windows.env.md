@@ -22,6 +22,7 @@ C:\Program Files\Git\cmd;
 C:\Program Files (x86)\Common Files\Oracle\Java\javapath;
 C:\Program Files (x86)\Java\jdk1.8.0_271\bin;
 C:\Program Files (x86)\Graphviz2.38\bin;
+D:\Program\apache-maven-3.8.1\bin;
 A:\go\bin;
 D:\Program\Go\bin;
 D:\Program\D-Bus\bin;
@@ -41,10 +42,10 @@ D:\Program\zstd;
 D:\Program\rocksdb;
 D:\Program\JMeter\bin;
 E:\Tool\SysinternalsSuite;
-D:\Program Files (x86)\NetSarang\Xshell 7;
-D:\Program Files (x86)\NetSarang\Xftp 7;
 F:\Program\Android\sdk\platform-tools;
 F:\Program\Android\apache-ant-1.10.5\bin;
+D:\Program Files (x86)\NetSarang\Xshell 7;
+D:\Program Files (x86)\NetSarang\Xftp 7;
 C:\Program Files\Microsoft SQL Server\130\Tools\Binn;
 C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn;
 C:\Program Files\Microsoft\Web Platform Installer;
@@ -65,7 +66,7 @@ android       F:\Program\Android\sdk\platform-tools
 ANT_HOME      F:\Program\Android\apache-ant-1.10.5
 ChocolateyInstall C:\ProgramData\chocolatey
 ChocolateyToolsLocation C:\tools
-CLASSPATH     .;%JAVA_HOME%\lib;
+CLASSPATH     .;%JAVA_HOME%\lib\dt.jar:%JAVA_HOME%\lib\tools.jar;
 ComSpec       %SystemRoot%\system32\cmd.exe
 DOCKER_HOST   tcp://localhost:2375
 ERLANG_HOME   D:\Program\erl10.5
@@ -74,9 +75,12 @@ GOPATH        A:\go
 GOPROXY       https://goproxy.io,direct
 IPFS_PATH     A:\database\ipfs\.ipfs
 Include       .;%JAVA_HOME%\lib;
-JAVA_HOME     C:\Program Files (x86)\Java\jdk1.8.0_271  #// JAVA_BIN  %JAVA_HOME%/bin
-JRE_HOME      C:\Program Files (x86)\Java\jdk1.8.0_271\jre
+JAVA_HOME     C:\Program Files (x86)\Java\jdk1.8.0_271
+JRE_HOME      %JAVA_HOME%\jre
+JAVA_BIN      %JAVA_HOME%\bin
 JAVA_OPTS     -Xms512m -Xmx1024m -XX:PermSize=256M -Dfile.encoding=utf-8  #// _JAVA_OPTIONS -Xms512m -Xmx512m
+M2_HOME       D:\Program\apache-maven-3.8.1
+MAVEN_HOME    D:\Program\apache-maven-3.8.1
 JMETER_HOME   D:\Program\JMeter
 KUBECONFIG    C:\Users\Administrator\.kube\config
 LUA_DEV       D:\Program\Lua\5.1

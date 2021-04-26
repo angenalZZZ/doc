@@ -844,7 +844,23 @@ character-set-server = utf8mb4
 # EOF
 
 
-# 环境变量: https://github.com/angenalZZZ/doc/blob/master/sh/01-locale-profile.sh
+# 点播/直播/视频转码
+# go get -u github.com/giorgisio/goav  # 提供开发 go sdk
+# https://github.com/shimberger/gohls  # 提供点播 gohls -h ?目录中自动转码> HTTP Live Streaming (HLS)
+# https://github.com/MattMcManis/Axiom # 提供视频转码/格式转换 c# gui windows
+
+# 快捷命令: https://github.com/angenalZZZ/doc/blob/master/sh/02-bash_aliases.sh
+alias lht='ls -lht'  # 文件列表-按时间倒序
+alias lhs='ls -lhS'  # 文件列表-按大小倒序
+alias start-pg='sudo service postgresql start'
+alias run-pg='sudo -u postgres psql'
+
+~~~
+
+#### 环境变量
+
+> [本地配置`locale-profile`](https://github.com/angenalZZZ/doc/blob/master/sh/01-locale-profile.sh)
+~~~
 ##进行软链结: ln -s /git/doc/sh/01-locale-profile.sh /etc/profile.d/01-locale-profile.sh
 > vi /etc/profile.d/01-locale-profile.sh
 # path 系统目录;SHELL搜索目录;
@@ -892,18 +908,6 @@ export CGO_CFLAGS="-I$FFMPEG_ROOT/include"
 export LD_LIBRARY_PATH=$HOME/ffmpeg/lib
 ##使以上配置立即生效
 > source /etc/profile
-
-# 点播/直播/视频转码
-# go get -u github.com/giorgisio/goav  # 提供开发 go sdk
-# https://github.com/shimberger/gohls  # 提供点播 gohls -h ?目录中自动转码> HTTP Live Streaming (HLS)
-# https://github.com/MattMcManis/Axiom # 提供视频转码/格式转换 c# gui windows
-
-# 快捷命令: https://github.com/angenalZZZ/doc/blob/master/sh/02-bash_aliases.sh
-alias lht='ls -lht'  # 文件列表-按时间倒序
-alias lhs='ls -lhS'  # 文件列表-按大小倒序
-alias start-pg='sudo service postgresql start'
-alias run-pg='sudo -u postgres psql'
-
 ~~~
 
 

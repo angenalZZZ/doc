@@ -61,8 +61,6 @@ C:\tools\lxrunoffline;
 
 - 系统变量
 ```
-_JAVA_OPTIONS -Xms512m -Xmx512m
-JAVA_OPTS     -Xms256m -Xmx2048m -Dfile.encoding=utf-8
 android       F:\Program\Android\sdk\platform-tools
 ANT_HOME      F:\Program\Android\apache-ant-1.10.5
 ChocolateyInstall C:\ProgramData\chocolatey
@@ -76,9 +74,9 @@ GOPATH        A:\go
 GOPROXY       https://goproxy.io,direct
 IPFS_PATH     A:\database\ipfs\.ipfs
 Include       .;%JAVA_HOME%\lib;
-JAVA_HOME     C:\Program Files (x86)\Java\jdk1.8.0_271
-JAVA_BIN      %JAVA_HOME%/bin
-JRE_HOME      %JAVA_HOME%/jre
+JAVA_HOME     C:\Program Files (x86)\Java\jdk1.8.0_271  #// JAVA_BIN  %JAVA_HOME%/bin
+JRE_HOME      %JAVA_HOME%\jre
+JAVA_OPTS     -Xms512m -Xmx1024m -XX:PermSize=256M -Dfile.encoding=utf-8  #// _JAVA_OPTIONS -Xms512m -Xmx512m
 JMETER_HOME   D:\Program\JMeter
 KUBECONFIG    C:\Users\Administrator\.kube\config
 LUA_DEV       D:\Program\Lua\5.1

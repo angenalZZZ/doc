@@ -75,7 +75,7 @@ GOPROXY       https://goproxy.io,direct
 IPFS_PATH     A:\database\ipfs\.ipfs
 Include       .;%JAVA_HOME%\lib;
 JAVA_HOME     C:\Program Files (x86)\Java\jdk1.8.0_271  #// JAVA_BIN  %JAVA_HOME%/bin
-JRE_HOME      %JAVA_HOME%\jre
+JRE_HOME      C:\Program Files (x86)\Java\jdk1.8.0_271\jre
 JAVA_OPTS     -Xms512m -Xmx1024m -XX:PermSize=256M -Dfile.encoding=utf-8  #// _JAVA_OPTIONS -Xms512m -Xmx512m
 JMETER_HOME   D:\Program\JMeter
 KUBECONFIG    C:\Users\Administrator\.kube\config

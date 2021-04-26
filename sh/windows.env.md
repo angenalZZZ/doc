@@ -66,7 +66,6 @@ android       F:\Program\Android\sdk\platform-tools
 ANT_HOME      F:\Program\Android\apache-ant-1.10.5
 ChocolateyInstall C:\ProgramData\chocolatey
 ChocolateyToolsLocation C:\tools
-CLASSPATH     .;%JAVA_HOME%\lib\dt.jar:%JAVA_HOME%\lib\tools.jar;
 ComSpec       %SystemRoot%\system32\cmd.exe
 DOCKER_HOST   tcp://localhost:2375
 ERLANG_HOME   D:\Program\erl10.5
@@ -75,6 +74,7 @@ GOPATH        A:\go
 GOPROXY       https://goproxy.io,direct
 IPFS_PATH     A:\database\ipfs\.ipfs
 Include       .;%JAVA_HOME%\lib;
+CLASSPATH     .;%JAVA_HOME%\lib\dt.jar:%JAVA_HOME%\lib\tools.jar;
 JAVA_HOME     C:\Program Files (x86)\Java\jdk1.8.0_271
 JRE_HOME      %JAVA_HOME%\jre
 JAVA_BIN      %JAVA_HOME%\bin

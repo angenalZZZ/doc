@@ -47,7 +47,7 @@
 6. `loovit.net AlphaSSL` : https://www.lowendtalk.com/entry/register?Target=discussion%2Fcomment%2F2306096
 
 
-#### 安装证书
+#### [安装证书](https://cloud.tencent.com/document/product/400/4143)
 
 <table>
 <tbody><tr>

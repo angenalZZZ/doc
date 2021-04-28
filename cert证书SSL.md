@@ -37,7 +37,8 @@
 
 > [`SSH for Connect to GitHub Help`](https://help.github.com/en/articles/connecting-to-github-with-ssh)
 
-> `SSL免费证书`机构比较多，如：
+> [安全便捷的证书申请和管理工具`KeyManager`](https://keymanager.org)`推荐`，`SSL免费证书`提供机构比较多，如：
+0. `永久免费HTTPS证书` : https://freessl.cn
 1. `腾讯云DV SSL 证书` : https://cloud.tencent.com/product/ssl
 2. `Let’s Encrypt` : https://letsencrypt.org/
 4. `CloudFlare SSL` : https://www.cloudflare.com/

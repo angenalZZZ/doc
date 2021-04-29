@@ -227,10 +227,19 @@ $ mkcert example.com "*.example.com" localhost 127.0.0.1 ::1 #3.创建证书,指
 
 ```
 
+#### 安装证书后的操作
+
+> Windows Server
+~~~cmd
+:: 清除dns本地缓存
+ipconfig /release
+:: ipconfig /all
+ipconfig /flushdns
+ipconfig /renew
+:: 刷新dns本地缓存
+netsh int ip set dns
+netsh winsock reset
+~~~
+
 ----
-
-
-
-
-
 

@@ -68,6 +68,19 @@ wsl --set-default <linux>   # 设置<linux>为默认
 wsl -u root -d <linux>      # 以指定用户运行(默认为用户root)[先进入系统添加用户后再执行该命令]
 ~~~
 
+> Windows 10 & [PowerShell 5](https://aka.ms/wmf5download) & [Scoop](https://scoop.sh/)
+~~~bash
+# PowerShell 以管理员方式运行, 执行策略更改。执行策略可帮助你防止执行不信任的脚本。
+PS> Set-ExecutionPolicy RemoteSigned -scope CurrentUser
+# 安装 Scoop
+PS> Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+# iwr -useb get.scoop.sh | iex  # or shorter
+# 安装 curl、7zip、lsd
+PS> scoop install curl  # 包含 curl、7zip 命令
+PS> scoop install lsd   # 漂亮的 ls 命令
+~~~
+
+
 #### 子系统centos
 > Windows 10 [WSL - Centos](https://github.com/RoliSoft/WSL-Distribution-Switcher)、[系统设置工具推荐dotfiles](https://github.com/nickjj/dotfiles)
 ~~~bash

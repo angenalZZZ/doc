@@ -3,7 +3,7 @@
 - [Windows绿色软件✨](https://vip.jokerps.com/software/windows) `推荐`
 - [rufus_USB启动盘_支持ISOs(Windows,Linux,UEFI,etc.)](https://rufus.ie/)
 - [frp内网穿透](https://gofrp.org/docs/)、[ZeroTier内网穿透](https://www.zerotier.com/download/)
-- [『暗部软件分享』](https://www.lanzoui.com/b0k1bw0j) [工具推荐，最新app资源下载](https://ssrshare.github.io/bt/)
+- [『暗部软件分享』](https://www.lanzoui.com/b0k1bw0j) [工具推荐，最新app资源下载](https://ssrshare.github.io/bt/)、[开源共享破解版软件](https://www.gopojie.net/)
 
 ## [系统安全`网络安全`](https://github.com/angenalZZZ/doc/blob/master/网络安全.md)
 - [深信服](https://bbs.sangfor.com.cn/plugin.php?id=index:index)
@@ -13,7 +13,7 @@
 - [Visual Studio Code](https://code.visualstudio.com/)、[Kite](https://www.kite.com/)、[JetBrains IDE](https://www.jetbrains.com/)
 
 ## [开发资源](#)
-- [`分享吧`优质福利资源](https://www.fx8y.com/)、[`好例子网`源码下载](https://www.haolizi.net/)、[开源共享破解版软件](https://www.gopojie.net/)
+- [`分享吧`优质福利资源](https://www.fx8y.com/)、[`好例子网`源码下载](https://www.haolizi.net/)
 - [`后端技术`](https://ldqk.org/cat/34)[.NET控件库`DevExpress`](https://ldqk.org/1849)
 
 ## [学习资源](#)

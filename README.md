@@ -14,6 +14,7 @@
 
 ## [开发工具](https://www.jb51.net/softs/)
 - [Visual Studio Code](https://code.visualstudio.com/)、[JetBrains IDE](https://www.jetbrains.com/)、[Kite`插件`](https://www.kite.com/)
+- [Visio`建模工具`](https://www.microsoft.com/zh-cn/microsoft-365/visio/flowchart-software)、[Axure RP`原型设计`](https://www.axure.com.cn/)、[EDraw`流程图,拓扑图`](https://www.edrawsoft.cn/)、[Project`大型项目管理(甘特图)`](https://www.microsoft.com/zh-cn/microsoft-365/project/project-management-software)
 
 ## [开发资源](#)
 - [`分享吧`优质福利资源](https://www.fx8y.com/)、[`好例子网`源码下载](https://www.haolizi.net/)

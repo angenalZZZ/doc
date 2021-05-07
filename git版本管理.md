@@ -52,28 +52,30 @@
 
 # 2.通过修改hosts, 获取以下 DNS Resource Records, 解决CDN被屏蔽问题..
 # github > fix git clone github project failed > /etc/hosts
-140.82.113.4 github.com                     # 查询> https://github.com.ipaddress.com
+18.138.202.180 github.com                   # 查询> https://github.com.ipaddress.com
+18.138.202.180 www.github.com
 199.232.69.194 github.global.ssl.fastly.net # 查询> https://fastly.net.ipaddress.com/github.global.ssl.fastly.net
-185.199.108.153 assets-cdn.github.com       # 查询> https://github.com.ipaddress.com/assets-cdn.github.com
-185.199.109.153 assets-cdn.github.com
-185.199.110.153 assets-cdn.github.com
-185.199.111.153 assets-cdn.github.com
-185.199.108.133 raw.githubusercontent.com  # 查询> https://githubusercontent.com.ipaddress.com/raw.githubusercontent.com
-185.199.109.133 raw.githubusercontent.com
+185.199.109.133 assets-cdn.github.com       # 查询> https://github.com.ipaddress.com/assets-cdn.github.com
+185.199.109.133 raw.github.com
+185.199.109.133 raw.githubusercontent.com   # 查询> https://githubusercontent.com.ipaddress.com/raw.githubusercontent.com
 186.199.110.133 raw.githubusercontent.com
 187.199.111.133 raw.githubusercontent.com
-# 188.101.184.133 gist.githubusercontent.com
-# 189.101.184.133 cloud.githubusercontent.com
-# 190.101.184.133 camo.githubusercontent.com
-# 191.101.184.133 avatars0.githubusercontent.com
-# 192.101.184.133 avatars1.githubusercontent.com
-# 193.101.184.133 avatars2.githubusercontent.com
-# 194.101.184.133 avatars3.githubusercontent.com
-# 195.101.184.133 avatars4.githubusercontent.com
-# 196.101.184.133 avatars5.githubusercontent.com
-# 197.101.184.133 avatars6.githubusercontent.com
-# 198.101.184.133 avatars7.githubusercontent.com
-# 199.101.184.133 avatars8.githubusercontent.com
+185.199.109.133 gist.githubusercontent.com
+185.199.109.133 cloud.githubusercontent.com
+185.199.109.133 camo.githubusercontent.com
+185.199.109.133 desktop.githubusercontent.com
+185.199.109.133 marketplace-screenshots.githubusercontent.com
+185.199.109.133 repository-images.githubusercontent.com
+185.199.109.133 user-images.githubusercontent.com
+185.199.109.133 avatars0.githubusercontent.com
+185.199.109.133 avatars1.githubusercontent.com
+185.199.109.133 avatars2.githubusercontent.com
+185.199.109.133 avatars3.githubusercontent.com
+185.199.109.133 avatars4.githubusercontent.com
+185.199.109.133 avatars5.githubusercontent.com
+185.199.109.133 avatars6.githubusercontent.com
+185.199.109.133 avatars7.githubusercontent.com
+185.199.109.133 avatars8.githubusercontent.com
 
 # 3.刷新dns缓存..
 $ sudo killall -HUP mDNSResponder

@@ -9,8 +9,11 @@
 - [深信服](https://bbs.sangfor.com.cn/plugin.php?id=index:index)
 - [System安全(堡垒机OSM、终端检测EDR、安全评估TSS、数据库审计DAS、行为管理AC、基线核查BVT等)](https://bbs.sangfor.com.cn/plugin.php?id=service:download)
 
+## [运维监控](https://blog.csdn.net/tianshiyeben/article/details/106946869)
+- [Zabbix`推荐`](https://www.zabbix.com/)、[WGCLOUD`推荐:西安.图安`](https://www.wgstart.com/)、[Nagios](https://www.nagios.org/)、[Ganglia](http://ganglia.info/)、[Grafana](https://grafana.com/)、[Zenoss](https://www.zenoss.com/)、[Open-falcon`小米`](https://github.com/xiaomi/open-falcon)、[LEPUS`天兔`](https://www.lepus.cc/)、[Cacti](https://www.cacti.net/)
+
 ## [开发工具](https://www.jb51.net/softs/)
-- [Visual Studio Code](https://code.visualstudio.com/)、[Kite](https://www.kite.com/)、[JetBrains IDE](https://www.jetbrains.com/)
+- [Visual Studio Code](https://code.visualstudio.com/)、[JetBrains IDE](https://www.jetbrains.com/)、[Kite`插件`](https://www.kite.com/)
 
 ## [开发资源](#)
 - [`分享吧`优质福利资源](https://www.fx8y.com/)、[`好例子网`源码下载](https://www.haolizi.net/)

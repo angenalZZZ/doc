@@ -17,7 +17,7 @@
 - [Axure RP`原型设计`](https://www.axure.com.cn/)、[EDraw`流程图/拓扑图`](https://www.edrawsoft.cn/)、[Visio`建模工具`](https://www.microsoft.com/zh-cn/microsoft-365/visio/flowchart-software)、[Project`大型项目管理(甘特图)`](https://www.microsoft.com/zh-cn/microsoft-365/project/project-management-software)
 
 ## [开发资源](#)
-- [`分享吧`优质福利资源](https://www.fx8y.com/)、[`好例子网`源码下载](https://www.haolizi.net/)
+- [推荐`board4all`](https://www.board4all.biz/)、[`分享吧`优质福利资源](https://www.fx8y.com/)、[`好例子网`源码下载](https://www.haolizi.net/)
 - [`后端技术`](https://ldqk.org/cat/34)[.NET控件库`DevExpress`](https://ldqk.org/1849)
 
 ## [学习资源](#)

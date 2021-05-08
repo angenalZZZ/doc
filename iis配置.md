@@ -124,5 +124,14 @@
 </configuration>
 ~~~
 
+
+> `无法验证强名称签名` `1.引用dll程序集错误(无法启动)` `2.修改Web.config`
+~~~xml
+  <system.web>
+    <hostingEnvironment shadowCopyBinAssemblies="false" />
+  </system.web>
+~~~
+
+
 ----
 

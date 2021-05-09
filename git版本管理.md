@@ -41,16 +41,18 @@
 # [https]
 #   proxy = http://127.0.0.1:1087
 
-# 1.通过修改默认配置, 解决网络限制问题..
-> git config --global http.https://github.com.proxy '' # 网络代理github.com设置(先清空代理)
-> git config --global http.postBuffer 524288000 # 上传文件大小限制500M=1024*1024*500(默认100M)
-> git config --global http.sslVerify "false"    # 关闭ssl验证(网络异常)
-> git config --global http.lowSpeedLimit 0      # 下载文件限制
-> git config --global http.lowSpeedTime 999999  # 下载文件时速
+# 1.通过修改默认配置, 解决网络问题..
+> git config --global --unset http.proxy        # 关闭http代理
+> git config --global --unset https.proxy       # 关闭https代理
+> git config --global http.sslVerify "false"    # 关闭ssl验证(网络异常时,可选)
+> git config --global http.https://github.com.proxy '' # 清空github.com网络代理(可选)
+> git config --global http.postBuffer 524288000 # 上传文件大小;限制500M=1024*1024*500(默认100M)
+> git config --global http.lowSpeedLimit 0      # 下载文件限制;
+> git config --global http.lowSpeedTime 999999  # 下载文件时速;
 > git clone --depth=1 https://***/***/***.git   # 下载失败时，1.首先浅层clone..
 > git fetch --unshallow                         # 下载更快..然后更新远程库到本地; 2.或者使用SSH进行下载
 
-# 2.通过修改hosts, 获取以下 DNS Resource Records, 解决CDN被屏蔽问题..
+# 2.通过修改hosts, 获取以下 DNS Resource Records, 解决CDN被屏蔽(DNS污染)问题..
 # github > fix git clone github project failed > /etc/hosts
 18.138.202.180 github.com                   # 查询> https://github.com.ipaddress.com
 18.138.202.180 www.github.com
@@ -83,6 +85,7 @@ $ sudo dscacheutil -flushcache
 > ipconfig /flushdns  # on windows
 
 > git config --system -l # show windows system config > git config --system -e [--edit]
+# http.sslVerify=false
 # http.sslbackend=openssl
 # http.sslcainfo=C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt
 # credential.helper=manager

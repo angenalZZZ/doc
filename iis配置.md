@@ -125,7 +125,7 @@
 ~~~
 
 
-> `**无法验证强名称签名**` [`1.引用dll程序集错误(无法启动)`](https://blog.csdn.net/aoshilang2249/article/details/78111409) `2.修改Web.config`
+> `**无法验证强名称签名**` [`1.引用dll错误 ASP.Net Projects must disable shadow copy`](https://blog.csdn.net/aoshilang2249/article/details/78111409) `2.修改Web.config`
 ~~~xml
   <system.web>
     <hostingEnvironment shadowCopyBinAssemblies="false" />

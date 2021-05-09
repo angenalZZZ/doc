@@ -8,16 +8,11 @@
 > git config --global user.name "yangzhou"      # 修改全局git用户配置
 > git config --global user.email "angenal@hotmail.com" # 修改全局git用户账号邮箱
 
-# github加速或打不开时，参考 https://github.com/docmirror/dev-sidecar
-# 下载安装 http://dev-sidecar.docmirror.cn/update/DevSidecar-1.4.0.exe
-
 # 保存用户名密码和仓库链接在硬盘中(~/.git-credentials)，而不用在每次push时都输入密码。
 > git config --global credential.helper store   # 提交push时不用每次都输入用户名密码的方法(删除参数--global会只对当前仓库生效)
 > git credential-manager uninstall              # 有时需要把项目的用户名和密码删掉>存储用户名和密码的文件记录~/.git-credentials
-
 > git config --global color.ui true             # 在终端中启用彩色输出
 > git config --global core.editor emacs         # 使用emacs文本编辑器(可选)
-
 > git config --global alias.co "checkout"       # 修改全局git用户的快捷键\命令
 > git config --global alias.br "branch"
 > git config --global alias.ci "commit"
@@ -30,7 +25,8 @@
 > git config --global alias.lg1 "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - \
   %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all"
 > git config --global alias.lg2 "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - \
-  %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all"
+  %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset) \
+  %C(dim white)- %an%C(reset)' --all"
 
 > git config --global --edit                    # 直接编辑全局配置文件 ~/.gitconfig
 [alias]  # 参考: https://stackoverflow.com/questions/1057564/pretty-git-branch-graphs
@@ -40,6 +36,9 @@
 #   proxy = http://127.0.0.1:1087
 # [https]
 #   proxy = http://127.0.0.1:1087
+
+# 如果github打不开时，参考(可选) https://github.com/docmirror/dev-sidecar
+# 下载安装(可选) http://dev-sidecar.docmirror.cn/update/DevSidecar-1.4.0.exe
 
 # 1.通过修改默认配置, 解决网络问题..
 > git config --global --unset http.proxy        # 关闭http代理

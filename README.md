@@ -5,19 +5,13 @@
 - [frp内网穿透](https://gofrp.org/docs/)、[ZeroTier内网穿透](https://www.zerotier.com/download/)
 - [『暗部软件分享』](https://www.lanzoui.com/b0k1bw0j) [工具推荐，最新app资源下载](https://ssrshare.github.io/bt/)、[开源共享破解版软件](https://www.gopojie.net/)
 
-## [系统安全`网络安全`](https://github.com/angenalZZZ/doc/blob/master/网络安全.md)
-- [深信服](https://bbs.sangfor.com.cn/plugin.php?id=index:index)
-- [System安全(堡垒机OSM、终端检测EDR、安全评估TSS、数据库审计DAS、行为管理AC、基线核查BVT等)](https://bbs.sangfor.com.cn/plugin.php?id=service:download)
-
-## [运维监控](https://blog.csdn.net/tianshiyeben/article/details/106946869)
-- [Zabbix`推荐`](https://www.zabbix.com/)、[WGCLOUD`推荐:西安.图安`](https://www.wgstart.com/)、[Nagios](https://www.nagios.org/)、[Ganglia](http://ganglia.info/)、[Grafana](https://grafana.com/)、[Zenoss](https://www.zenoss.com/)、[Open-falcon`小米`](https://github.com/xiaomi/open-falcon)、[LEPUS`天兔`](https://www.lepus.cc/)、[Cacti](https://www.cacti.net/)
-
 ## [开发工具](https://www.jb51.net/softs/)
 - [Visual Studio Code](https://code.visualstudio.com/)、[JetBrains IDE](https://www.jetbrains.com/)、[Kite`插件`](https://www.kite.com/)
 - [Axure RP`原型设计`](https://www.axure.com.cn/)、[EDraw`流程图/拓扑图`](https://www.edrawsoft.cn/)、[Visio`建模工具`](https://www.microsoft.com/zh-cn/microsoft-365/visio/flowchart-software)、[Project`大型项目管理(甘特图)`](https://www.microsoft.com/zh-cn/microsoft-365/project/project-management-software)
 
 ## [开发资源](#)
-- [推荐`board4all`](https://www.board4all.biz/)、[`分享吧`优质福利资源](https://www.fx8y.com/)、[`好例子网`源码下载](https://www.haolizi.net/)
+- [『`board4all`』国外破解联盟`推荐`](https://www.board4all.biz/)、[吾爱破解论坛](https://www.52pojie.cn/)
+- [`分享吧`优质福利资源](https://www.fx8y.com/)、[`好例子网`源码下载](https://www.haolizi.net/)
 - [`后端技术`](https://ldqk.org/cat/34)[.NET控件库`DevExpress`](https://ldqk.org/1849)
 
 ## [学习资源](#)
@@ -26,8 +20,15 @@
 - [GitMind在线思维导图](https://gitmind.cn/)
 - [Icon](https://shields.io/)
 
+## [`网络安全`](https://github.com/angenalZZZ/doc/blob/master/网络安全.md)
+- [深信服](https://bbs.sangfor.com.cn/plugin.php?id=index:index)
+- [System安全(堡垒机OSM、终端检测EDR、安全评估TSS、数据库审计DAS、行为管理AC、基线核查BVT等)](https://bbs.sangfor.com.cn/plugin.php?id=service:download)
+
 ## [网站工具](http://chenapp.com/chrome/developtools)
 - [Vue驱动的静态网站生成器](https://vuepress.vuejs.org/zh/)、[新榜/榜单/排名](http://newrank.cn/)
+
+## [运维监控](https://blog.csdn.net/tianshiyeben/article/details/106946869)
+- [Zabbix`推荐`](https://www.zabbix.com/)、[WGCLOUD`推荐:西安.图安`](https://www.wgstart.com/)、[Nagios](https://www.nagios.org/)、[Ganglia](http://ganglia.info/)、[Grafana](https://grafana.com/)、[Zenoss](https://www.zenoss.com/)、[Open-falcon`小米`](https://github.com/xiaomi/open-falcon)、[LEPUS`天兔`](https://www.lepus.cc/)、[Cacti](https://www.cacti.net/)
 
 ## [导航主页](https://vip.jokerps.com/sites)
 - [KIM主页](https://kim.plopco.com/ "主页从未如此惊艳")、[小呆导航](https://www.webjike.com/ "可自定义的简洁网址导航")、[青柠起始页](https://a.maorx.cn/ "简洁美观实用的浏览器起始页")、[牛站导航](https://www.niuzdh.com/ "精选最好的网站服务平台")、[Seeseed](https://www.seeseed.com/ "无穷尽设计可能")、[设计导航](http://hao.shejidaren.com/ "精选最好的设计网站大全")、[addog](https://www.addog.vip/ "广告创意、设计、文案、PPT模板")、[运营工具大全](https://xiaomark.com/tool "收录优秀好用的运营工具")、[更多](https://vip.jokerps.com/favorites/page)

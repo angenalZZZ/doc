@@ -3,10 +3,12 @@
 
 - 用户变量/Path
 ```
+# %USERPROFILE% = C:\Users\Administrator
 %USERPROFILE%\AppData\Local\Programs\Microsoft VS Code\bin
 %USERPROFILE%\AppData\Local\Programs\Python\Python37-32
 %USERPROFILE%\AppData\Local\Programs\Python\Python37-32\Scripts
 %USERPROFILE%\AppData\Local\Microsoft\WindowsApps
+%USERPROFILE%\scoop\shims
 %USERPROFILE%\.dotnet\tools
 ```
 
@@ -68,6 +70,8 @@ ANT_HOME      F:\Program\Android\apache-ant-1.10.5
 ChocolateyInstall C:\ProgramData\chocolatey
 ChocolateyToolsLocation C:\tools
 ComSpec       %SystemRoot%\system32\cmd.exe
+DENO_DIR          A:\deno
+DENO_INSTALL_ROOT A:\deno\bin
 DOCKER_HOST   tcp://localhost:2375
 ERLANG_HOME   D:\Program\erl10.5
 GO111MODULE   auto

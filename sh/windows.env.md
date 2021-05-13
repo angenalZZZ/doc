@@ -41,6 +41,7 @@ D:\Program\v\.bin;
 D:\Program\zstd;
 D:\Program\rocksdb;
 D:\Program\JMeter\bin;
+D:\Program\swigwin-3.0.12;
 E:\Tool\SysinternalsSuite;
 F:\Program\Android\sdk\platform-tools;
 F:\Program\Android\apache-ant-1.10.5\bin;

@@ -19,24 +19,28 @@ docker > docker pull redis;docker run --name redis-server -d -p6379:6379 redis;d
   bind 127.0.0.1 ::1 # bind 192.168.1.100 10.0.0.1 # 不限制本地访问,需要指定外网RemoteIP
 # ***指定访问端口号***
   port 6379
-  protected-mode yes # only accepts from clients connecting from 127.0.0.1 and ::1, No password is configured.
-  tcp-keepalive 300  # TCP keepalive. On Linux, specified value (seconds) is the period used to send ACKs.
-  tcp-backlog 511    # In high requests-per-second environments and tcp_max_syn_backlog to get the desired effect.
-  timeout 0
+  protected-mode yes # 仅接受从 127.0.0.1, ::1 连接的客户机，特别是未配置密码时
+  tcp-keepalive 300  # TCP保持连接时长。在Linux上，指定用于发送ACK确认心跳的时长（秒）
+  tcp-backlog 511    # 在每秒请求数较高的环境中，指定 tcp_max_syn_backlog 可以获得所需的效果
+  timeout 0      # 客户端空闲N秒后关闭连接; (默认)禁用关闭客户端连接
 # ***守护进程的方式启动***
-  daemonize yes  # By default Redis does not run as a daemon. Redis will write a pid file when daemonized.
-  supervised no  # If you run Redis from upstart or systemd
-  pidfile /var/run/redis_6379.pid  # writes it at startup and removes it at exit. specified when daemonize yes.
+  daemonize yes  # 默认情况下，Redis不作为守护进程运行。Redis将在后台监控时写入一个pid文件。
+  supervised no  # 在Linux上，如果您从upstart或systemd运行Redis
+  pidfile /var/run/redis_6379.pid  # 启动时写入pid，退出时删除。当指定了 daemonize yes 时。
 # ***日志跟踪级别***
   loglevel notice # warning, error
 # ***日志跟踪文件***
   logfile "/var/log/redis_6379.log"
 # ***限制客户端连接数***
   maxclients 100
+# ***限制内存上限***
+  maxmemory 200mb
+# ***当超过内存上限时，指定删除策略***
+  maxmemory-policy noeviction # (默认)不删除未过期的Key
 # ***设置密码***
   requirepass 123456
-# ***数据持久化到本地磁盘***
-  appendonly yes
+# ***数据持久化到本地磁盘*** AOF and RDB 两种持久化模式
+  appendonly yes # (默认)no不持久化;
 # ***数据持久化路径: /data/appendonly.aof
   appendfilename "appendonly.aof"
 # save <seconds> <changes>  # Save the Real DB on disk:

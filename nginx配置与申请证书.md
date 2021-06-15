@@ -13,6 +13,7 @@ sudo systemctl reload nginx   # 修改配置后，需要重新加载服务
 sudo systemctl disable nginx && sudo systemctl stop nginx #禁止开机启动，停止服务
 ls /etc/nginx/sites-available # 设置Nginx服务器模块(类似Apache虚拟主机) www.linuxidc.com/Linux/2018-05/152258.htm
 sudo apt install certbot      # 使用Let's Encrypt保护Nginx  www.linuxidc.com/Linux/2018-05/152259.htm
+> nssm install nginx          # <Windows>服务安装，可用 https://nssm.cc
 ~~~
 * 常用命令
 ~~~shell

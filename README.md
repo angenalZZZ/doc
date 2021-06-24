@@ -6,7 +6,7 @@
 - [『暗部软件分享』](https://www.lanzoui.com/b0k1bw0j)、[`Open`共享软件](https://www.gopojie.net/)、[`Portable`绿色软件](https://portable4pc.com/)
 
 ## [手机工具](https://ssrshare.github.io/bt/)
-- [模拟器`NoxPlayer`](https://portable4pc.com/noxplayer/)
+- [iOS模拟器`Coolmuster`](https://portable4pc.com/coolmuster-ios-assistant-portable/)、[安卓模拟器`Coolmuster`](https://portable4pc.com/coolmuster-android-assistant-portable/)、[安卓模拟器`NoxPlayer`](https://portable4pc.com/noxplayer/)
 
 ## [开发工具](https://www.jb51.net/softs/)
 - [Visual Studio Code](https://code.visualstudio.com/)、[JetBrains IDE](https://www.jetbrains.com/)、[Kite`插件`](https://www.kite.com/)

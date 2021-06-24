@@ -1,10 +1,12 @@
 
-## [系统工具](https://vip.jokerps.com/software)
+## [电脑工具](https://vip.jokerps.com/software)
 - [Windows绿色软件✨](https://vip.jokerps.com/software/windows) `推荐`
 - [rufus_USB启动盘_支持ISOs(Windows,Linux,UEFI,etc.)](https://rufus.ie/)
 - [frp内网穿透](https://gofrp.org/docs/)、[ZeroTier内网穿透](https://www.zerotier.com/download/)
-- [『暗部软件分享』](https://www.lanzoui.com/b0k1bw0j) [工具推荐，最新app资源下载](https://ssrshare.github.io/bt/)
-- [开源共享软件](https://www.gopojie.net/)、[`Portable`绿色软件](https://portable4pc.com/)
+- [『暗部软件分享』](https://www.lanzoui.com/b0k1bw0j)、[`Open`共享软件](https://www.gopojie.net/)、[`Portable`绿色软件](https://portable4pc.com/)
+
+## [手机工具](https://ssrshare.github.io/bt/)
+- [模拟器`NoxPlayer`](https://portable4pc.com/noxplayer/)
 
 ## [开发工具](https://www.jb51.net/softs/)
 - [Visual Studio Code](https://code.visualstudio.com/)、[JetBrains IDE](https://www.jetbrains.com/)、[Kite`插件`](https://www.kite.com/)

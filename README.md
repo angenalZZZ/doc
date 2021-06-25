@@ -3,7 +3,7 @@
 - [Windows绿色软件✨](https://vip.jokerps.com/software/windows) `推荐`
 - [rufus_USB启动盘_支持ISOs(Windows,Linux,UEFI,etc.)](https://rufus.ie/)
 - [frp内网穿透](https://gofrp.org/docs/)、[ZeroTier内网穿透](https://www.zerotier.com/download/)
-- [『暗部软件分享』](https://www.lanzoui.com/b0k1bw0j)、[`Open`共享软件](https://www.gopojie.net/)、[`Portable`绿色软件](https://portable4pc.com/)
+- [`Open`共享软件](https://www.gopojie.net/)、[`Portable`绿色软件](https://portable4pc.com/)、[『暗部软件分享』](https://www.lanzoui.com/b0k1bw0j)
 
 ## [手机工具](https://ssrshare.github.io/bt/)
 - [iOS模拟器`Coolmuster`](https://portable4pc.com/coolmuster-ios-assistant-portable/)、[安卓模拟器`Coolmuster`](https://portable4pc.com/coolmuster-android-assistant-portable/)、[安卓模拟器`NoxPlayer`](https://portable4pc.com/noxplayer/)
@@ -14,7 +14,7 @@
 
 ## [开发资源](#)
 - [`(推荐)`国外-破解联盟`board4all`](https://www.board4all.biz/)、[`(推荐)`国外-破解分享`ShareApps`](https://shareappscrack.com/)、[国外-破解`ftuApps`](https://ftuapps.dev/category/net/)
-- [`(推荐)`国内-吾爱破解](https://www.52pojie.cn/)
+- [`(推荐)`国内-吾爱破解](https://www.52pojie.cn/)、[`(推荐)`国内-飘云阁](https://www.chinapyg.com/)
 - [`分享吧`优质福利资源](https://www.fx8y.com/)、[`好例子网`源码实例下载](https://www.haolizi.net/)
 - [`后端技术`](https://ldqk.org/cat/34)[.NET控件库`DevExpress`](https://ldqk.org/1849)
 

@@ -1,9 +1,7 @@
 
 ## [电脑工具](https://vip.jokerps.com/software)
-- [Windows绿色软件✨](https://vip.jokerps.com/software/windows) `推荐`
-- [rufus_USB启动盘_支持ISOs(Windows,Linux,UEFI,etc.)](https://rufus.ie/)
-- [frp内网穿透](https://gofrp.org/docs/)、[ZeroTier内网穿透](https://www.zerotier.com/download/)
-- [`Open`共享软件](https://www.gopojie.net/)、[`Portable`绿色软件](https://portable4pc.com/)、[『暗部软件分享』](https://www.lanzoui.com/b0k1bw0j)
+- [`Windows`绿色软件✨](https://vip.jokerps.com/software/windows)、[rufus_USB启动盘(Windows,Linux,UEFI)](https://rufus.ie/)、[frp内网穿透](https://gofrp.org/docs/)、[ZeroTier内网穿透](https://www.zerotier.com/download/)
+- [`Portable`绿色软件](https://portable4pc.com/)、[`Open`共享软件](https://www.gopojie.net/)、[『暗部软件分享』](https://www.lanzoui.com/b0k1bw0j)
 
 ## [手机工具](https://ssrshare.github.io/bt/)
 - [iOS模拟器`Coolmuster`](https://portable4pc.com/coolmuster-ios-assistant-portable/)、[安卓模拟器`Coolmuster`](https://portable4pc.com/coolmuster-android-assistant-portable/)、[安卓模拟器`NoxPlayer`](https://portable4pc.com/noxplayer/)

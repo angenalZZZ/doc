@@ -4,16 +4,15 @@
 - [`Portable`绿色软件](https://portable4pc.com/)、[`Open`共享软件](https://www.gopojie.net/)、[『暗部软件分享』](https://www.lanzoui.com/b0k1bw0j)
 
 ## [手机工具](https://ssrshare.github.io/bt/)
-- [iOS模拟器`Coolmuster`](https://portable4pc.com/coolmuster-ios-assistant-portable/)、[安卓模拟器`Coolmuster`](https://portable4pc.com/coolmuster-android-assistant-portable/)、[安卓模拟器`NoxPlayer`](https://portable4pc.com/noxplayer/)
+- [`iOS`助手`Coolmuster`](https://portable4pc.com/coolmuster-ios-assistant-portable/)、[`Android`助手`Coolmuster`](https://portable4pc.com/coolmuster-android-assistant-portable/)、[`Android`模拟器`NoxPlayer`](https://portable4pc.com/noxplayer/)
 
 ## [开发工具](https://www.jb51.net/softs/)
 - [Visual Studio Code](https://code.visualstudio.com/)、[JetBrains IDE](https://www.jetbrains.com/)、[Kite`插件`](https://www.kite.com/)
 - [Axure RP`原型设计`](https://www.axure.com.cn/)、[EDraw`流程图/拓扑图`](https://www.edrawsoft.cn/)、[Visio`建模工具`](https://www.microsoft.com/zh-cn/microsoft-365/visio/flowchart-software)、[Project`大型项目管理(甘特图)`](https://www.microsoft.com/zh-cn/microsoft-365/project/project-management-software)
 
 ## [开发资源](#)
-- [`国外`破解联盟`board4all`](https://www.board4all.biz/)、[`国外`破解分享`ShareApps`](https://shareappscrack.com/)
-- [`国内`吾爱破解](https://www.52pojie.cn/)、[`国内`飘云阁](https://www.chinapyg.com/)
-- [`分享吧`优质福利资源](https://www.fx8y.com/)、[`好例子`源码实例下载](https://www.haolizi.net/)、[.NET控件库`DevExpress`](https://ldqk.org/1849)
+- [`国外`破解联盟`board4all`](https://www.board4all.biz/)、[`国外`破解分享`ShareApps`](https://shareappscrack.com/)、[`国内`吾爱破解](https://www.52pojie.cn/)、[`国内`飘云阁](https://www.chinapyg.com/)
+- [`分享吧`优质福利资源](https://www.fx8y.com/)、[`好例子`源码实例下载](https://www.haolizi.net/)、[`.NET`控件库`DevExpress`](https://ldqk.org/1849)
 
 ## [学习资源](#)
 - [软件工程师★学习路线](https://github.com/jwasham/coding-interview-university/blob/main/translations/README-cn.md)

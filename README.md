@@ -11,16 +11,15 @@
 - [Axure RP`原型设计`](https://www.axure.com.cn/)、[EDraw`流程图/拓扑图`](https://www.edrawsoft.cn/)、[Visio`建模工具`](https://www.microsoft.com/zh-cn/microsoft-365/visio/flowchart-software)、[Project`大型项目管理(甘特图)`](https://www.microsoft.com/zh-cn/microsoft-365/project/project-management-software)
 
 ## [开发资源](#)
-- [`(推荐)`国外-破解联盟`board4all`](https://www.board4all.biz/)、[`(推荐)`国外-破解分享`ShareApps`](https://shareappscrack.com/)、[国外-破解`ftuApps`](https://ftuapps.dev/category/net/)
-- [`(推荐)`国内-吾爱破解](https://www.52pojie.cn/)、[`(推荐)`国内-飘云阁](https://www.chinapyg.com/)
-- [`分享吧`优质福利资源](https://www.fx8y.com/)、[`好例子网`源码实例下载](https://www.haolizi.net/)
-- [`后端技术`](https://ldqk.org/cat/34)[.NET控件库`DevExpress`](https://ldqk.org/1849)
+- [`国外`破解联盟`board4all`](https://www.board4all.biz/)、[`国外`破解分享`ShareApps`](https://shareappscrack.com/)
+- [`国内`吾爱破解](https://www.52pojie.cn/)、[`国内`飘云阁](https://www.chinapyg.com/)
+- [`分享吧`优质福利资源](https://www.fx8y.com/)、[`好例子`源码实例下载](https://www.haolizi.net/)、[.NET控件库`DevExpress`](https://ldqk.org/1849)
 
 ## [学习资源](#)
 - [软件工程师★学习路线](https://github.com/jwasham/coding-interview-university/blob/main/translations/README-cn.md)
 - [软件工程师C++学习《剑指Offer》](https://github.com/zhedahht/CodingInterviewChinese2)
-- [GitMind在线思维导图](https://gitmind.cn/)
-- [Icon](https://shields.io/)
+- [`itMind`线思维导图](https://gitmind.cn/)
+- [`Icon`](https://shields.io/)
 
 ## [`网络安全`](https://github.com/angenalZZZ/doc/blob/master/网络安全.md)
 - [深信服](https://bbs.sangfor.com.cn/plugin.php?id=index:index)

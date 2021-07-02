@@ -1,6 +1,6 @@
 
 # **[`Redis`](http://redis.cn) - [`Remote Dictionary Service`](http://redis.io)** 
-> [`安装`](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#redis)、[`配置`](#1配置Redis)、[`查询服务信息`](#2查询服务信息)、[`基础数据结构`](#3基础数据结构)、[`命令`](http://doc.redisfans.com)、[`教程`](http://www.runoob.com/redis/redis-tutorial.html)
+> [`安装`](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#redis)、[`配置`](#1配置Redis)、[`查询服务信息`](#2查询服务信息)、[`基础数据结构`](#3基础数据结构)、[`命令`](http://doc.redisfans.com)、[`RedisDesktopManager`](https://github.com/lework/RedisDesktopManager-Windows)、[`教程`](http://www.runoob.com/redis/redis-tutorial.html)
 
 ~~~
 mac    > brew install redis 
@@ -115,6 +115,7 @@ redis-server --port 6381 --slaveof 192.168.1.8 6379
 ~~~
 redis-cli -h 127.0.0.1 -p 6379 -a 123456 -n 0 # redis连接参数 [p端口],[a密码一般不填],[n数据库*默认0]
 redis-cli -r 10000 RPUSH queue:myqueue '{"class":"MyClass","args":["hello","world"]}' #-<插入1万条记录进队列中>
+openssl s_client -connect 127.0.0.1:6379 -cert test.crt -key test.key -CAfile ca.pem  #-Debug SSL
 > info [all]                    # 获取所有信息
   # 1. Server 服务器运行的环境参数
   # 2. Clients 客户端相关信息
@@ -156,8 +157,14 @@ redis-cli -r 10000 RPUSH queue:myqueue '{"class":"MyClass","args":["hello","worl
 
 # 客户端与Redis建立连接后会自动选择0号数据库，不过可以随时使用SELECT命令更换数据库
 > select 1  # 选择1号数据库
-> keys *    # 查询所有key(慎用)
-> flushdb 0 # 清空数据库0
+> keys *    # 查询所有key(慎用)~下面eval~开始生成测试数据~
+> eval "for index = 0,100000 do redis.call('SET', 'test_key' .. index, index) end" 0
+> eval "for index = 0,100000 do redis.call('SET', 'test_key:' .. math.random(1, 100) .. ':' .. math.random(1,100), index) end" 0
+> eval "for index = 0,100000 do redis.call('HSET', 'test_large_hash', index, index) end" 0
+> eval "for index = 0,100000 do redis.call('ZADD', 'test_large_zset', index, index) end" 0
+> eval "for index = 0,100000 do redis.call('SADD', 'test_large_set', index) end" 0
+> eval "for index = 0,100000 do redis.call('LPUSH', 'test_large_list', index) end" 0
+> flushdb 1 # 清空数据库1
 > flushall  # 清空一个Redis实例中所有数据库中的数据：Redis默认支持16个数据库（可以通过配置文件支持更多，无上限）
 # 性能测试
 > redis-benchmark -n 10000 -q

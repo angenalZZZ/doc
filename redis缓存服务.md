@@ -1,6 +1,7 @@
 
 # **[`Redis`](http://redis.cn) - [`Remote Dictionary Service`](http://redis.io)** 
-> [`安装`](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#redis)、[`配置`](#1配置Redis)、[`查询服务信息`](#2查询服务信息)、[`基础数据结构`](#3基础数据结构)、[`命令`](http://doc.redisfans.com)、[`RedisDesktopManager`](https://github.com/lework/RedisDesktopManager-Windows)、[`教程`](http://www.runoob.com/redis/redis-tutorial.html)
+> [`安装`](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#redis)、[`配置`](#1配置Redis)、[`查询服务信息`](#2查询服务信息)、[`基础数据结构`](#3基础数据结构)、[`命令`](http://doc.redisfans.com)、[`教程`](http://www.runoob.com/redis/redis-tutorial.html)<br>
+> [`RedisDesktopManager`](https://github.com/lework/RedisDesktopManager-Windows)、[AnotherRedisDesktopManager](https://gitee.com/qishibo/AnotherRedisDesktopManager/releases)
 
 ~~~
 mac    > brew install redis 

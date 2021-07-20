@@ -470,6 +470,7 @@ sudo systemctl restart nginx  # 重启Nginx服务
 sudo systemctl disable nginx  # 禁止开机启动
 sudo systemctl reload nginx   # 修改配置后，需要重新加载Nginx服务
 ls /etc/nginx/sites-available # 设置Nginx服务器模块(类似Apache虚拟主机) www.linuxidc.com/Linux/2018-05/152258.htm
+# 安装 Let’s Encrypt (Certbot) https://www.ubuntupit.com/how-to-install-and-setup-lets-encrypt-certbot-on-linux
 sudo apt install certbot      # 使用Let's Encrypt保护Nginx  www.linuxidc.com/Linux/2018-05/152259.htm
 runuser -l yangzhou -s /bin/sh -m -c "/usr/local/nginx/sbin/nginx" # 启动(可用 su+目标用户的密码; sudo+自己的密码)
 sudo rm /etc/nginx/sites-enabled/default # 删除默认网站,新创建一个如下:

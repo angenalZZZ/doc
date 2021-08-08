@@ -1,4 +1,4 @@
-# nodejs [下载windows安装包](https://npm.taobao.org/mirrors/node/v12.18.4/node-v12.18.4-x64.msi)
+# nodejs [下载windows安装包](https://npm.taobao.org/mirrors/node/v12.16.3/node-v12.16.3-x64.msi)
 
 ~~~bash
 sudo apt install nodejs               # 安装Nodejs(此安装方式node版本较低; 推荐wget安装node新版本-如下)
@@ -12,8 +12,9 @@ sudo ln -sf /usr/local/node/bin/npm /usr/local/bin/npm
 ~~~
 
 # npm 配置
-    %USERPROFILE%\.npmrc
+
 ~~~
+# %USERPROFILE%\.npmrc
 init-author-name=yangzhou
 init-author-email=angenal@hotmail.com
 cache=D:\Program\nodejs\node_cache
@@ -26,7 +27,7 @@ userconfig=D:\Program\nodejs\.npmrc
   npm config set userconfig = "D:\Program\nodejs\.npmrc"   [先设置个性化保存位置]
   npm set init-author-name yangzhou
   npm set init-author-email angenal@hotmail.com
-  #npm set init-license MIT
+  # npm set init-license MIT
   npm config set cache "D:\Program\nodejs\node_cache"      [全局缓存下载目录]
   npm config set prefix "D:\Program\nodejs\node_global"    [全局模块安装目录]
   npm config set proxy http://localhost:23547              [不建议]

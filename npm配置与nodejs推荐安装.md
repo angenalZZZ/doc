@@ -12,14 +12,21 @@ sudo ln -sf /usr/local/node/bin/npm /usr/local/bin/npm
 ~~~
 
 # npm 配置
-
+    %USERPROFILE%\.npmrc
 ~~~
+init-author-name=yangzhou
+init-author-email=angenal@hotmail.com
+cache=D:\Program\nodejs\node_cache
+prefix=D:\Program\nodejs\node_global
+userconfig=D:\Program\nodejs\.npmrc
+~~~
+~~~cmd
   [nodejs用户变量 Path] += D:\Program\nodejs\node_global
   [nodejs系统变量 NODE_PATH] = D:\Program\nodejs\node_global\node_modules
   npm config set userconfig = "D:\Program\nodejs\.npmrc"   [先设置个性化保存位置]
   npm set init-author-name yangzhou
   npm set init-author-email angenal@hotmail.com
-  npm set init-license MIT
+  #npm set init-license MIT
   npm config set cache "D:\Program\nodejs\node_cache"      [全局缓存下载目录]
   npm config set prefix "D:\Program\nodejs\node_global"    [全局模块安装目录]
   npm config set proxy http://localhost:23547              [不建议]

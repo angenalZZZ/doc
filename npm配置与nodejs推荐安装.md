@@ -16,6 +16,7 @@ sudo ln -sf /usr/local/node/bin/npm /usr/local/bin/npm
 ~~~
   [nodejs用户变量 Path] += D:\Program\nodejs\node_global
   [nodejs系统变量 NODE_PATH] = D:\Program\nodejs\node_global\node_modules
+  npm config set userconfig = "D:\Program\nodejs\.npmrc"   [先设置个性化保存位置]
   npm set init-author-name yangzhou
   npm set init-author-email angenal@hotmail.com
   npm set init-license MIT

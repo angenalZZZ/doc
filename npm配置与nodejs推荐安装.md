@@ -2,9 +2,9 @@
 
 ~~~bash
 sudo apt install nodejs               # 安装Nodejs(此安装方式node版本较低; 推荐wget安装node新版本-如下)
-wget -O node-linux-x64.tar.gz https://npm.taobao.org/mirrors/node/v12.18.4/node-v12.18.4-linux-x64.tar.gz
+wget -O node-linux-x64.tar.gz https://npm.taobao.org/mirrors/node/v12.16.3/node-v12.16.3-linux-x64.tar.gz
 sudo tar -zxf node-linux-x64.tar.gz -C /usr/local/         # 解压目录
-sudo mv /usr/local/node-v12.18.4-linux-x64 /usr/local/node # 重命名安装目录
+sudo mv /usr/local/node-v12.16.3-linux-x64 /usr/local/node # 重命名安装目录
 sudo chown -R `id -un`:`id -gn` /usr/local/node            # 设置目录权限
 export PATH=/usr/local/node/bin:$PATH # 环境配置 /etc/profile.d/nodejs-profile.sh (推荐)
 sudo ln -sf /usr/local/node/bin/node /usr/local/bin/node   # 设置软链接 (不推荐)
@@ -14,7 +14,7 @@ sudo ln -sf /usr/local/node/bin/npm /usr/local/bin/npm
 # npm 配置
 
 ~~~
-# %USERPROFILE%\.npmrc
+# 配置文件 %USERPROFILE%\.npmrc
 init-author-name=yangzhou
 init-author-email=angenal@hotmail.com
 cache=D:\Program\nodejs\node_cache

@@ -329,7 +329,8 @@ Get-AppxPackage -AllUsers | Select Name, PackageFullName | Select-String "Ubuntu
 Get-AppxPackage CanonicalGroupLimited.UbuntuonWindows | Remove-AppxPackage # 卸载
 # curl.exe -L -o ubuntu-1804.appx https://aka.ms/wslubuntu1804 # 下载
 curl.exe -L -o ubuntu-2004.appx https://aka.ms/wslubuntu2004 # 下载
-Add-AppxPackage .\ubuntu-2004.appx # 离线安装WSL Ubuntu 20.04 至指定路径
+Add-AppxPackage .\ubuntu-2004.appx # 离线安装WSL Ubuntu 20.04 至指定路径, 或者解压出来\install.tar.gz
+PS> LxRunOffline install -n Ubuntu -d D:\ubuntu2004 -f D:\ubuntu2004\install.tar.gz # (推荐)离线安装Ubuntu
 $ cat /etc/os-release  # 查看系统详细信息
 $ sudo apt-get update && sudo apt-get dist-upgrade # 更新apt软件管理工具
 $ sudo apt-get clean && sudo apt-get update --fix-missing

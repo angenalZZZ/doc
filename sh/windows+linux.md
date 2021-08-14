@@ -60,11 +60,20 @@ choco install lxrunoffline
 # LxRunOffline install -n <system-name> -d <system-rootfsdir> -f <system-install.tar.xz> # 复制appx解压目录/启动程序*.exe
 PS> LxRunOffline install -n Ubuntu-18.04 -d C:\ubuntu1804 -f .\install.tar.gz # 离线安装Ubuntu-18.04
 # LxRunOffline su -n <system-name> -v 1000 # 以指定用户(id=1000)运行(默认为用户root=0)[先进入系统添加用户后再执行该命令]
+# LxRunOffline注册已安装好的<linux>子系统
+PS> LxRunOffline register -n Ubuntu -d D:\ubuntu2004
+PS> LxRunOffline register -n Centos7 -d D:\centos7
+# LxRunOffline迁移已安装好的<linux>子系统
+PS> LxRunOffline move -n Ubuntu -d E:\wsl\Ubuntu
+PS> LxRunOffline list
+PS> wsl -l -v  # 查看<linux>子系统
+  NAME       STATE           VERSION
+* Ubuntu     Stopped         1
+  Centos7    Stopped         1
 # 设置 WSL 默认版本为 2 (独立运行<linux>需内存多)
 wsl --set-default-version 2 # Update to WSL 2
-wsl -l -v                   # 查看<linux>是否为 WSL 2
 wsl --set-version <linux> 2 # 修改<linux>为 WSL 2
-wsl --set-default <linux>   # 设置<linux>为默认
+wsl --set-default <linux>   # 设置<linux>为*默认*
 wsl -u root -d <linux>      # 以指定用户运行(默认为用户root)[先进入系统添加用户后再执行该命令]
 ~~~
 

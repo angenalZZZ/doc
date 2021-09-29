@@ -10,6 +10,7 @@
 ## [开发工具](https://www.jb51.net/softs/)
 - [Visual Studio Code](https://code.visualstudio.com/)、[JetBrains IDE](https://www.jetbrains.com/)、[Kite`插件`](https://www.kite.com/)
 - [Axure RP`原型设计`](https://www.axure.com.cn/)、[EDraw`流程图/拓扑图`](https://www.edrawsoft.cn/)、[Visio`建模工具`](https://www.microsoft.com/zh-cn/microsoft-365/visio/flowchart-software)、[Project`大型项目管理(甘特图)`](https://www.microsoft.com/zh-cn/microsoft-365/project/project-management-software)
+- [`bit.ly`短链接](https://bitly.com/)
 
 ## [开发资源](#)
 - [`国外`破解联盟`board4all`](https://www.board4all.biz/)、[`国外`破解分享`ShareApps`](https://shareappscrack.com/)、[`国内`吾爱破解](https://www.52pojie.cn/)[`工具`](https://down.52pojie.cn/Tools/)、[`国内`飘云阁](https://www.chinapyg.com/)

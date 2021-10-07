@@ -58,10 +58,12 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.We
 choco install lxrunoffline
 # 获取离线安装包 <system-install.tar.xz> 1.修改[wsl]*.appx后缀为.zip 2.解压得到install.tar.gz 3.安装[执行LxRunOffline]
 # LxRunOffline install -n <system-name> -d <system-rootfsdir> -f <system-install.tar.xz> # 复制appx解压目录/启动程序*.exe
-PS> LxRunOffline install -n Ubuntu-18.04 -d C:\ubuntu1804 -f .\install.tar.gz # 离线安装Ubuntu-18.04
+PS> LxRunOffline install -n Centos7 -d D:\centos7 -f D:\centos7\centos-7-docker.tar.xz # 离线安装centos-7
+PS> LxRunOffline install -n Ubuntu-18.04 -d D:\ubuntu1804 -f D:\ubuntu1804\install.tar.gz # 离线安装Ubuntu-18.04
+PS> LxRunOffline install -n Ubuntu-20.04 -d D:\ubuntu2004 -f D:\ubuntu2004\install.tar.gz # (推荐)安装Ubuntu-20.04
 # LxRunOffline su -n <system-name> -v 1000 # 以指定用户(id=1000)运行(默认为用户root=0)[先进入系统添加用户后再执行该命令]
 # LxRunOffline注册已安装好的<linux>子系统
-PS> LxRunOffline register -n Ubuntu -d D:\ubuntu2004
+PS> LxRunOffline register -n Ubuntu -d D:\ubuntu2004 # 先备份迁移整个目录
 PS> LxRunOffline register -n Centos7 -d D:\centos7
 # LxRunOffline迁移已安装好的<linux>子系统
 PS> LxRunOffline move -n Ubuntu -d E:\wsl\Ubuntu
@@ -93,9 +95,9 @@ PS> scoop install -g lsd   # 漂亮的 ls 命令
 > Windows 10 [WSL - Centos](https://github.com/RoliSoft/WSL-Distribution-Switcher)、[系统设置工具推荐dotfiles](https://github.com/nickjj/dotfiles)
 ~~~bash
 # 部署 centos7 到 WSL (下载Docker镜像) https://github.com/RoliSoft/WSL-Distribution-Switcher
-LxRunOffline install -n centos7 -d A:\centos7 -f A:\centos7\centos-7-docker.tar.xz
+PS> LxRunOffline install -n Centos7 -d D:\centos7 -f D:\centos7\centos-7-docker.tar.xz
 # 开启 CentOS
-LxRunOffline run -n centos7
+PS> LxRunOffline run -n Centos7
 cat /etc/system-release && cat /usr/lib/os-release # CentOS Linux release 7.9.2009 (Core) 系统完整信息
 # 更新软件源[第一步][腾讯云阿里云CVM跳过]
 cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak # 先备份repo

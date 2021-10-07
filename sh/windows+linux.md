@@ -60,10 +60,13 @@ choco install lxrunoffline
 # LxRunOffline install -n <system-name> -d <system-rootfsdir> -f <system-install.tar.xz> # 复制appx解压目录/启动程序*.exe
 PS> LxRunOffline install -n Centos7 -d D:\centos7 -f D:\centos7\centos-7-docker.tar.xz # 离线安装centos-7
 PS> LxRunOffline install -n Ubuntu-18.04 -d D:\ubuntu1804 -f D:\ubuntu1804\install.tar.gz # 离线安装Ubuntu-18.04
-PS> LxRunOffline install -n Ubuntu-20.04 -d D:\ubuntu2004 -f D:\ubuntu2004\install.tar.gz # (推荐)安装Ubuntu-20.04
+PS> LxRunOffline install -n Ubuntu -d D:\ubuntu2004 -f D:\ubuntu2004\install.tar.gz # (推荐)安装Ubuntu-20.04
+# 备份迁移-用于以后install
+PS> LxRunOffline export -n Centos7 -f D:\centos7.tar.gz
+PS> LxRunOffline export -n Ubuntu -f D:\ubuntu2004.tar.gz
 # LxRunOffline su -n <system-name> -v 1000 # 以指定用户(id=1000)运行(默认为用户root=0)[先进入系统添加用户后再执行该命令]
-# LxRunOffline注册已安装好的<linux>子系统
-PS> LxRunOffline register -n Ubuntu -d D:\ubuntu2004 # 先备份迁移整个目录
+# LxRunOffline注册已安装好的<linux>子系统(提前备份整个目录)
+PS> LxRunOffline register -n Ubuntu -d D:\ubuntu2004
 PS> LxRunOffline register -n Centos7 -d D:\centos7
 # LxRunOffline迁移已安装好的<linux>子系统
 PS> LxRunOffline move -n Ubuntu -d E:\wsl\Ubuntu

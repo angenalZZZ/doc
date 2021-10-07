@@ -72,7 +72,7 @@ certbot delete --cert-name example.com
 ## 在阿里云上，OSS和CDN的配置上，选择直接输入证书内容替换原来直接选择的阿里云证书。
 ~~~
 
-* [配置参数说明](https://github.com/digitalocean/nginxconfig.io)与[✨在线编辑器](https://nginxconfig.io/)
+* [配置参数说明](https://github.com/digitalocean/nginxconfig.io)与[✨在线编辑器](https://nginxconfig.io/)、[托管 ASP.NET Core](https://docs.microsoft.com/zh-cn/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-5.0#configure-nginx)
 ~~~nginx
 # 进程用户
 user nginx; # <linux>

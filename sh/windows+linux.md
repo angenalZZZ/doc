@@ -434,15 +434,17 @@ sudo apt-get install oracle-java8-installer   # 在线安装, 离线下载 downl
 sudo apt-get install oracle-java8-set-default # 使用默认版本jdk1.8
 sudo update-alternatives –config java         # 多版本JDK之间切换
 
-# 安装 .NET Core 语言
-wget -q https://packages.microsoft.com/config/ubuntu/19.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+# 安装 .NET Core 语言  https://docs.microsoft.com/zh-cn/dotnet/core/install/linux-ubuntu
+wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
 sudo dpkg -i packages-microsoft-prod.deb
+sudo rm packages-microsoft-prod.deb
 sudo apt-get update
 sudo apt-get install dotnet-runtime-3.1 aspnetcore-runtime-3.1  # 仅安装 .NET Core Runtime
-sudo apt-get install dotnet-sdk-3.1                # 安装 .NET Core SDK  > dotnet -h
+sudo apt-get install apt-transport-https aspnetcore-runtime-5.0 # 仅安装运行时(推荐)
+sudo apt-get install dotnet-sdk-3.1                             # 安装 .NET Core SDK  > dotnet -h
 
 # 安装 R 语言(用于统计计算) > /usr/bin/R --help # 大写R
-sudo apt-get -y install r-recommended --fix-broken 
+sudo apt-get -y install r-recommended --fix-broken
 
 # 安装 erlang 语言
 sudo apt install -f libncurses5-dev freeglut3-dev fop m4 tk unixodbc unixodbc-dev xsltproc socat 

@@ -62,7 +62,7 @@ PS> LxRunOffline install -n Centos7 -d D:\centos7 -f E:\Software\linux\centos7\c
 PS> LxRunOffline install -n Ubuntu -d D:\ubuntu2004 -f E:\Software\linux\ubuntu2004\install.tar.gz #安装Ubuntu-20.04(推荐)
 PS> LxRunOffline install -n Legacy -d D:\ubuntu1804 -f E:\Software\linux\ubuntu1804\install.tar.gz #安装Ubuntu-18.04
 # 备份迁移已安装的WSL系统;用于以后离线安装
-PS> LxRunOffline export -n Centos7 -f E:\Software\linux\centos7\centos-7-docker.tar.xz
+PS> LxRunOffline export -n Centos7 -f E:\Software\linux\centos7\install.tar.gz
 PS> LxRunOffline export -n Ubuntu -f E:\Software\linux\ubuntu2004\install.tar.gz
 PS> LxRunOffline export -n Legacy -f E:\Software\linux\ubuntu1804\install.tar.gz
 # LxRunOffline su -n <system-name> -v 1000 # 以指定用户(id=1000)运行(默认为用户root=0)[先进入系统添加用户后再执行该命令]

@@ -47,7 +47,7 @@ Get-AppxPackage *store* | Remove-AppxPackage # 删除原来的 Microsoft Store
 Get-AppxPackage -AllUsers | Select Name, PackageFullName | Select-String "WindowsStore" # 查询并复制<包名>
 Add-AppxPackage -Register "C:\Program Files\WindowsApps\<包全名>\AppxManifest.xml" -DisableDevelopmentMode #安装
 ~~~
-> Windows 10 WSL & Chocolatey & LxRunOffline & [Update to WSL 2](https://docs.microsoft.com/en-au/windows/wsl/install-win10#step-2---update-to-wsl-2)
+> Windows 10 WSL (Chocolatey & LxRunOffline) [Update to WSL 2](https://docs.microsoft.com/en-au/windows/wsl/install-win10#step-2---update-to-wsl-2)
 ~~~bash
 # PowerShell 以管理员方式运行, 打开 WSL 程序和功能
 Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform
@@ -57,11 +57,11 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.We
 # 安装 LxRunOffline
 choco install lxrunoffline
 # 获取离线安装包 <install.tar.xz> 1.修改[wsl]*.appx后缀为.zip 2.解压得到install.tar.gz 3.离线安装 4.进入目录/*启动程序*.exe
-# LxRunOffline install -n <system-name> -d <system-rootfsdir> -f <install.tar.gz>    #离线安装命令
+# 离线安装命令> LxRunOffline install -n <system-name> -d <system-rootfsdir> -f <install.tar.gz>
 PS> LxRunOffline install -n Centos7 -d D:\centos7 -f E:\Software\linux\centos7\centos-7-docker.tar.xz #离线安装centos-7
 PS> LxRunOffline install -n Ubuntu -d D:\ubuntu2004 -f E:\Software\linux\ubuntu2004\install.tar.gz #安装Ubuntu-20.04(推荐)
 PS> LxRunOffline install -n Legacy -d D:\ubuntu1804 -f E:\Software\linux\ubuntu1804\install.tar.gz #安装Ubuntu-18.04
-# 备份迁移已安装的WSL系统;用于以后离线安装;
+# 备份迁移已安装的WSL系统;用于以后离线安装
 PS> LxRunOffline export -n Centos7 -f E:\Software\linux\centos7\centos-7-docker.tar.xz
 PS> LxRunOffline export -n Ubuntu -f E:\Software\linux\ubuntu2004\install.tar.gz
 PS> LxRunOffline export -n Legacy -f E:\Software\linux\ubuntu1804\install.tar.gz
@@ -76,7 +76,10 @@ PS> wsl -l -v  # 查看<linux>子系统
   NAME       STATE           VERSION
 * Ubuntu     Stopped         1
   Centos7    Stopped         1
-PS> wsl.exe -d Centos7 # 运行<linux>子系统
+# 运行<linux>子系统
+PS> wsl -d Centos7
+PS> wsl -d Ubuntu
+PS> wsl -d Legacy (默认)
 # 设置 WSL 默认版本为 2 (独立运行<linux>需内存多)
 wsl --set-default-version 2 # Update to WSL 2
 wsl --set-version <linux> 2 # 修改<linux>为 WSL 2

@@ -47,7 +47,7 @@ Get-AppxPackage *store* | Remove-AppxPackage # 删除原来的 Microsoft Store
 Get-AppxPackage -AllUsers | Select Name, PackageFullName | Select-String "WindowsStore" # 查询并复制<包名>
 Add-AppxPackage -Register "C:\Program Files\WindowsApps\<包全名>\AppxManifest.xml" -DisableDevelopmentMode #安装
 ~~~
-> Windows 10 WSL & Chocolatey & LxRunOffline、[Update to WSL 2](https://docs.microsoft.com/en-au/windows/wsl/install-win10#step-2---update-to-wsl-2)
+> Windows 10 WSL & Chocolatey & LxRunOffline & [Update to WSL 2](https://docs.microsoft.com/en-au/windows/wsl/install-win10#step-2---update-to-wsl-2)
 ~~~bash
 # PowerShell 以管理员方式运行, 打开 WSL 程序和功能
 Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform
@@ -56,14 +56,15 @@ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-L
 Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 # 安装 LxRunOffline
 choco install lxrunoffline
-# 获取离线安装包 <system-install.tar.xz> 1.修改[wsl]*.appx后缀为.zip 2.解压得到install.tar.gz 3.安装[执行LxRunOffline]
-# LxRunOffline install -n <system-name> -d <system-rootfsdir> -f <system-install.tar.xz> # 复制appx解压目录/启动程序*.exe
-PS> LxRunOffline install -n Centos7 -d D:\centos7 -f D:\centos7\centos-7-docker.tar.xz # 离线安装centos-7
-PS> LxRunOffline install -n Ubuntu-18.04 -d D:\ubuntu1804 -f D:\ubuntu1804\install.tar.gz # 离线安装Ubuntu-18.04
-PS> LxRunOffline install -n Ubuntu -d D:\ubuntu2004 -f D:\ubuntu2004\install.tar.gz # (推荐)安装Ubuntu-20.04
-# 备份迁移-用于以后install
-PS> LxRunOffline export -n Centos7 -f D:\centos7.tar.gz
-PS> LxRunOffline export -n Ubuntu -f D:\ubuntu2004.tar.gz
+# 获取离线安装包 <install.tar.xz> 1.修改[wsl]*.appx后缀为.zip 2.解压得到install.tar.gz 3.离线安装 4.进入目录/*启动程序*.exe
+# LxRunOffline install -n <system-name> -d <system-rootfsdir> -f <install.tar.gz>    #离线安装命令
+PS> LxRunOffline install -n Centos7 -d D:\centos7 -f E:\Software\linux\centos7\centos-7-docker.tar.xz #离线安装centos-7
+PS> LxRunOffline install -n Ubuntu -d D:\ubuntu2004 -f E:\Software\linux\ubuntu2004\install.tar.gz #安装Ubuntu-20.04(推荐)
+PS> LxRunOffline install -n Legacy -d D:\ubuntu1804 -f E:\Software\linux\ubuntu1804\install.tar.gz #安装Ubuntu-18.04
+# 备份迁移已安装的WSL系统;用于以后离线安装;
+PS> LxRunOffline export -n Centos7 -f E:\Software\linux\centos7\centos-7-docker.tar.xz
+PS> LxRunOffline export -n Ubuntu -f E:\Software\linux\ubuntu2004\install.tar.gz
+PS> LxRunOffline export -n Legacy -f E:\Software\linux\ubuntu1804\install.tar.gz
 # LxRunOffline su -n <system-name> -v 1000 # 以指定用户(id=1000)运行(默认为用户root=0)[先进入系统添加用户后再执行该命令]
 # LxRunOffline注册已安装好的<linux>子系统(提前备份整个目录)
 PS> LxRunOffline register -n Ubuntu -d D:\ubuntu2004
@@ -75,6 +76,7 @@ PS> wsl -l -v  # 查看<linux>子系统
   NAME       STATE           VERSION
 * Ubuntu     Stopped         1
   Centos7    Stopped         1
+PS> wsl.exe -d Centos7 # 运行<linux>子系统
 # 设置 WSL 默认版本为 2 (独立运行<linux>需内存多)
 wsl --set-default-version 2 # Update to WSL 2
 wsl --set-version <linux> 2 # 修改<linux>为 WSL 2

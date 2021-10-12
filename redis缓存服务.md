@@ -20,7 +20,7 @@ $ echo "deb https://download.keydb.dev/open-source-dist $(lsb_release -sc) main"
 # echo "deb [trusted=yes] https://download.keydb.dev/open-source-dist $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/keydb.list
 $ sudo wget -O /etc/apt/trusted.gpg.d/keydb.gpg https://download.keydb.dev/open-source-dist/keyring.gpg
 $ sudo apt update
-# sudo apt update --allow-unauthenticated # 同上or同下
+# sudo apt update --allow-unauthenticated # 同上or同下(当更新apt失败时)
 # sudo apt -o Acquire::AllowInsecureRepositories=true -o Acquire::AllowDowngradeToInsecureRepositories=true update
 $ sudo apt install keydb           # keydb-server and keydb-tools
 # sudo apt -o APT::Get::AllowUnauthenticated=true install keydb

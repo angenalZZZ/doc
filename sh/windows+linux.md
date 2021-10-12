@@ -354,6 +354,8 @@ Add-AppxPackage .\ubuntu-2004.appx # 离线安装WSL Ubuntu 20.04 至指定路�
 PS> LxRunOffline install -n Ubuntu -d D:\ubuntu2004 -f D:\ubuntu2004\install.tar.gz # (推荐)这样安装Ubuntu
 $ cat /etc/os-release  # 查看系统详细信息
 $ sudo apt-get update && sudo apt-get dist-upgrade # 更新apt软件管理工具
+# sudo apt-get update --allow-unauthenticated # 同上or同下(当更新apt失败时)
+# sudo apt-get -o Acquire::AllowInsecureRepositories=true -o Acquire::AllowDowngradeToInsecureRepositories=true update
 $ sudo apt-get clean && sudo apt-get update --fix-missing
 # 设置root账户密码[第一步]
 $ sudo passwd root                          # 改root密码

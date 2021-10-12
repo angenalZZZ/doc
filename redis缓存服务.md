@@ -1,6 +1,6 @@
 
 # **[`Redis`](http://redis.cn) - [`Remote Dictionary Service`](http://redis.io)** 
-  [Redis中文网](http://www.redis.cn/)、[KeyDB - The faster Redis Alternative](https://keydb.dev/)[快速搭建集群](https://mp.weixin.qq.com/s/W3dlKIdsxAxcSZmNbOuNQQ)
+  [Redis中文网](http://www.redis.cn/)、[KeyDB - The faster Redis Alternative](https://keydb.dev/)
 
 > [`安装`](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#redis)、[`配置`](#1配置Redis)、[`查询服务信息`](#2查询服务信息)、[`基础数据结构`](#3基础数据结构)、[`命令`](http://doc.redisfans.com)、[`教程`](http://www.runoob.com/redis/redis-tutorial.html)<br>
 > [`RedisDesktopManager`](https://github.com/lework/RedisDesktopManager-Windows)、[AnotherRedisDesktopManager](https://gitee.com/qishibo/AnotherRedisDesktopManager/releases)
@@ -11,6 +11,36 @@ ubuntu > apt-get install redis
 redhat > yum install redis 
 windows> https://github.com/tporadowski/redis/releases > https://github.com/MicrosoftArchive/redis/releases 
 docker > docker pull redis;docker run --name redis-server -d -p6379:6379 redis;docker exec -it redis-server redis-cli 
+~~~
+
+#### [快速搭建KeyDB集群](https://docs.keydb.dev/docs/)
+~~~
+#ubuntu >>
+$ echo "deb https://download.keydb.dev/open-source-dist $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/keydb.list
+$ sudo wget -O /etc/apt/trusted.gpg.d/keydb.gpg https://download.keydb.dev/open-source-dist/keyring.gpg
+$ sudo apt update
+$ sudo apt install keydb           # keydb-server and keydb-tools
+$ sudo apt install keydb-sentinel  # run it as a service
+$ sudo service keydb-server status # /lib/systemd/system/keydb-server.service
+$ sudo service keydb-server start
+$ sudo service keydb-server stop
+$ sudo systemctl enable keydb-server # run on boot
+# keydb config file: /etc/keydb/keydb.conf
+# uninstall keydb:ubuntu
+$ sudo apt autoremove --purge keydb keydb-server keydb-sentinel keydb-tools
+$ sudo rm /etc/apt/sources.list.d/keydb.list
+#centos7 >>
+$ rpm --import https://download.keydb.dev/pkg/open_source/rpm/RPM-GPG-KEY-keydb
+$ wget https://download.keydb.dev/pkg/open_source/rpm/centos7/x86_64/keydb-latest-1.el7.x86_64.rpm
+$ sudo yum install ./keydb-latest-1.el7.x86_64.rpm  # yum install -y sudo
+$ yum info keydb
+$ sudo service keydb status  # /lib/systemd/system/keydb.service
+$ sudo service keydb start   # /lib/systemd/system/keydb-sentinel.service
+$ sudo service keydb stop
+$ sudo systemctl enable keydb  # run on boot
+# keydb config file: /etc/keydb/sentinel.conf
+# uninstall keydb:centos
+$ sudo yum remove keydb
 ~~~
 
 ####  1.配置Redis 

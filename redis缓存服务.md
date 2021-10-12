@@ -29,6 +29,7 @@ $ sudo systemctl enable keydb-server # run on boot
 # uninstall keydb:ubuntu
 $ sudo apt autoremove --purge keydb keydb-server keydb-sentinel keydb-tools
 $ sudo rm /etc/apt/sources.list.d/keydb.list
+
 #centos7 >>
 $ rpm --import https://download.keydb.dev/pkg/open_source/rpm/RPM-GPG-KEY-keydb
 $ wget https://download.keydb.dev/pkg/open_source/rpm/centos7/x86_64/keydb-latest-1.el7.x86_64.rpm
@@ -41,6 +42,36 @@ $ sudo systemctl enable keydb  # run on boot
 # keydb config file: /etc/keydb/sentinel.conf
 # uninstall keydb:centos
 $ sudo yum remove keydb
+# 创建2个节点组成集群;手动启动命令:
+keydb-server /etc/keydb/16379.conf
+keydb-server /etc/keydb/26379.conf
+vi /etc/keydb/16379.conf # 设置>>
+port 16379
+requirepass 123456
+masterauth 123456
+active-replica yes
+replicaof 127.0.0.1 26379
+vi /etc/keydb/26379.conf # 设置>>
+port 26379
+requirepass 123456
+# 使用Nginx用作负载均衡(端口:6379){"keydb":"localhost:6379,password=123456"};修改nginx.conf
+events {
+  worker_connections 1024;
+}
+stream
+{
+  upstream keydb
+  {
+    server 192.168.1.10:16379;
+    server 192.168.1.10:26379;
+  }
+  server
+  {
+    listen 127.0.0.1:6379;
+    proxy_pass keydb;
+    proxy_protocol off;
+  }
+}
 ~~~
 
 ####  1.配置Redis 

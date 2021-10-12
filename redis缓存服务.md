@@ -1,6 +1,6 @@
 
 # **[`Redis`](http://redis.cn) - [`Remote Dictionary Service`](http://redis.io)** 
-  [Redis中文网](http://www.redis.cn/)、[KeyDB - The faster Redis Alternative](https://keydb.dev/)
+  [Redis中文网](http://www.redis.cn/)
 
 > [`安装`](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#redis)、[`配置`](#1配置Redis)、[`查询服务信息`](#2查询服务信息)、[`基础数据结构`](#3基础数据结构)、[`命令`](http://doc.redisfans.com)、[`教程`](http://www.runoob.com/redis/redis-tutorial.html)<br>
 > [`RedisDesktopManager`](https://github.com/lework/RedisDesktopManager-Windows)、[AnotherRedisDesktopManager](https://gitee.com/qishibo/AnotherRedisDesktopManager/releases)
@@ -13,7 +13,8 @@ windows> https://github.com/tporadowski/redis/releases > https://github.com/Micr
 docker > docker pull redis;docker run --name redis-server -d -p6379:6379 redis;docker exec -it redis-server redis-cli 
 ~~~
 
-#### [快速搭建KeyDB集群](https://docs.keydb.dev/docs/)
+#### [`快速搭建KeyDB集群`](https://docs.keydb.dev/docs/)
+    [`KeyDB` - The faster Redis Alternative](https://keydb.dev/)
 ~~~
 #ubuntu >>
 $ echo "deb https://download.keydb.dev/open-source-dist $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/keydb.list

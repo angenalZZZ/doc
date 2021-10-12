@@ -17,9 +17,13 @@ docker > docker pull redis;docker run --name redis-server -d -p6379:6379 redis;d
 ~~~
 #ubuntu >>
 $ echo "deb https://download.keydb.dev/open-source-dist $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/keydb.list
+# echo "deb [trusted=yes] https://download.keydb.dev/open-source-dist $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/keydb.list
 $ sudo wget -O /etc/apt/trusted.gpg.d/keydb.gpg https://download.keydb.dev/open-source-dist/keyring.gpg
 $ sudo apt update
+# sudo apt update --allow-unauthenticated # 同上or同下
+# sudo apt -o Acquire::AllowInsecureRepositories=true -o Acquire::AllowDowngradeToInsecureRepositories=true update
 $ sudo apt install keydb           # keydb-server and keydb-tools
+# sudo apt -o APT::Get::AllowUnauthenticated=true install keydb
 $ sudo apt install keydb-sentinel  # run it as a service
 $ sudo service keydb-server status # /lib/systemd/system/keydb-server.service
 $ sudo service keydb-server start

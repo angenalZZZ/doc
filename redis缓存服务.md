@@ -13,8 +13,8 @@ windows> https://github.com/tporadowski/redis/releases > https://github.com/Micr
 docker > docker pull redis;docker run --name redis-server -d -p6379:6379 redis;docker exec -it redis-server redis-cli 
 ~~~
 
-#### [`快速搭建KeyDB集群`](https://docs.keydb.dev/docs/)
-    [`KeyDB` - The faster Redis Alternative](https://keydb.dev/)
+[`KeyDB` - The faster Redis Alternative](https://keydb.dev/)
+[`快速搭建KeyDB集群`](https://docs.keydb.dev/docs/)
 ~~~
 #ubuntu >>
 $ echo "deb https://download.keydb.dev/open-source-dist $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/keydb.list

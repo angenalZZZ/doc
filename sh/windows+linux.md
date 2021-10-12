@@ -132,40 +132,7 @@ yum install -y gcc-c++ make net-tools       # 安装*gcc/make/net-tools
 yum install -y glibc glibc.i686             # 安装*glibc*x86_64,i686
 yum install -y GraphicsMagick               # 安装*GraphicsMagick(2D图库)
 
-# 安装Redis的高性能分支KeyDB集群
-wget https://download.keydb.dev/pkg/open_source/rpm/centos7/x86_64/keydb-latest-1.el7.x86_64.rpm
-yum install ./keydb-latest-1.el7.x86_64.rpm
-# 创建2个节点组成集群;命令启动:
-keydb-server /etc/redis/16379.conf
-keydb-server /etc/redis/26379.conf
-vi /etc/redis/16379.conf # 设置>>
-port 16379
-requirepass 123456
-masterauth 123456
-active-replica yes
-replicaof 127.0.0.1 26379
-vi /etc/redis/26379.conf # 设置>>
-port 26379
-requirepass 123456
-# 使用Nginx用作负载均衡(端口:6379){"keydb":"localhost:6379,password=123456"};修改nginx.conf
-events {
-  worker_connections 1024;
-}
-stream
-{
-  upstream keydb
-  {
-    server 192.168.1.10:16379;
-    server 192.168.1.10:26379;
-  }
-  server
-  {
-    listen 127.0.0.1:6379;
-    proxy_pass keydb;
-    proxy_protocol off;
-  }
-}
-
+# 安装Redis的高性能分支KeyDB: https://github.com/angenalZZZ/doc/blob/master/redis缓存服务.md#快速搭建keydb集群
 
 # 安装数据库 Mysql 8.0 参考 https://dev.mysql.com/doc/refman/8.0/en/linux-installation-yum-repo.html
 cd /tmp # 需提前安装依赖 # yum install -y epel-release glibc glibc.i686 gcc-c++ wget net-tools

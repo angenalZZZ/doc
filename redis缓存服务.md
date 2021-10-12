@@ -46,7 +46,8 @@ $ sudo systemctl enable keydb  # run on boot
 # keydb config file: /etc/keydb/sentinel.conf
 # uninstall keydb:centos
 $ sudo yum remove keydb
-# 创建2个节点组成集群;
+
+#创建2个节点组成集群;
 # cp /etc/keydb/keydb.conf /etc/keydb/16379.conf
 # cp /etc/keydb/keydb.conf /etc/keydb/26379.conf
 vi /etc/keydb/16379.conf # 设置>>
@@ -60,17 +61,17 @@ port 26379
 requirepass 123456
 active-replica yes
 # chown keydb:keydb /etc/keydb/*.conf
-# 手动启动集群;
+#手动启动集群;
 # keydb-server /etc/keydb/16379.conf
 # keydb-server /etc/keydb/26379.conf
-# 查询集群状态;
+#查询集群状态;
 > redis-cli -h 127.0.0.1 -p 26379 -a 123456 -n 0
 > set k1 v1
 > exit
 > redis-cli -h 127.0.0.1 -p 16379 -a 123456 -n 0
 > get k1
 > exit
-# 使用nginx负载均衡(端口:6379){"keydb":"localhost:6379,password=123456"};修改nginx.conf>
+#使用Nginx负载均衡(redis端口:6379){"keydb":"localhost:6379,password=123456"};修改nginx.conf>
 events {
   worker_connections 1024;
 }
@@ -88,6 +89,7 @@ stream
     proxy_protocol off;
   }
 }
+#开机启动服务 https://github.com/ochinchina/supervisord
 ~~~
 
 ####  1.配置Redis 

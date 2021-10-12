@@ -132,7 +132,7 @@ yum install -y gcc-c++ make net-tools       # 安装*gcc/make/net-tools
 yum install -y glibc glibc.i686             # 安装*glibc*x86_64,i686
 yum install -y GraphicsMagick               # 安装*GraphicsMagick(2D图库)
 
-# 安装Redis的高性能分支KeyDB: https://github.com/angenalZZZ/doc/blob/master/redis缓存服务.md#快速搭建keydb集群
+# 安装Redis的高性能分支KeyDB: https://github.com/angenalZZZ/doc/blob/master/redis缓存服务.md
 
 # 安装数据库 Mysql 8.0 参考 https://dev.mysql.com/doc/refman/8.0/en/linux-installation-yum-repo.html
 cd /tmp # 需提前安装依赖 # yum install -y epel-release glibc glibc.i686 gcc-c++ wget net-tools

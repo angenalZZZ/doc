@@ -13,8 +13,7 @@ windows> https://github.com/tporadowski/redis/releases > https://github.com/Micr
 docker > docker pull redis;docker run --name redis-server -d -p6379:6379 redis;docker exec -it redis-server redis-cli 
 ~~~
 
-[`KeyDB` - The faster Redis Alternative](https://keydb.dev/)
-[`快速搭建KeyDB集群`](https://docs.keydb.dev/docs/)
+[`KeyDB` - The faster Redis Alternative](https://keydb.dev/)、[`快速搭建KeyDB集群`](https://docs.keydb.dev/docs/)
 ~~~
 #ubuntu >>
 $ echo "deb https://download.keydb.dev/open-source-dist $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/keydb.list
@@ -32,6 +31,9 @@ $ sudo apt autoremove --purge keydb keydb-server keydb-sentinel keydb-tools
 $ sudo rm /etc/apt/sources.list.d/keydb.list
 
 #centos7 >>
+# yum install -y sudo
+# su - centos
+$ cd ~
 $ rpm --import https://download.keydb.dev/pkg/open_source/rpm/RPM-GPG-KEY-keydb
 $ wget https://download.keydb.dev/pkg/open_source/rpm/centos7/x86_64/keydb-latest-1.el7.x86_64.rpm
 $ sudo yum install ./keydb-latest-1.el7.x86_64.rpm  # yum install -y sudo
@@ -40,22 +42,35 @@ $ sudo service keydb status  # /lib/systemd/system/keydb.service
 $ sudo service keydb start   # /lib/systemd/system/keydb-sentinel.service
 $ sudo service keydb stop
 $ sudo systemctl enable keydb  # run on boot
+# usermod -aG keydb centos && groups centos # 添加centos普通用户的keydb用户组&&查询出来
 # keydb config file: /etc/keydb/sentinel.conf
 # uninstall keydb:centos
 $ sudo yum remove keydb
-# 创建2个节点组成集群;手动启动命令:
-keydb-server /etc/keydb/16379.conf
-keydb-server /etc/keydb/26379.conf
+# 创建2个节点组成集群;
+# cp /etc/keydb/keydb.conf /etc/keydb/16379.conf
+# cp /etc/keydb/keydb.conf /etc/keydb/26379.conf
 vi /etc/keydb/16379.conf # 设置>>
 port 16379
-requirepass 123456
-masterauth 123456
-active-replica yes
 replicaof 127.0.0.1 26379
+masterauth 123456
+requirepass 123456
+active-replica yes
 vi /etc/keydb/26379.conf # 设置>>
 port 26379
 requirepass 123456
-# 使用Nginx用作负载均衡(端口:6379){"keydb":"localhost:6379,password=123456"};修改nginx.conf
+active-replica yes
+# chown keydb:keydb /etc/keydb/*.conf
+# 手动启动集群;
+# keydb-server /etc/keydb/16379.conf
+# keydb-server /etc/keydb/26379.conf
+# 查询集群状态;
+> redis-cli -h 127.0.0.1 -p 26379 -a 123456 -n 0
+> set k1 v1
+> exit
+> redis-cli -h 127.0.0.1 -p 16379 -a 123456 -n 0
+> get k1
+> exit
+# 使用nginx负载均衡(端口:6379){"keydb":"localhost:6379,password=123456"};修改nginx.conf>
 events {
   worker_connections 1024;
 }

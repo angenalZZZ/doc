@@ -5,8 +5,8 @@
 ```
 证书：           CA根证书(服务器身份验证)                               # apiserver.crt <=> apiserver.key
 *版本            V1
-*颁发者          acme                                                  # CN = acme
-*使用者          acme-apiserver                                        # CN = acme-apiserver
+*颁发者          acme                                                 # CN = acme
+*使用者          acme-apiserver                                       # CN = acme-apiserver
 *公钥            RSA (2048 Bits)
 *公钥参数         05 00
 *增强型密钥用法   服务器身份验证 (1.3.6.1.5.5.7.3.1)
@@ -169,10 +169,14 @@ openssl rsa -in server.key -out server.key.public
 ~~~
  - *本机开发证书-- OpenSSL 生成 localhost.crt & localhost.key*
 ~~~bash
+# localhost本机开发证书
 # hosts可指定子域名www等: 127.0.0.1 www.localhost
 > openssl req -x509 -out localhost.crt -keyout localhost.key -newkey rsa:2048 -nodes -sha256 \
     -subj '/CN=localhost' -extensions EXT -config <( printf "[dn]\nCN=localhost\n[req]\ndistinguished_name \
     = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
+
+# localhost项目生成事件(Microsoft Visual Studio)
+> if not exist "$(ProjectDir)$(PackageId).pfx" (dotnet dev-certs https -ep "$(ProjectDir)$(PackageId).pfx" -p 123456 -t && dotnet dev-certs https --clean -i "$(ProjectDir)$(PackageId).pfx" -p 123456)
 
   ## 单个域名 [sv.key sv.crt ci.key ci.crt] -一般用于本地开发(无密码验证-pass*)
 openssl genrsa -out sv.key 2048    # genrsa生成server端密钥文件

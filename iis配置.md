@@ -39,6 +39,18 @@
 .woff2  application/x-font-woff
 ```
 
+> `默认文档` 添加到`网站`配置 ...
+```
+  <system.webServer>
+    <defaultDocument>
+      <files>
+        <!-- 发布 ClickOnce 应用程序: https://docs.microsoft.com/zh-cn/visualstudio/deployment/publishing-clickonce-applications?view=vs-2019 -->
+        <add value="WPF.application" />
+      </files>
+    </defaultDocument>
+  </system.webServer>
+```
+
 > `上传限制` [Upload Large Files to IIS / .NET](https://www.webdavsystem.com/server/documentation/large_files_iis_asp_net)
 ~~~xml
   <system.webServer>

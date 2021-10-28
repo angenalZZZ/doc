@@ -39,12 +39,12 @@
 .woff2  application/x-font-woff
 ```
 
-> `默认文档` 添加到`网站`配置 ...
-```
+> `默认文档` 添加到`网站`配置 ... [发布 ClickOnce 应用程序](https://docs.microsoft.com/zh-cn/visualstudio/deployment/publishing-clickonce-applications?view=vs-2019)
+```xml
   <system.webServer>
     <defaultDocument>
       <files>
-        <!-- 发布 ClickOnce 应用程序: https://docs.microsoft.com/zh-cn/visualstudio/deployment/publishing-clickonce-applications?view=vs-2019 -->
+        <!-- 发布 ClickOnce 应用程序后 -->
         <add value="WPF.application" />
       </files>
     </defaultDocument>

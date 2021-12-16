@@ -15,15 +15,26 @@ phantom.outputEncoding = "gbk"; // 设置网页编码 (防止输出中文时出�
 // 提供了一套可以访问和操作web文档的核心方法，包括操作DOM、事件捕获、用户事件模拟等。
 var webPage = require('webpage'); // 加载模块
 var page = webPage.create();  // 创建实例
-page.open(url, settings, callback) {} // 访问网页
+page.settings.userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537 (KHTML, like Gecko) Chrome/96 Safari/537 Edg/96';
+page.open(url, settings, callback) // 访问网页
 // url：访问的网页网址
 // callback：网页被打开完时的回调函数
 // method：默认为GET,也可指定为POST等方法
 // data：HTTP请求-提交的数据
 // settings：HTTP请求的配置对象
-page.open(url, callback) {}
-page.open(url, method, callback) {}
-page.open(url, method, data, callback) {}
+page.open(url, function (status) {
+    if (status !== 'success') {
+        console.log('Unable to access network');
+    } else {
+        var hello = page.evaluate(function () {
+            return document.getElementById('hello').innerText;
+        });
+        console.log(hello);
+    }
+    phantom.exit();
+}) 
+page.open(url, method, callback) 
+page.open(url, method, data, callback) 
 page.onLoadStarted = function() {           // page.open开始事件callback
   var currentUrl = page.evaluate(function() { return window.location.href; });
   console.log('window.location：' + currentUrl + ' loading...');
@@ -91,17 +102,26 @@ require('webpage').create().open('http://api.custom.com/', {
 // page.evaluate方法用于打开网页后，在页面中执行js代码，如点击、滑动、翻页等
 var page = require('webpage').create();
 page.open('https://www.baidu.com/', function(status) {
-    var title = page.evaluate(function(){ return document.title; });
-    console.log(title);
+    if (status !== 'success') {
+        console.log('Unable to access network');
+    } else {
+      var title = page.evaluate(function(){ return document.title; });
+      console.log(title);
+    }
     phantom.exit();
 });
 // page.includeJs方法用于页面加载外部脚本，加载完成后可调用指定的回调函数
 var page = require('webpage').create();
 page.open('https://www.baidu.com/', function(status) {
-    page.includeJs('https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js', function() {
-        page.evaluate(function () { $('.button').click(); });
+    if (status !== 'success') {
+        console.log('Unable to access network');
         phantom.exit();
-    });
+    } else {
+      page.includeJs('https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js', function() {
+          page.evaluate(function () { $('.button').click(); });
+          phantom.exit();
+      });
+    }
 });
 // render方法用于将网页保存成图片。该方法根据后缀名，将网页保存成不同的格式，如：PDF,PNG,JPEG,BMP,PPM,GIF
 var page = require('webpage').create();

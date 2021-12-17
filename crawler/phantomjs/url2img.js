@@ -1,5 +1,5 @@
 "use strict";
-// 命令: phantomjs url2img.js "https://www.cncsedu.com.cn/web/#/admin/InfoDetail?Id=f20ac0c3-21e7-4673-a169-d24e647b16eb&origin=200"
+// 命令: phantomjs url2img.js "https://webcdn.m.qq.com/webapp_myapp/index.html#/"
 // Import Common-JS modules
 var system = require("system");
 // Saved images-dir
@@ -14,12 +14,12 @@ var paperSize = {
 };
 // Custom headers
 var customHeaders = {
-    "Host": "www.cncsedu.com.cn",
+    "Host": "webcdn.m.qq.com",
     "Upgrade-Insecure-Requests": "1",
     "Accept-Encoding": "gzip, deflate, br",
     "Cache-Control": "max-age=0",
-    "Cookie": "lhyj-client_code=5a55f9c1f181c962652cf935c04ce0a0; lhyj-access_token=vkelMCRWmNMsKp7bKatk6pHBEcNxHmrDYdeFb3qWMzFQ6WmTuk8Pf15kJ5kb6L2OsAvPn8PAwZOvaKXlBJeTj5elELbnp7FqX7AQ4dzCpvDj-Go8MT2zCX_onBPyTyiVORqASRwe0CAXosuOx7qqPMLgMagBwIjAnLcAGk71d1zwraD-akm6oCKfZvWu6zXODcTTD_FHcVzwvEm1KB9y0M8DEwhfvm33d_LARTGt7RrxzMqvbeNSFbvXmBy1DzR3; lhyj-refresh_token=beT2H-60wIGEVZwyxKS7t5CrQ6EXHwPiov1GY2z0XT-5lprLXIHe8TWeCUOrFHRZKD0",
-    "Authorization": "Bearer vkelMCRWmNMsKp7bKatk6pHBEcNxHmrDYdeFb3qWMzFQ6WmTuk8Pf15kJ5kb6L2OsAvPn8PAwZOvaKXlBJeTj5elELbnp7FqX7AQ4dzCpvDj-Go8MT2zCX_onBPyTyiVORqASRwe0CAXosuOx7qqPMLgMagBwIjAnLcAGk71d1zwraD-akm6oCKfZvWu6zXODcTTD_FHcVzwvEm1KB9y0M8DEwhfvm33d_LARTGt7RrxzMqvbeNSFbvXmBy1DzR3"
+    "Cookie": "",
+    "Authorization": ""
 };
 // Custom user-agent
 var userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537 (KHTML, like Gecko) Chrome/96 Safari/537 Edg/96";

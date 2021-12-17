@@ -53,8 +53,8 @@
 
 # 2.通过修改hosts, 获取以下 DNS Resource Records, 解决CDN被屏蔽(DNS污染)问题..
 # github > fix git clone github project failed > /etc/hosts
-18.138.202.180 github.com                   # 查询> https://github.com.ipaddress.com
-18.138.202.180 www.github.com
+52.69.186.44 github.com                   # 查询> https://github.com.ipaddress.com
+52.69.186.44 www.github.com
 199.232.69.194 github.global.ssl.fastly.net # 查询> https://fastly.net.ipaddress.com/github.global.ssl.fastly.net
 185.199.109.133 assets-cdn.github.com       # 查询> https://github.com.ipaddress.com/assets-cdn.github.com
 185.199.109.133 raw.github.com

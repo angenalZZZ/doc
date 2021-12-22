@@ -718,7 +718,7 @@ $ sealos init --passwd '123456' \
 	--version v1.22.0
 ```
 * 在线安装步骤:  1-8 (除了4) 在所有节点执行
-   * 1.关闭防火墙，配置免密登录
+ * 1.关闭防火墙，配置免密登录
 ```bash
 systemctl stop firewalld # 防止端口不开放，k8s集群无法启动(k8s运行之后再开放firewalld)
 ```

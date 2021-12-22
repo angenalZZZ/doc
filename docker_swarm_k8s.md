@@ -700,7 +700,24 @@ services:
 
 > [安装](https://kubernetes.io/zh/docs/setup/)
 
-* 步骤:  1-8 (除了4) 在所有节点执行
+* [离线安装](https://github.com/fanux/sealos)
+   * 本地开发环境
+```
+# 下载并安装sealos, sealos是个golang的二进制工具，直接下载拷贝到bin目录即可
+$ wget -c https://sealyun.oss-cn-beijing.aliyuncs.com/latest/sealos && \
+    chmod +x sealos && mv sealos /usr/bin 
+
+# 下载离线资源包
+$ wget -c https://sealyun.oss-cn-beijing.aliyuncs.com/05a3db657821277f5f3b92d834bbaf98-v1.22.0/kube1.22.0.tar.gz
+
+# 安装一个三个master的集群
+$ sealos init --passwd '123456' \
+	--master 192.168.0.2  --master 192.168.0.3  --master 192.168.0.4  \
+	--node 192.168.0.5 \
+	--pkg-url /root/kube1.22.0.tar.gz \
+	--version v1.22.0
+```
+* 在线安装步骤:  1-8 (除了4) 在所有节点执行
    * 1.关闭防火墙，配置免密登录
 ```bash
 systemctl stop firewalld # 防止端口不开放，k8s集群无法启动(k8s运行之后再开放firewalld)

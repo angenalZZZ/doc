@@ -722,18 +722,18 @@ $ sealos init --passwd '123456' \
 ```bash
 systemctl stop firewalld # 防止端口不开放，k8s集群无法启动(k8s运行之后再开放firewalld)
 ```
-      * 2.关闭selinux
+   * 2.关闭selinux
 ```bash
 setenforce 0
 ```
-      * 3.关闭swap
+   * 3.关闭swap
 ```bash
 swapoff -a    # 临时关闭
 blkid | lsblk # 查看blk设备,注释swap的每一行(查找带有swap字样的信息)
 vim /etc/fstab # 查找fs挂载点,注释swap的每一行(开启swap内存分区,会导致k8s无法启动)
 free          # 查看swap是否关闭 Swap: 0  0  0
 ```
-      * 4.添加主机名与IP对应的关系（这一步可以只在master执行），这一步我为后面传输网络做准备
+   * 4.添加主机名与IP对应的关系（这一步可以只在master执行），这一步我为后面传输网络做准备
 ```
 vim /etc/hosts
 192.168.235.145       k8s-master
@@ -749,14 +749,14 @@ scp -r .ssh root@192.168.44.5:/root
 # 查看这些端口是否被占用(如果被占用,请手动释放)
 netstat -ntlp |grep -E '6443|23[79,80]|1025[0,1,2]' # 使用netstat: apt install net-tools
 ```
-      * 5.将桥接的IPV4流量传递到iptables
+   * 5.将桥接的IPV4流量传递到iptables
 ```text
 vi /etc/sysctl.d/k8s.conf
 
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 ```
-      * 6.安装Docker及同步时间
+   * 6.安装Docker及同步时间
 ```bash
 wget https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo -O/etc/yum.repos.d/docker-ce.repo
 
@@ -769,7 +769,7 @@ systemctl enable docker
 yum install ntpdate -y
 ntpdate cn.pool.ntp.org
 ```
-     * 7.添加阿里云YUM软件源
+   * 7.添加阿里云YUM软件源
 ```text
 vi /etc/yum.repos.d/kubernetes.repo
 
@@ -782,13 +782,13 @@ repo_gpgcheck=1
 gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
 https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 ```
-      * 8.安装kubeadm，kubelet和kubectl
+   * 8.安装kubeadm，kubelet和kubectl
 ```bash
 yum makecache fast
 
 yum install -y kubectl-1.18.3 kubeadm-1.18.3 kubelet-1.18.3 --nogpgcheck
 ```
-      * 9. 部署Kubernetes Master  初始化master（在master执行）
+   * 9. 部署Kubernetes Master  初始化master（在master执行）
 ```bash
 # 第一次初始化比较慢，需要拉取镜像
 kubeadm init --apiserver-advertise-address=192.168.235.145   # 换成自己master的IP
@@ -805,7 +805,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 生成
 kubeadm join 192.168.235.145:6443 --token w5rify.gulw6l1yb63zsqsa --discovery-token-ca-cert-hash sha256:4e7f3a03392a7f9277d9f0ea2210f77d6e67ce0367e824ed891f6fefc7dae3c8
 ```
-       * 验证状态，发现前两个是pending，get pods 发现是not ready
+   * 验证状态，发现前两个是pending，get pods 发现是not ready
 ```bash
 kubectl get pods --all-namespaces
 NAMESPACE     NAME                             READY   STATUS   RESTARTS   AGE
@@ -817,7 +817,7 @@ kube-system   kube-controller-manager-local1   1/1     Running   0         100d
 kube-system   kube-proxy-2trv9                 1/1     Running   0         100d
 kube-system   kube-scheduler-local1           1/1     Running   0         100d
 ```
-      * 需要安装flannel
+   * 需要安装flannel
 ```bash
 # 安装flannel（在master执行）
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
@@ -828,7 +828,7 @@ scp -r /etc/cni root@192.168.44.5:/etc
 # 这一步也要拷贝，否则节点看着正常，但是pod由于网络原因无法创建
 scp -r /run/flannel/ root@192.168.44.5:/run
 ```
-      * 再次初始化(不用做也可以)
+   * 再次初始化(不用做也可以)
 ```
 # 执行第9步的命令
 kubeadm init ...
@@ -840,7 +840,7 @@ kubeadm init ...
 --apiserver-bind-port api-server 6443的端口
 --ignore-preflight-errors all 跳过之前已安装部分（出问题时，问题解决后加上继续运行）
 ```
-      * 查看集群状态，master正常
+   * 查看集群状态，master正常
 ```bash
 #[root@local1 ~]# kubectl get cs
 NAME                 STATUS    MESSAGE             ERROR
@@ -863,7 +863,7 @@ kube-system   kube-proxy-sdbl9                 1/1     Running   0          15m
 kube-system   kube-proxy-v4vxg                 1/1     Running   0          16m
 kube-system   kube-scheduler-local1            1/1     Running   0  
 ```
-      * 10、node工作节点加载 (node节点执行1-8，如果第五步不执行，会添加失败; 在node节点执行上面初始化时生成的join命令)
+   * 10、node工作节点加载 (node节点执行1-8，如果第五步不执行，会添加失败; 在node节点执行上面初始化时生成的join命令)
 ```bash
 kubeadm join 192.168.235.145:6443 --token w5rify.gulw6l1yb63zsqsa --discovery-token-ca-cert-hash sha256:4e7f3a03392a7f9277d9f0ea2210f77d6e67ce0367e824ed891f6fefc7dae3c8
 
@@ -874,14 +874,14 @@ kubeadm join 192.168.235.145:6443 --token w5rify.gulw6l1yb63zsqsa --discovery-to
 
 # Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
 ```
-      * 在master查看
+   * 在master查看
 ```text
 [root@local1 ~]# kubectl get nodes
 NAME     STATUS     ROLES    AGE     VERSION
 local1   Ready      master   4m58s   v1.18.3
 local2   Ready      <none>   3m36s   v1.18.3
 ```
-      * 在node节点查看
+   * 在node节点查看
 ```text
 [root@local3 ~]# kubectl get nodes
 Unable to connect to the server: x509: certificate signed by unknown authority (possibly because of "crypto/rsa: verification error" while trying to verify candidate authority certificate "kubernetes")
@@ -902,13 +902,13 @@ local1   Ready    master   6m36s   v1.18.0
 local2   Ready    <none>   31s     v1.18.0
 local3   Ready    <none>   5m43s   v1.18.0
 ```
-      * 11、如果节点出错，可以移除节点
+   * 11、如果节点出错，可以移除节点
 ```bash
 kubeadm reset   # 重置节点
 
 kubectl delete node node-1 # 删除节点，删除后 数据就从etcd中清除了(可运行kubectl的任一节点中执行)
 ```
-      * 12、如果加入节点时，token过期，可以重新生成
+   * 12、如果加入节点时，token过期，可以重新生成
 ```text
 查看token
 kubeadm token list

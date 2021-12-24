@@ -792,6 +792,7 @@ $ yum clean all & yum makecache               # 更新镜像源缓存
 > [`Redis高性能内存数据库`](http://www.redis.cn)
 ~~~shell
   $ wget http://download.redis.io/releases/redis-stable.tar.gz # 下载源码 # cd ~
+  $ wget http://download.redis.io/releases/redis-5.0.14.tar.gz redis-6.0.16.tar.gz # 指定版本
   $ tar xzf redis-stable.tar.gz                                # 解压源码
   $ cd redis-stable && sudo make install                       # 编译Redis
   $ cd utils && sudo ./install_server.sh                       # 安装Redis

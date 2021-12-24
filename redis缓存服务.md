@@ -7,10 +7,10 @@
 
 ~~~
 mac    > brew install redis 
-ubuntu > apt-get install redis 
-redhat > yum install redis 
-windows> https://github.com/tporadowski/redis/releases > https://github.com/MicrosoftArchive/redis/releases 
-docker > docker pull redis;docker run --name redis-server -d -p6379:6379 redis;docker exec -it redis-server redis-cli 
+ubuntu > apt-get install redis ; http://download.redis.io/releases/redis-5.0.14.tar.gz redis-6.0.16.tar.gz
+centos > yum install redis #(redhat)
+windows> https://github.com/tporadowski/redis/releases ; https://github.com/MicrosoftArchive/redis/releases 
+docker > docker pull redis ; docker run --name redis-server -d -p6379:6379 redis ; docker exec -it redis-server redis-cli 
 ~~~
 
 [`KeyDB` - The faster Redis Alternative](https://keydb.dev/)、[`快速搭建KeyDB集群`](https://docs.keydb.dev/docs/)

@@ -13,6 +13,34 @@ windows> https://github.com/tporadowski/redis/releases ; https://github.com/Micr
 docker > docker pull redis ; docker run --name redis-server -d -p6379:6379 redis ; docker exec -it redis-server redis-cli 
 ~~~
 
+[`Redis`高性能内存数据库](http://www.redis.cn)
+~~~shell
+  $ wget http://download.redis.io/releases/redis-stable.tar.gz # 下载源码 # cd ~
+  $ wget http://download.redis.io/releases/redis-5.0.14.tar.gz redis-6.0.16.tar.gz # 指定版本
+  $ tar xzf redis-stable.tar.gz                                # 解压源码
+  $ cd redis-stable && sudo make install                       # 编译Redis
+  $ cd utils && sudo ./install_server.sh                       # 安装Redis
+  $ rm -rf ~/redis-stable && rm -f ~/redis-stable.tar.gz       # 删除源码
+  #-config>>  /etc/redis/6379.conf       # 修改配置文件
+  # << bind 0.0.0.0                      # 允许远程连接
+  # << requirepass 123456                # 设置访问密码
+  # << protected-mode no                 # 关闭保护模式
+  $ ps aux|grep redis                    # 查看进程: /usr/local/bin/redis-server 127.0.0.1:6379
+  $ redis-server                         # (可选)启动服务(独立模式|常规启动), 可通过 ps aux 查看进程
+  $ sudo service redis_6379 start        # (可选)启动服务(非独立模式|后台启动服务) start|stop|restart
+  $ sudo update-rc.d redis_6379 defaults # (推荐)开机启动Redis将init脚本添加到所有默认运行级别(需stop后处理)
+  > nssm install RedisWSLubuntu1804 bash.exe -c redis-server # 启动前设置Windows服务登录账户为Administrator
+  # 客户端命令Redis
+  $ redis-cli -h 127.0.0.1 -p 6379 -a "123456" -n 0 # [p端口],[a密码],[n数据库]
+  $ redis-cli shutdown                   # 关闭Redis服务
+  $ config set requirepass "123456"      # 设置访问密码
+  $ auth 123456                          # 密码认证;再执行其它命令.
+  # 性能测试Redis
+  > redis-benchmark -h 127.0.0.1 -p 6369 -c 30 -d 512 -t set,get -n 1000000 -r 100000000 # SET: 64K, GET: 68K
+  > redis-benchmark -n 10000 -q -c 30       # 本机Redis       < SET: 42K, GET: 50K > requests per second
+  > buntdb-benchmark -n=10000 -q -r=30 -mem # 本机BuntDB(推荐) < SET:760K,GET:5000K > github.com/tidwall/buntdb
+~~~
+
 [`KeyDB` - The faster Redis Alternative](https://keydb.dev/)、[`快速搭建KeyDB集群`](https://docs.keydb.dev/docs/)
 ~~~
 #ubuntu >>

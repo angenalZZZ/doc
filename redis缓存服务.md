@@ -76,10 +76,11 @@ ProtectSystem=full
 
 [Install]
 WantedBy=multi-user.target
-Alias=redis.6379.service
+Alias=redis.service
 ~~~
 ~~~shell
   $ sudo cp /etc/redis/redis.conf /etc/redis/6379.conf
+  #
   #-config>>  /etc/redis/6379.conf       # 修改配置文件
   # supervised systemd
   # daemonize yes

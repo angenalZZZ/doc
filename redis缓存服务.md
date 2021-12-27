@@ -106,12 +106,14 @@ Alias=redis.service
   #> sudo chown -R redis:redis /var/lib/redis/rejson.so
   # 
   # loadmodule /var/lib/redis/rejson.so  # 编辑redis.conf
+  #> redis-server --loadmodule /var/lib/redis/rejson.so # 先检测是否能正常加载
   #
   $ sudo systemctl restart redis-server  # 重启服务(先保存配置文件6379.conf)
   $ sudo systemctl status redis-server   # 查看状态
   #
   $ ps aux|grep redis                    # 查看进程: /usr/local/bin/redis-server 127.0.0.1:6379
   $ redis-server                         # (可选)启动服务(独立模式|常规启动), 可通过 ps aux 查看进程
+  # redis-server /etc/redis/6379.conf    # (可选)启动服务(指定配置文件)
   $ sudo service redis_6379 start        # (可选)启动服务(非独立模式|后台启动服务) start|stop|restart
   $ sudo update-rc.d redis_6379 defaults # (推荐)开机启动Redis将init脚本添加到所有默认运行级别(需stop后处理)
   > nssm install RedisWSLubuntu1804 bash.exe -c redis-server # 启动前设置Windows服务登录账户为Administrator

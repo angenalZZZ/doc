@@ -105,6 +105,7 @@
   $ mkdir -p /home/admin & chmod 777 /home/admin 
   # 新建用户-默认值: useradd -D  |  cat /etc/default/useradd ;修改默认shell: useradd -D -s /bin/zsh
   $ useradd -m -d /home/admin -G adm,cdrom,sudo,dip,plugdev,lpadmin,sambashare,libvirt admin # -m管理员
+  $ adduser --system --group --no-create-home redis       # 创建系统redis用户-不建主目录
   $ useradd -d /home/test  -s /bin/bash test # 新建普通用户test
   $ man newusers    # 批量更新和创建新用户
   $ userdel -r test # 删除用户

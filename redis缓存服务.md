@@ -15,16 +15,92 @@ docker > docker pull redis ; docker run --name redis-server -d -p6379:6379 redis
 
 [`Redis`高性能内存数据库](http://www.redis.cn)
 ~~~shell
-  $ wget http://download.redis.io/releases/redis-stable.tar.gz # 下载源码 # cd ~
+  $ sudo apt install -y build-essential pkg-config libssl-dev  # 准备编译环境
+  $ cd /tmp
+  $ wget http://download.redis.io/releases/redis-stable.tar.gz # 下载源码
   $ wget http://download.redis.io/releases/redis-5.0.14.tar.gz redis-6.0.16.tar.gz # 指定版本
-  $ tar xzf redis-stable.tar.gz                                # 解压源码
-  $ cd redis-stable && sudo make install                       # 编译Redis
-  $ cd utils && sudo ./install_server.sh                       # 安装Redis
+  $ tar -xzf redis-*.tar.gz                                    # 解压源码
+  $ cd redis-stable
+  # sudo make MALLOC=libc BUILD_TLS=yes                        # 编译Redis同时启用TLS
+  $ sudo make install                                          # 编译Redis未启用TLS
+  $ cd utils && sudo ./install_server.sh                       # 安装Redis(推荐)
+  #
+  # sudo adduser --system --group --no-create-home redis       # 创建系统redis用户-不建主目录
+  # cd /tmp/redis-stable/src
+  # sudo cp redis-server redis-cli redis-benchmark redis-check-aof redis-check-rdb /usr/local/bin/
+  # sudo mkdir /var/lib/redis                                  # 创建数据目录
+  # sudo chown -R redis:redis /var/lib/redis
+  # sudo chmod 770 /var/lib/redis
+  # sudo mkdir /var/log/redis                                  # 创建日志目录
+  # sudo chown -R redis:redis /var/log/redis
+  # sudo mkdir /var/run/redis                                  # 创建pid文件目录
+  # sudo chown -R redis:redis /var/run/redis
+  # sudo mkdir /etc/redis                                      # 创建配置文件目录
+  # sudo chown -R redis:redis /etc/redis
+  # sudo cp /tmp/redis-stable/redis.conf /etc/redis/
+  # sudo vim /etc/systemd/system/redis.service                 # 创建 Redis server service
+  # 
+[Unit]
+Description=Redis store service
+After=network.target
+Documentation=http://redis.io/documentation, man:redis-server(1)
+
+[Service]
+Type=forking
+ExecStart=/usr/local/bin/redis-server /etc/redis/redis.conf
+PIDFile=/run/redis/redis-server.pid
+ExecStartPost=/bin/sh -c "echo $MAINPID > /run/redis/redis-server.pid"
+TimeoutStartSec=5
+TimeoutStopSec=5
+Restart=always
+User=redis
+Group=redis
+
+UMask=007
+PrivateTmp=yes
+LimitNOFILE=65535
+
+ReadOnlyDirectories=/
+ReadWritePaths=-/var/lib/redis
+ReadWritePaths=-/var/log/redis
+ReadWritePaths=-/run/redis
+
+
+# redis-server can write to its own config file when in cluster mode so we
+# permit writing there by default. If you are not using this feature, it is
+# recommended that you replace the following lines with "ProtectSystem=full".
+ProtectSystem=full
+#ReadWriteDirectories=-/etc/redis
+
+[Install]
+WantedBy=multi-user.target
+Alias=redis.service
+  #
+  # sudo cp /etc/redis/redis.conf /etc/redis/redis.conf_backup
+  #
   $ rm -rf ~/redis-stable && rm -f ~/redis-stable.tar.gz       # 删除源码
   #-config>>  /etc/redis/6379.conf       # 修改配置文件
+  # supervised systemd
+  # daemonize yes
   # << bind 0.0.0.0                      # 允许远程连接
-  # << requirepass 123456                # 设置访问密码
+  # << requirepass "123456"              # 设置访问密码 <随机生成> openssl rand -base64 10
   # << protected-mode no                 # 关闭保护模式
+  # dir /var/lib/redis/                  # 数据目录
+  # logfile "/var/log/redis/redis.log"   # 日志文件
+  # pidfile "/run/redis/redis-server.pid"
+  #
+  # Redis启用TLS
+  # sudo openssl req -x509 -nodes -newkey rsa:4096 -keyout /etc/redis/redis-server-key.pem -out /etc/redis/redis-server-cert.pem -days 3650 
+  #
+  # tls-cert-file /etc/redis/redis-server-cert.pem
+  # tls-key-file /etc/redis/redis-server-key.pem
+  # tls-ca-cert-file /etc/ssl/certs/ca-certificates.crt
+  # tls-auth-clients no  # Disallow clients that don't use TLS.
+  # port 0               # Disable non-TLS services.
+  # tls-port 6379        # Enable TLS based service on default Redis port.
+  #
+  $ sudo systemctl restart redis-server  # 重启服务
+  $ sudo systemctl status redis-server   # 查看状态
   $ ps aux|grep redis                    # 查看进程: /usr/local/bin/redis-server 127.0.0.1:6379
   $ redis-server                         # (可选)启动服务(独立模式|常规启动), 可通过 ps aux 查看进程
   $ sudo service redis_6379 start        # (可选)启动服务(非独立模式|后台启动服务) start|stop|restart
@@ -32,6 +108,7 @@ docker > docker pull redis ; docker run --name redis-server -d -p6379:6379 redis
   > nssm install RedisWSLubuntu1804 bash.exe -c redis-server # 启动前设置Windows服务登录账户为Administrator
   # 客户端命令Redis
   $ redis-cli -h 127.0.0.1 -p 6379 -a "123456" -n 0 # [p端口],[a密码],[n数据库]
+  $ redis-cli --tls --cacert /etc/redis/redis-server-cert.pem # 安全连接Redis(启用TLS时)
   $ redis-cli shutdown                   # 关闭Redis服务
   $ config set requirepass "123456"      # 设置访问密码
   $ auth 123456                          # 密码认证;再执行其它命令.

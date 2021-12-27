@@ -23,12 +23,13 @@ docker > docker pull redis ; docker run --name redis-server -d -p6379:6379 redis
   $ cd redis-stable
   # sudo make MALLOC=libc BUILD_TLS=yes                        # 编译Redis同时启用TLS
   $ sudo make install                                          # 编译Redis未启用TLS
-  $ cd utils && sudo ./install_server.sh                       # 安装Redis(推荐)
+  $ cd utils && sudo ./install_server.sh                       # 自动安装Redis(推荐)
   $ rm -rf ~/redis-stable && rm -f ~/redis-stable.tar.gz       # 删除源码(安装后)
-  #
+  # 手动安装Redis
   # sudo adduser --system --group --no-create-home redis       # 创建系统redis用户-不建主目录
   # cd /tmp/redis-stable/src
   # sudo cp redis-server redis-cli redis-benchmark redis-check-aof redis-check-rdb /usr/local/bin/
+  # sudo ln -sf /usr/local/bin/redis-sentinel redis-server
   # sudo mkdir /var/lib/redis                                  # 创建数据目录
   # sudo chown -R redis:redis /var/lib/redis
   # sudo chmod 770 /var/lib/redis
@@ -39,11 +40,11 @@ docker > docker pull redis ; docker run --name redis-server -d -p6379:6379 redis
   # sudo mkdir /etc/redis                                      # 创建配置文件目录
   # sudo chown -R redis:redis /etc/redis
   # sudo cp /tmp/redis-stable/redis.conf /etc/redis/
-  # sudo vim /etc/systemd/system/redis.6379.service                 # 创建 Redis server service
+  # sudo vim /etc/systemd/system/redis.service                 # 创建 Redis service
 ~~~
 ~~~
 [Unit]
-Description=Redis 6379 server
+Description=Redis server
 After=network.target
 Documentation=http://redis.io/documentation, man:redis-server(1)
 
@@ -78,7 +79,7 @@ WantedBy=multi-user.target
 Alias=redis.6379.service
 ~~~
 ~~~shell
-  # sudo cp /etc/redis/redis.conf /etc/redis/6379.conf
+  $ sudo cp /etc/redis/redis.conf /etc/redis/6379.conf
   #-config>>  /etc/redis/6379.conf       # 修改配置文件
   # supervised systemd
   # daemonize yes
@@ -90,7 +91,7 @@ Alias=redis.6379.service
   # pidfile "/var/run/redis/6379.pid"    # 进程文件
   #
   # Redis启用TLS
-  # sudo openssl req -x509 -nodes -newkey rsa:4096 -keyout /etc/redis/redis-server-key.pem -out /etc/redis/redis-server-cert.pem -days 3650 
+  #> sudo openssl req -x509 -nodes -newkey rsa:4096 -keyout /etc/redis/redis-server-key.pem -out /etc/redis/redis-server-cert.pem -days 3650 
   #
   # tls-cert-file /etc/redis/redis-server-cert.pem
   # tls-key-file /etc/redis/redis-server-key.pem
@@ -99,8 +100,15 @@ Alias=redis.6379.service
   # port 0               # Disable non-TLS services.
   # tls-port 6379        # Enable TLS based service on default Redis port.
   #
-  $ sudo systemctl restart redis-server  # 重启服务
+  # Redis加载模块
+  # cp /mnt/c/rejson.so /var/lib/redis/
+  #> sudo chown -R redis:redis /var/lib/redis/rejson.so
+  # 
+  # loadmodule /var/lib/redis/rejson.so  # 编辑redis.conf
+  #
+  $ sudo systemctl restart redis-server  # 重启服务(先保存配置文件6379.conf)
   $ sudo systemctl status redis-server   # 查看状态
+  #
   $ ps aux|grep redis                    # 查看进程: /usr/local/bin/redis-server 127.0.0.1:6379
   $ redis-server                         # (可选)启动服务(独立模式|常规启动), 可通过 ps aux 查看进程
   $ sudo service redis_6379 start        # (可选)启动服务(非独立模式|后台启动服务) start|stop|restart

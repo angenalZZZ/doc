@@ -24,6 +24,7 @@ docker > docker pull redis ; docker run --name redis-server -d -p6379:6379 redis
   # sudo make MALLOC=libc BUILD_TLS=yes                        # 编译Redis同时启用TLS
   $ sudo make install                                          # 编译Redis未启用TLS
   $ cd utils && sudo ./install_server.sh                       # 安装Redis(推荐)
+  $ rm -rf ~/redis-stable && rm -f ~/redis-stable.tar.gz       # 删除源码(安装后)
   #
   # sudo adduser --system --group --no-create-home redis       # 创建系统redis用户-不建主目录
   # cd /tmp/redis-stable/src
@@ -38,18 +39,19 @@ docker > docker pull redis ; docker run --name redis-server -d -p6379:6379 redis
   # sudo mkdir /etc/redis                                      # 创建配置文件目录
   # sudo chown -R redis:redis /etc/redis
   # sudo cp /tmp/redis-stable/redis.conf /etc/redis/
-  # sudo vim /etc/systemd/system/redis.service                 # 创建 Redis server service
-  # 
+  # sudo vim /etc/systemd/system/redis.6379.service                 # 创建 Redis server service
+~~~
+~~~
 [Unit]
-Description=Redis store service
+Description=Redis 6379 server
 After=network.target
 Documentation=http://redis.io/documentation, man:redis-server(1)
 
 [Service]
 Type=forking
-ExecStart=/usr/local/bin/redis-server /etc/redis/redis.conf
-PIDFile=/run/redis/redis-server.pid
-ExecStartPost=/bin/sh -c "echo $MAINPID > /run/redis/redis-server.pid"
+ExecStart=/usr/local/bin/redis-server /etc/redis/6379.conf
+PIDFile=/var/run/redis/6379.pid
+ExecStartPost=/bin/sh -c "echo $MAINPID > /var/run/redis/6379.pid"
 TimeoutStartSec=5
 TimeoutStopSec=5
 Restart=always
@@ -63,8 +65,7 @@ LimitNOFILE=65535
 ReadOnlyDirectories=/
 ReadWritePaths=-/var/lib/redis
 ReadWritePaths=-/var/log/redis
-ReadWritePaths=-/run/redis
-
+ReadWritePaths=-/var/run/redis
 
 # redis-server can write to its own config file when in cluster mode so we
 # permit writing there by default. If you are not using this feature, it is
@@ -74,20 +75,19 @@ ProtectSystem=full
 
 [Install]
 WantedBy=multi-user.target
-Alias=redis.service
-  #
-  # sudo cp /etc/redis/redis.conf /etc/redis/redis.conf_backup
-  #
-  $ rm -rf ~/redis-stable && rm -f ~/redis-stable.tar.gz       # 删除源码
+Alias=redis.6379.service
+~~~
+~~~shell
+  # sudo cp /etc/redis/redis.conf /etc/redis/6379.conf
   #-config>>  /etc/redis/6379.conf       # 修改配置文件
   # supervised systemd
   # daemonize yes
   # << bind 0.0.0.0                      # 允许远程连接
   # << requirepass "123456"              # 设置访问密码 <随机生成> openssl rand -base64 10
   # << protected-mode no                 # 关闭保护模式
-  # dir /var/lib/redis/                  # 数据目录
-  # logfile "/var/log/redis/redis.log"   # 日志文件
-  # pidfile "/run/redis/redis-server.pid"
+  # dir /var/lib/redis/6379              # 数据目录6379
+  # logfile "/var/log/redis/6379.log"    # 日志文件
+  # pidfile "/var/run/redis/6379.pid"    # 进程文件
   #
   # Redis启用TLS
   # sudo openssl req -x509 -nodes -newkey rsa:4096 -keyout /etc/redis/redis-server-key.pem -out /etc/redis/redis-server-cert.pem -days 3650 

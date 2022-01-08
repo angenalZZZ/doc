@@ -17,7 +17,7 @@
 - [`分享吧`优质福利资源](https://www.fx8y.com/)、[`好例子`源码实例下载](https://www.haolizi.net/)、[`.NET`控件库`DevExpress`](https://ldqk.org/1849)
 
 ## [网页搜索引擎](#)
-- [​Microsoft Bing​](https://www.bing.com/)、[​CC Search​](https://search.creativecommons.org/)、[​DuckDuckGo​](https://duckduckgo.com/)、[​Ecosia​](https://www.ecosia.org/)
+- [​Microsoft Bing​](https://www.bing.com/)、[​CC Search​](https://search.creativecommons.org/)、[​DuckDuckGo​](https://duckduckgo.com/)、[​Ecosia​](https://www.ecosia.org/)、[​F 搜​`推荐`](https://fsou.cc)
 - [​Giphy​](https://giphy.com/)、[​giveWater​](https://www.givewater.com/)、[​Internet Archive​](https://archive.org/)、[​JustWatch​](https://www.justwatch.com/)、[​Kiddle​](https://www.kiddle.co/)
 - [​NASA Image and Video Library​](https://images.nasa.gov/)、[​Peekier​](https://peekier.com/)、[​Quant​](https://www.qwant.com/)
 - [​SearchCode​](https://searchcode.com/)、[​StartPage​](https://www.startpage.com/)、[​Swisscows​](https://swisscows.com/)、[​Thangs​](https://thangs.com/)

@@ -451,7 +451,12 @@
   # 字体
   $ sudo apt-get install fontconfig                # yum install fontconfig  #<CentOS>
   $ sudo apt-get install ttf-mscorefonts-installer # yum install mkfontscale #安装中文字体
-  $ sudo fc-cache -f -v   # 更新字体缓存
+  $ sudo mkdir /usr/share/fonts/windows           # 从其它计算机上拷贝字体文件
+  $ sudo cp -r /media/angenal/OS/Windows/Fonts/* /usr/share/fonts/windows/ # 从其它计算机{OS}
+  $ cd /usr/share/fonts
+  $ sudo chmod 755 -R windows # 修改字体文件权限, 使root以外的用户也可以使用
+  $ sudo mkfontscale && mkfontdir
+  $ sudo fc-cache -fv   # 更新字体缓存
   # 输入法
   $ sudo add-apt-repository ppa:fcitx-team/nightly
   $ sudo apt-get install fcitx-pinyin fcitx-sogoupinyin fcitx-googlepinyin # 拼音

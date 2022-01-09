@@ -458,10 +458,18 @@
   $ sudo mkfontscale && mkfontdir
   $ sudo fc-cache -fv   # 更新字体缓存
   # 输入法
+  > [sogou linux](https://pinyin.sogou.com/linux/help.php)
   $ sudo add-apt-repository ppa:fcitx-team/nightly
   $ sudo apt-get install fcitx-pinyin fcitx-sogoupinyin fcitx-googlepinyin # 拼音
   $ sudo apt-get install fcitx-table fcitx-table-wubi fcitx-table-wbpy     # 五笔
   $ sudo apt-get -y install im-config libapt-pkg-perl fcitx fcitx-table-wbpy && im-config -s fcitx # 安装五笔并设置fcitx为默认输入法
+  # 输入法(新)
+  $ apt-cache search fcitx5
+  $ sudo apt install fcitx5* kde-config-fcitx5
+  $ vi ~/.pam_environment
+GTK_IM_MODULE DEFAULT=fcitx5
+QT_IM_MODULE  DEFAULT=fcitx5
+XMODIFIERS    DEFAULT=@im=fcitx5
 ~~~
 
 ## linux开发环境及常用安装

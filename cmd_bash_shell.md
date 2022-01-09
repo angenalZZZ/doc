@@ -447,29 +447,7 @@
       [-d DATA] [-D file] [-o Output-Type="csv"] <url>
   > hey -c 2000 -n 10000 -z 10s -H "X-Requested-With: XMLHttpRequest" \ #并发2000,最多请求10000次,压测10秒钟(QPS未限制频率)
       http://www.weain.mil.cn/cg_unit/sysarticle/sysarticle/getPv?id=1295626301076480001
-  
-  # 字体
-  $ sudo apt-get install fontconfig                # yum install fontconfig  #<CentOS>
-  $ sudo apt-get install ttf-mscorefonts-installer # yum install mkfontscale #安装中文字体
-  $ sudo mkdir /usr/share/fonts/windows           # 从其它计算机上拷贝字体文件
-  $ sudo cp -r /media/angenal/OS/Windows/Fonts/* /usr/share/fonts/windows/ # 从其它计算机{OS}
-  $ cd /usr/share/fonts
-  $ sudo chmod 755 -R windows # 修改字体文件权限, 使root以外的用户也可以使用
-  $ sudo mkfontscale && mkfontdir
-  $ sudo fc-cache -fv   # 更新字体缓存
-  # 输入法
-  > [sogou linux](https://pinyin.sogou.com/linux/help.php)
-  $ sudo add-apt-repository ppa:fcitx-team/nightly
-  $ sudo apt-get install fcitx-pinyin fcitx-sogoupinyin fcitx-googlepinyin # 拼音
-  $ sudo apt-get install fcitx-table fcitx-table-wubi fcitx-table-wbpy     # 五笔
-  $ sudo apt-get -y install im-config libapt-pkg-perl fcitx fcitx-table-wbpy && im-config -s fcitx # 安装五笔并设置fcitx为默认输入法
-  # 输入法(新)
-  $ apt-cache search fcitx5
-  $ sudo apt install fcitx5* kde-config-fcitx5
-  $ vi ~/.pam_environment
-GTK_IM_MODULE DEFAULT=fcitx5
-QT_IM_MODULE  DEFAULT=fcitx5
-XMODIFIERS    DEFAULT=@im=fcitx5
+
 ~~~
 
 ## linux开发环境及常用安装
@@ -504,6 +482,34 @@ $ wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Cento
 $ cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
 $ sed -i 's/http:/https:/g' /etc/yum.repos.d/CentOS-Base.repo # 批量替换http为https
 $ yum clean all & yum makecache               # 更新镜像源缓存
+~~~
+
+> `中文字体及输入法`
+~~~bash
+  # 字体
+  $ sudo apt-get install fontconfig                # yum install fontconfig  #<CentOS>
+  $ sudo apt-get install ttf-mscorefonts-installer # yum install mkfontscale #安装中文字体
+  $ sudo mkdir /usr/share/fonts/windows           # 从其它计算机上拷贝字体文件
+  $ sudo cp -r /media/angenal/OS/Windows/Fonts/* /usr/share/fonts/windows/ # 从其它计算机{OS}
+  $ cd /usr/share/fonts
+  $ sudo chmod 755 -R windows # 修改字体文件权限, 使root以外的用户也可以使用
+  $ sudo mkfontscale && mkfontdir
+  $ sudo fc-cache -fv   # 更新字体缓存
+  # 输入法
+  > [sogou linux](https://pinyin.sogou.com/linux/help.php)
+  $ sudo add-apt-repository ppa:fcitx-team/nightly
+  $ sudo apt-get install fcitx-pinyin fcitx-sogoupinyin fcitx-googlepinyin # 拼音
+  $ sudo apt-get install fcitx-table fcitx-table-wubi fcitx-table-wbpy     # 五笔
+  $ sudo apt-get -y install im-config libapt-pkg-perl fcitx fcitx-table-wbpy # 先安装五笔
+  $ sudo im-config -s fcitx                       # 后设置fcitx为默认输入法
+  # 输入法(新)fcitx5*
+  $ sudo apt-cache search fcitx5              # 查找可用安装
+  $ sudo apt-get install kde-config-fcitx5 # 安装依赖
+  $ sudo apt-get install fcitx5*                  # 完整安装
+  $ vi ~/.pam_environment                       # 设置fcitx为默认输入法
+GTK_IM_MODULE DEFAULT=fcitx5
+QT_IM_MODULE  DEFAULT=fcitx5
+XMODIFIERS    DEFAULT=@im=fcitx5
 ~~~
 
 > `zsh`是一款强大的虚拟终端，推荐使用 [oh my zsh](https://github.com/robbyrussell/oh-my-zsh) 配置管理终端

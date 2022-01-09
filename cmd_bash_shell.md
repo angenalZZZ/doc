@@ -484,29 +484,28 @@ $ sed -i 's/http:/https:/g' /etc/yum.repos.d/CentOS-Base.repo # 批量替换http
 $ yum clean all & yum makecache               # 更新镜像源缓存
 ~~~
 
-> `中文字体及输入法`
+> `中文字体`及`输入法`
 ~~~bash
-  # 字体
-  $ sudo apt-get install fontconfig                # yum install fontconfig  #<CentOS>
-  $ sudo apt-get install ttf-mscorefonts-installer # yum install mkfontscale #安装中文字体
-  $ sudo mkdir /usr/share/fonts/windows           # 从其它计算机上拷贝字体文件
-  $ sudo cp -r /media/angenal/OS/Windows/Fonts/* /usr/share/fonts/windows/ # 从其它计算机{OS}
-  $ cd /usr/share/fonts
-  $ sudo chmod 755 -R windows # 修改字体文件权限, 使root以外的用户也可以使用
-  $ sudo mkfontscale && mkfontdir
-  $ sudo fc-cache -fv   # 更新字体缓存
-  # 输入法
-  > [sogou linux](https://pinyin.sogou.com/linux/help.php)
-  $ sudo add-apt-repository ppa:fcitx-team/nightly
-  $ sudo apt-get install fcitx-pinyin fcitx-sogoupinyin fcitx-googlepinyin # 拼音
-  $ sudo apt-get install fcitx-table fcitx-table-wubi fcitx-table-wbpy     # 五笔
-  $ sudo apt-get -y install im-config libapt-pkg-perl fcitx fcitx-table-wbpy # 先安装五笔
-  $ sudo im-config -s fcitx                       # 后设置fcitx为默认输入法
-  # 输入法(新)fcitx5*
-  $ sudo apt-cache search fcitx5              # 查找可用安装
-  $ sudo apt-get install kde-config-fcitx5 # 安装依赖
-  $ sudo apt-get install fcitx5*                  # 完整安装
-  $ vi ~/.pam_environment                       # 设置fcitx为默认输入法
+# 字体
+$ sudo apt-get install fontconfig                # yum install fontconfig  #<CentOS>
+$ sudo apt-get install ttf-mscorefonts-installer # yum install mkfontscale #安装中文字体
+$ sudo mkdir /usr/share/fonts/windows           # 从其它计算机上拷贝字体文件
+$ sudo cp -r /media/angenal/OS/Windows/Fonts/* /usr/share/fonts/windows/ # 从其它计算机{OS}
+$ cd /usr/share/fonts
+$ sudo chmod 755 -R windows # 修改字体文件权限, 使root以外的用户也可以使用
+$ sudo mkfontscale && mkfontdir
+$ sudo fc-cache -fv   # 更新字体缓存
+# 输入法(不推荐) 搜狗输入法`bug多` https://pinyin.sogou.com/linux/help.php
+$ sudo add-apt-repository ppa:fcitx-team/nightly
+$ sudo apt-get install fcitx-pinyin fcitx-sogoupinyin fcitx-googlepinyin # 拼音
+$ sudo apt-get install fcitx-table fcitx-table-wubi fcitx-table-wbpy     # 五笔
+$ sudo apt-get -y install im-config libapt-pkg-perl fcitx fcitx-table-wbpy # 先安装五笔
+$ sudo im-config -s fcitx                # 后设置fcitx为默认输入法
+# 输入法(推荐)fcitx5
+$ sudo apt-cache search fcitx5           # 查找可用安装包
+$ sudo apt-get install kde-config-fcitx5 # 安装依赖项
+$ sudo apt-get install fcitx5*           # 完整的安装
+$ vi ~/.pam_environment                  # 设置fcitx5为默认输入法
 GTK_IM_MODULE DEFAULT=fcitx5
 QT_IM_MODULE  DEFAULT=fcitx5
 XMODIFIERS    DEFAULT=@im=fcitx5

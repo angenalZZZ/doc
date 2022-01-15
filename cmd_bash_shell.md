@@ -171,26 +171,31 @@
   $ ifconfig |grep inet
   $ ifconfig |grep 'inet ' |head -5  # 获取前5条ipV4
   $ ifconfig |grep 'inet6' |head -5  # 获取前5条ipV6
-  # 科学上网 - 代理设置 (解决网络问题)  蓝灯: https://github.com/getlantern/lantern
-  $ sudo vim /etc/profile [全局|用户配置：~/.profile] # 填写如下VPN转发PORT
-  export FTP_PROXY=http://<proxy hostname:port>      # 临时使用
-  export HTTP_PROXY=http://<proxy hostname:port>
-  export HTTPS_PROXY=https://<proxy hostname:port>
-  export NO_PROXY=localhost,127.0.0.1,10.96.0.0/12,192.168.99.0/24,192.168.39.0/24
-  # 主机环境 - 解析设置 github.com/googlehosts/hosts
-  > notepad C:\Windows\System32\drivers\etc\hosts
-  > set                 # 查看系统环境变量windows
-  $ export              # 查看系统环境变量linux
-  $ cat /etc/hosts      # 一次显示整个文件
-  $ cat > /etc/hosts    # 从键盘创建一个文件
-  $ sudo killall -HUP mDNSResponder
-  $ sudo dscacheutil -flushcache
 
-  # 开启IPv6 隧道·开通(Windows)
-  > netsh interface teredo set state enterpriseclient server=default # 设置Teredo服务器
-  > netsh interface teredo set state server=teredo.remlab.net # 修改Teredo服务器(当测试连接失败时)
-  > ping -6 ipv6.test-ipv6.com       # 测试IPv6连接(访问检测 http://test-ipv6.com 测试项目/无域名IPv6连接测试-成功)
-  > netsh interface ipv6 reset       # 重置IPv6配置(重启系统)
+  $ ping -s 64 -i 1 -c 10 www.baidu.com # 检查网络 -s包大小 -i每隔几秒 -c次数限制
+  $ traceroute www.baidu.com         # 跟踪网络发送的数据包经过的路由及IP地址（一般30条以内）
+  1   192.168.1.1  6.959ms  1.299ms  1.419ms      # 第1个路由器
+  2   211.162.222.1  3.062ms  109.611ms  6.706ms  # 第2个路由器
+  3   10.231.248.217  7.688ms  5.653ms  8.155ms   # 第3个路由器
+  4   14.197.210.81  4.506ms  4.233ms  13.228ms   # 第4个路由器
+  5   ＊ ＊ ＊                                     # 数据包被屏蔽了
+
+  $ mtr 8.8.8.8                      # 追踪网络并进行实时分析（例如Centos跟踪谷歌服务器）
+
+  # 域名解析
+  $ host www.baidu.com               # 域名解析
+  $ nslookup www.baidu.com           # 查询DNS记录，查看域名解析是否正常
+  $ dig -h                           # 查询DNS包括A记录，MX记录，NS记录等信息
+  $ dig @server [解析域名] 
+  $ dig -x [反向解析IP地址] @server
+  $ dig baidu.com +nssearch          # 查找一个域的授权 dns 服务器
+  $ dig www.baidu.com +trace         # 从根服务器开始追踪一个域名的解析过程
+  $ dig yahoo.com A +noall +answer   # A记录
+  $ dig yahoo.com MX +noall +answer  # MX记录
+  $ dig yahoo.com NS +noall +answer  # NS记录
+  $ dig yahoo.com ANY +noall +answer # 查询上面所有的记录
+  $ dig www.baidu.com +short         # 查询快速回答
+  $ dig baidu.com ANY +noall +answer +nocmd +multiline # 查询详细回答
 
   # 网络IP和ＭＡＣ地址
   $ host localhost
@@ -208,24 +213,32 @@
   > netsh wlan show profile          # 查看WiFi配置信息
   > netsh wlan export profile folder=C:\ key=clear # 查看WiFi密码<XML>/WLANProfile/MSM/security/sharedKey/keyMaterial
 
-  # 域名解析
-  $ nslookup www.baidu.com           # 查询DNS记录，查看域名解析是否正常
-  $ dig -h                           # 查询DNS包括A记录，MX记录，NS记录等信息
-  $ dig @server [解析域名] 
-  $ dig -x [反向解析IP地址] @server
-  $ dig baidu.com +nssearch          # 查找一个域的授权 dns 服务器
-  $ dig www.baidu.com +trace         # 从根服务器开始追踪一个域名的解析过程
-  $ dig yahoo.com A +noall +answer   # A记录
-  $ dig yahoo.com MX +noall +answer  # MX记录
-  $ dig yahoo.com NS +noall +answer  # NS记录
-  $ dig yahoo.com ANY +noall +answer # 查询上面所有的记录
-  $ dig www.baidu.com +short         # 查询快速回答
-  $ dig baidu.com ANY +noall +answer +nocmd +multiline # 查询详细回答
+  # 主机环境 - 解析设置 github.com/googlehosts/hosts
+  > notepad C:\Windows\System32\drivers\etc\hosts
+  > set                 # 查看系统环境变量windows
+  $ export              # 查看系统环境变量linux
+  $ cat /etc/hosts      # 一次显示整个文件
+  $ cat > /etc/hosts    # 从键盘创建一个文件
+  $ sudo killall -HUP mDNSResponder
+  $ sudo dscacheutil -flushcache
+
+  # 开启IPv6 隧道·开通(Windows)
+  > netsh interface teredo set state enterpriseclient server=default # 设置Teredo服务器
+  > netsh interface teredo set state server=teredo.remlab.net # 修改Teredo服务器(当测试连接失败时)
+  > ping -6 ipv6.test-ipv6.com       # 测试IPv6连接(访问检测 http://test-ipv6.com 测试项目/无域名IPv6连接测试-成功)
+  > netsh interface ipv6 reset       # 重置IPv6配置(重启系统)
 
   # 网络共享
   > net share           # 查找
   > net share c         # 添加
   > net share c /delete # 删除
+
+  # 科学上网 - 代理设置 (解决网络问题)  免费ss/ssr/v2ray/trojan节点: https://github.com/freefq/free
+  $ sudo vim /etc/profile [全局|用户配置：~/.profile] # 填写如下VPN转发PORT
+  export FTP_PROXY=http://<proxy hostname:port>      # 临时使用
+  export HTTP_PROXY=http://<proxy hostname:port>
+  export HTTPS_PROXY=https://<proxy hostname:port>
+  export NO_PROXY=localhost,127.0.0.1,10.96.0.0/12,192.168.99.0/24,192.168.39.0/24
 
   # 进程详情
   > tasklist
@@ -501,14 +514,36 @@ $ sudo apt-get install fcitx-pinyin fcitx-sogoupinyin fcitx-googlepinyin # 拼�
 $ sudo apt-get install fcitx-table fcitx-table-wubi fcitx-table-wbpy     # 五笔
 $ sudo apt-get -y install im-config libapt-pkg-perl fcitx fcitx-table-wbpy # 先安装五笔
 $ sudo im-config -s fcitx                # 后设置fcitx为默认输入法
+
 # 输入法(推荐)fcitx5
 $ sudo apt-cache search fcitx5           # 查找可用安装包
-$ sudo apt-get install kde-config-fcitx5 # 安装依赖项
-$ sudo apt-get install fcitx5*           # 完整的安装
+$ sudo apt-get install kde-config-fcitx5 # 安装依赖项(options)
+$ sudo apt-get -y install im-config libapt-pkg-perl fcitx5* # 安装
 $ vi ~/.pam_environment                  # 设置fcitx5为默认输入法
 GTK_IM_MODULE DEFAULT=fcitx5
 QT_IM_MODULE  DEFAULT=fcitx5
 XMODIFIERS    DEFAULT=@im=fcitx5
+
+# 输入法(彻底卸载)
+sudo apt-get search fcitx*
+
+sudo apt-get remove fcitx
+sudo apt-get remove fcitx-module*
+sudo apt-get remove fcitx-frontend*
+sudo apt-get purge fcitx*
+
+sudo apt-get install fcitx-frontend-gtk2
+sudo apt-get install fcitx-frontend-gtk3
+sudo apt-get install fcitx-frontend-qt4
+sudo apt-get install fcitx
+
+sudo apt-get remove fcitx-pinyin
+sudo apt-get remove fcitx-sunpinyin
+sudo apt-get remove fcitx-googlepinyin
+sudo apt-get remove fcitx-table-wubi-large
+sudo apt-get remove fcitx-module-kimpanel
+
+sudo reboot now
 ~~~
 
 > `zsh`是一款强大的虚拟终端，推荐使用 [oh my zsh](https://github.com/robbyrussell/oh-my-zsh) 配置管理终端

@@ -586,6 +586,7 @@ sudo reboot now
   # 或者使用; if [ -f "$HOME/.bash_aliases" ]; then . "$HOME/.bash_aliases"; fi
   ##启动zsh(3) 输入命令zsh; 如果出现权限问题compinit解决如下:
   $ sudo chmod -R 755 /usr/local/share/zsh/site-functions
+  $ sudo chmod -R g-w,o-w /home/yangzhou/.antigen
   $ source ~/.zshrc  # 执行脚本,使配置生效.
   
   ##配置zsh(2)为系统用户root 

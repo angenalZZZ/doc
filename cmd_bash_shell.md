@@ -332,15 +332,24 @@
   # 目录访问权限
   > cd [目录]
   $ sudo chown -R 1000 [目录]   # 改变[目录](-R递归修改文件和目录)的"拥有者"为uid:1000 = $(id -u)
-  $ sudo chown root:root [目录] # 修改目录的"拥有者"
-  $ sudo chgrp –R users [目录]  # 改变[目录]的"所属用户组"为G:users = $(id -g)
+  $ sudo chown root:root [目录] # 修改目录的"拥有者:所属组:其它人"
+  $ sudo chgrp –R users [目录]  # 改变[目录]的"所属组"为G:users = $(id -g)
+  $ sudo chmod u+rw,g+rw,o+rw [文件]   #创建的文件只能添加读写权限rw
+  $ sudo chmod u+x,g+x,o+x [可执行文件] #只可为可执行文件添加执行权限x
+  $ sudo chmod u+w,g+w,o+w [目录] # 创建的目录一定要有执行权限dr-xr-xr-x否则无法使用命令行访问
   $ sudo chmod 744 [目录]      # 修改当前目录(.)权限为可读写及执行(-R递归修改文件和目录)
   $ sudo chmod 777 to/path    # 每个人都有读和写以及执行的权限(约定的三个数字owner=7;group=7;others=7)
   $ sudo chmod 666 to/path    # 每个人都有读和写的权限(常用于文件上传下载)
   $ sudo chmod 700 to/path    # 只有所有者有读和写以及执行的权限
   $ sudo chmod 600 to/path    # 只有所有者有读和写的权限
   $ sudo chmod 644 to/path    # 所有者有读和写的权限，组用户只有读的权限
-  $ [ -d /temp ] ||  sudo mkdir /temp && sudo chmod -vR 1777 /temp # 创建共享临时目录 drwxrwxrwt
+  
+  $ umask                     # 指定创建文件目录的默认权限
+  0002                        # 目录：drwxrwxr-x 文件：-rw-rw-r--
+  0022                        # 目录：drwxr-xr-x 文件：-rw-r--r--
+  
+  # 创建共享临时目录 drwxrwxrwt 如系统临时目录/tmp
+  $ [ -d /temp ] || sudo mkdir /temp && sudo chmod -vR 1777 /temp
   $ sudo chmod -vR +t /temp   # 添加目录[文件删除+重命名]的权限 ...rwt
    #0 : None  #1 : Execute Only  #2 : Write Only  #3 : Write & Execute  #4 : Read Only
    #5 : Read & Execute  #6 : Read & Write  #7 : Read, Write & Execute

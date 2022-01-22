@@ -3,21 +3,21 @@
 
 - 用户变量/Path
 ```
-# %USERPROFILE% = C:\Users\Administrator
+# $HOME = %USERPROFILE% = C:\Users\Administrator
 %USERPROFILE%\AppData\Local\Microsoft\WindowsApps
 %USERPROFILE%\AppData\Local\Programs\Python\Python37-32
 %USERPROFILE%\AppData\Local\Programs\Python\Python37-32\Scripts
 %USERPROFILE%\AppData\Local\Programs\Microsoft VS Code\bin
 %USERPROFILE%\scoop\shims
+%USERPROFILE%\.cargo\bin
 %USERPROFILE%\.dotnet\tools
 ```
 
 - 系统变量/Path
 ```
-%SystemRoot%\system32\WBEM
 C:\Windows
 C:\Windows\system32
-C:\Windows\System32\Wbem
+C:\Windows\System32\wbem
 C:\Windows\System32\OpenSSH\
 C:\Windows\System32\WindowsPowerShell\v1.0\
 D:\Program\Python\Python39-32\Scripts\
@@ -28,11 +28,11 @@ C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR
 C:\Program Files (x86)\Graphviz2.38\bin
 C:\Program Files\Git\cmd
 D:\Program\Go\bin
+D:\Program\CMake\bin
 D:\Program\D-Bus\bin
 D:\Program\erl10.5\bin
 D:\Program\Lua\5.1
 D:\Program\Lua\5.1\clibs
-D:\Program\CMake\bin
 D:\Program\nng\bin
 D:\Program\nanomsg\bin
 D:\Program\nodejs
@@ -47,13 +47,14 @@ D:\Program\rocksdb
 D:\Program\JMeter\bin
 D:\Program\swigwin-3.0.12
 D:\Program\apache-maven-3.8.1\bin
+D:\Program\Strawberry\c\bin
+D:\Program\Strawberry\perl\bin
+D:\Program\Strawberry\perl\site\bin
 D:\Tool\SysinternalsSuite
 A:\go\bin
 A:\deno\bin
 C:\tools\lxrunoffline
 C:\ProgramData\chocolatey\bin
-C:\Program Files\Azure Data Studio\bin
-C:\Program Files\Microsoft\Web Platform Installer
 C:\Program Files\Microsoft VS Code\bin
 C:\Program Files\Microsoft SQL Server\130\Tools\Binn\
 C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\
@@ -101,7 +102,7 @@ LUA_PATH      ;;D:\Program\Lua\5.1\lua\?.luac
 NN_STATIC_LIB   D:\Program\nanomsg\lib
 NODE_PATH       D:\Program\nodejs\node_global\node_modules
 PKG_CONFIG_PATH D:\Program\msys64\mingw64\lib\pkgconfig
-SOLR_INSTALL  A:\database\solr
+SOLR_INSTALL  D:\Program\solr
 ZONEINFO      A:\go\bin\zoneinfo.zip
 ```
 

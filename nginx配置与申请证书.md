@@ -325,6 +325,28 @@ server {
     }
 }
 ~~~
+ * 配置代理-解决跨域问题
+~~~nginx
+server {
+    listen       *:80;
+    server_name  localhost company.com www.company.com;
+    location / {
+        if ($request_method == 'OPTIONS') {
+            add_header Access-Control-Allow-Origin 'http://localhost:8080'; # 前端网址
+            add_header Access-Control-Allow-Headers '*';
+            add_header Access-Control-Allow-Methods '*';
+            add_header Access-Control-Allow-Credentials 'true'; # 允许跨域使用Cookies
+            return 204;
+        }
+        if ($request_method != 'OPTIONS') {
+            add_header Access-Control-Allow-Origin 'http://localhost:8080' always; # 前端网址
+            add_header Access-Control-Allow-Credentials 'true'; # 允许跨域使用Cookies
+        }
+        proxy_pass  http://localhost:5000; # 后端网址::反向代理::
+    }
+}
+~~~
+
 ```
 //-配置Nginx响应`头信息`：http.server.add_header, http.server.location.proxy_set_header
 {

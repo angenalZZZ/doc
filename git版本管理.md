@@ -29,16 +29,38 @@
   %C(dim white)- %an%C(reset)' --all"
 
 > git config --global --edit                    # 直接编辑全局配置文件 ~/.gitconfig
-[alias]  # 参考: https://stackoverflow.com/questions/1057564/pretty-git-branch-graphs
-  lg = !"git lg1"
-  tree = "forest --pretty=format:\"%C(red)%h %C(magenta)(%ar) %C(blue)%an %C(reset)%s\" --style=15 --reverse"
-# [http]
-#   proxy = http://127.0.0.1:1087
-# [https]
-#   proxy = http://127.0.0.1:1087
+[user]
+        name = yangzhou
+        email = angenal@hotmail.com
+[http]
+        postBuffer = 524288000
+        sslVerify = true
+        lowSpeedLimit = 0
+        lowSpeedTime = 999999
+#       proxy = http://127.0.0.1:1087
+#[https]
+#       proxy = http://127.0.0.1:1087
+[alias]
+        adog = log --all --decorate --oneline --graph
+        ls = log --oneline
+        lg = !"git lg1"
+        tree = "forest --pretty=format:\"%C(red)%h %C(magenta)(%ar) %C(blue)%an %C(reset)%s\" --style=15 --reverse"
+        hist = log --graph --date-order --date=short --pretty=format:'%C(auto)%h%d %C(reset)%s %C(bold blue)%ce %C(reset)%C(green)%cr (%cd)'
+        co = checkout
+        br = branch
+        ci = commit
+        st = status
+        dog = log --all --decorate --oneline --graph
+[color]
+        ui = true
+[diff]
+        tool = vsdiffmerge
+[difftool]
+        prompt = true
+# 参考: https://stackoverflow.com/questions/1057564/pretty-git-branch-graphs
 
-# 如果github打不开时，参考(可选) https://github.com/docmirror/dev-sidecar
-# 下载安装(可选) http://dev-sidecar.docmirror.cn/update/DevSidecar-1.4.0.exe
+# 设置proxy，当github打不开时，参考(可选) https://github.com/docmirror/dev-sidecar
+# 下载安装(可选) http://dev-sidecar.docmirror.cn
 
 # 1.通过修改默认配置, 解决网络问题..
 > git config --global --unset http.proxy        # 关闭http代理

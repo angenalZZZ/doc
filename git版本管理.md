@@ -43,8 +43,7 @@
 [alias]
         adog = log --all --decorate --oneline --graph
         ls = log --oneline
-        lg = !"git lg1"
-        tree = "forest --pretty=format:\"%C(red)%h %C(magenta)(%ar) %C(blue)%an %C(reset)%s\" --style=15 --reverse"
+        tree = forest --pretty=format:'%C(red)%h %C(magenta)(%ar) %C(blue)%an %C(reset)%s' --style=15 --reverse
         hist = log --graph --date-order --date=short --pretty=format:'%C(auto)%h%d %C(reset)%s %C(bold blue)%ce %C(reset)%C(green)%cr (%cd)'
         co = checkout
         br = branch

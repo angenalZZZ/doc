@@ -127,7 +127,16 @@ cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak # 先
 wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo #获取阿里镜像源
 sed -i 's/http:/https:/g' /etc/yum.repos.d/CentOS-Base.repo # 批量替换http为https
 yum clean all & yum makecache               # 更新镜像源缓存
-# 基础软件安装[第二步]
+yum install -y epel-release                 # 安装*epel软件源
+yum install -y curl wget vim ntpdate        # 安装*curl/wget/vim/ntpdate(同步时区)
+ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime # 统一时区为上海时区
+ntpdate ntp1.aliyun.com                     # 统一使用(阿里云)服务器进行时间同步
+yum install -y gnupg ca-certificates openssl # 安装*gnupg/ca/openssl
+yum install -y sudo                         # 安装*sudo(为普通用户临时使用root权限时)
+yum install -y gcc-c++ make net-tools       # 安装*gcc/make/net-tools
+yum install -y glibc glibc.i686             # 安装*glibc*x86_64,i686(32位)
+yum install -y GraphicsMagick               # 安装*GraphicsMagick(2D图库)
+# 基础软件安装[第二步] 可选
 passwd root                                 # 先设置root账户的密码
 useradd -M centos && usermod -L centos      # 然后创建centos普通账户
 usermod -d /home/centos centos && usermod -s /bin/bash centos && usermod -aG adm centos # 修改centos的$HOME$SHELL..
@@ -136,16 +145,6 @@ gpasswd -a app200 app200 && newgrp app200   # 添加用户进组app200
 cat /etc/passwd |grep app200                # 查看上面创建的用户及组app200
 gpasswd -d app200 app200 && userdel app200 && groupdel app200 && rm -rf /var/lib/app200 # 删除用户及组app200
 chown -R <name>:<name> /<dir>               # 指定目录<dir>权限给user:<name>
-yum install -y curl wget vim ntpdate        # 安装*curl/wget/vim/ntpdate(同步时区)
-ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime # 统一时区为上海时区
-echo 'Asia/Shanghai' > /etc/timezone        # touch /etc/timezone
-ntpdate ntp1.aliyun.com                     # 统一使用(阿里云)服务器进行时间同步
-yum install -y gnupg ca-certificates openssl # 安装*gnupg/ca/openssl
-yum install -y epel-release                 # 安装*epel软件源
-yum install -y sudo                         # 安装*sudo(为普通用户)
-yum install -y gcc-c++ make net-tools       # 安装*gcc/make/net-tools
-yum install -y glibc glibc.i686             # 安装*glibc*x86_64,i686
-yum install -y GraphicsMagick               # 安装*GraphicsMagick(2D图库)
 
 # 安装Redis的高性能分支KeyDB: https://github.com/angenalZZZ/doc/blob/master/redis缓存服务.md
 

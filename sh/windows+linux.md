@@ -151,13 +151,25 @@ yum install -y GraphicsMagick               # 安装*GraphicsMagick(2D图库)
 
 # 安装数据库 Mysql 8.0 参考 https://dev.mysql.com/doc/refman/8.0/en/linux-installation-yum-repo.html
 cd /tmp # 需提前安装依赖 # yum install -y epel-release glibc glibc.i686 gcc-c++ wget net-tools
-# sudo wget -O /etc/yum.repos.d/ http://repo.mysql.com/mysql-community-release-el7-7.noarch.rpm #低版本MySQL
-wget http://repo.mysql.com/mysql80-community-release-el7.rpm && rpm -ivh mysql80-community-release-el7.rpm
-yum install mysql-server # 安装 MySQL 配置如下 https://dev.mysql.com/doc/refman/8.0/en/server-configuration.html
-> systemctl start mysqld # 启动 MySQL (如果失败时,参考如下 > D-Bus connection Operation not permitted)
+# sudo wget -O /etc/yum.repos.d/ http://repo.mysql.com/mysql-community-release-el7-7.noarch.rpm #低版本
+wget http://repo.mysql.com/mysql80-community-release-el8-1.noarch.rpm # 新版本mysql80
+rpm -ivh mysql80-community-release-el8-1.noarch.rpm  # 导入repo
+# 安装 MySQL
+yum install mysql-community-server
+# 配置 https://dev.mysql.com/doc/refman/8.0/en/server-configuration.html
+# 启动 MySQLd (如果WSL失败时,参考如下 > D-Bus connection Operation not permitted)
+> systemctl start mysqld
 mv /usr/bin/systemctl /usr/bin/systemctl.old
 wget -O /usr/bin/systemctl https://github.com/gdraheim/docker-systemctl-replacement/blob/master/files/docker/systemctl.py
 chmod +x /usr/bin/systemctl
+# 重置root密码
+cat /var/log/mysqld.log | grep temporary # 获取首次安装启动后"临时生成的root密码"
+mysqladmin -u root -p password
+Enter password: # 输入"临时生成的root密码"
+New password: # 输入"新的密码"
+# 登录 MySQL
+mysql -u root -p mysql
+mysql> show databases;
 
 
 # 安装数据库 MongoDB 参考 https://www.mongodb.org.cn  https://mongodb.net.cn/manual/tutorial/install-mongodb-on-red-hat/

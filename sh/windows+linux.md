@@ -101,7 +101,7 @@ PS> scoop install -g lsd   # 漂亮的 ls 命令
 
 
 #### 子系统centos
-> Windows 10 [WSL - Centos](https://github.com/RoliSoft/WSL-Distribution-Switcher)、[系统设置工具推荐dotfiles](https://github.com/nickjj/dotfiles)
+> Windows 10 [WSL - Centos](https://github.com/RoliSoft/WSL-Distribution-Switcher)、[系统设置工具推荐dotfiles](https://github.com/nickjj/dotfiles)<br>
 > VM [VirtualBox 6 - Windows hosts](https://www.virtualbox.org/wiki/Downloads)、[CentOS-7-x86_64-DVD.iso](http://isoredirect.centos.org/centos/7/isos/x86_64/)
 ~~~bash
 # 部署 centos7 到 WSL (下载Docker镜像) https://github.com/RoliSoft/WSL-Distribution-Switcher
@@ -109,7 +109,7 @@ PS> LxRunOffline install -n Centos7 -d D:\centos7 -f D:\centos7\centos-7-docker.
 # 开启 CentOS 从 WSL
 PS> LxRunOffline run -n Centos7
 # 从 VM VirtualBox 安装 Centos7 开启桥接模式
-vi /etc/sysconfig/network-scripts/ifcfg-enp0s3 #设置静态IP > 然后重启网络 > service network restart
+vi /etc/sysconfig/network-scripts/ifcfg-enp0s3 #设置静态IP(网卡设备名称enp0s3可在安装时设置或自动分配)
 BOOTPROTO=static # dhcp 换成 static
 ONBOOT=yes # no 换成 yes
 IPADDR=192.168.1.201  # 设置静态IP地址与主机的前三位一致
@@ -117,8 +117,11 @@ GATEWAY=192.168.1.1   # 默认网关与主机的一致
 NETMASK=255.255.255.0 # 子网掩码与主机的一致
 DNS1=217.23.9.168     # DNS1与主机的一致(本地)
 DNS1=8.8.8.8          # DNS2与主机的一致(谷歌)
+# 然后重启网络 > service network restart 或重启 > reboot
 # 查看系统信息 CentOS Linux release 7.9.2009 (Core)
 cat /etc/system-release && cat /usr/lib/os-release
+# 查看IP地址
+ip addr | grep inet # Centos7命令
 # 更新软件源[第一步][腾讯云阿里云CVM跳过]
 cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak # 先备份repo
 wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo #获取阿里镜像源

@@ -170,6 +170,11 @@ New password: # 输入"新的密码"
 # 登录 MySQL
 mysql -u root -p mysql
 mysql> show databases;
+# 导入时区
+mysql> select * from mysql.time_zone;
+mysql> exit
+mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root -p mysql
+mysql> select count(*) from mysql.time_zone;
 
 
 # 安装数据库 MongoDB 参考 https://www.mongodb.org.cn  https://mongodb.net.cn/manual/tutorial/install-mongodb-on-red-hat/

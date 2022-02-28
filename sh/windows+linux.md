@@ -313,7 +313,7 @@ systemctl enable kubelet && systemctl start kubelet
 # 安装 Master 节点
 hostnamectl set-hostname master # 修改主机名
 vi /etc/hosts # 通过 ip addr 命令，获取本机IP，将其添加到 /etc/hosts
-# xxx.xxx.xxx.xxx master
+192.168.1.201 master
 # 配置 Kubernetes 初始化文件
 kubeadm config print init-defaults > init-kubeadm.conf # 取得默认配置文件
 vim init-kubeadm.conf  # 修改配置文件>>
@@ -321,7 +321,7 @@ vim init-kubeadm.conf  # 修改配置文件>>
 imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
 # localAPIEndpointc/advertiseAddress改为master的IP, port默认不修改
 localAPIEndpoint:
-  advertiseAddress: 192.168.56.101  # master的IP
+  advertiseAddress: 192.168.56.101  # master的IP << 以太网适配器 VirtualBox Host-Only Network
   bindPort: 6443
 # 配置子网络 pod 网络为 flannel 网段
 networking:
@@ -358,7 +358,7 @@ kubeadm join 172.16.81.164:6443 --token abcdef.0123456789abcdef \
 
 
 # 安装 Jenkins 实现自动化构建
-yum install -y java
+yum install -y java-1.8.0-openjdk  # yum install -y java
 wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
 rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
 yum install jenkins

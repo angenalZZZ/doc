@@ -63,9 +63,10 @@
 #127.0.0.1 license.piriform.com
 
 # github
-140.82.113.3 github.com
-185.199.108.153 assets-cdn.github.com
-199.232.69.194 github.global.ssl.fastly.net
+#140.82.113.3 github.com
+#185.199.108.153 assets-cdn.github.com
+#199.232.69.194 github.global.ssl.fastly.net
+
 #52.74.223.119 github.com
 #204.232.175.78 documentcloud.github.com
 #204.232.175.94 gist.github.com

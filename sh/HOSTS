@@ -1,0 +1,101 @@
+###############################################################
+# Microsoft Connect Test
+# http://www.msftconnecttest.com/connecttest.txt
+###############################################################
+
+# Localhost (DO NOT REMOVE) Start
+
+# localhost name resolution is handled within DNS itself.
+127.0.0.1 localhost
+::1	localhost
+::1	ip6-localhost
+::1	ip6-loopback
+
+###### Wamp/php VirtualHost ######
+
+# kod file explorer
+127.0.0.1 local.kod.com
+::1	local.kod.com
+# crawl movie
+127.0.0.1 local.crawlmovie.com
+::1	local.crawlmovie.com
+# DiscuzX3.4
+127.0.0.1 local.discuz.com
+::1	local.discuz.com
+
+###### IIS/asp.net Web Site ######
+
+# shopping website
+127.0.0.1 www.shop.com
+127.0.0.1 api.shop.com
+127.0.0.1 assets.shop.com
+127.0.0.1 static.shop.com
+127.0.0.1 wsdl.shop.com
+127.0.0.1 tool.shop.com
+127.0.0.1 ui.shop.com
+
+###### Other DNS Settings ######
+
+# Gogs local Git Server
+127.0.1.1 gogs
+::1 gogs
+
+# PerfTap local StatSite
+127.0.1.1 perftap
+::1 perftap
+
+# adobe
+127.0.0.1 lmlicenses.wip4.adobe.com
+127.0.0.1 lm.licenses.adobe.com
+127.0.0.1 na1r.services.adobe.com
+127.0.0.1 hlrcv.stage.adobe.com
+127.0.0.1 practivate.adobe.com
+127.0.0.1 activate.adobe.com
+
+# xunlei
+127.0.0.1 fishcodelib.com
+127.0.0.1 hub5btmain.sandai.net
+127.0.0.1 hub5emu.sandai.net
+127.0.0.1 upgrade.xl9.xunlei.com
+
+# jetbrains
+#127.0.0.1 account.jetbrains.com
+#127.0.0.1 license.piriform.com
+
+# github
+140.82.113.3 github.com
+185.199.108.153 assets-cdn.github.com
+199.232.69.194 github.global.ssl.fastly.net
+#52.74.223.119 github.com
+#204.232.175.78 documentcloud.github.com
+#204.232.175.94 gist.github.com
+#107.21.116.220 help.github.com
+#207.97.227.252 nodeload.github.com
+#199.27.76.130 raw.github.com
+#107.22.3.110 status.github.com
+#204.232.175.78 training.github.com
+
+# docker
+#192.168.1.102 host.docker.internal
+#192.168.1.102 gateway.docker.internal
+# docker desktop
+#192.168.1.103 host.docker.internal
+#192.168.1.103 gateway.docker.internal
+# allow same kube context to work on the host and the container
+#127.0.0.1 kubernetes.docker.internal
+
+# keygen crack
+127.0.0.1 api.tableplus.com
+127.0.0.1 activate.navicat.com
+
+# Localhost (DO NOT REMOVE) End
+###############################################################
+###############################################################
+
+
+# Copyright (c) 2017-2020, googlehosts members.
+# https://github.com/googlehosts/hosts
+
+# This work is licensed under a modified HOSTS License.
+# https://github.com/googlehosts/hosts/raw/master/LICENSE
+

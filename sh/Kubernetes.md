@@ -35,6 +35,13 @@ vi /etc/hosts
 hostnamectl set-hostname k8s01 # 192.168.1.201
 hostnamectl set-hostname k8s02 # 192.168.1.202
 hostnamectl set-hostname k8s03 # 192.168.1.203
+
+# 可设置免密码登录
+ssh-keygen  # 192.168.1.201
+cat .ssh/id_rsa.pub >> .ssh/authorized_keys
+chmod 600 .ssh/authorized_keys
+scp -r .ssh root@192.168.1.202:/root
+scp -r .ssh root@192.168.1.203:/root
 ~~~
 
 #### 安装Docker
@@ -94,16 +101,20 @@ systemctl daemon-reload && systemctl restart docker
 > K8S 版本 v1.19.0
 ~~~bash
 # 安装组件
-yum install -y kubelet-1.19.0 kubeadm-1.19.0 kubectl-1.19.0 --disableexcludes=kubernetes
+yum install -y kubelet-1.19.0 kubeadm-1.19.0 kubectl-1.19.0 --disableexcludes=kubernetes [--nogpgcheck]
 # 管理开机启动
 systemctl enable kubelet && systemctl start kubelet
-# 开启IPv6 (K8S已支持)
+# 为安装K8S网络前，开启IPv6，并将桥接的IPv4流量传递到K8S的iptables
 cat <<EOF > /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-iptables = 1
 net.bridge.bridge-nf-call-ip6tables = 1
 EOF
 # 查看开启情况
 sysctl --system
+# 为安装K8S网络前，同步时间问题
+yum install -y ntpdate
+ntpdate cn.pool.ntp.org
+
 ~~~
 > K8S master 节点
 ~~~bash
@@ -116,7 +127,7 @@ kubernetesVersion: v1.19.0 # 检查版本是否一致并修改
 networking:
   dnsDomain: cluster.local
   serviceSubnet: 10.96.0.0/12
-  podSubnet: 10.244.0.0/16  # 新增pod子网络
+  podSubnet: 10.244.0.0/16  # 新增pod子网络flannel
 # 摘取镜像, 需提前配置镜像源 /etc/docker/daemon.json
 kubeadm config images pull --config kubeadm-init.yaml
 # 检查镜像版本TAG
@@ -133,13 +144,17 @@ getenforce  # 获取Shell执行权 Permissive
 # 初始化:执行:
 kubeadm init --config kubeadm-init.yaml
 # kubeadm init --config kubeadm-init.yaml --ignore-preflight-errors=Swap
+# kubeadm init --apiserver-advertise-address=192.168.1.201 \
+# --image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers \
+# --kubernetes-version=v1.19.0 \
+# --service-cidr=10.96.0.0/12 --pod-network-cidr=10.244.0.0/16  # 新增pod子网络flannel设置
 # 初始化成功后, 为当前用户配置K8S环境(在输出信息中可查看到)
 mkdir -p $HOME/.kube
 cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 chown $(id -u):$(id -g) $HOME/.kube/config
 # 查看虚机K8S节点信息
 kubectl get node
-# 节点状态NoReady为待加入网络
+# 节点状态NotReady表示未安装网络，接下来开始安装网络
 wget https://docs.projectcalico.org/manifests/calico.yaml
 # 修改网络配置 calico.yaml
 - name: CLUSTER_TYPE   # <<修改位置

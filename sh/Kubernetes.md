@@ -152,7 +152,7 @@ mkdir -p $HOME/.kube
 cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 chown $(id -u):$(id -g) $HOME/.kube/config
 # 查看虚机K8S节点信息
-kubectl get node
+kubectl get nodes
 # 节点状态NotReady表示未安装网络，接下来开始安装网络calico
 # 或者，安装flannel网络设置:
 # kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yaml
@@ -176,15 +176,16 @@ wget https://docs.projectcalico.org/manifests/calico.yaml
 # 构建网络 calico.yaml
 kubectl apply -f calico.yaml
 # 查看虚机K8S节点信息 Ready 状态
-kubectl get node
+kubectl get nodes
 # 初始化:执行后, 其它节点加入集群(在输出信息中可查看到), 提前关闭Swap分区及Selinux
 kubeadm token list
 kubeadm token create --print-join-command # 在master节点查看其它节点加入集群的命令
 kubeadm join 192.168.1.201:6433 --token a.* --discovery-token-ca-cert-hash sha256:*
 # 在worker节点查看运行的容器 kube-proxy,calico-node
 docker ps
-# 在master节点查看K8S详细信息
-kubectl get node -o wide # 仅查看default命名空间下的Pod
-kubectl get nodes --all-namespaces -o wide
+# 在master节点查看K8S所有节点的详细信息
+kubectl get nodes -o wide
+# 查看安装好的Pods，默认仅查看default命名空间下的Pod
+kubectl get pods --all-namespaces -o wide
 ~~~
 

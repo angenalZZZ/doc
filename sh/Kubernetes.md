@@ -3,7 +3,7 @@
 #### 安装虚拟机VM
 > VM [VirtualBox 6 - Windows hosts](https://www.virtualbox.org/wiki/Downloads)、[CentOS-7-x86_64-DVD.iso](http://isoredirect.centos.org/centos/7/isos/x86_64/)
 ~~~bash
-# 从 VM 安装 Centos7 并设置为`4CPU`+`4G内存`+`桥接网卡`
+# 从 VM 安装 Centos7 并设置为`4CPU`+`4G内存`+`桥接网卡`，至少要求硬件为`2CPU`+`2G内存`
 
 # 设置静态IP(*网卡设备名称*可在安装时设置或自动分配)
 vi /etc/sysconfig/network-scripts/ifcfg-*
@@ -185,6 +185,9 @@ kubeadm join 192.168.1.201:6433 --token a.* --discovery-token-ca-cert-hash sha25
 docker ps
 # 在master节点查看K8S所有节点的详细信息
 kubectl get nodes -o wide
+# 安装失败后，可重置安装
+kubectl reset
+kubectl delete node node-123
 # 查看安装好的Pods，默认仅查看default命名空间下的Pod
 kubectl get pods --all-namespaces -o wide
 ~~~

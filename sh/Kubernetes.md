@@ -158,6 +158,8 @@ kubectl apply -f calico.yaml
 # 查看虚机K8S节点信息 Ready 状态
 kubectl get node
 # 初始化:执行后, 其它节点加入集群(在输出信息中可查看到), 提前关闭Swap分区及Selinux
+kubeadm token list
+kubeadm token create --print-join-command # 在master节点查看其它节点加入集群的命令
 kubeadm join 192.168.1.201:6433 --token a.* --discovery-token-ca-cert-hash sha256:*
 # 在worker节点查看运行的容器 kube-proxy,calico-node
 docker ps

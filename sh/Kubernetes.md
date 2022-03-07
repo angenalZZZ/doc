@@ -12,9 +12,9 @@ ONBOOT=yes            # 开机启动 no 换成 yes (修改)
 IPADDR=192.168.1.201  # 设置静态IP地址与主机前三位一致(新增)
 GATEWAY=192.168.1.1   # 默认网关与主机一致
 NETMASK=255.255.255.0 # 子网掩码与主机一致 或者: PREFIX=24
-DNS1=8.8.8.8          # DNS1与主机一致(谷歌)
-DNS2=223.5.5.5        # DNS2与主机一致(阿里)
-DNS3=114.114.114.114  # DNS3与主机一致(国内)
+DNS1=223.5.5.5        # DNS1与主机一致(阿里)
+DNS2=8.8.8.8          # DNS2与主机一致(谷歌)
+DNS3=114.114.114.114  # DNS3与主机一致(国内)可选
 # 重启网络
 systemctl restart network
 # service network restart
@@ -114,7 +114,6 @@ sysctl --system
 # 为安装K8S网络前，同步时间问题
 yum install -y ntpdate
 ntpdate cn.pool.ntp.org
-
 ~~~
 > K8S master 节点
 ~~~bash
@@ -154,7 +153,13 @@ cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 chown $(id -u):$(id -g) $HOME/.kube/config
 # 查看虚机K8S节点信息
 kubectl get node
-# 节点状态NotReady表示未安装网络，接下来开始安装网络
+# 节点状态NotReady表示未安装网络，接下来开始安装网络calico
+# 或者，安装flannel网络设置:
+# kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yaml
+# scp -r /etc/cni root@192.168.1.202:/etc
+# scp -r /etc/cni root@192.168.1.203:/etc
+# scp -r /run/flannel root@192.168.1.202:/run
+# scp -r /run/flannel root@192.168.1.203:/run
 wget https://docs.projectcalico.org/manifests/calico.yaml
 # 修改网络配置 calico.yaml
 - name: CLUSTER_TYPE   # <<修改位置

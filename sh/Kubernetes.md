@@ -164,6 +164,7 @@ kubeadm join 192.168.1.201:6433 --token a.* --discovery-token-ca-cert-hash sha25
 # 在worker节点查看运行的容器 kube-proxy,calico-node
 docker ps
 # 在master节点查看K8S详细信息
-kubectl get node -o wide
+kubectl get node -o wide # 仅查看default命名空间下的Pod
+kubectl get nodes --all-namespaces -o wide
 ~~~
 

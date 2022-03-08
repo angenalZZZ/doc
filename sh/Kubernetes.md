@@ -45,6 +45,7 @@ scp -r .ssh root@192.168.1.203:/root
 ~~~
 
 #### 安装Docker
+> 推荐安装1.10.0以上版本的Docker客户端，参考文档[docker-ce](https://yq.aliyun.com/articles/110806)
 > 容器化 Docker v19.* 兼容 K8S 版本 v1.19.*
 ~~~bash
 # 关闭防火器(K8S会创建防火器规则,导致防火器规则重复)

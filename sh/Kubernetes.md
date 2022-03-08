@@ -143,10 +143,11 @@ getenforce  # 获取Shell执行权 Permissive
 # 初始化:执行:
 kubeadm init --config kubeadm-init.yaml
 # kubeadm init --config kubeadm-init.yaml --ignore-preflight-errors=Swap
-# kubeadm init --apiserver-advertise-address=192.168.1.201 \
+# kubeadm init --apiserver-advertise-address=192.168.1.201 \ # 指定master的IP
 # --image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers \
-# --kubernetes-version=v1.19.0 \
-# --service-cidr=10.96.0.0/12 --pod-network-cidr=10.244.0.0/16  # 新增pod子网络flannel设置
+# --kubernetes-version=v1.19.0 \    # 指定K8S安装的版本号
+# --service-cidr=10.96.0.0/12 \     # 设置flannel网络Svc网段,有默认值时可不指定(可选项)
+# --pod-network-cidr=10.244.0.0/16  # 设置flannel网络Pod网段
 # 初始化成功后, 为当前用户配置K8S环境(在输出信息中可查看到)
 mkdir -p $HOME/.kube
 cp -i /etc/kubernetes/admin.conf $HOME/.kube/config

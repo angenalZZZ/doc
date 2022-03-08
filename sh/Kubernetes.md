@@ -55,7 +55,7 @@ yum install -y yum-utils device-mapper-persistent-data lvm2
 # 配置yum资源
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 # 安装Docker
-yum install -y docker-ce-19.03.9-3.el7
+yum install -y docker-ce-19.03.9-3.el7 docker-ce-cli-19.03.9-3.el7 containerd.io
 # 查安装结果
 yum list docker-ce --showduplicates | sort -r
 docker -v

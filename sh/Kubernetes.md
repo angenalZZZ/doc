@@ -51,7 +51,13 @@ yum install -y docker-ce-19.03.9-3.el7
 # 查安装结果
 yum list docker-ce --showduplicates | sort -r
 docker -v
-# 管理开机启动
+# 降级Docker版本
+yum downgrade -y --setopt=obsoletes=0 docker-ce-19.03.9-3.el7 docker-ce-cli-19.03.9-3.el7 containerd.io
+docker version # 查看版本
+# 如果出现镜像文件或者容器丢失情况, 需要更改镜像存储位置.
+# sed -i "s#-H fd:#-g /opt/data/docker -H fd:#g" /lib/systemd/system/docker.service
+# systemctl daemon-reload && systemctl restart docker
+# 设置为开机启动
 systemctl enable docker && systemctl start docker
 docker info
 # 添加阿里yum资源

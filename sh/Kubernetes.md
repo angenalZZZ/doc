@@ -3,7 +3,7 @@
 #### 安装虚拟机VM
 > VM [VirtualBox 6 - Windows hosts](https://www.virtualbox.org/wiki/Downloads)、[CentOS-7-x86_64-DVD.iso](http://isoredirect.centos.org/centos/7/isos/x86_64/)
 ~~~bash
-# 从 VM 安装 Centos7 并设置为`4CPU`+`4G内存`+`桥接网卡`
+# 从 VM 安装 Centos7 并设置为`4CPU`+`4G内存`+`桥接网卡`，至少要求硬件为`2CPU`+`2G内存`
 
 # 设置静态IP(*网卡设备名称*可在安装时设置或自动分配)
 vi /etc/sysconfig/network-scripts/ifcfg-*
@@ -12,9 +12,9 @@ ONBOOT=yes            # 开机启动 no 换成 yes (修改)
 IPADDR=192.168.1.201  # 设置静态IP地址与主机前三位一致(新增)
 GATEWAY=192.168.1.1   # 默认网关与主机一致
 NETMASK=255.255.255.0 # 子网掩码与主机一致 或者: PREFIX=24
-DNS1=8.8.8.8          # DNS1与主机一致(谷歌)
-DNS2=223.5.5.5        # DNS2与主机一致(阿里)
-DNS3=114.114.114.114  # DNS3与主机一致(国内)
+DNS1=223.5.5.5        # DNS1与主机一致(阿里)
+DNS2=8.8.8.8          # DNS2与主机一致(谷歌)
+DNS3=114.114.114.114  # DNS3与主机一致(国内)可选
 # 重启网络
 systemctl restart network
 # service network restart
@@ -35,9 +35,17 @@ vi /etc/hosts
 hostnamectl set-hostname k8s01 # 192.168.1.201
 hostnamectl set-hostname k8s02 # 192.168.1.202
 hostnamectl set-hostname k8s03 # 192.168.1.203
+
+# 可设置免密码登录
+ssh-keygen  # 192.168.1.201
+cat .ssh/id_rsa.pub >> .ssh/authorized_keys
+chmod 600 .ssh/authorized_keys
+scp -r .ssh root@192.168.1.202:/root
+scp -r .ssh root@192.168.1.203:/root
 ~~~
 
 #### 安装Docker
+> 推荐安装1.10.0以上版本的Docker客户端，参考文档[docker-ce](https://yq.aliyun.com/articles/110806)，登录[阿里容器镜像服务](https://cr.console.aliyun.com/cn-hangzhou/instances)<br>
 > 容器化 Docker v19.* 兼容 K8S 版本 v1.19.*
 ~~~bash
 # 关闭防火器(K8S会创建防火器规则,导致防火器规则重复)
@@ -71,15 +79,21 @@ repo_gpgcheck=0
 gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
        http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 EOF
-# 设置镜像库,加速拉取推送images
+# 配置镜像加速器, 您可以通过修改daemon配置文件/etc/docker/daemon.json来使用加速器
+sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": ["https://4txtc8r4.mirror.aliyuncs.com"]
+}
+EOF
+# 也可设置多个镜像库,加速拉取推送images
 vi /etc/docker/daemon.json # 或设置当前用户 ~/.docker/daemon.json
 {
   "registry-mirrors": [
-    "https://1nj0zren.mirror.aliyuncs.com", "http://f1361db2.m.daocloud.io",
-    "https://docker.mirrors.ustc.edu.cn",
-    "https://registry.docker-cn.com"
+    "https://4txtc8r4.mirror.aliyuncs.com", "http://8fe1b42e.m.daocloud.io",
+    "https://docker.mirrors.ustc.edu.cn", "https://registry.docker-cn.com"
   ],
-  "exec-opts": ["native.cgroupdriver=systemd"],
+  "exec-opts": ["native.cgroupdriver=systemd"], # 设置兼容K8S的Docker的cgroup驱动systemd
   "log-driver": "json-file",
   "log-opts": {
     "max-size": "100m"
@@ -96,24 +110,27 @@ vi /etc/docker/daemon.json # 或设置当前用户 ~/.docker/daemon.json
 systemctl daemon-reload && systemctl restart docker
 ~~~
 
-#### 安装K8S/Kubernetes
+#### 安装Kubernetes
 > K8S 版本 v1.19.0
 ~~~bash
 # 安装组件
-yum install -y kubelet-1.19.0 kubeadm-1.19.0 kubectl-1.19.0 --disableexcludes=kubernetes
+yum install -y kubelet-1.19.0 kubeadm-1.19.0 kubectl-1.19.0 --disableexcludes=kubernetes [--nogpgcheck]
 # 管理开机启动
 systemctl enable kubelet && systemctl start kubelet
-# 开启IPv6 (K8S已支持)
+# 为安装K8S网络前，开启IPv6，并将桥接的IPv4流量传递到K8S的iptables
 cat <<EOF > /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-iptables = 1
 net.bridge.bridge-nf-call-ip6tables = 1
 EOF
 # 查看开启情况
 sysctl --system
+# 为安装K8S网络前，同步时间问题
+yum install -y ntpdate
+ntpdate cn.pool.ntp.org
 ~~~
-> K8S master 节点
+> K8S 节点 (至少2个以上)
 ~~~bash
-# 生成初始化文件 kubeadm-init.yaml
+# master 节点, 生成初始化文件 kubeadm-init.yaml
 kubeadm config print init-defaults > kubeadm-init.yaml
 # 修改初始化文件 kubeadm-init.yaml
 advertiseAddress: 1.2.3.4 # 改为master虚机IP: 192.168.*.*
@@ -122,7 +139,7 @@ kubernetesVersion: v1.19.0 # 检查版本是否一致并修改
 networking:
   dnsDomain: cluster.local
   serviceSubnet: 10.96.0.0/12
-  podSubnet: 10.244.0.0/16  # 新增pod子网络
+  podSubnet: 10.244.0.0/16  # 新增pod子网络flannel
 # 摘取镜像, 需提前配置镜像源 /etc/docker/daemon.json
 kubeadm config images pull --config kubeadm-init.yaml
 # 检查镜像版本TAG
@@ -135,17 +152,28 @@ setenforce 0     # 临时关闭selinux
 vi /etc/sysconfig/selinux
 SELINUX=disabled # 永久关闭selinux
 setenforce 0 && sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
-getenforce  # 获取Shell执行权 Permissive
+getenforce  # 查看关闭selinux情况Disabled (获取Shell执行权Permissive)
 # 初始化:执行:
 kubeadm init --config kubeadm-init.yaml
 # kubeadm init --config kubeadm-init.yaml --ignore-preflight-errors=Swap
+# kubeadm init --apiserver-advertise-address=192.168.1.201 \ # 指定master的IP
+# --image-repository=registry.cn-hangzhou.aliyuncs.com/google_containers \
+# --kubernetes-version=v1.19.0 \    # 指定K8S安装的版本号
+# --service-cidr=10.96.0.0/12 \     # 设置flannel网络Svc网段,有默认值时可不指定(可选项)
+# --pod-network-cidr=10.244.0.0/16  # 设置flannel网络Pod网段
 # 初始化成功后, 为当前用户配置K8S环境(在输出信息中可查看到)
 mkdir -p $HOME/.kube
 cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 chown $(id -u):$(id -g) $HOME/.kube/config
 # 查看虚机K8S节点信息
-kubectl get node
-# 节点状态NoReady为待加入网络
+kubectl get nodes
+# 节点状态NotReady表示未安装网络，接下来开始安装网络calico
+# 或者，安装flannel网络设置:
+# kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yaml
+# scp -r /etc/cni root@192.168.1.202:/etc
+# scp -r /etc/cni root@192.168.1.203:/etc
+# scp -r /run/flannel root@192.168.1.202:/run
+# scp -r /run/flannel root@192.168.1.203:/run
 wget https://docs.projectcalico.org/manifests/calico.yaml
 # 修改网络配置 calico.yaml
 - name: CLUSTER_TYPE   # <<修改位置
@@ -162,14 +190,26 @@ wget https://docs.projectcalico.org/manifests/calico.yaml
 # 构建网络 calico.yaml
 kubectl apply -f calico.yaml
 # 查看虚机K8S节点信息 Ready 状态
-kubectl get node
+kubectl get nodes
 # 初始化:执行后, 其它节点加入集群(在输出信息中可查看到), 提前关闭Swap分区及Selinux
 kubeadm token list
 kubeadm token create --print-join-command # 在master节点查看其它节点加入集群的命令
 kubeadm join 192.168.1.201:6433 --token a.* --discovery-token-ca-cert-hash sha256:*
 # 在worker节点查看运行的容器 kube-proxy,calico-node
 docker ps
-# 在master节点查看K8S详细信息
-kubectl get node -o wide
+# 在master节点查看K8S所有节点的详细信息
+kubectl get nodes -o wide
+# 安装失败后，可重置安装
+kubectl reset
+kubectl delete node node-123
+# 查看安装好的Pods，默认仅查看default命名空间下的Pod
+kubectl get pods --all-namespaces -o wide
+~~~
+
+#### 应用部署在Kubernetes
+~~~bash
+# 开启防火器(K8S会创建成功后，用于创建Docker应用的网络访问规则)
+systemctl disable firewalld && systemctl stop firewalld
+
 ~~~
 

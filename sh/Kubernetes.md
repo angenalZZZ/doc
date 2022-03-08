@@ -72,15 +72,21 @@ repo_gpgcheck=0
 gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
        http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 EOF
-# 设置镜像库,加速拉取推送images
+# 配置镜像加速器, 您可以通过修改daemon配置文件/etc/docker/daemon.json来使用加速器
+sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": ["https://4txtc8r4.mirror.aliyuncs.com"]
+}
+EOF
+# 也可设置多个镜像库,加速拉取推送images
 vi /etc/docker/daemon.json # 或设置当前用户 ~/.docker/daemon.json
 {
   "registry-mirrors": [
-    "https://1nj0zren.mirror.aliyuncs.com", "http://f1361db2.m.daocloud.io",
-    "https://docker.mirrors.ustc.edu.cn",
-    "https://registry.docker-cn.com"
+    "https://4txtc8r4.mirror.aliyuncs.com", "http://8fe1b42e.m.daocloud.io",
+    "https://docker.mirrors.ustc.edu.cn", "https://registry.docker-cn.com"
   ],
-  "exec-opts": ["native.cgroupdriver=systemd"],
+  "exec-opts": ["native.cgroupdriver=systemd"], # 设置兼容K8S的Docker的cgroup驱动systemd
   "log-driver": "json-file",
   "log-opts": {
     "max-size": "100m"

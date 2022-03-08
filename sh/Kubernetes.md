@@ -97,7 +97,7 @@ vi /etc/docker/daemon.json # 或设置当前用户 ~/.docker/daemon.json
 systemctl daemon-reload && systemctl restart docker
 ~~~
 
-#### 安装K8S/Kubernetes
+#### 安装Kubernetes
 > K8S 版本 v1.19.0
 ~~~bash
 # 安装组件
@@ -115,9 +115,9 @@ sysctl --system
 yum install -y ntpdate
 ntpdate cn.pool.ntp.org
 ~~~
-> K8S master 节点
+> K8S 节点 (至少2个以上)
 ~~~bash
-# 生成初始化文件 kubeadm-init.yaml
+# master 节点, 生成初始化文件 kubeadm-init.yaml
 kubeadm config print init-defaults > kubeadm-init.yaml
 # 修改初始化文件 kubeadm-init.yaml
 advertiseAddress: 1.2.3.4 # 改为master虚机IP: 192.168.*.*
@@ -191,5 +191,12 @@ kubectl reset
 kubectl delete node node-123
 # 查看安装好的Pods，默认仅查看default命名空间下的Pod
 kubectl get pods --all-namespaces -o wide
+~~~
+
+#### 应用部署在Kubernetes
+~~~bash
+# 开启防火器(K8S会创建成功后，用于创建Docker应用的网络访问规则)
+systemctl disable firewalld && systemctl stop firewalld
+
 ~~~
 

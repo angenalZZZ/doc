@@ -6,12 +6,12 @@
 # 从 VM 安装 Centos7 并设置为`4CPU`+`4G内存`+`桥接网卡`，至少要求硬件为`2CPU`+`2G内存`
 
 # 设置静态IP(*网卡设备名称*可在安装时设置或自动分配)
-vi /etc/sysconfig/network-scripts/ifcfg-*
+vi /etc/sysconfig/network-scripts/ifcfg-enp0s3
 BOOTPROTO=static      # dhcp 换成 static (修改)
 ONBOOT=yes            # 开机启动 no 换成 yes (修改)
 IPADDR=192.168.1.201  # 设置静态IP地址与主机前三位一致(新增)
 GATEWAY=192.168.1.1   # 默认网关与主机一致
-NETMASK=255.255.255.0 # 子网掩码与主机一致 或者: PREFIX=24
+PREFIX=24             # 子网掩码与主机一致 即: NETMASK=255.255.255.0
 DNS1=223.5.5.5        # DNS1与主机一致(阿里)
 DNS2=8.8.8.8          # DNS2与主机一致(谷歌)
 DNS3=114.114.114.114  # DNS3与主机一致(国内)可选

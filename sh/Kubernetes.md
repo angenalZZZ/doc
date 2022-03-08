@@ -139,7 +139,7 @@ setenforce 0     # 临时关闭selinux
 vi /etc/sysconfig/selinux
 SELINUX=disabled # 永久关闭selinux
 setenforce 0 && sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
-getenforce  # 获取Shell执行权 Permissive
+getenforce  # 查看关闭selinux情况Disabled (获取Shell执行权Permissive)
 # 初始化:执行:
 kubeadm init --config kubeadm-init.yaml
 # kubeadm init --config kubeadm-init.yaml --ignore-preflight-errors=Swap

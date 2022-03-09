@@ -115,6 +115,8 @@ systemctl daemon-reload && systemctl restart docker
 ~~~bash
 # 安装组件
 yum install -y kubelet-1.19.0 kubeadm-1.19.0 kubectl-1.19.0 --disableexcludes=kubernetes [--nogpgcheck]
+# 关闭防火器(K8S会创建防火器规则,导致防火器规则重复) [应用部署K8S时应该开启防火器]
+systemctl disable firewalld && systemctl stop firewalld
 # 管理开机启动
 systemctl enable kubelet && systemctl start kubelet
 # 为安装K8S网络前，开启IPv6，并将桥接的IPv4流量传递到K8S的iptables

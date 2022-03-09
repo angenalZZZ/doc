@@ -95,6 +95,19 @@
   > mkdir -p %USERPROFILE% # 用户目录
   > mkdir to/path # 创建目录 $ mkdir -p to/path  [-p递归创建目录]
   > quser         # 当前用户状态
+  $ cat /etc/passwd # 查看所有用户 ; 统计用户数 cat /etc/passwd | wc -l
+  $ cat /etc/passwd |grep `id -un` # 查看当前登录用户
+  # root:x:0:0:root:/root:/bin/bash
+  # centos::500:500:centos:/home/centos:/bin/bash
+  # 用户名:是否密码登录:uid:gid:用户说明:家目录:登录后执行的Shell客户端
+  $ cat /etc/shadow # 用户的密码列表
+  $ cat /etc/shadow |grep `id -un` # 查看当前用户的密码
+  # root:*+*:365*50:0:99999:7:::
+  # root:密码MD5:创建日期值[1970-1-1为第1天]:不能被修改的天数[0为不限制]:强制需修改的天数[99999为不限制]\
+  #  :提醒需修改的天数起日[7表示第7天起提醒强制需修改密码]\
+  #  :宽限登录日期[7表示强制需修改密码日期过后7天内为宽限期\过期后登录账号时强制改密码]\
+  #  :有效期限[用于商业购买年月]\
+  #  :其它用途😊
   $ whoami && w && id  # 当前用户信息
   $ echo -e "$USER\n$HOME\n$SHELL\n$PATH\n$LOGNAME\n$MAIL" # 当前用户环境 [-e允许反斜杠转义字符]
   $ id            # 返回 uid=0(root) gid=0(root) groups=0(root)  ; root登录:  su root ; su - ;目录不变
@@ -109,22 +122,9 @@
   $ useradd -d /home/test  -s /bin/bash test # 新建普通用户test
   $ man newusers    # 批量更新和创建新用户
   $ userdel -r test # 删除用户
-  $ cat /etc/passwd # 查看所有用户 ; 统计用户数 cat /etc/passwd | wc -l
-  $ cat /etc/passwd |grep `id -un` # 查看当前登录用户
-  # root:x:0:0:root:/root:/bin/bash
-  # centos::500:500:centos:/home/centos:/bin/bash
-  # 用户名:是否密码登录:uid:gid:用户说明:家目录:登录后执行的Shell客户端
-  $ cat /etc/shadow # 用户的密码列表
-  $ cat /etc/shadow |grep `id -un` # 查看当前用户的密码
-  # root:*+*:365*50:0:99999:7:::
-  # root:密码MD5:创建日期值[1970-1-1为第1天]:不能被修改的天数[0为不限制]:强制需修改的天数[99999为不限制]\
-  #  :提醒需修改的天数起日[7表示第7天起提醒强制需修改密码]\
-  #  :宽限登录日期[7表示强制需修改密码日期过后7天内为宽限期\过期后登录账号时强制改密码]\
-  #  :有效期限[用于商业购买年月]\
-  #  :其它用途😊
-  $ cat /etc/group  # 用户组列表
-  $ groups          # 用户所在组
-  $ groupadd        # 添加用户组
+  $ cat /etc/group  # 用户组
+  $ groups          # 用户组
+  $ groupadd        # 添加组
   $ passwd admin    # 修改密码
   $ login           # 用户登录
   # 修改用户多选组-G=groups   # 查用户组${id -g 用户名} $ groups yangzhou

@@ -81,31 +81,31 @@ gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
        http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 EOF
 # 配置镜像加速器, 您可以通过修改daemon配置文件/etc/docker/daemon.json来使用加速器
-sudo mkdir -p /etc/docker
-sudo tee /etc/docker/daemon.json <<-'EOF'
-{
-  "registry-mirrors": ["https://4txtc8r4.mirror.aliyuncs.com"]
-}
-EOF
-# 也可设置多个镜像库,加速拉取推送images
+# sudo mkdir -p /etc/docker
+# sudo tee /etc/docker/daemon.json <<-'EOF'
+# {
+#   "registry-mirrors": ["https://4txtc8r4.mirror.aliyuncs.com"]
+# }
+# EOF
+# 也可设置多个镜像库,加速拉取推送images:
+#  @"exec-opts":设置兼容cgroup驱动systemd  @"insecure-registries":设置 http://[私有库IP]:[私有库Port]
+#  @"features": { "buildkit": true # syntax = docker/dockerfile:experimental }
 vi /etc/docker/daemon.json # 或设置当前用户 ~/.docker/daemon.json
 {
   "registry-mirrors": [
     "https://4txtc8r4.mirror.aliyuncs.com", "http://8fe1b42e.m.daocloud.io",
     "https://docker.mirrors.ustc.edu.cn", "https://registry.docker-cn.com"
   ],
-  "exec-opts": ["native.cgroupdriver=systemd"], # 设置兼容K8S的Docker的cgroup驱动systemd
+  "exec-opts": ["native.cgroupdriver=systemd"],
   "log-driver": "json-file",
   "log-opts": {
     "max-size": "100m"
   },
-  "storage-driver": "overlay2"
-  #"insecure-registries": [], # Or: http://[私有库IP]:[私有库Port]
-  #"debug": false,
-  #"experimental": true, # Enable实验性功能features:eg. #DOCKER_BUILDKIT=1
-  #"features": {
-  #  "buildkit": true # syntax = docker/dockerfile:experimental
-  #}
+  "debug": false,
+  "experimental": true,
+  "storage-driver": "overlay2",
+  "insecure-registries": [],
+  "features": {}
 }
 # 重新加载配置 & 重启docker
 systemctl daemon-reload && systemctl restart docker

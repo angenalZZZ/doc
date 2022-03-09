@@ -3,7 +3,7 @@
 #### 安装虚拟机VM
 > VM [VirtualBox 6 - Windows hosts](https://www.virtualbox.org/wiki/Downloads)、[CentOS-7-x86_64-DVD.iso](http://isoredirect.centos.org/centos/7/isos/x86_64/)
 ~~~bash
-# 从 VM 安装 Centos7 并设置为`4CPU`+`4G内存`+`桥接网卡`，至少要求硬件为`2CPU`+`2G内存`+
+# 从 VM 安装 Centos7 并设置为`4CPU`+`4G内存`+`桥接网卡`，至少要求硬件为`2CPU`+`2G内存`+  # 根据主机情况来设置
 # `系统语言英文(默认不变)+提供中文支持(添加)`+`时区为亚洲上海(修改)`+`修改root密码+新建centos普通用户`+`其它不设置`
 
 # 设置静态IP(*网卡设备名称*可在安装时设置或自动分配)
@@ -17,8 +17,7 @@ DNS1=223.5.5.5        # DNS1与主机一致(阿里)
 DNS2=8.8.8.8          # DNS2与主机一致(谷歌)
 DNS3=114.114.114.114  # DNS3与主机一致(国内)可选
 # 重启网络
-systemctl restart network
-# service network restart
+systemctl restart network  # service network restart
 # 查看IP地址
 ip addr | grep inet # Centos7命令
 # 预设置hosts
@@ -27,7 +26,7 @@ vi /etc/hosts
 192.168.1.201 k8s01
 192.168.1.202 k8s02
 192.168.1.203 k8s03
-# Github DNS
+# Github DNS (可选)
 140.82.113.3 github.com
 185.199.108.153 assets-cdn.github.com
 199.232.69.194 github.global.ssl.fastly.net
@@ -38,9 +37,9 @@ hostnamectl set-hostname k8s02 # 192.168.1.202
 hostnamectl set-hostname k8s03 # 192.168.1.203
 
 # 可设置免密码登录
-ssh-keygen  # 192.168.1.201
+ssh-keygen  # 192.168.1.201 master 节点生成后, 复制到其它节点
 cat .ssh/id_rsa.pub >> .ssh/authorized_keys
-chmod 600 .ssh/authorized_keys
+chmod 600 .ssh/authorized_keys   # 其它节点非root用户使用时
 scp -r .ssh root@192.168.1.202:/root
 scp -r .ssh root@192.168.1.203:/root
 ~~~
@@ -49,7 +48,7 @@ scp -r .ssh root@192.168.1.203:/root
 > 推荐安装1.10.0以上版本的Docker客户端，参考文档[docker-ce](https://yq.aliyun.com/articles/110806)，登录[阿里容器镜像服务](https://cr.console.aliyun.com/cn-hangzhou/instances)<br>
 > 容器化 Docker v19.* 兼容 K8S 版本 v1.19.*
 ~~~bash
-# 关闭防火器(K8S会创建防火器规则,导致防火器规则重复)
+# 关闭防火器(K8S会创建防火器规则,导致防火器规则重复) [应用部署K8S时应该开启防火器]
 systemctl disable firewalld && systemctl stop firewalld
 # 安装依赖 device-mapper-persistent-data 是linux下的一个存储驱动(一个高级存储技术) lvm 的作用则是创建逻辑磁盘分区
 yum install -y yum-utils device-mapper-persistent-data lvm2
@@ -209,8 +208,9 @@ kubectl get pods --all-namespaces -o wide
 
 #### 应用部署在Kubernetes
 ~~~bash
-# 开启防火器(K8S会创建成功后，用于创建Docker应用的网络访问规则)
-systemctl disable firewalld && systemctl stop firewalld
+# 先开启防火器(K8S初始化成功后,用于部署K8S应用时生成相应的网络访问规则)
+systemctl status firewalld  # 检查防火器状态
+systemctl enable firewalld && systemctl start firewalld
 
 ~~~
 

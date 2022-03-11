@@ -104,11 +104,17 @@ $ sudo killall -HUP mDNSResponder
 $ sudo dscacheutil -flushcache
 > ipconfig /flushdns  # on windows
 
-> git config --system -l # show windows system config > git config --system -e [--edit]
+> git config --system -l # show windows system config
+> git config --system -e # [--edit] windows system config
 # http.sslVerify=false
 # http.sslbackend=openssl
 # http.sslcainfo=C:/Program Files/Git/mingw64/ssl/certs/ca-bundle.crt
 # credential.helper=manager
+
+> git config --system core.longpaths true # enabled log file paths in git (run as Administrator)
+# If this repository contains git submodules. 
+# To add the submodules to the project, navigate to the repository root and type:
+> git submodule update --init --recursive
 
 # 设置SSH-Key: github.com/settings/keys
 > ssh-keygen -t rsa -C "angenal@hotmail.com"

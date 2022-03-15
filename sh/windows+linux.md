@@ -81,6 +81,9 @@ PS> wsl -l -v  # 查看<linux>子系统
 PS> wsl -d Centos7
 PS> wsl -d Ubuntu
 PS> wsl -d Legacy (默认)
+# 为什么要升级 Update to WSL 2
+sysctl -a |grep vm  # 检查系统内存配置
+sysctl -w vm.max_map_count=262144 # 提高虚拟内存限制（WSL 1 不支持; WSL 2 支持）
 # 设置 WSL 默认版本为 2 (独立运行<linux>需内存多)
 wsl --set-default-version 2 # Update to WSL 2
 wsl --set-version <linux> 2 # 修改<linux>为 WSL 2

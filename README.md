@@ -1,7 +1,7 @@
 
 ## [电脑工具](https://vip.jokerps.com/software)
 - [`Windows`绿色软件✨](https://vip.jokerps.com/software/windows)、[rufus_USB启动盘(Windows,Linux,UEFI)](https://rufus.ie/)、[frp内网穿透](https://gofrp.org/docs/)、[ZeroTier内网穿透](https://www.zerotier.com/download/)、[万彩办公大师](http://www.wofficebox.com/)
-- [`Portable`绿色软件](https://portable4pc.com/)、[`Open`共享软件](https://www.gopojie.net/)
+- [`Portable`绿色软件](https://portable4pc.com/)、[`Open`共享软件](https://www.gopojie.net/)、[`Free`软件`大文件传输`](https://alternativeto.net/software/swisstransfer/)
 - [『暗部软件分享』](https://www.lanzoui.com/b0k1bw0j)、[『磁力链接聚合搜索』](https://github.com/xiandanin/magnetW/wiki)、[『支持1200+在线视频网站』`Hitomi-Downloader`](https://github.com/KurtBestor/Hitomi-Downloader)
 
 ## [手机工具](https://ssrshare.github.io/bt/)

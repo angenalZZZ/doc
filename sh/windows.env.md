@@ -9,7 +9,7 @@
 %USERPROFILE%\AppData\Local\Programs\Python\Python37-32\Scripts
 %USERPROFILE%\AppData\Local\Programs\Microsoft VS Code\bin
 %USERPROFILE%\scoop\shims
-%USERPROFILE%\.cargo\bin
+%CARGO_HOME%\bin
 %USERPROFILE%\.dotnet\tools
 ```
 
@@ -53,6 +53,7 @@ D:\Program\Strawberry\perl\site\bin
 D:\Tool\SysinternalsSuite
 A:\go\bin
 A:\deno\bin
+A:\rust\bin
 C:\tools\lxrunoffline
 C:\ProgramData\chocolatey\bin
 C:\Program Files\Microsoft VS Code\bin
@@ -78,6 +79,8 @@ ChocolateyInstall C:\ProgramData\chocolatey
 ChocolateyToolsLocation C:\tools
 CATALINA_HOME D:\Program\apache-tomcat-8.5.65
 CLASSPATH     .;%JAVA_HOME%\lib\dt.jar:%JAVA_HOME%\lib\tools.jar;%CATALINA_HOME%\lib\servlet-api.jar;
+CARGO_HOME    A:\rust\.cargo   # 在运行Rust安装`rustup-init`之前设置CARGO_HOME
+RUSTUP_HOME   A:\rust\.rustup  # 同上,设置RUSTUP_HOME
 DENO_DIR          A:\deno
 DENO_INSTALL_ROOT A:\deno\bin
 DOCKER_HOST   tcp://localhost:2375

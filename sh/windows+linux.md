@@ -12,6 +12,13 @@
 
 #### 系统升级
 
+> Windows [下载网址](https://shareappscrack.com/windows-direct-link/)、[Win11_Chinese(Simplified)_x64v1.iso](https://software.download.prss.microsoft.com/db/Win11_Chinese(Simplified)_x64v1.iso)
+~~~bash
+slmgr /ipk W269N-WFGWX-YVC9B-4J6C9-T83GX # Windows 11 专业版激活
+slmgr /skms kms.loli.best
+slmgr /ato
+~~~
+
 > Windows 10 免费升级到20H2 [Download Update Tool](https://go.microsoft.com/fwlink/?LinkId=691209) ，[下载激活工具](https://disk.yandex.ru/d/JtECKWUIhtBLUA)
 ~~~bash
 slmgr /ipk W269N-WFGWX-YVC9B-4J6C9-T83GX  # 专业版 or 企业版: 96YNV-9X4RP-2YYKB-RMQH4-6Q72D

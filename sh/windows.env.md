@@ -51,6 +51,7 @@ D:\Program\Strawberry\c\bin
 D:\Program\Strawberry\perl\bin
 D:\Program\Strawberry\perl\site\bin
 D:\Tool\SysinternalsSuite
+D:\Tool\SysinternalsSuite\platform-tools
 A:\go\bin
 A:\deno\bin
 A:\rust\bin

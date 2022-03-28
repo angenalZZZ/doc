@@ -117,22 +117,21 @@ PS> scoop install -g lsd   # 漂亮的 ls 命令
 > [获取adb - Android Install Tool](https://dl.google.com/android/repository/platform-tools_r31.0.3-windows.zip)<br>
 > [获取Google Play 商店](https://github.com/LSPosed/MagiskOnWSA)
 ~~~bash
-# 下载：https://store.rg-adguard.net
-# 搜索：ProductId = 9P3395VX91NR
-# 复制下载链接, 使用迅雷下载完成
-# 以管理员方式运行PowerShell安装
-Add-AppxPackage "E:\Software\windows\SubsystemForAndroid\Microsoft.UI.Xaml.2.6_2.62112.3002.0_x64__8wekyb3d8bbwe.Appx"
-Add-AppxPackage "E:\Software\windows\SubsystemForAndroid\MicrosoftCorporationII.WindowsSubsystemForAndroid_2203.40000.1.0_neutral__8wekyb3d8bbwe.Msixbundle"
+# 下载WSA：https://store.rg-adguard.net
+# 搜索WSA：ProductId = 9P3395VX91NR
+# 复制下载链接;使用迅雷下载;以管理员方式运行PowerShell安装;
+Add-AppxPackage "E:\Software\windows\SubsystemForAndroid\Microsoft.UI.Xaml.Appx"
+Add-AppxPackage "E:\Software\windows\SubsystemForAndroid\MicrosoftCorporationII.WindowsSubsystemForAndroid_2203.Msixbundle"
 
-# 安装后启动并设置Hyper-V(可选;当安装Win11到虚拟机时)
+# 安装后启动并设置VM(可选;当安装win11到虚拟机后)
 # 内存：9216 MB
 # CPU：P.4 * C.2 = 8 核 √ 虚拟化 Intel VT-x/EPT √ 虚拟化 IOMMU
 
-# 安装安卓应用(adb)
+# 安装应用(adb)
 cd D:\Tool\SysinternalsSuite\platform-tools
 adb devices                 # show all device/emulator
 adb connect 127.0.0.1:58526 # connect emulator before install
-adb install 安卓应用.apk    # -s 127.0.0.1:58526
+adb install 安卓应用.apk     # -s 127.0.0.1:58526
 ~~~
 
 

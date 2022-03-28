@@ -128,7 +128,7 @@ Add-AppxPackage "E:\Software\windows\SubsystemForAndroid\MicrosoftCorporationII.
 # CPU：P.4 * C.2 = 8 核 √ 虚拟化 Intel VT-x/EPT √ 虚拟化 IOMMU
 
 # 安装应用(adb)
-cd D:\Tool\SysinternalsSuite\platform-tools
+cd D:\Tool\SysinternalsSuite\platform-tools # 提前`获取adb`解压至该目录;设置系统环境变量;
 adb devices                 # show all device/emulator
 adb connect 127.0.0.1:58526 # connect emulator before install
 adb install 安卓应用.apk     # -s 127.0.0.1:58526

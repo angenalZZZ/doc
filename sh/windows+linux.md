@@ -112,8 +112,9 @@ PS> scoop install -g lsd   # 漂亮的 ls 命令
 
 
 #### 子系统[android](https://www.microsoft.com/store/productId/9P3395VX91NR)
-> [开启 Windows Subsystem for Android](https://appuals.com/this-app-will-not-work-on-your-device-error-windows-11)<br>
-> [获取 Android adb tool](https://dl.google.com/android/repository/platform-tools_r31.0.3-windows.zip)
+> [开启WSA - Windows Subsystem for Android](https://appuals.com/this-app-will-not-work-on-your-device-error-windows-11)<br>
+> [获取adb - Android Install Tool](https://dl.google.com/android/repository/platform-tools_r31.0.3-windows.zip)
+> [获取Google Play](https://github.com/LSPosed/MagiskOnWSA)
 ~~~bash
 # 下载：https://store.rg-adguard.net
 # 搜索：ProductId = 9P3395VX91NR

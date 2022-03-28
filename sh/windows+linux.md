@@ -124,7 +124,7 @@ PS> scoop install -g lsd   # 漂亮的 ls 命令
 Add-AppxPackage "E:\Software\windows\SubsystemForAndroid\Microsoft.UI.Xaml.2.6_2.62112.3002.0_x64__8wekyb3d8bbwe.Appx"
 Add-AppxPackage "E:\Software\windows\SubsystemForAndroid\MicrosoftCorporationII.WindowsSubsystemForAndroid_2203.40000.1.0_neutral__8wekyb3d8bbwe.Msixbundle"
 
-# 安装后启动并设置Hyper-V(可选)
+# 安装后启动并设置Hyper-V(可选;当安装Win11到虚拟机时)
 # 内存：9216 MB
 # CPU：P.4 * C.2 = 8 核 √ 虚拟化 Intel VT-x/EPT √ 虚拟化 IOMMU
 

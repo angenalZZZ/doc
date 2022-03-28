@@ -114,7 +114,7 @@ PS> scoop install -g lsd   # 漂亮的 ls 命令
 
 #### 子系统[android](https://www.microsoft.com/store/productId/9P3395VX91NR)
 > [开启WSA - Windows Subsystem for Android](https://appuals.com/this-app-will-not-work-on-your-device-error-windows-11)<br>
-> [获取adb - Android Install Tool](https://dl.google.com/android/repository/platform-tools_r31.0.3-windows.zip)<br>
+> [获取adb - Android Install Tool](https://dl.google.com/android/repository/platform-tools_latest-windows.zip)<br>
 > [获取Google Play 商店](https://github.com/LSPosed/MagiskOnWSA)
 ~~~bash
 # 下载WSA：https://store.rg-adguard.net
@@ -127,11 +127,21 @@ Add-AppxPackage "E:\Software\windows\SubsystemForAndroid\MicrosoftCorporationII.
 # 内存：9216 MB
 # CPU：P.4 * C.2 = 8 核 √ 虚拟化 Intel VT-x/EPT √ 虚拟化 IOMMU
 
-# 安装应用(adb)
+# 安装应用(使用adb方式)
 cd D:\Tool\SysinternalsSuite\platform-tools # 提前`获取adb`解压至该目录;设置系统环境变量;
-adb devices                 # show all device/emulator
-adb connect 127.0.0.1:58526 # connect emulator before install
-adb install 安卓应用.apk     # -s 127.0.0.1:58526
+adb --version                # 检查版本
+
+# 解决virtwifi联网问题
+adb shell settings put global captive_portal_https_url https://www.google.cn/generate_204
+adb shell settings put global captive_portal_http_url http://www.google.cn/generate_204
+
+adb devices                  # show connected device/emulator
+adb connect 127.0.0.1:58526  # connect emulator before install
+adb install "安卓应用.apk"   # -s 127.0.0.1:58526
+
+adb install "D:\Tool\Mobile\Apk\Magisk-v24.3.apk"
+adb install "D:\Tool\Mobile\Apk\edge_arm64_Stable.apk"
+
 ~~~
 
 

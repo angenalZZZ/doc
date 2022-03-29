@@ -113,7 +113,7 @@ PS> scoop install -g lsd   # 漂亮的 ls 命令
 
 
 #### 子系统[android](https://www.microsoft.com/store/productId/9P3395VX91NR)
-> [开启WSA - Windows Subsystem for Android](https://appuals.com/this-app-will-not-work-on-your-device-error-windows-11)<br>
+> [开启WSA - Windows Subsystem for Android](https://appuals.com/this-app-will-not-work-on-your-device-error-windows-11)、[`推荐`BlueStacks`模拟器`](https://www.bluestacks.com/download.html)<br>
 > [获取adb - Android Install Tool](https://dl.google.com/android/repository/platform-tools_latest-windows.zip)<br>
 > [获取Google Play 商店](https://github.com/LSPosed/MagiskOnWSA)
 ~~~bash

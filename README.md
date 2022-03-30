@@ -5,7 +5,8 @@
 - [『暗部软件分享』](https://www.lanzoui.com/b0k1bw0j)、[『磁力链接聚合搜索』](https://github.com/xiandanin/magnetW/wiki)、[『支持1200+在线视频网站』`Hitomi-Downloader`](https://github.com/KurtBestor/Hitomi-Downloader)
 
 ## [手机工具](https://ssrshare.github.io/bt/)
-- [`iOS`助手`Coolmuster`](https://portable4pc.com/coolmuster-ios-assistant-portable/)、[`Android`助手`Coolmuster`](https://portable4pc.com/coolmuster-android-assistant-portable/)、[`Android`模拟器`NoxPlayer`](https://portable4pc.com/noxplayer/)
+- [`iOS`助手`Coolmuster`](https://portable4pc.com/coolmuster-ios-assistant-portable/)、[`Android`助手`Coolmuster`](https://portable4pc.com/coolmuster-android-assistant-portable/)
+- [`Android`模拟器`Nox`](https://shareappscrack.com/noxplayer-nox-app-player/)[夜神](https://www.yeshen.com/)、[`Android`模拟器`LD`雷电](https://www.ldplayer.net/)
 
 ## [开发工具](https://www.jb51.net/softs/)
 - [Visual Studio Code](https://code.visualstudio.com/)、[JetBrains IDE](https://www.jetbrains.com/)、[Kite`插件`](https://www.kite.com/)

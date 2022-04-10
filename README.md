@@ -87,6 +87,12 @@
 
 
 ## 其它
+> [`WiFi`万能钥匙下载](https://bittly.cc/d8MX5)
+~~~bash
+#CMD命令：
+netsh wlan show profile
+netsh wlan export profile folder=C:\ key=clear
+~~~
 
 > `批量清空代码注释`
 ~~~shell

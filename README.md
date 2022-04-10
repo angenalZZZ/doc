@@ -3,6 +3,8 @@
 - [`Windows`绿色软件✨](https://vip.jokerps.com/software/windows)、[rufus_USB启动盘(Windows,Linux,UEFI)](https://rufus.ie/)、[frp内网穿透](https://gofrp.org/docs/)、[ZeroTier内网穿透](https://www.zerotier.com/download/)、[万彩办公大师](http://www.wofficebox.com/)
 - [`Portable`绿色软件](https://portable4pc.com/)、[`Open`共享软件](https://www.gopojie.net/)、[`Free`软件`大文件传输`](https://alternativeto.net/software/swisstransfer/)
 - [『暗部软件分享』](https://www.lanzoui.com/b0k1bw0j)、[『磁力链接聚合搜索』](https://github.com/xiandanin/magnetW/wiki)、[『支持1200+在线视频网站』`Hitomi-Downloader`](https://github.com/KurtBestor/Hitomi-Downloader)
+- [电脑软件库](https://aleikeji.lanzoui.com/b00u7t65i)、[电视软件库](https://aleikeji.lanzoui.com/b00u7t5wj)、[安卓软件库](https://aleikeji.lanzoui.com/b00u7t64h)(密码`0000`)
+
 
 ## [手机工具](https://ssrshare.github.io/bt/)
 - [`iOS`助手`Coolmuster`](https://portable4pc.com/coolmuster-ios-assistant-portable/)、[`Android`助手`Coolmuster`](https://portable4pc.com/coolmuster-android-assistant-portable/)
@@ -60,6 +62,7 @@
 - [片库](https://www.pianku.li/ "高清影视资源下载")、[my片库](https://www.mypianku.net)、[片源](http://pianyuan.la/ "BT、磁力种子资源分享")、[独播库](https://www.duboku.tv)、[奈飞中文电影](https://yanetflix.com)、[电影蜜蜂](https://www.dybee.tv)、[剧嗨](https://www.juhi.cc)、[555电影](https://www.o8tv.com)、[泥巴影院](https://www.mudvod.tv)、[欧乐影院](https://olevod.com)、[瓜子TV](https://guazitv.tv)、[tubiTV](https://tubitv.com)、[音范丝](http://www.yinfans.me/ "精选4K蓝光原盘下载")、[蓝调网](http://lcoc.top/ "vip视频解析网站")、[Audio Library](https://www.audiolibrary.com.co/ "无版权音乐下载")、[My Free MP3](http://tool.liumingye.cn/music/ "免费搜索下载无损音乐")、[TuneFind](https://www.tunefind.com/ "从电视和电影中查找音乐")、[果汁音乐](http://guozhivip.com/yinyue/ "音乐免费在线收听下载")、[更多](https://vip.jokerps.com/favorites/play)
 - [IPTV·电视直播源·`按国家、类别、语言`](https://github.com/iptv-org/iptv)、[IPTV·媒体工具](https://github.com/iptv-org/awesome-iptv)
 - [`开放资源`收录`小纸条`](https://u.gitcafe.net/)
+- [`含羞草`](https://www.hxcpp101.com/)
 
 
 ## [休闲娱乐](https://vip.jokerps.com/favorites/play)

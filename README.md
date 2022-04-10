@@ -59,10 +59,12 @@
 ## [影音媒体](https://vip.jokerps.com/favorites/play)
 - [片库](https://www.pianku.li/ "高清影视资源下载")、[my片库](https://www.mypianku.net)、[片源](http://pianyuan.la/ "BT、磁力种子资源分享")、[独播库](https://www.duboku.tv)、[奈飞中文电影](https://yanetflix.com)、[电影蜜蜂](https://www.dybee.tv)、[剧嗨](https://www.juhi.cc)、[555电影](https://www.o8tv.com)、[泥巴影院](https://www.mudvod.tv)、[欧乐影院](https://olevod.com)、[瓜子TV](https://guazitv.tv)、[tubiTV](https://tubitv.com)、[音范丝](http://www.yinfans.me/ "精选4K蓝光原盘下载")、[蓝调网](http://lcoc.top/ "vip视频解析网站")、[Audio Library](https://www.audiolibrary.com.co/ "无版权音乐下载")、[My Free MP3](http://tool.liumingye.cn/music/ "免费搜索下载无损音乐")、[TuneFind](https://www.tunefind.com/ "从电视和电影中查找音乐")、[果汁音乐](http://guozhivip.com/yinyue/ "音乐免费在线收听下载")、[更多](https://vip.jokerps.com/favorites/play)
 - [IPTV·电视直播源·`按国家、类别、语言`](https://github.com/iptv-org/iptv)、[IPTV·媒体工具](https://github.com/iptv-org/awesome-iptv)
+- [`开放资源`收录`小纸条`](https://u.gitcafe.net/)
 
 
 ## [休闲娱乐](https://vip.jokerps.com/favorites/play)
 - [Sleazy Fork](https://sleazyfork.org/zh-CN "提供成人用户脚本的网站")、[致美化](https://zhutix.com/ "最专业的电脑美化平台")、[PHOTOMOSH](https://photomosh.com/ "故障效果生成器")、[BigPixel](http://www.bigpixel.cn/ "千亿像素看中国")、[熊猫搜书](https://ebook.huzerui.com/ "电子书搜索平台合集")、[Pinterest](https://www.pinterest.com/ "世界上最大的图片社交分享网站")、[快速涂鸦](https://quickdraw.withgoogle.com/ "协助训练神经网络辨识涂鸦")、[Duotone](https://duotone.shapefactory.co/ "双色图片生成器")、[更多](https://vip.jokerps.com/favorites/play)
+- [私密房间](https://hyperbeam.com/app/)
 
 
 ## [设计素材](https://vip.jokerps.com/favorites/design)

@@ -87,9 +87,11 @@
 
 
 ## 其它
-> [`WiFi`万能钥匙下载](https://bittly.cc/d8MX5)
+> [`WiFi`万能钥匙下载](https://bittly.cc/d8MX5)<br>
+> [纸币收藏](https://www.realbanknotes.com/)、[文字转语音](https://coder.work/text2audio)、[谷歌地图上驾驶车辆](https://framesynthesis.com/drivingsimulator/maps)、[机器人布吉的舞蹈](https://roboboogie.codeclub.org.uk/)<br>
+> [图片设计](http://magicmockups.com/)、[图片放入手机模型](https://dimmy.club/)、[键盘娱乐](https://www.patatap.com/)
 ~~~bash
-#CMD命令：
+#CMD命令(获取Wifi密码)
 netsh wlan show profile
 netsh wlan export profile folder=C:\ key=clear
 ~~~

@@ -102,5 +102,12 @@ netsh wlan export profile folder=C:\ key=clear
   # 打开项目代码目录 > Ctrl+Shift+F
   > 搜索：\/\*[\s\S]*\*\/|\/\/.*  # 使用正则表达式(Alt+R)
   > 要包含的文件：*.cs *.c *.cpp *.h *.js *.ts ...
+# Visual Studio ^2019
+  # 打开项目解决方案 > Ctrl+Shift+F > 选择“在文件中替换”:
+  > 搜索：^[ \t]*//[^\n]*\n            # 使用正则表达式(Alt+E) > 删除注释
+  > 搜索：^[ \t]*//[^\n]*Token[^\n]+\n # 使用正则表达式(Alt+E) > 删除注释(包含Token)
+  > 搜索：^(?([^\r\n])\s)*\r?$\r?\n    # 使用正则表达式(Alt+E) > 删除空行
+  > 查找范围：整个解决方案
+  > 文件类型：默认或手动选择
 ~~~
 

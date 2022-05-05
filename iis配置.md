@@ -44,6 +44,8 @@
   <system.webServer>
     <defaultDocument>
       <files>
+        <!-- 可以先清除IIS默认的配置项 -->
+        <clear/>
         <!-- 发布 ClickOnce 应用程序后 -->
         <add value="WPF.application" />
       </files>
@@ -57,11 +59,27 @@
     <directoryBrowse enabled="false" />
     <security>
       <requestFiltering>
-        <!-- 请求限制：2GB -->
-        <requestLimits maxAllowedContentLength="2147483648" />
+        <!-- 当前限制：2147483647 (2GB) ; 默认值：30000000 (28.6 MB), 最大限制：4294967295 (4GB) -->
+        <requestLimits maxAllowedContentLength="2147483647" />
       </requestFiltering>
     </security>
   </system.webServer>
+  <system.web>
+    <!-- 仅当服务器 ASP.NET 运行时版本小于 4.5 时，设置当前限制：2097151 (2GB) ; 默认值：4096 (4MB) -->
+    <httpRuntime maxRequestLength="2097151"/>
+  </system.web>
+  <!-- 可以指定访问地址后限制 -->
+  <location path="file/upload">
+    <system.webServer>
+      <directoryBrowse enabled="false" />
+      <security>
+        <requestFiltering>
+          <!-- 当前限制：2147483647 (2GB) ; 默认值：30000000 (28.6 MB), 最大限制：4294967295 (4GB) -->
+          <requestLimits maxAllowedContentLength="2147483647" />
+        </requestFiltering>
+      </security>
+    </system.webServer>
+  </location>
 ~~~
 
 > `URL重定向` [`1.Install IIS URL Rewrite`](https://www.iis.net/downloads/microsoft/url-rewrite) [`Download samples`](https://download.microsoft.com/download/3/9/E/39E30671-7AD2-4902-B56B-C300D862595E/RewriteExtensibility.msi) `2.修改Web.config`

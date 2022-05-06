@@ -59,7 +59,7 @@
     <directoryBrowse enabled="false" />
     <security>
       <requestFiltering>
-        <!-- 当前限制：2147483647 (2GB) ; 默认值：30000000 (28.6 MB), 最大限制：4294967295 (4GB) -->
+        <!-- 当前限制：2147483647 (2GB) ; 默认值：30000000 (28.6MB), 最大限制：4294967295 (4GB) -->
         <requestLimits maxAllowedContentLength="2147483647" />
       </requestFiltering>
     </security>
@@ -74,7 +74,7 @@
       <directoryBrowse enabled="false" />
       <security>
         <requestFiltering>
-          <!-- 当前限制：2147483647 (2GB) ; 默认值：30000000 (28.6 MB), 最大限制：4294967295 (4GB) -->
+          <!-- 当前限制：2147483647 (2GB) ; 默认值：30000000 (28.6MB), 最大限制：4294967295 (4GB) -->
           <requestLimits maxAllowedContentLength="2147483647" />
         </requestFiltering>
       </security>
@@ -100,7 +100,7 @@
         </rule>
         <rule name="Swagger to Web redirect" patternSyntax="ECMAScript" stopProcessing="true">
           <!-- eg. https://www.demo.com/swagger/ui/index [to] https://www.demo.com/web -->
-          <match url="swagger/ui/index$" />
+          <match url="^swagger" />
           <action type="Redirect" url="https://{HTTP_HOST}/web" />
         </rule>
       </rules>

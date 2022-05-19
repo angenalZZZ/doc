@@ -59,8 +59,8 @@ files = /etc/supervisor/conf/*.ini
 > 创建 Cloudreve 应用配置所在目录，并创建配置文件
 ~~~bash
 sudo mkdir -p /etc/supervisor/conf
-sudo vim /etc/supervisor/conf/cloudreve.ini
-# vim /etc/supervisord.d/cloudreve.ini # 或者放到默认配置目录中
+sudo vim /etc/supervisor/conf/cloudreve.ini # 新增程序配置
+# vim /etc/supervisord.d/cloudreve.ini # 放到默认配置目录中
 ~~~
 ```
 [program:cloudreve]
@@ -73,7 +73,7 @@ stderr_logfile=/var/log/cloudreve.err
 stdout_logfile=/var/log/cloudreve.log
 ```
 ~~~bash
-# vim /etc/supervisord.d/WebApi.ini    # 新增应用程序配置 WebApi
+# vim /etc/supervisord.d/WebApi.ini    # 新增程序配置 WebApi 放到默认配置目录中
 ~~~
 ```
 [program:WebApi]
@@ -89,16 +89,16 @@ loglevel=warn
 logfile_maxbytes=2097152
 stdout_logfile_maxbytes=2097152
 stderr_logfile_maxbytes=2097152
-stderr_logfile=/home/centos/App/WebApi/supervisor.err.log
-stdout_logfile=/home/centos/App/WebApi/supervisor.out.log
+stderr_logfile=/home/centos/App/WebApi/logs/stderr.supervisor.log
+stdout_logfile=/home/centos/App/WebApi/logs/stdout.supervisor.log
 ```
 > 启动 supervisor (通过全局配置文件)
 ~~~bash
-supervisord -c /etc/supervisord.conf
-# 当新增或修改应用配置文件 /etc/supervisord.d/*.ini 后 reload 重新加载全局配置
-supervisorctl -c /etc/supervisord.conf # 指定全局配置文件
+supervisord -c /etc/supervisord.conf   # 按全局配置[启动服务]
+# 当新增或修改应用配置文件 /etc/supervisord.d/*.ini 后 reload [重新加载全局配置]
+supervisorctl -c /etc/supervisord.conf # 指定全局配置文件[进入supervisor命令控制台]
 supervisor> reload
-supervisor> status
+supervisor> status [start,stop,restart]
 supervisor> exit
 ~~~
 > 管理 supervisor 应用程序
@@ -106,7 +106,8 @@ supervisor> exit
 supervisorctl status            # 查看应用列表及状态
 supervisorctl status cloudreve  # 查看某个程序的状态
 supervisorctl start cloudreve   # 启动程序
-supervisorctl restart cloudreve # 重启程序
 supervisorctl stop cloudreve    # 停止程序
+supervisorctl restart cloudreve # 重启程序
 ~~~
 
+----

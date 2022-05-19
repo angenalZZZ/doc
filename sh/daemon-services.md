@@ -94,11 +94,11 @@ stdout_logfile=/home/centos/App/WebApi/logs/stdout.supervisor.log
 ```
 > 启动 supervisor (通过全局配置文件)
 ~~~bash
-supervisord -c /etc/supervisord.conf   # 按全局配置[启动服务]
+supervisord -c /etc/supervisord.conf   # 按全局配置[启动服务]supervisord
 # 当新增或修改应用配置文件 /etc/supervisord.d/*.ini 后 reload [重新加载全局配置]
 supervisorctl -c /etc/supervisord.conf # 指定全局配置文件[进入supervisor命令控制台]
 supervisor> reload
-supervisor> status [start,stop,restart]
+supervisor> status [start,stop,restart] [程序名称,如WebApi]
 supervisor> exit
 ~~~
 > 管理 supervisor 应用程序

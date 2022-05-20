@@ -13,9 +13,9 @@
 
 #### 系统升级
 
-> Windows [下载网址](https://shareappscrack.com/windows-direct-link/)、[Win11_Chinese(Simplified)_x64v1.iso](https://software.download.prss.microsoft.com/db/Win11_Chinese(Simplified)_x64v1.iso)
+> Windows [下载网址](https://shareappscrack.com/windows-direct-link/)、[Win11_Chinese(Simplified)_x64v1.iso](https://software.download.prss.microsoft.com/db/Win11_Chinese(Simplified)_x64v1.iso)、[激活码](https://www.jiaochengzhijia.com/win11/146428.html)
 ~~~bash
-slmgr /ipk W269N-WFGWX-YVC9B-4J6C9-T83GX # Windows 11 专业版激活
+slmgr /ipk 8G7XN-V7YWC-W8RPC-V73KB-YWRDB # Windows 11 专业版激活
 slmgr /skms kms.loli.best
 slmgr /ato
 ~~~

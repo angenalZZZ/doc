@@ -33,6 +33,13 @@ slmgr /upk                                # 卸载密钥(当无法激活时) www
   * [`resilio`File Sync for Windows, Mac, Linux](https://www.resilio.com/platforms/desktop/)、[Tutorials](https://www.resilio.com/tech/sync-tutorials-and-howto/)
   * [`syncthing`File Sync for Windows, Mac, Linux](https://github.com/syncthing/syncthing/releases/latest)、[Document](https://docs.syncthing.net/users/syncthing.html)
 
+> Windows 系统工具
+* [推荐 Windows 软件源/系统优化|效率办公|影音媒体...](https://vip.jokerps.com/software/windows)
+* [调试 Windows 诊断跟踪|内存分析|WinDbg|Tools...](http://windbg.org/)
+* [禁用 Windows 安全中心 Microsoft Defender 防病毒程序](https://www.sordum.org/9480/)
+* [禁止 Windows 自动更新](https://www.sordum.org/9470/)
+
+
 > Windows 10 系统问题排查
 ~~~bash
 sfc /SCANNOW                                    # 检查系统组件是否有问题？

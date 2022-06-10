@@ -18,7 +18,7 @@
 ## [开发资源](#)
 - [`国外`破解联盟`board4all`](https://www.board4all.biz/)、[`国外`破解分享`ShareApps`](https://shareappscrack.com/)、[`国内`吾爱破解](https://www.52pojie.cn/)[`工具`](https://down.52pojie.cn/Tools/)、[`国内`飘云阁](https://www.chinapyg.com/)
 - [`分享吧`优质福利资源](https://www.fx8y.com/)、[`好例子`源码实例下载](https://www.haolizi.net/)、[`.NET`控件库`DevExpress`](https://ldqk.org/1849)
-- [`大眼仔`](http://www.dayanzai.me/)、[`亿破姐`](https://www.ypojie.com/)、[`汉化博客网`](http://www.th-sjy.com/)、[`分享者网`](https://www.sharerw.com/)、[`求资源网`](https://www.qiuziyuan.net/)
+- [`DownloadlyIR`](https://downloadlyir.com/)、[`大眼仔`](http://www.dayanzai.me/)、[`亿破姐`](https://www.ypojie.com/)、[`汉化博客网`](http://www.th-sjy.com/)、[`分享者网`](https://www.sharerw.com/)、[`求资源网`](https://www.qiuziyuan.net/)
 
 ## [网页搜索引擎](#)
 - [​Microsoft Bing​](https://www.bing.com/)、[​CC Search​](https://search.creativecommons.org/)、[​DuckDuckGo​](https://duckduckgo.com/)、[​Ecosia​](https://www.ecosia.org/)、[​F 搜​`推荐`](https://fsou.cc)

@@ -401,7 +401,18 @@ git branch -d clean_up
 git remote rm [远程仓库名origin]/[分支clean_up]
 ~~~
 
-####  25.加标签-(版本号)
+####  25.删除当前分支全部日志后，重新提交当前分支
+
+~~~bash
+git checkout --orphan lastest_branch # 新建临时分支,并切换到该分支
+git add -A                           # 添加所有文件
+git commit -m "重新提交当前分支"      # 提交更改
+git branch -D master                 # 删除分支
+git branch -m master                 # 将当前分支重命名
+git push -f origin master            # 最后强制更新存储库
+~~~
+
+####  26.加标签-(版本号)
 
 ~~~bash
 git tag -a v0.1.3 -m "Release Version 0.1.3" # -a 添加, -d 删除
@@ -410,14 +421,14 @@ git push --tags origin                 # 推送本地仓库的全部标签到远
 git push origin :refs/tags/[tag-name]  # 删除远程标签tag-name
 ~~~
 
-####  26.最后发布
+####  27.最后发布
 
 ~~~bash
 git push --all                         # 推送本地仓库的所有分支和标签
 git push origin master                 # 推送本地仓库的主分支master到远程仓库origin/master
 ~~~
 
-####  27.[push.sh 参考文档](https://github.com/fengyuhetao/shell)
+####  28.[push.sh 参考文档](https://github.com/fengyuhetao/shell)
 
 ~~~bash
 #!/usr/bin/env bash

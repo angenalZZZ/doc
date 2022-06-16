@@ -5,6 +5,16 @@
 - [『暗部软件分享』](https://www.lanzoui.com/b0k1bw0j)、[『磁力链接聚合搜索』](https://github.com/xiandanin/magnetW/wiki)、[『支持1200+在线视频网站』`Hitomi-Downloader`](https://github.com/KurtBestor/Hitomi-Downloader)
 - [电脑软件库](https://aleikeji.lanzoui.com/b00u7t65i)、[电视软件库](https://aleikeji.lanzoui.com/b00u7t5wj)、[安卓软件库](https://aleikeji.lanzoui.com/b00u7t64h)(密码`0000`)
 
+## [`网络安全`](https://github.com/angenalZZZ/doc/blob/master/网络安全.md)
+- [杀毒软件](https://www.freedidi.com/4729.html "免费杀毒软件")
+    - [Bitdefender 卫士](https://www.bitdefender.com/solutions/free.html "免费")
+    - [AVG 免费防毒](https://www.avg.com/en-us/free-antivirus-download "免费")
+    - [Avira](https://www.avira.com/zh-cn/free-security "免费")
+    - [Malwarebytes](https://www.malwarebytes.com/ "免费")
+    - [世界反病毒实验室排行榜](https://www.av-test.org/en/antivirus/home-windows/)
+- [深信服](https://bbs.sangfor.com.cn/plugin.php?id=index:index)
+- [System安全(堡垒机OSM、终端检测EDR、安全评估TSS、数据库审计DAS、行为管理AC、基线核查BVT等)](https://bbs.sangfor.com.cn/plugin.php?id=service:download)
+
 
 ## [手机工具](https://ssrshare.github.io/bt/)
 - [`iOS`助手`Coolmuster`](https://portable4pc.com/coolmuster-ios-assistant-portable/)、[`Android`助手`Coolmuster`](https://portable4pc.com/coolmuster-android-assistant-portable/)
@@ -32,16 +42,6 @@
 - [软件工程师C++学习《剑指Offer》](https://github.com/zhedahht/CodingInterviewChinese2)
 - [`itMind`线思维导图](https://gitmind.cn/)
 - [`Icon`](https://shields.io/)
-
-## [`网络安全`](https://github.com/angenalZZZ/doc/blob/master/网络安全.md)
-- [杀毒软件](https://www.freedidi.com/4729.html "免费杀毒软件")
-    - [Bitdefender 卫士](https://www.bitdefender.com/solutions/free.html "免费")
-    - [AVG 免费防毒](https://www.avg.com/en-us/free-antivirus-download "免费")
-    - [Avira](https://www.avira.com/zh-cn/free-security "免费")
-    - [Malwarebytes](https://www.malwarebytes.com/ "免费")
-    - [世界反病毒实验室排行榜](https://www.av-test.org/en/antivirus/home-windows/)
-- [深信服](https://bbs.sangfor.com.cn/plugin.php?id=index:index)
-- [System安全(堡垒机OSM、终端检测EDR、安全评估TSS、数据库审计DAS、行为管理AC、基线核查BVT等)](https://bbs.sangfor.com.cn/plugin.php?id=service:download)
 
 ## [网站工具](http://chenapp.com/chrome/developtools)
 - [Vue驱动的静态网站生成器](https://vuepress.vuejs.org/zh/)、[新榜/榜单/排名](http://newrank.cn/)

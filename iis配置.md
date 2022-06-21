@@ -162,6 +162,13 @@
   </system.web>
 ~~~
 
+> `**程序集需要完全信任时**`
+~~~xml
+  <system.web>
+    <!-- 当在共享Web主机上时 -->
+    <trust level="Full" />
+  </system.web>
+~~~
 
 ----
 

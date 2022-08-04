@@ -12,6 +12,7 @@
 ## [手机工具](https://ssrshare.github.io/bt/)
 - [`iOS`助手`Coolmuster`](https://portable4pc.com/coolmuster-ios-assistant-portable/)、[`Android`助手`Coolmuster`](https://portable4pc.com/coolmuster-android-assistant-portable/)
 - [`Android`模拟器`Nox`](https://shareappscrack.com/noxplayer-nox-app-player/)[`夜神`](https://www.yeshen.com/)、[`Android`模拟器`LD雷电`](https://www.ldplayer.net/)、[BlueStacks`模拟器`](https://www.bluestacks.com/download.html)
+- [快速检测APK程序是否安全?`MetaDefender`](https://metadefender.opswat.com/)、[`VirusTotal`免費的病毒、蠕虫、木马软件分析](https://www.virustotal.com/)
 
 ## [开发工具](https://www.jb51.net/softs/)
 - [Visual Studio Code](https://code.visualstudio.com/)、[JetBrains IDE](https://www.jetbrains.com/)、[Kite`插件`](https://www.kite.com/)

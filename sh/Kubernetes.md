@@ -3,8 +3,9 @@
 #### 安装虚拟机VM
 > VM [VirtualBox 6 - Windows hosts](https://www.virtualbox.org/wiki/Downloads)、[CentOS-7-x86_64-DVD.iso](http://isoredirect.centos.org/centos/7/isos/x86_64/)
 ~~~bash
-# 从 VM 安装 Centos7 并设置为`4CPU`+`4G内存`+`桥接网卡`，至少要求硬件为`2CPU`+`2G内存`+  # 根据主机情况来设置
-# `系统语言英文(默认不变)+提供中文支持(添加)`+`时区为亚洲上海(修改)`+`修改root密码+新建centos普通用户`+`其它不设置`
+# 从 VM 安装 Centos7 并设置为`4CPU`+`4G内存`+`桥接网卡`，至少要求为`2CPU`+`2G内存`以上；
+# 根据主机情况设置`4CPU`+`8G内存`+`仅主机(Host-Only)网络VirtualBox Host-Only Ethernet Adapter`+`存储SATA/AHCI/固态驱动器.vdi\40G`
+# `系统语言英文(默认不变)+提供中文支持(添加)`+`时区为亚洲上海(修改)`+`修改root密码+新建centos普通用户`
 # 分别安装虚机：k8s01、k8s02、k8s03
 
 # 设置静态IP(*网卡设备名称*可在安装时设置或自动分配)

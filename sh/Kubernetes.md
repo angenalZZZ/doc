@@ -12,10 +12,10 @@
 vi /etc/sysconfig/network-scripts/ifcfg-enp0s3
 BOOTPROTO=static      # dhcp 换成 static (修改)
 ONBOOT=yes            # 开机启动 no 换成 yes (修改)
-IPADDR=192.168.1.201  # 设置静态IP地址与主机前三位一致(新增)  # > ipconfig > IPv4地址: 172.16.11.201
+IPADDR=192.168.1.201  # 设置静态IP地址与主机前三位一致(新增)  # > ipconfig > IPv4地址: 172.16.10.201/255
 GATEWAY=192.168.1.1   # 默认网关与主机一致                   # > ipconfig > 默认网关: 172.16.10.1
 PREFIX=24             # 子网掩码与主机一致 即: NETMASK=255.255.255.0 # 或 > 子网掩码: 255.255.254.0
-DNS1=223.5.5.5        # DNS1与主机一致(阿里)
+DNS1=223.5.5.5        # DNS1与主机一致(阿里) [可选]
 DNS2=8.8.8.8          # DNS2与主机一致(谷歌)
 DNS3=114.114.114.114  # DNS3与主机一致(国内/移动/联通/电信)
 # 重启网络

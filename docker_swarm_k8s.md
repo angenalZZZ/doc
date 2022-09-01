@@ -38,8 +38,8 @@ $ sudo curl -L https://github.com/docker/machine/releases/download/v0.16.2/docke
     > /usr/local/bin/docker-machine  # 安装 docker-machine
 $ docker-machine version             # 安装完毕,查看版本
 # 设置 Docker 执行, 不使用sudo执行docker命令，先切换当前用户 su -u xxx (root~exit)
-$ sudo usermod -aG docker ${USER} # 将当前用户加入docker组 # sudo gpasswd -M ${USER} docker && newgrp - docker
-$ sudo service docker restart        # 重启Docker服务 # sudo systemctl restart docker
+sudo gpasswd -a ${USER} docker && newgrp - docker # 将当前用户加入并更新docker组
+sudo service docker restart          # 重启Docker服务 # sudo systemctl restart docker
 # 本机启动 Docker Daemon (容器服务端) 
 $ curl -Lo ~/.docker/machine/cache/boot2docker.iso \ # 下载最新版本的boot2docker镜像 for docker-machine create
     https://github.com/boot2docker/boot2docker/releases/download/v19.03.5/boot2docker.iso

@@ -447,7 +447,7 @@ ENTRYPOINT ["dotnet", "App.Host.dll"] */
   #连接后端mysql2
   mysql -P33062 -u root -p123456 -h 127.0.0.1
   
-  # 数据库 
+  # 数据库 Oracle 11g
   docker pull registry.cn-hangzhou.aliyuncs.com/helowin/oracle_11g
   docker run --name oracle -d -p 1521:1521 
     -v d:\docker\app\oracle\data:/home/oracle/data 

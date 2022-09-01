@@ -454,6 +454,15 @@ ENTRYPOINT ["dotnet", "App.Host.dll"] */
     registry.cn-hangzhou.aliyuncs.com/helowin/oracle_11g
   # docker-compose up -d -f A:\database\oracle\docker-compose.yml
   # 参考 https://www.cnblogs.com/mike666/p/13999397.html
+  sqlplus /nolog  # 登录数据库;或用其它客户端,如Navicat需安装Client: instantclient-basic-windows.x64-11.2.0.4.0.zip
+  conn /as sysdba # 切换为管理用户
+  ALTER PROFILE DEFAULT LIMIT PASSWORD_LIFE_TIME UNLIMITED; # 修改密码规则策略为密码永不过期
+  alter system set processes=2000 scope=spfile;   # 修改数据库最大连接数
+  alter user system identified by system;         # 修改system账号密码为 system
+  alter user sys identified by system;            # 修改sys账号密码为 system
+  create user admin identified by admin1;         # 创建管理员账号admin密码为 admin1
+  grant connect,resource,dba to admin;            # 将dba管理权限授权给账号 admin
+  select * from dba_users where username='admin'; # 查看用户信息
   
   # 数据库 PostgreSql + 时序数据timescaledb + 云计算
   docker run --name timescaledb -d -p 5432:5432 -e POSTGRES_PASSWORD=123456 timescale/timescaledb:latest-pg11

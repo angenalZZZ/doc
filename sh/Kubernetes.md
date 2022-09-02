@@ -120,6 +120,7 @@ vi /etc/docker/daemon.json # 或设置当前用户 ~/.docker/daemon.json
 systemctl daemon-reload
 # 将当前用户加入到docker组(获取执行docker的权限)
 gpasswd -a ${USER} docker && newgrp - docker
+gpasswd -a centos docker && newgrp - docker
 # 重启docker
 systemctl restart docker
 # 卸载docker

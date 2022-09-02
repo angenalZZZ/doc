@@ -135,6 +135,7 @@ rm -rf /var/lib/docker /etc/docker ~/.docker
 # 安装组件
 yum install -y kubelet kubeadm kubectl  # 最新版K8S
 yum install -y kubelet-1.19.0 kubeadm-1.19.0 kubectl-1.19.0 --disableexcludes=kubernetes [--nogpgcheck] # 或指定版本
+yum install -y kubelet-1.25.0-0 kubeadm-1.25.0-0 kubectl-1.25.0-0
 # 关闭防火器(K8S会创建防火器规则,导致防火器规则重复) [应用部署K8S时应该开启防火器]
 systemctl disable firewalld && systemctl stop firewalld
 # 管理开机启动

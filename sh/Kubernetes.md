@@ -81,8 +81,8 @@ repo_gpgcheck=0
 gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 EOF
 # 安装Docker
-yum install -y docker-ce # 最新版Docker
-yum install -y docker-ce-19.03.9-3.el7 # 或指定版本19
+#yum install -y docker-ce # 最新版Docker
+#yum install -y docker-ce-19.03.9-3.el7 # 或指定版本19
 yum install -y docker-ce-20.10.17-3.el7 # 或指定版本20
 # 查安装结果
 yum list installed|grep docker # yum list docker-ce | sort -r
@@ -138,13 +138,14 @@ ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose # 创建快捷方式
 > K8S 版本 v1.19.0 (或安装最新版K8S)
 ~~~bash
 # 安装组件
-yum install -y kubelet kubeadm kubectl  # 最新版K8S
-yum install -y kubelet-1.19.0 kubeadm-1.19.0 kubectl-1.19.0 --disableexcludes=kubernetes [--nogpgcheck] # 或指定版本
-yum install -y kubelet-1.25.0-0 kubeadm-1.25.0-0 kubectl-1.25.0-0
+#yum install -y kubelet kubeadm kubectl  # 最新版K8S
+#yum install -y kubelet-1.19.0 kubeadm-1.19.0 kubectl-1.19.0 --disableexcludes=kubernetes [--nogpgcheck] # 或指定版本
+yum install -y kubelet-1.20.2 kubeadm-1.20.2 kubectl-1.20.2
+#yum install -y kubelet-1.25.0-0 kubeadm-1.25.0-0 kubectl-1.25.0-0
 # 关闭防火器(K8S会创建防火器规则,导致防火器规则重复) [应用部署K8S时应该开启防火器]
 systemctl disable firewalld && systemctl stop firewalld
 # 管理开机启动
-systemctl enable kubelet && systemctl start kubelet
+systemctl enable kubelet
 # 为安装K8S网络前，开启IPv6 [系统默认已开启] (将桥接的IPv4流量传递到K8S的iptables)
 cat <<EOF > /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-iptables = 1

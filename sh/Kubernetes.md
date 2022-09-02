@@ -152,10 +152,11 @@ net.bridge.bridge-nf-call-iptables = 1
 net.bridge.bridge-nf-call-ip6tables = 1
 EOF
 # 查看开启情况
-sysctl --system
+sysctl --system #生效开启的IPv6
 # 为安装K8S网络前，同步时间问题
 yum install -y ntpdate
-ntpdate cn.pool.ntp.org
+ntpdate time.windows.com
+#ntpdate cn.pool.ntp.org
 ~~~
 > K8S 节点初始化 (至少2个以上)
 ~~~bash

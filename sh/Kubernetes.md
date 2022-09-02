@@ -170,7 +170,7 @@ chown $(id -u):$(id -g) $HOME/.kube/config
 # 查看虚机K8S节点信息
 kubectl get nodes
 # 节点状态NotReady表示未安装网络，接下来开始安装网络calico (需提前开启IPv6)
-# 或者，安装flannel网络设置:
+# 安装集群的flannel网络: 可提前下载文件kube-flannel.yaml
 # kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yaml
 # scp -r /etc/cni root@192.168.1.202:/etc
 # scp -r /etc/cni root@192.168.1.203:/etc
@@ -196,6 +196,8 @@ kubectl get nodes
 # 初始化:执行后, 其它节点加入集群(在输出信息中可查看到), 提前关闭Swap分区及Selinux
 kubeadm token list
 kubeadm token create --print-join-command # 在master节点查看其它节点加入集群的命令
+
+# worker 节点初始化 (把工作节点加入集群)
 kubeadm join 192.168.1.201:6433 --token a.* --discovery-token-ca-cert-hash sha256:*
 # 在worker节点查看运行的容器 kube-proxy,calico-node
 docker ps

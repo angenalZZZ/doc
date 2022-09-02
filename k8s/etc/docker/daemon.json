@@ -1,0 +1,4 @@
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "registry-mirrors": ["https://4txtc8r4.mirror.aliyuncs.com"]
+}

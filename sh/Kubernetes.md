@@ -227,8 +227,18 @@ kubectl get nodes
 kubeadm token list
 kubeadm token create --print-join-command # 在master节点查看其它节点加入集群的命令
 
+# 把工作节点加入集群前，需要从主节点复制这个文件到工作节点
+mkdir -p "$HOME"/.kube
+  sudo scp -r root@192.168.1.201:/etc/kubernetes/admin.conf "$HOME"/.kube/config
+  sudo chown "$(id -u)":"$(id -g)" "$HOME"/.kube/config
+  if [ ! -f "/home/centos/.kube/config" ];then
+    sudo cp -r "$HOME"/.kube /home/centos
+    sudo chown -R centos:centos /home/centos/.kube
+  fi
 # worker 节点初始化 (把工作节点加入集群)
 kubeadm join 192.168.1.201:6433 --token a.* --discovery-token-ca-cert-hash sha256:*
+## 安装网络 kube-flannel
+kubectl apply -f kube-flannel.yml # <<所有节点执行
 # 在worker节点查看运行的容器 kube-proxy,calico-node
 docker ps
 # 在master节点查看K8S所有节点的详细信息

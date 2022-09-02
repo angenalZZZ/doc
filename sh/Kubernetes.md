@@ -82,9 +82,10 @@ gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg http://mirrors.a
 EOF
 # 安装Docker
 yum install -y docker-ce # 最新版Docker
-yum install -y docker-ce-19.03.9-3.el7 docker-ce-cli-19.03.9-3.el7 containerd.io # 或指定版本
+yum install -y docker-ce-19.03.9-3.el7 # 或指定版本19
+yum install -y docker-ce-20.10.17-3.el7 # 或指定版本20
 # 查安装结果
-yum list docker-ce --showduplicates | sort -r
+yum list installed|grep docker # yum list docker-ce | sort -r
 # 降级Docker版本(如果要指定版本)
 yum downgrade -y --setopt=obsoletes=0 docker-ce-19.03.9-3.el7 docker-ce-cli-19.03.9-3.el7 containerd.io
 docker -v # 查看版本
@@ -115,8 +116,12 @@ vi /etc/docker/daemon.json # 或设置当前用户 ~/.docker/daemon.json
 #   "insecure-registries": [],
 #   "features": {}
 # }
-# 重新加载配置 & 重启docker
-systemctl daemon-reload && systemctl restart docker
+# 重新加载配置
+systemctl daemon-reload
+# 将当前用户加入到docker组(获取执行docker的权限)
+gpasswd -a ${USER} docker && newgrp - docker
+# 重启docker
+systemctl restart docker
 # 卸载docker
 yum list installed|grep docker
 yum remove docker-ce.x86_64 docker-ce-cli.x86_64 containerd.io.x86_64

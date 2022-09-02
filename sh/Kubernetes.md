@@ -119,7 +119,7 @@ systemctl daemon-reload && systemctl restart docker
 # 卸载docker
 yum list installed|grep docker
 yum remove docker-ce.x86_64 docker-ce-cli.x86_64 containerd.io.x86_64
-rm -rf /var/lib/docker ~/.docker
+rm -rf /var/lib/docker /etc/docker ~/.docker
 ~~~
 
 #### 安装Kubernetes

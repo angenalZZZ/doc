@@ -43,7 +43,13 @@ hostnamectl set-hostname k8s01 # 192.168.1.201
 hostnamectl set-hostname k8s02 # 192.168.1.202
 hostnamectl set-hostname k8s03 # 192.168.1.203
 
-# 设置免密登录 (可选)
+# 设置scp复制文件时, 不进行严格的主机密钥检查 (输账号密码后可完成操作)
+cat >>/etc/ssh/ssh_config<<EOF
+StrictHostKeyChecking no
+UserKnownHostsFile /dev/null
+EOF
+
+# 设置scp复制文件时, 免密登录 (可选,但不安全)
 ssh-keygen  # 192.168.1.201 master 节点生成后, 复制.ssh到其它VM虚机
 cat .ssh/id_rsa.pub >> .ssh/authorized_keys # 另存公钥
 chmod 600 .ssh/authorized_keys # 其它VM虚机非root用户时需读写权限

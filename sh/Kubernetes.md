@@ -192,7 +192,7 @@ kubectl get nodes
 ## 集群网络 kube-flannel: 可提前下载文件kube-flannel.yaml
 ## kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 ## 安装网络 kube-flannel
-kubectl apply -f kube-flannel.yml
+kubectl apply -f kube-flannel.yml # <<所有节点执行
 # scp -r /etc/cni root@192.168.1.202:/etc
 # scp -r /etc/cni root@192.168.1.203:/etc
 # scp -r /run/flannel root@192.168.1.202:/run
@@ -213,6 +213,8 @@ kubectl apply -f kube-flannel.yml
 #  value: "Never"  # 修改键值 Always 为 Never
 ## 构建网络 calico.yaml
 #kubectl apply -f calico.yaml
+# 去污点...使master也可以作为worker节点
+kubectl taint nodes --all node-role.kubernetes.io/master-
 # 查看虚机K8S节点信息 Ready 状态
 kubectl get nodes
 # 初始化:执行后, 其它节点加入集群(在输出信息中可查看到), 提前关闭Swap分区及Selinux

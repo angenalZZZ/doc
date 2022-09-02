@@ -1,5 +1,10 @@
 # 容器化集群 K8S/Kubernetes
 
+## 云平台搭建
+* [腾讯云 TKE](https://cloud.tencent.com/product/tke)
+* [阿里云 ACK](https://www.aliyun.com/product/kubernetes)
+* `裸机搭建`
+
 #### 安装虚拟机VM
 > VM [VirtualBox 6 - Windows hosts](https://www.virtualbox.org/wiki/Downloads)、[CentOS-7-x86_64-DVD.iso](http://isoredirect.centos.org/centos/7/isos/x86_64/)
 ~~~bash

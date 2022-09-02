@@ -189,27 +189,30 @@ chown $(id -u):$(id -g) $HOME/.kube/config
 # 查看虚机K8S节点信息
 kubectl get nodes
 # 节点状态NotReady表示未安装网络，接下来开始安装网络calico (需提前开启IPv6)
-# 安装集群的flannel网络: 可提前下载文件kube-flannel.yaml
-# kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yaml
+## 集群网络 kube-flannel: 可提前下载文件kube-flannel.yaml
+## kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+## 安装网络 kube-flannel
+kubectl apply -f kube-flannel.yml
 # scp -r /etc/cni root@192.168.1.202:/etc
 # scp -r /etc/cni root@192.168.1.203:/etc
 # scp -r /run/flannel root@192.168.1.202:/run
 # scp -r /run/flannel root@192.168.1.203:/run
-wget https://docs.projectcalico.org/manifests/calico.yaml
-# 修改网络配置 calico.yaml
-- name: CLUSTER_TYPE   # <<修改位置
-  value: "k8s,bgp"
-# IP automatic detection. # 此处新增键值对
-- name: IP_AUTODETECTION_METHOD
-  value: "interface=en.*"
-# Auto-detect the BGP IP address.
-- name: IP
-  value: "autodetect"
-# Enable IPIP
-- name: CALICO_IPV4POOL_IPIP
-  value: "Never"  # 修改键值 Always 为 Never
-# 构建网络 calico.yaml
-kubectl apply -f calico.yaml
+## 集群网络 calico.yaml: 可提前下载文件calico.yaml
+##wget https://docs.projectcalico.org/manifests/calico.yaml
+## 修改网络配置 calico.yaml
+#- name: CLUSTER_TYPE   # <<修改位置
+#  value: "k8s,bgp"
+## IP automatic detection. # 此处新增键值对
+#- name: IP_AUTODETECTION_METHOD
+#  value: "interface=en.*"
+## Auto-detect the BGP IP address.
+#- name: IP
+#  value: "autodetect"
+## Enable IPIP
+#- name: CALICO_IPV4POOL_IPIP
+#  value: "Never"  # 修改键值 Always 为 Never
+## 构建网络 calico.yaml
+#kubectl apply -f calico.yaml
 # 查看虚机K8S节点信息 Ready 状态
 kubectl get nodes
 # 初始化:执行后, 其它节点加入集群(在输出信息中可查看到), 提前关闭Swap分区及Selinux

@@ -239,6 +239,7 @@ mkdir -p "$HOME"/.kube
 kubeadm join 192.168.1.201:6433 --token a.* --discovery-token-ca-cert-hash sha256:*
 ## 安装网络 kube-flannel
 kubectl apply -f kube-flannel.yml # <<所有节点执行
+
 # 在worker节点查看运行的容器 kube-proxy,calico-node
 docker ps
 # 在master节点查看K8S所有节点的详细信息
@@ -248,6 +249,9 @@ kubectl reset
 kubectl delete node node-123
 # 查看安装好的Pods，默认仅查看default命名空间下的Pod
 kubectl get pods --all-namespaces -o wide
+
+# 卸载K8S 节点安装
+yum remove kubeadm.x86_64 kubectl.x86_64 kubelet.x86_64 kubernetes-cni.x86_64 cri-tools.x86_64
 ~~~
 
 #### 应用部署在Kubernetes

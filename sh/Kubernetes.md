@@ -160,13 +160,14 @@ ntpdate cn.pool.ntp.org
 > K8S 节点初始化 (至少2个以上)
 ~~~bash
 # master 节点初始化1:
-kubeadm init --image-repository=registry.aliyuncs.com/google_containers
+kubeadm init --image-repository=registry.aliyuncs.com/google_containers --service-cidr=10.96.0.0/12 --pod-network-cidr=10.244.0.0/16
+kubeadm init --apiserver-advertise-address=192.168.1.201 --image-repository=registry.aliyuncs.com/google_containers --service-cidr=10.96.0.0/12 --pod-network-cidr=10.244.0.0/16
 # master 节点初始化失败时, 可通过指定的文件来初始化 kubeadm-init.yaml
 kubeadm config print init-defaults > kubeadm-init.yaml
 # 修改初始化文件 kubeadm-init.yaml
-advertiseAddress: 1.2.3.4 # 改为master虚机IP: 192.168.*.*
+advertiseAddress: 1.2.3.4 # 改为master虚机IP: 192.168.1.201
 imageRepository: k8s.gcr.io # 改为 registry.cn-hangzhou.aliyuncs.com/google_containers
-kubernetesVersion: v1.19.0 # 检查版本是否一致并修改
+kubernetesVersion: v1.20.2  # 检查版本是否一致并修改
 networking:
   dnsDomain: cluster.local
   serviceSubnet: 10.96.0.0/12

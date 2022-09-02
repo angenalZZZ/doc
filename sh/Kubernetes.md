@@ -57,10 +57,28 @@ scp -r .ssh root@k8s03:/root   # 同上
 ~~~bash
 # 关闭防火器(K8S会创建防火器规则,导致防火器规则重复) [应用部署K8S时应该开启防火器]
 systemctl disable firewalld && systemctl stop firewalld
+# 关闭Swap分区及SELinux
+# swapoff -a       # 临时关闭swap分区
+# vi /etc/fstab    # 永久关闭swap分区,注释**swap
+swapoff -a && sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+# setenforce 0     # 临时关闭selinux
+# vi /etc/sysconfig/selinux
+# SELINUX=disabled # 永久关闭selinux
+setenforce 0 && sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
+# getenforce  # 查看关闭selinux情况Disabled (获取Shell执行权Permissive)
 # 安装依赖 device-mapper-persistent-data 是linux下的一个存储驱动(一个高级存储技术) lvm 的作用则是创建逻辑磁盘分区
 yum install -y yum-utils device-mapper-persistent-data lvm2
-# 配置yum资源
+# 添加安装源
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+cat > /etc/yum.repos.d/kubernetes.repo <<EOF
+[kubernetes]
+name=Kubernetes
+baseurl=http://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=0
+repo_gpgcheck=0
+gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+EOF
 # 安装Docker
 yum install -y docker-ce-19.03.9-3.el7 docker-ce-cli-19.03.9-3.el7 containerd.io
 # 查安装结果
@@ -74,33 +92,13 @@ docker version # 查看版本
 # systemctl daemon-reload && systemctl restart docker
 # 设置为开机启动
 systemctl enable docker && systemctl start docker
-docker info
-# 添加阿里yum资源
-cat > /etc/yum.repos.d/kubernetes.repo <<EOF
-[kubernetes]
-name=Kubernetes
-baseurl=http://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
-enabled=1
-gpgcheck=0
-repo_gpgcheck=0
-gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
-       http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
-EOF
-# 配置镜像加速器, 您可以通过修改daemon配置文件/etc/docker/daemon.json来使用加速器
-# sudo mkdir -p /etc/docker
-# sudo tee /etc/docker/daemon.json <<-'EOF'
-# {
-#   "registry-mirrors": ["https://4txtc8r4.mirror.aliyuncs.com"]
-# }
-# EOF
-# 也可设置多个镜像库,加速拉取推送images:
-#  @"exec-opts":设置兼容cgroup驱动systemd  @"insecure-registries":设置 http://[私有库IP]:[私有库Port]
+# 配置镜像加速器, 通过修改系统配置文件/etc/docker/daemon.json 可设置多个镜像, 加速拉取推送images
+#  @"exec-opts": 设置兼容cgroup驱动systemd  @"insecure-registries": 设置http://[私有库IP]:[私有库Port]
 #  @"features": { "buildkit": true # syntax = docker/dockerfile:experimental }
 vi /etc/docker/daemon.json # 或设置当前用户 ~/.docker/daemon.json
 {
   "registry-mirrors": [
-    "https://4txtc8r4.mirror.aliyuncs.com", "http://8fe1b42e.m.daocloud.io",
-    "https://docker.mirrors.ustc.edu.cn", "https://registry.docker-cn.com"
+    "https://4txtc8r4.mirror.aliyuncs.com", "http://8fe1b42e.m.daocloud.io", "https://docker.mirrors.ustc.edu.cn", "https://registry.docker-cn.com"
   ],
   "exec-opts": ["native.cgroupdriver=systemd"],
   "log-driver": "json-file",
@@ -108,7 +106,7 @@ vi /etc/docker/daemon.json # 或设置当前用户 ~/.docker/daemon.json
     "max-size": "100m"
   },
   "debug": false,
-  "experimental": true,
+  "experimental": false,
   "storage-driver": "overlay2",
   "insecure-registries": [],
   "features": {}
@@ -153,15 +151,6 @@ networking:
 kubeadm config images pull --config kubeadm-init.yaml
 # 检查镜像版本TAG
 docker images
-# 初始化前, 关闭Swap分区及Selinux
-swapoff -a       # 临时关闭swap分区
-vi /etc/fstab    # 永久关闭swap分区,注释**swap
-swapoff -a && sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
-setenforce 0     # 临时关闭selinux
-vi /etc/sysconfig/selinux
-SELINUX=disabled # 永久关闭selinux
-setenforce 0 && sed -i 's/^SELINUX=.*/SELINUX=disabled/' /etc/selinux/config
-getenforce  # 查看关闭selinux情况Disabled (获取Shell执行权Permissive)
 # 初始化:执行:
 kubeadm init --config kubeadm-init.yaml
 # kubeadm init --config kubeadm-init.yaml --ignore-preflight-errors=Swap

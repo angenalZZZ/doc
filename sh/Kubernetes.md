@@ -116,6 +116,10 @@ vi /etc/docker/daemon.json # 或设置当前用户 ~/.docker/daemon.json
 # }
 # 重新加载配置 & 重启docker
 systemctl daemon-reload && systemctl restart docker
+# 卸载docker
+yum list installed|grep docker
+yum remove docker-ce.x86_64 docker-ce-cli.x86_64 containerd.io.x86_64
+rm -rf /var/lib/docker ~/.docker
 ~~~
 
 #### 安装Kubernetes

@@ -127,6 +127,11 @@ systemctl restart docker
 yum list installed|grep docker
 yum remove docker-ce.x86_64 docker-ce-cli.x86_64 containerd.io.x86_64
 rm -rf /var/lib/docker /etc/docker ~/.docker
+
+## 安装docker-compose
+curl -L https://get.daocloud.io/docker/compose/releases/download/v2.10.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+chmod a+x /usr/local/bin/docker-compose
+ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose # 创建快捷方式
 ~~~
 
 #### 安装Kubernetes

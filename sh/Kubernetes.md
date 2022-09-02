@@ -69,6 +69,7 @@ setenforce 0 && sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=disabled/g
 # 安装依赖 device-mapper-persistent-data 是linux下的一个存储驱动(一个高级存储技术) lvm 的作用则是创建逻辑磁盘分区
 yum install -y yum-utils device-mapper-persistent-data lvm2
 # 添加安装源
+# ll /etc/yum.repos.d|grep docker # 查看以前的配置> head /etc/yum.repos.d/docker-ce.repo
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 cat > /etc/yum.repos.d/kubernetes.repo <<EOF
 [kubernetes]

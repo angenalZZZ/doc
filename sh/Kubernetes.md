@@ -53,7 +53,7 @@ scp -r .ssh root@k8s03:/root   # 同上
 
 #### 安装Docker
 > 推荐安装1.10.0以上版本的Docker客户端，参考文档[docker-ce](https://yq.aliyun.com/articles/110806)，登录[阿里容器镜像服务](https://cr.console.aliyun.com/cn-hangzhou/instances)<br>
-> 容器化 Docker v19.* 兼容 K8S 版本 v1.19.*
+> 容器化 Docker v19.* 兼容 K8S 版本 v1.19.* (或安装最新版Docker+K8S)
 ~~~bash
 # 关闭防火器(K8S会创建防火器规则,导致防火器规则重复) [应用部署K8S时应该开启防火器]
 systemctl disable firewalld && systemctl stop firewalld
@@ -80,13 +80,13 @@ repo_gpgcheck=0
 gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 EOF
 # 安装Docker
-yum install -y docker-ce-19.03.9-3.el7 docker-ce-cli-19.03.9-3.el7 containerd.io
+yum install -y docker-ce # 最新版Docker
+yum install -y docker-ce-19.03.9-3.el7 docker-ce-cli-19.03.9-3.el7 containerd.io # 或指定版本
 # 查安装结果
 yum list docker-ce --showduplicates | sort -r
-docker -v
-# 降级Docker版本
+# 降级Docker版本(如果要指定版本)
 yum downgrade -y --setopt=obsoletes=0 docker-ce-19.03.9-3.el7 docker-ce-cli-19.03.9-3.el7 containerd.io
-docker version # 查看版本
+docker -v # 查看版本
 # 如果出现镜像文件或者容器丢失情况, 需要更改镜像存储位置.
 # sed -i "s#-H fd:#-g /opt/data/docker -H fd:#g" /lib/systemd/system/docker.service
 # systemctl daemon-reload && systemctl restart docker
@@ -97,34 +97,38 @@ systemctl enable docker && systemctl start docker
 #  @"features": { "buildkit": true # syntax = docker/dockerfile:experimental }
 vi /etc/docker/daemon.json # 或设置当前用户 ~/.docker/daemon.json
 {
-  "registry-mirrors": [
-    "https://4txtc8r4.mirror.aliyuncs.com", "http://8fe1b42e.m.daocloud.io", "https://docker.mirrors.ustc.edu.cn", "https://registry.docker-cn.com"
-  ],
   "exec-opts": ["native.cgroupdriver=systemd"],
-  "log-driver": "json-file",
-  "log-opts": {
-    "max-size": "100m"
-  },
-  "debug": false,
-  "experimental": false,
-  "storage-driver": "overlay2",
-  "insecure-registries": [],
-  "features": {}
+  "registry-mirrors": ["https://4txtc8r4.mirror.aliyuncs.com"]
 }
+# {
+#   "exec-opts": ["native.cgroupdriver=systemd"],
+#   "registry-mirrors": [
+#      "https://4txtc8r4.mirror.aliyuncs.com","http://8fe1b42e.m.daocloud.io",
+#      "https://docker.mirrors.ustc.edu.cn","https://registry.docker-cn.com"
+#   ],
+#   "log-driver": "json-file",
+#   "log-opts": { "max-size": "100m" },
+#   "debug": false,
+#   "experimental": true,
+#   "storage-driver": "overlay2",
+#   "insecure-registries": [],
+#   "features": {}
+# }
 # 重新加载配置 & 重启docker
 systemctl daemon-reload && systemctl restart docker
 ~~~
 
 #### 安装Kubernetes
-> K8S 版本 v1.19.0
+> K8S 版本 v1.19.0 (或安装最新版K8S)
 ~~~bash
 # 安装组件
-yum install -y kubelet-1.19.0 kubeadm-1.19.0 kubectl-1.19.0 --disableexcludes=kubernetes [--nogpgcheck]
+yum install -y kubelet kubeadm kubectl  # 最新版K8S
+yum install -y kubelet-1.19.0 kubeadm-1.19.0 kubectl-1.19.0 --disableexcludes=kubernetes [--nogpgcheck] # 或指定版本
 # 关闭防火器(K8S会创建防火器规则,导致防火器规则重复) [应用部署K8S时应该开启防火器]
 systemctl disable firewalld && systemctl stop firewalld
 # 管理开机启动
 systemctl enable kubelet && systemctl start kubelet
-# 为安装K8S网络前，开启IPv6，并将桥接的IPv4流量传递到K8S的iptables
+# 为安装K8S网络前，开启IPv6 [系统默认已开启] (将桥接的IPv4流量传递到K8S的iptables)
 cat <<EOF > /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-iptables = 1
 net.bridge.bridge-nf-call-ip6tables = 1
@@ -135,9 +139,11 @@ sysctl --system
 yum install -y ntpdate
 ntpdate cn.pool.ntp.org
 ~~~
-> K8S 节点 (至少2个以上)
+> K8S 节点初始化 (至少2个以上)
 ~~~bash
-# master 节点, 生成初始化文件 kubeadm-init.yaml
+# master 节点初始化1:
+kubeadm init --image-repository=registry.aliyuncs.com/google_containers
+# master 节点初始化失败时, 可通过指定的文件来初始化 kubeadm-init.yaml
 kubeadm config print init-defaults > kubeadm-init.yaml
 # 修改初始化文件 kubeadm-init.yaml
 advertiseAddress: 1.2.3.4 # 改为master虚机IP: 192.168.*.*
@@ -149,9 +155,7 @@ networking:
   podSubnet: 10.244.0.0/16  # 新增pod子网络flannel
 # 摘取镜像, 需提前配置镜像源 /etc/docker/daemon.json
 kubeadm config images pull --config kubeadm-init.yaml
-# 检查镜像版本TAG
-docker images
-# 初始化:执行:
+# master 节点初始化2:
 kubeadm init --config kubeadm-init.yaml
 # kubeadm init --config kubeadm-init.yaml --ignore-preflight-errors=Swap
 # kubeadm init --apiserver-advertise-address=192.168.1.201 \ # 指定master的IP
@@ -165,7 +169,7 @@ cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 chown $(id -u):$(id -g) $HOME/.kube/config
 # 查看虚机K8S节点信息
 kubectl get nodes
-# 节点状态NotReady表示未安装网络，接下来开始安装网络calico
+# 节点状态NotReady表示未安装网络，接下来开始安装网络calico (需提前开启IPv6)
 # 或者，安装flannel网络设置:
 # kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yaml
 # scp -r /etc/cni root@192.168.1.202:/etc

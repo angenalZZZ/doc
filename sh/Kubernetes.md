@@ -8,25 +8,25 @@
 #### 安装虚拟机VM
 > VM [VirtualBox 6 - Windows hosts](https://www.virtualbox.org/wiki/Downloads)、[CentOS-7-x86_64-DVD.iso](http://isoredirect.centos.org/centos/7/isos/x86_64/)
 ~~~bash
-# 从 VM 安装 Centos7 并设置为`4CPU`+`4G内存`+`桥接网卡`，至少要求为`2CPU`+`2G内存`以上；
+# 从 VM 安装 Centos7 并设置为`4CPU`+`8G内存`+`桥接网卡`，至少要求为`2CPU`+`4G内存`以上；
 # 根据主机情况设置`4CPU`+`8G内存`+`仅主机(Host-Only)网络VirtualBox Host-Only Ethernet Adapter`+`存储SATA/AHCI/固态驱动器.vdi\40G`
-# `系统语言英文(默认不变)+提供中文支持(添加)`+`时区为亚洲上海(修改)`+`修改root密码+新建centos普通用户`
-# 分别安装虚机：k8s01、k8s02、k8s03
+# `系统语言英文+添加中文支持`+`修改时区为亚洲上海`+`修改root密码+新建centos管理账号`
+# 分别安装虚机：k8s01(master)、k8s02(worker)、k8s03(worker)
 
 # 设置静态IP(*网卡设备名称*可在安装时设置或自动分配)
-vi /etc/sysconfig/network-scripts/ifcfg-enp0s3
+vi /etc/sysconfig/network-scripts/ifcfg-enp**
 BOOTPROTO=static      # dhcp 换成 static (修改)
-ONBOOT=yes            # 开机启动 no 换成 yes (修改)
-IPADDR=192.168.1.201  # 设置静态IP地址与主机前三位一致(新增)  # > ipconfig > IPv4地址: 172.16.10.201/255
-GATEWAY=192.168.1.1   # 默认网关与主机一致                   # > ipconfig > 默认网关: 172.16.10.1
-PREFIX=24             # 子网掩码与主机一致 即: NETMASK=255.255.255.0 # 或 > 子网掩码: 255.255.254.0
-DNS1=223.5.5.5        # DNS1与主机一致(阿里) [可选]
-DNS2=8.8.8.8          # DNS2与主机一致(谷歌)
+IPADDR=192.168.1.201  # 新增静态IP与主机(前三位)网段一致     # > ipconfig > IPv4地址: 172.16.10.201/255
+GATEWAY=192.168.1.1   # 默认网关与主机一致                  # > ipconfig > 默认网关: 172.16.10.1
+PREFIX=24             # 子网掩码与主机一致 即: NETMASK=255.255.255.0 #或 > 子网掩码: 255.255.254.0
+DNS1=8.8.8.8          # DNS2与主机一致(谷歌)
+DNS2=223.5.5.5        # DNS1与主机一致(阿里) [可选]
 DNS3=114.114.114.114  # DNS3与主机一致(国内/移动/联通/电信)
+ONBOOT=yes            # 修改开机启动 no 换成 yes
 # 重启网络
-systemctl restart network  # service network restart
+systemctl restart network  #或 > service network restart
 # 查看IP地址
-ip addr | grep inet # Centos7命令
+ip addr | grep inet # Centos命令
 # 预设置hosts
 vi /etc/hosts
 # Kubernetes(共享VM虚机DNS)
@@ -43,12 +43,12 @@ hostnamectl set-hostname k8s01 # 192.168.1.201
 hostnamectl set-hostname k8s02 # 192.168.1.202
 hostnamectl set-hostname k8s03 # 192.168.1.203
 
-# 设置免密码登录 (可选)
+# 设置免密登录 (可选)
 ssh-keygen  # 192.168.1.201 master 节点生成后, 复制.ssh到其它VM虚机
 cat .ssh/id_rsa.pub >> .ssh/authorized_keys # 另存公钥
-chmod 600 .ssh/authorized_keys   # 其它VM虚机非root用户时需读写权限
-scp -r .ssh root@192.168.1.202:/root # 复制.ssh到其它虚机root用户
-scp -r .ssh root@192.168.1.203:/root # 同上
+chmod 600 .ssh/authorized_keys # 其它VM虚机非root用户时需读写权限
+scp -r .ssh root@k8s02:/root   # 复制.ssh到其它虚机root用户
+scp -r .ssh root@k8s03:/root   # 同上
 ~~~
 
 #### 安装Docker

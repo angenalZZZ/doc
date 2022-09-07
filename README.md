@@ -11,22 +11,22 @@
 - [`DownloadlyIR`](https://downloadlyir.com/)、[`大眼仔`](http://www.dayanzai.me/)、[`亿破姐`](https://www.ypojie.com/)、[`汉化博客网`](http://www.th-sjy.com/)、[`分享者网`](https://www.sharerw.com/)、[`求资源网`](https://www.qiuziyuan.net/)、[bit.ly`短链接`](https://bitly.com/)
 
 ## [开源资源](#)
-- [佰阅部落](https://baiyue.one/)
-
-## [`网络安全`](https://github.com/angenalZZZ/doc/blob/master/网络安全.md)
-- [杀毒软件](https://www.freedidi.com/4729.html "免费杀毒软件")（[Bitdefender 卫士](https://www.bitdefender.com/solutions/free.html "免费")、[AVG 免费防毒](https://www.avg.com/en-us/free-antivirus-download "免费")、[Avira](https://www.avira.com/zh-cn/free-security "免费")、[Malwarebytes](https://www.malwarebytes.com/ "免费")、[世界反病毒实验室排行榜](https://www.av-test.org/en/antivirus/home-windows/)）
-- [System安全(堡垒机OSM、终端检测EDR、安全评估TSS、数据库审计DAS、行为管理AC、基线核查BVT等)](https://bbs.sangfor.com.cn/plugin.php?id=service:download)、[深信服](https://bbs.sangfor.com.cn/plugin.php?id=index:index)
-
-## [手机工具](https://ssrshare.github.io/bt/)
-- [`iOS`助手`Coolmuster`](https://portable4pc.com/coolmuster-ios-assistant-portable/)、[`Android`助手`Coolmuster`](https://portable4pc.com/coolmuster-android-assistant-portable/)
-- [`Android`模拟器`Nox`](https://shareappscrack.com/noxplayer-nox-app-player/)[`夜神`](https://www.yeshen.com/)、[`Android`模拟器`LD雷电`](https://www.ldplayer.net/)、[BlueStacks`模拟器`](https://www.bluestacks.com/download.html)
-- [快速检测APK程序是否安全?`MetaDefender`](https://metadefender.opswat.com/)、[`VirusTotal`免費的病毒、蠕虫、木马软件分析](https://www.virustotal.com/)
+- [佰阅部落](https://baiyue.one/)、[懒得勤快](https://masuit.com/cat/41)
 
 ## [开发工具](https://www.jb51.net/softs/)
 - [Visual Studio Code](https://code.visualstudio.com/)、[JetBrains IDE](https://www.jetbrains.com/)、[Kite`插件`](https://www.kite.com/)
 - [Axure RP`原型设计`](https://www.axure.com.cn/)、[EDraw`流程图/拓扑图`](https://www.edrawsoft.cn/)、[Visio`建模工具`](https://www.microsoft.com/zh-cn/microsoft-365/visio/flowchart-software)、[Project`大型项目管理(甘特图)`](https://www.microsoft.com/zh-cn/microsoft-365/project/project-management-software)
 - [K8工具合集(内网渗透/提权工具/远程溢出/漏洞利用/扫描工具/密码破解/免杀工具](https://github.com/k8gege/K8tools)
 - [收集网络安全、黑客技术文档、工具、代码](https://github.com/ckjbug/Hacking)
+
+## [手机工具](https://ssrshare.github.io/bt/)
+- [`iOS`助手`Coolmuster`](https://portable4pc.com/coolmuster-ios-assistant-portable/)、[`Android`助手`Coolmuster`](https://portable4pc.com/coolmuster-android-assistant-portable/)
+- [`Android`模拟器`Nox`](https://shareappscrack.com/noxplayer-nox-app-player/)[`夜神`](https://www.yeshen.com/)、[`Android`模拟器`LD雷电`](https://www.ldplayer.net/)、[BlueStacks`模拟器`](https://www.bluestacks.com/download.html)
+- [快速检测APK程序是否安全?`MetaDefender`](https://metadefender.opswat.com/)、[`VirusTotal`免費的病毒、蠕虫、木马软件分析](https://www.virustotal.com/)
+
+## [`网络安全`](https://github.com/angenalZZZ/doc/blob/master/网络安全.md)
+- [杀毒软件](https://www.freedidi.com/4729.html "免费杀毒软件")（[Bitdefender 卫士](https://www.bitdefender.com/solutions/free.html "免费")、[AVG 免费防毒](https://www.avg.com/en-us/free-antivirus-download "免费")、[Avira](https://www.avira.com/zh-cn/free-security "免费")、[Malwarebytes](https://www.malwarebytes.com/ "免费")、[世界反病毒实验室排行榜](https://www.av-test.org/en/antivirus/home-windows/)）
+- [System安全(堡垒机OSM、终端检测EDR、安全评估TSS、数据库审计DAS、行为管理AC、基线核查BVT等)](https://bbs.sangfor.com.cn/plugin.php?id=service:download)、[深信服](https://bbs.sangfor.com.cn/plugin.php?id=index:index)
 
 ## [网页搜索引擎](#)
 - [​Microsoft Bing​](https://www.bing.com/)、[​CC Search​](https://search.creativecommons.org/)、[​DuckDuckGo​](https://duckduckgo.com/)、[​Ecosia​](https://www.ecosia.org/)、[​F 搜​`推荐`](https://fsou.cc)

@@ -252,9 +252,9 @@
 
   # 进程详情
   > tasklist
-  > wmic process where "caption = 'java.exe' and commandline like '%server-1.properties%'" get processid
+  # wmic process where "caption = 'java.exe' and commandline like '%server-1.properties%'" get processid
   $ free
-  $ ps aux || ps le             # 进程列表: USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND
+  # ps aux || ps le             # 进程列表: USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND
   $ ps -ef                      # 进程列表: UID  PID  PPID  C STIME TTY TIME CMD
   $ ps -ef | grep dotnet        # 查看dotnet进程id
   $ ps -eo pid,cmd | grep uuid  # [o输出字段,e依赖的系统环境]
@@ -268,14 +268,14 @@
   $ ps -e -o stat,ppid,pid,cmd | grep -e '^[Zz]' | awk '{print $2}' | xargs kill -9 # 批量删除(Z开头)僵尸进程
   
   > netstat -ano | findstr :3000 # 杀死进程使用, 指定占用的端口号
-  > taskkill /F /PID <<PID>>     # PowerShell杀死进程
+  # taskkill /F /PID <<PID>>     # PowerShell杀死进程
   $ kill -l             # 查看软件中断SIG [Linux标准信号1~31] (实时信号:32~64) +打印所有支持的信号名称
   # kill -9 <<PID>>     # 强制结束程序-9=KILL(不能被捕获-阻塞-忽略) 
-  $ kill -SIGUSR1 <<PID>> # 重启服务-10=USR1   1      2      3       9       15 (default)
-  $ kill -SIGTERM <<PID>> # 关闭服务           SIGHUP/SIGINT/SIGQUIT/SIGKILL/SIGTERM
-  $ pkill -1 -ef <<NAME>> # 等待进程退出,指定进程名称
-  $ killall -I <<NAME>>   # 立即结束程序,指定进程名称
-  $ killall -I -s 15 -u `id -un` <<NAME>> # -s 15 {(default)结束程序}(可以被捕获-阻塞-忽略)+程序内可监听该信号SIG
+  # kill -SIGUSR1 <<PID>> # 重启服务-10=USR1   1      2      3       9       15 (default)
+  # kill -SIGTERM <<PID>> # 关闭服务           SIGHUP/SIGINT/SIGQUIT/SIGKILL/SIGTERM
+  # pkill -1 -ef <<NAME>> # 等待进程退出,指定进程名称
+  # killall -I <<NAME>>   # 立即结束程序,指定进程名称
+  # killall -I -s 15 -u `id -un` <<NAME>> # -s 15 {(default)结束程序}(可以被捕获-阻塞-忽略)+程序内可监听该信号SIG
   # 参考: https://gist.github.com/biezhi/74bfe20f9758210c1be18c64e6992a37
   # -1=HUP结束终端控制进程(等待进程退出\平滑重启) -2=INT用户发送INTR字符(Ctrl+C\触发进程结束) -3=QUIT用户发送QUIT字符(Ctrl+/)
   # -18=TSTP暂停进程 -19=CONT继续进程 -17=STOP停止进程(不能被捕获) 

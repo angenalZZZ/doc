@@ -16,6 +16,10 @@ docker > docker pull redis ; docker run --name redis-server -d -p6379:6379 redis
 
 [`Redis Stack`](https://redis.io/download/)as json document, graph, time series. clients library: [`.NET`](https://redis.io/docs/stack/get-started/tutorials/stack-dotnet/)、[`Java`](https://redis.io/docs/stack/get-started/tutorials/stack-spring/)、[`Node.js`](https://redis.io/docs/stack/get-started/tutorials/stack-node/)
 ~~~
+# 更新Centos内核
+yum update -y kernel
+yum install -y kernel-headers kernel-devel gcc make
+init 6  # 重启系统
 # 同步时间问题
 yum install -y ntpdate
 ntpdate time.windows.com

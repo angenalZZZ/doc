@@ -41,6 +41,11 @@
   $ cat /etc/system-release && cat /usr/lib/os-release # CentOS Linux release 7.9.2009 (Core)
   $ cat /etc/issue && lsb_release -cs && lsb_release -a #Linux发行版本信息+支持的体系结构[amd64,x86_64,arm64]
   $ echo "Linux-x86_64" && echo $(uname -s)-$(uname -m) && echo `uname -s`-`uname -m`
+
+  # 更新至完整的Centos内核
+  yum update -y kernel
+  yum install -y kernel-headers kernel-devel gcc make
+  init 6  # 重启系统
   
   # 系统…性能测试
   $ wget -qO- https://git.io/superbench.sh | bash

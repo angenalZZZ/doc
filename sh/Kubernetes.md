@@ -61,6 +61,10 @@ scp -r .ssh root@k8s03:/root   # 同上
 > 推荐安装1.10.0以上版本的Docker客户端，参考文档[docker-ce](https://yq.aliyun.com/articles/110806)，登录[阿里容器镜像服务](https://cr.console.aliyun.com/cn-hangzhou/instances)<br>
 > 容器化 Docker v19.* 兼容 K8S 版本 v1.19.* (或安装最新版Docker+K8S)
 ~~~bash
+# 更新Centos内核
+yum update -y kernel
+yum install -y kernel-headers kernel-devel gcc make
+init 6  # 重启系统
 # 关闭防火器(K8S会创建防火器规则,导致防火器规则重复) [应用部署K8S时应该开启防火器]
 systemctl disable firewalld && systemctl stop firewalld
 # 关闭Swap分区及SELinux

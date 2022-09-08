@@ -27,8 +27,8 @@ yum install -y ntpdate
 ntpdate time.windows.com
 #ntpdate cn.pool.ntp.org
 # 修改默认配置，开启IPv6[系统默认未开启]，并优化内核TCP参数 
-vi /usr/lib/sysctl.d/00-system.conf # 参考git文件: usr/lib/sysctl.d/00-system.conf
-# 修改open-files限制高并发数/etc/sysctl.conf # 参考git文件: etc/sysctl.conf
+vi /usr/lib/sysctl.d/00-system.conf # 参考git文件: /k8s/usr/lib/sysctl.d/00-system.conf
+# 修改open-files限制高并发数/etc/sysctl.conf # 参考git文件: /k8s/etc/sysctl.conf
 # 使修改生效
 sysctl -p
 # 查看生效情况

@@ -299,6 +299,17 @@
   $ df -ah               # 文件系统  容量  已用  可用  已用%  挂载点
   $ lsblk                # 文件系统  分区  挂载点
   $ fdisk -l             # 文件系统  硬件  挂载点
+
+  # 手动挂载光盘内容
+  $ cd /
+  $ lsblk                # 查看/dev下是否有光盘rom(最后一行) sr0 .. rom
+  $ mkdir -p media/cdrom # 先查看是否已经挂载光盘> ll /media/cdrom
+  $ mount /dev/cdrom /media/cdrom # 手动挂载光盘(上面:如果没有目录cdrom时手动创建)
+  # mount -t auto /dev/cdrom /media/cdrom/
+  $ df -h                # 查看挂载成功后的情况: /dev/sr0 .. /media/cdrom
+  $ ll /media/cdrom      # 查看光盘内容
+  $ sh *.run             # 运行程序
+
   $ ls -al [目录]        # 查看目录及文件读写权限 alias ll='ls -alF' ; alias la='ls -A' ; alias l='ls -CF'
   $ lsof -h              # 查看打开的文件、进程、网络资源等，功能强大。
   $ touch main.js        # 新建文件

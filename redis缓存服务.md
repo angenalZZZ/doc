@@ -5,12 +5,34 @@
 > [`安装`](https://github.com/angenalZZZ/doc/blob/master/cmd_bash_shell.md#redis)、[`配置`](#1配置Redis)、[`扩展模块`](https://redis.com/redis-enterprise-software/download-center/modules/)、[`查询服务信息`](#2查询服务信息)、[`基础数据结构`](#3基础数据结构)、[`命令`](http://doc.redisfans.com)、[`教程`](http://www.runoob.com/redis/redis-tutorial.html)<br>
 > [`RedisDesktopManager`](https://github.com/lework/RedisDesktopManager-Windows)、[AnotherRedisDesktopManager](https://gitee.com/qishibo/AnotherRedisDesktopManager/releases)
 
+[`Redis`](https://redis.io/)
 ~~~
 mac    > brew install redis 
 ubuntu > apt-get install redis ; http://download.redis.io/releases/redis-5.0.14.tar.gz redis-6.0.16.tar.gz
 centos > yum install redis #(redhat)
 windows> https://github.com/tporadowski/redis/releases ; https://github.com/MicrosoftArchive/redis/releases 
 docker > docker pull redis ; docker run --name redis-server -d -p6379:6379 redis ; docker exec -it redis-server redis-cli 
+~~~
+
+[`Redis Stack`](https://redis.io/download/)as json document, graph, time series. clients library: [`.NET`](https://redis.io/docs/stack/get-started/tutorials/stack-dotnet/)、[`Java`](https://redis.io/docs/stack/get-started/tutorials/stack-spring/)、[`Node.js`](https://redis.io/docs/stack/get-started/tutorials/stack-node/)
+~~~
+ubuntu > 
+curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
+sudo apt-get update
+sudo apt-get install redis-stack-server
+centos > 
+cat > /etc/yum.repos.d/redis.repo <<EOF
+[Redis]
+name=Redis
+baseurl=http://packages.redis.io/rpm/rhel7
+enabled=1
+gpgcheck=1
+EOF
+#curl -fsSL https://packages.redis.io/gpg > redis.key
+sudo rpm --import redis.key
+sudo yum install epel-release
+sudo yum install redis-stack-server
 ~~~
 
 [`Redis`高性能内存数据库](http://www.redis.cn)

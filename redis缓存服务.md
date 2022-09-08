@@ -59,10 +59,28 @@ baseurl=http://packages.redis.io/rpm/rhel7
 enabled=1
 gpgcheck=1
 EOF
-#curl -fsSL https://packages.redis.io/gpg > redis.key
-sudo rpm --import redis.key
+#curl -fsSL https://packages.redis.io/gpg > /tmp/redis.key
+sudo rpm --import /tmp/redis.key
 sudo yum install epel-release
 sudo yum install redis-stack-server
+# 修改配置
+cat > /etc/redis-stack.conf <<EOF
+bind 192.168.1.207
+port 6379
+timeout 0
+daemonize yes
+loadmodule /opt/redis-stack/lib/redisearch.so
+loadmodule /opt/redis-stack/lib/redisgraph.so
+loadmodule /opt/redis-stack/lib/redistimeseries.so
+loadmodule /opt/redis-stack/lib/rejson.so
+loadmodule /opt/redis-stack/lib/redisbloom.so
+EOF
+# 查安装结果
+yum list installed|grep redis
+# 设置为开机启动
+systemctl enable redis-stack-server && systemctl start redis-stack-server
+# 查看版本
+redis-stack-server -v
 ~~~
 
 [`Redis`高性能内存数据库](http://www.redis.cn)

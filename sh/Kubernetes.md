@@ -153,12 +153,29 @@ systemctl disable firewalld && systemctl stop firewalld
 # 管理开机启动
 systemctl enable kubelet
 # 为安装K8S网络前，开启IPv6 [系统默认已开启] (将桥接的IPv4流量传递到K8S的iptables)
-cat <<EOF > /etc/sysctl.d/k8s.conf
+vi /usr/lib/sysctl.d/00-system.conf
 net.bridge.bridge-nf-call-iptables = 1
 net.bridge.bridge-nf-call-ip6tables = 1
+# 内核TCP参数优化
+net.ipv4.tcp_fastopen = 3
+net.ipv4.tcp_syncookies = 1
+net.ipv4.tcp_tw_reuse = 1
+net.ipv4.tcp_tw_recycle = 0
+net.ipv4.tcp_fin_timeout = 30
+net.ipv4.tcp_keepalive_time = 1200
+#net.ipv4.ip_local_port_range = 1024 61000
+net.ipv4.tcp_max_syn_backlog = 8192
+net.ipv4.tcp_max_tw_buckets = 5000
+net.ipv4.tcp_slow_start_after_idle = 0
+net.ipv4.tcp_congestion_control = hybla
+# 修改open-files限制高并发数
+cat >>/etc/sysctl.conf<<EOF
+fs.file-max = 100000
 EOF
-# 查看开启情况
-sysctl --system #生效开启的IPv6
+# 使修改生效
+sysctl -p
+# 查看生效情况
+sysctl --system
 # 为安装K8S网络前，同步时间问题
 yum install -y ntpdate
 ntpdate time.windows.com

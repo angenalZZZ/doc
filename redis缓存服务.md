@@ -20,36 +20,20 @@ docker > docker pull redis ; docker run --name redis-server -d -p6379:6379 redis
 yum update -y kernel
 yum install -y kernel-headers kernel-devel gcc make
 init 6  # 重启系统
+# 关闭防火器
+systemctl disable firewalld && systemctl stop firewalld
 # 同步时间问题
 yum install -y ntpdate
 ntpdate time.windows.com
-# 关闭防火器
-systemctl disable firewalld && systemctl stop firewalld
-# 修改默认配置, 开启IPv6 (将桥接的IPv4流量传递到iptables)
-vi /usr/lib/sysctl.d/00-system.conf
-net.bridge.bridge-nf-call-iptables = 1
-net.bridge.bridge-nf-call-ip6tables = 1
-# 内核TCP参数优化
-net.ipv4.tcp_fastopen = 3
-net.ipv4.tcp_syncookies = 1
-net.ipv4.tcp_tw_reuse = 1
-net.ipv4.tcp_tw_recycle = 0
-net.ipv4.tcp_fin_timeout = 30
-net.ipv4.tcp_keepalive_time = 1200
-#net.ipv4.ip_local_port_range = 1024 61000
-net.ipv4.tcp_max_syn_backlog = 8192
-net.ipv4.tcp_max_tw_buckets = 5000
-net.ipv4.tcp_slow_start_after_idle = 0
-net.ipv4.tcp_congestion_control = hybla
-# 修改open-files限制高并发数
-cat >>/etc/sysctl.conf<<EOF
-fs.file-max = 100000
-EOF
+#ntpdate cn.pool.ntp.org
+# 修改默认配置，开启IPv6[系统默认未开启]，并优化内核TCP参数 
+vi /usr/lib/sysctl.d/00-system.conf # 参考git文件: usr/lib/sysctl.d/00-system.conf
+# 修改open-files限制高并发数/etc/sysctl.conf # 参考git文件: etc/sysctl.conf
 # 使修改生效
 sysctl -p
 # 查看生效情况
 sysctl --system
-# 安装
+# 开始安装
 ubuntu > 
 curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list

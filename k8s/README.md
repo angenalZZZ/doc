@@ -57,9 +57,7 @@ scp -r .ssh root@k8s02:/root   # 复制.ssh到其它虚机root用户
 scp -r .ssh root@k8s03:/root   # 同上
 ~~~
 
-#### 安装Docker
-> 推荐安装1.10.0以上版本的Docker客户端，参考文档[docker-ce](https://yq.aliyun.com/articles/110806)，登录[阿里容器镜像服务](https://cr.console.aliyun.com/cn-hangzhou/instances)<br>
-> 容器化 Docker v19.* 兼容 K8S 版本 v1.19.* (或安装最新版Docker+K8S)
+#### 安装准备
 ~~~bash
 # 更新Centos内核
 yum update -y kernel
@@ -77,7 +75,53 @@ swapoff -a && sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
 setenforce 0 && sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
 # getenforce  # 查看关闭selinux情况Disabled (获取Shell执行权Permissive)
 # 安装依赖 device-mapper-persistent-data 是linux下的一个存储驱动(一个高级存储技术) lvm 的作用则是创建逻辑磁盘分区
-yum install -y yum-utils device-mapper-persistent-data lvm2
+yum install -y yum-utils device-mapper-persistent-data lvm2 bzip2
+# 为安装K8S网络前，同步时间问题
+yum install -y ntpdate
+ntpdate time.windows.com
+#ntpdate cn.pool.ntp.org
+# 为安装K8S网络前，开启IPv6[系统默认未开启]，并优化内核TCP参数 (将桥接的IPv4流量传递到K8S的iptables)
+vi /usr/lib/sysctl.d/00-system.conf # 参考git文件: usr/lib/sysctl.d/00-system.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+net.bridge.bridge-nf-call-arptables = 0
+net.core.rmem_default = 262144
+net.core.rmem_max = 4194304
+net.core.wmem_default = 262144
+net.core.wmem_max = 1048576
+net.ipv4.tcp_fastopen = 3
+net.ipv4.tcp_syncookies = 1
+net.ipv4.tcp_tw_reuse = 1
+net.ipv4.tcp_tw_recycle = 0
+net.ipv4.tcp_fin_timeout = 30
+net.ipv4.tcp_keepalive_time = 1200
+net.ipv4.ip_local_port_range = 1024 65000
+net.ipv4.tcp_max_syn_backlog = 8192
+net.ipv4.tcp_max_tw_buckets = 5000
+net.ipv4.tcp_slow_start_after_idle = 0
+net.ipv4.tcp_congestion_control = hybla
+# 修改open-files限制高并发数 # 参考git文件: etc/sysctl.conf
+cat >>/etc/sysctl.conf<<EOF
+fs.aio-max-nr = 1048576
+fs.file-max = 6815744
+kernel.core_uses_pid = 1
+kernel.kptr_restrict = 1
+kernel.sysrq = 16
+kernel.shmall = 2097152
+kernel.shmmax = 2972168
+kernel.shmmni = 4096
+kernel.sem = 250 32000 100 128
+EOF
+# 使修改生效
+sysctl -p
+# 查看生效情况
+sysctl --system
+~~~
+
+#### 安装Docker
+> 推荐安装1.10.0以上版本的Docker客户端，参考文档[docker-ce](https://yq.aliyun.com/articles/110806)，登录[阿里容器镜像服务](https://cr.console.aliyun.com/cn-hangzhou/instances)<br>
+> 容器化 Docker v19.* 兼容 K8S 版本 v1.19.* (或安装最新版Docker+K8S)
+~~~bash
 # 添加安装源
 # ll /etc/yum.repos.d|grep docker # 查看以前的配置> head /etc/yum.repos.d/docker-ce.repo
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
@@ -156,34 +200,6 @@ yum install -y kubelet-1.20.2 kubeadm-1.20.2 kubectl-1.20.2
 systemctl disable firewalld && systemctl stop firewalld
 # 管理开机启动
 systemctl enable kubelet
-# 为安装K8S网络前，开启IPv6 [系统默认未开启] (将桥接的IPv4流量传递到K8S的iptables)
-vi /usr/lib/sysctl.d/00-system.conf
-net.bridge.bridge-nf-call-iptables = 1
-net.bridge.bridge-nf-call-ip6tables = 1
-# 内核TCP参数优化
-net.ipv4.tcp_fastopen = 3
-net.ipv4.tcp_syncookies = 1
-net.ipv4.tcp_tw_reuse = 1
-net.ipv4.tcp_tw_recycle = 0
-net.ipv4.tcp_fin_timeout = 30
-net.ipv4.tcp_keepalive_time = 1200
-#net.ipv4.ip_local_port_range = 1024 61000
-net.ipv4.tcp_max_syn_backlog = 8192
-net.ipv4.tcp_max_tw_buckets = 5000
-net.ipv4.tcp_slow_start_after_idle = 0
-net.ipv4.tcp_congestion_control = hybla
-# 修改open-files限制高并发数
-cat >>/etc/sysctl.conf<<EOF
-fs.file-max = 100000
-EOF
-# 使修改生效
-sysctl -p
-# 查看生效情况
-sysctl --system
-# 为安装K8S网络前，同步时间问题
-yum install -y ntpdate
-ntpdate time.windows.com
-#ntpdate cn.pool.ntp.org
 ~~~
 > K8S 节点初始化 (至少2个以上)
 ~~~bash

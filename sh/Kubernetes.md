@@ -152,7 +152,7 @@ yum install -y kubelet-1.20.2 kubeadm-1.20.2 kubectl-1.20.2
 systemctl disable firewalld && systemctl stop firewalld
 # 管理开机启动
 systemctl enable kubelet
-# 为安装K8S网络前，开启IPv6 [系统默认已开启] (将桥接的IPv4流量传递到K8S的iptables)
+# 为安装K8S网络前，开启IPv6 [系统默认未开启] (将桥接的IPv4流量传递到K8S的iptables)
 vi /usr/lib/sysctl.d/00-system.conf
 net.bridge.bridge-nf-call-iptables = 1
 net.bridge.bridge-nf-call-ip6tables = 1

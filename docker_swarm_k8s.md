@@ -472,7 +472,7 @@ ENTRYPOINT ["dotnet", "App.Host.dll"] */
   cp /home/oracle/app/oracle/oradata/helowin/control01.ctl /home/oracle/app/oracle/flash_recovery_area/helowin/control02.ctl
   exit ; docker restart oracle ; docker exec -it oracle bash
   su - root # 密码为 helowin
-  vi /etc/profle ; source /etc/profle ; vi ~/.bashrc ; source ~/.bashrc 
+  vi ~/.bashrc ; source ~/.bashrc 
 export ORACLE_HOME=/home/oracle/app/oracle/product/11.2.0/dbhome_2
 export ORACLE_SID=helowin
 export PATH=$ORACLE_HOME/bin:$PATH
@@ -494,21 +494,21 @@ export PATH=$ORACLE_HOME/bin:$PATH
 > select instance from v$thread;
 > shutdown immediate; exit;                        # 关闭数据库
   vi /home/oracle/.bash_profile                    # 修改SID为ORCL
-export ORACLE_SID=ORCL
+export ORACLE_SID=ORCL                             # 还包括: vi ~/.bashrc ; source ~/.bashrc 
   source /home/oracle/.bash_profile
   vi /etc/oratab                                   # 修改SID根目录
   # helowin:/home/oracle/.. 改为 ORCL:/home/oracle/..
   cd $ORACLE_HOME/dbs # 修改dbs文件
   mv hc_helowin.dat hc_ORCL.dat
-  mv lkhellowin lkORCL
+  mv lkHELOWIN lkORCL
   mv orapwhelowin orapwORCL
-  mv spfilehellowin.ora spfileORCL.ora
+  mv spfilehelowin.ora spfileORCL.ora
   mv inithelowin.ora initORCL.ora
   orapwd file=$ORACLE_HOME/dbs/orapwORCL password=system entries=5 force=y # 重建口令文件(orapwORCL文件)
+  exit ; docker restart oracle ; docker exec -it oracle bash # 必须重启docker
   sqlplus / as sysdba
   startup                                          # 启动数据库
 > select instance from v$thread;                   # 检查SID名称
-
   
   # 数据库 PostgreSql + 时序数据timescaledb + 云计算
   docker run --name timescaledb -d -p 5432:5432 -e POSTGRES_PASSWORD=123456 timescale/timescaledb:latest-pg11

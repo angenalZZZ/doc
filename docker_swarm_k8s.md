@@ -456,10 +456,10 @@ ENTRYPOINT ["dotnet", "App.Host.dll"] */
   # 数据库 Oracle 11g
   docker pull registry.cn-hangzhou.aliyuncs.com/helowin/oracle_11g
   docker run --name oracle --restart=always -d -m 1024m -p 1521:1521 
-    -v /media/ShareFolder/docker/app/oracle/data:/home/oracle/data 
+    -v /media/ShareFolder/docker/app/oracle/oradata:/home/oracle/app/oracle/oradata 
     registry.cn-hangzhou.aliyuncs.com/helowin/oracle_11g
   # docker-compose up -d -f A:\database\oracle\docker-compose.yml
-  # 参考 https://www.cnblogs.com/mike666/p/13999397.html
+  # 参考 https://www.cnblogs.com/mike666/p/13999397.html https://blog.csdn.net/qq_27858615/article/details/124834097
   sqlplus /nolog  # 登录数据库;或用其它客户端,如Navicat需安装Client: instantclient-basic-windows.x64-11.2.0.4.0.zip
   conn /as sysdba # 切换为管理用户
   ALTER PROFILE DEFAULT LIMIT PASSWORD_LIFE_TIME UNLIMITED; # 修改密码规则策略为密码永不过期

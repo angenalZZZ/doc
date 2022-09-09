@@ -483,10 +483,10 @@ export PATH=$ORACLE_HOME/bin:$PATH
 > ALTER PROFILE DEFAULT LIMIT PASSWORD_LIFE_TIME UNLIMITED; # 修改密码规则策略为密码永不过期
 > alter user system identified by system;          # 修改system账号密码为 system
 > alter user sys identified by system;             # 修改sys账号密码为 system
-> create user admin1 identified by admin1;         # 创建管理员账号 admin1 密码 admin1
-> grant connect,resource,dba to admin1;            # 将dba管理权限授权给账号 admin1
-> alter user admin1 account unlock;                # 用户解锁
-> select * from dba_users where username='admin1'; # 查看用户信息
+> create user admin identified by system;          # 创建管理员账号 admin 密码 system
+> grant connect,resource,dba to admin;             # 将dba管理权限授权给账号 admin
+> alter user admin account unlock;                 # 用户解锁
+> select username from dba_users;                  # 查看用户信息
 > alter system set processes=2000 scope=spfile;    # 修改数据库最大连接数
 > alter system set SHARED_POOL_SIZE='128M' SCOPE=spfile; # 扩大共享内存
 > shutdown immediate; startup;                     # 重启数据库
@@ -509,7 +509,8 @@ export ORACLE_SID=ORCL                             # 还包括: vi ~/.bashrc ; s
   sqlplus / as sysdba
   startup                                          # 启动数据库
 > select instance from v$thread;                   # 检查SID名称
-  
+> select username from dba_users;                  # 查看用户信息
+
   # 数据库 PostgreSql + 时序数据timescaledb + 云计算
   docker run --name timescaledb -d -p 5432:5432 -e POSTGRES_PASSWORD=123456 timescale/timescaledb:latest-pg11
   

@@ -48,6 +48,7 @@
   init 6  # 重启系统
 
   # 系统清理
+  yum install -y yum-utils
   journalctl --vacuum-size=512M          # 系统日志大小限制
   package-cleanup --oldkernels --count=1 # 清理旧内核包
   yum clean all                          # 清理全部安装缓存

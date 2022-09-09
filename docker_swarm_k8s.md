@@ -455,7 +455,7 @@ ENTRYPOINT ["dotnet", "App.Host.dll"] */
   
   # 数据库 Oracle 11g
   docker pull registry.cn-hangzhou.aliyuncs.com/helowin/oracle_11g
-  docker run --name oracle --restart=always -d -m 1024m -p 1521:1521 
+  docker run --name oracle --privileged=true -d -m 1024m -p 1521:1521 
     -v /media/ShareFolder/docker/app/oracle/oradata:/home/oracle/app/oracle/oradata 
     registry.cn-hangzhou.aliyuncs.com/helowin/oracle_11g
   # docker-compose up -d -f A:\database\oracle\docker-compose.yml

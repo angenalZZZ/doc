@@ -393,7 +393,7 @@ alias dockerclean='dockercleanc || true && dockercleani'           # 清除停�
   docker run --name redis6 --restart=always -d -m 512m -p 16379:6379 -p 8001:8001 
     -e REDIS_ARGS="--requirepass 123456" -e REDISTIMESERIES_ARGS="RETENTION_POLICY=20" 
     -v /media/ShareFolder/docker/app/redis6/data:/data 
-    -v /media/ShareFolder/docker/app/redis6/local-redis-stack.conf:/redis-stack.conf 
+    -v /media/ShareFolder/docker/app/redis6/redis-stack.conf:/etc/redis-stack.conf 
     redis/redis-stack
   # docker exec -it redis-stack redis-cli -p 6379 -a "123456" # 执行redis客户端命令
   docker run -p 6379:6379 -itd redislabs/redistimeseries  # 时序Db https://github.com/RedisLabsModules

@@ -455,20 +455,60 @@ ENTRYPOINT ["dotnet", "App.Host.dll"] */
   
   # 数据库 Oracle 11g
   docker pull registry.cn-hangzhou.aliyuncs.com/helowin/oracle_11g
+  groupadd -g 500 oinstall && groupadd -g 501 dba && groupadd -g 502 oper
+  useradd -u 500 -g oinstall -G dba,oper oracle
+  mkdir -p /media/docker/oracle
+  docker run --name oracletmp --privileged=true -d -p 1521:1521 registry.cn-hangzhou.aliyuncs.com/helowin/oracle_11g
+  docker cp oracletmp:/home/oracle/app/oracle/oradata/ /media/docker/oracle/
+  chown -R 500:500 /media/docker/oracle
+  docker rm -f oracletmp
   docker run --name oracle --privileged=true -d -m 1024m -p 1521:1521 
-    -v /media/ShareFolder/docker/app/oracle/oradata:/home/oracle/app/oracle/oradata 
+    -v /media/docker/oracle/oradata:/home/oracle/app/oracle/oradata 
     registry.cn-hangzhou.aliyuncs.com/helowin/oracle_11g
-  # docker-compose up -d -f A:\database\oracle\docker-compose.yml
+  # docker-compose up -d # A:\database\oracle\docker-compose.yml
   # 参考 https://www.cnblogs.com/mike666/p/13999397.html https://blog.csdn.net/qq_27858615/article/details/124834097
+  docker exec -it oracle bash
+  rm -rf /home/oracle/app/oracle/flash_recovery_area/helowin/control02.ctl
+  cp /home/oracle/app/oracle/oradata/helowin/control01.ctl /home/oracle/app/oracle/flash_recovery_area/helowin/control02.ctl
+  exit ; docker restart oracle ; docker exec -it oracle bash
+  su - root # 密码为 helowin
+  vi /etc/profle ; source /etc/profle ; vi ~/.bashrc ; source ~/.bashrc 
+export ORACLE_HOME=/home/oracle/app/oracle/product/11.2.0/dbhome_2
+export ORACLE_SID=helowin
+export PATH=$ORACLE_HOME/bin:$PATH
+  ln -s $ORACLE_HOME/bin/sqlplus /usr/bin # 创建sqlplus软连接-快捷方式
+  su - oracle # 密码为 oracle
   sqlplus /nolog  # 登录数据库;或用其它客户端,如Navicat需安装Client: instantclient-basic-windows.x64-11.2.0.4.0.zip
-  conn /as sysdba # 切换为管理用户
-  ALTER PROFILE DEFAULT LIMIT PASSWORD_LIFE_TIME UNLIMITED; # 修改密码规则策略为密码永不过期
-  alter system set processes=2000 scope=spfile;   # 修改数据库最大连接数
-  alter user system identified by system;         # 修改system账号密码为 system
-  alter user sys identified by system;            # 修改sys账号密码为 system
-  create user admin identified by admin1;         # 创建管理员账号admin密码为 admin1
-  grant connect,resource,dba to admin;            # 将dba管理权限授权给账号 admin
-  select * from dba_users where username='admin'; # 查看用户信息
+> conn /as sysdba # 切换为管理用户
+> ALTER PROFILE DEFAULT LIMIT PASSWORD_LIFE_TIME UNLIMITED; # 修改密码规则策略为密码永不过期
+> alter user system identified by system;          # 修改system账号密码为 system
+> alter user sys identified by system;             # 修改sys账号密码为 system
+> create user admin1 identified by admin1;         # 创建管理员账号 admin1 密码 admin1
+> grant connect,resource,dba to admin1;            # 将dba管理权限授权给账号 admin1
+> alter user admin1 account unlock;                # 用户解锁
+> select * from dba_users where username='admin1'; # 查看用户信息
+> alter system set processes=2000 scope=spfile;    # 修改数据库最大连接数
+> alter system set SHARED_POOL_SIZE='128M' SCOPE=spfile; # 扩大共享内存
+> shutdown immediate; startup;                     # 重启数据库
+  sqlplus /as sysdba
+> select instance from v$thread;
+> shutdown immediate; exit;                        # 关闭数据库
+  vi /home/oracle/.bash_profile                    # 修改SID为ORCL
+export ORACLE_SID=ORCL
+  source /home/oracle/.bash_profile
+  vi /etc/oratab                                   # 修改SID根目录
+  # helowin:/home/oracle/.. 改为 ORCL:/home/oracle/..
+  cd $ORACLE_HOME/dbs # 修改dbs文件
+  mv hc_helowin.dat hc_ORCL.dat
+  mv lkhellowin lkORCL
+  mv orapwhelowin orapwORCL
+  mv spfilehellowin.ora spfileORCL.ora
+  mv inithelowin.ora initORCL.ora
+  orapwd file=$ORACLE_HOME/dbs/orapwORCL password=system entries=5 force=y # 重建口令文件(orapwORCL文件)
+  sqlplus /as sysdba
+  startup                                          # 启动数据库
+> select instance from v$thread;                   # 检查SID名称
+
   
   # 数据库 PostgreSql + 时序数据timescaledb + 云计算
   docker run --name timescaledb -d -p 5432:5432 -e POSTGRES_PASSWORD=123456 timescale/timescaledb:latest-pg11

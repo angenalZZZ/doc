@@ -389,7 +389,13 @@ alias dockerclean='dockercleanc || true && dockercleani'           # 清除停�
   # 内存KV数据库redis
   docker run --name redis5 --network=workgroup --network-alias=redis5 --restart=always -d -m 512m -p 6379:6379 
     -v d:\docker\app\redis5\redis.conf:/etc/redis/redis.conf -v d:\docker\app\redis5\data:/data 
-    redis:5.0.3-alpine redis-server /etc/redis/redis.conf # 执行Sh /usr/local/bin/docker-entrypoint.sh
+    redis:5.0.14 redis-server /etc/redis/redis.conf # 执行Sh /usr/local/bin/docker-entrypoint.sh
+  docker run --name redis6 --restart=always -d -m 512m -p 16379:6379 -p 8001:8001 
+    -e REDIS_ARGS="--requirepass 123456" -e REDISTIMESERIES_ARGS="RETENTION_POLICY=20" 
+    -v /media/ShareFolder/docker/app/redis6/data:/data 
+    -v /media/ShareFolder/docker/app/redis6/local-redis-stack.conf:/redis-stack.conf 
+    redis/redis-stack
+  # docker exec -it redis-stack redis-cli -p 6379 -a "123456" # 执行redis客户端命令
   docker run -p 6379:6379 -itd redislabs/redistimeseries  # 时序Db https://github.com/RedisLabsModules
   docker run --name ssdb --network=workgroup --network-alias=ssdb -d -m 512m -p 8888:8888 
     -v d:\docker\app\ssdb\ssdb.conf:/ssdb/ssdb.conf leobuskin/ssdb-docker # 替代Redis http://ssdb.io/zh_cn
@@ -419,10 +425,10 @@ ENTRYPOINT ["dotnet", "App.Host.dll"] */
     $ dotnet /home/ConsoleApp2NewLife/ConsoleApp2NewLife.dll # 访问tcp://127.0.0.1:8000
 
   # 开源数据库mysql
-  docker run --name mysql -itd -p 3306:3306 --network=workgroup --network-alias=mysql --env MYSQL_ROOT_PASSWORD=HGJ766GR767FKJU0 
+  docker run --name mysql --restart=always -itd -m 1024m -p 3306:3306 --network=workgroup --network-alias=mysql --env MYSQL_ROOT_PASSWORD=HGJ766GR767FKJU0 
     mysql:5.7 # mariadb、mongo、mysql/mysql-server、microsoft/mssql-server-linux, (--network-alias)其它容器连此容器
   # 微软数据库mssql
-  docker run --name mssql -itd -p 1433:1433 --network=workgroup --network-alias=mssql -v "d:\docker\app\mssql\data:/var/opt/mssql/data" 
+  docker run --name mssql --restart=always -itd -m 1024m -p 1433:1433 --network=workgroup --network-alias=mssql -v "d:\docker\app\mssql\data:/var/opt/mssql/data" 
     -v "d:\docker\app\mssql\log:/var/opt/mssql/log" -e SA_PASSWORD=HGJ766GR767FKJU0 -e ACCEPT_EULA=Y 
     mcr.microsoft.com/mssql/server
 
@@ -449,8 +455,8 @@ ENTRYPOINT ["dotnet", "App.Host.dll"] */
   
   # 数据库 Oracle 11g
   docker pull registry.cn-hangzhou.aliyuncs.com/helowin/oracle_11g
-  docker run --name oracle -d -p 1521:1521 
-    -v d:\docker\app\oracle\data:/home/oracle/data 
+  docker run --name oracle --restart=always -d -m 1024m -p 1521:1521 
+    -v /media/ShareFolder/docker/app/oracle/data:/home/oracle/data 
     registry.cn-hangzhou.aliyuncs.com/helowin/oracle_11g
   # docker-compose up -d -f A:\database\oracle\docker-compose.yml
   # 参考 https://www.cnblogs.com/mike666/p/13999397.html
@@ -469,7 +475,7 @@ ENTRYPOINT ["dotnet", "App.Host.dll"] */
   
   # 搜索引擎 ElasticSearch 中文参考 www.elastic.co/guide/cn/elasticsearch/guide/current/index.html
   docker pull elasticsearch:6.8.0
-  docker run --name es -d -p 9200:9200 -p 9300:9300 \
+  docker run --name es -d --restart=always -p 9200:9200 -p 9300:9300 \
     -e "discovery.type=single-node" -e ES_JAVA_OPTS="-Xms128m -Xmx128m" elasticsearch:6.8.0
   docker exec -it es /bin/bash > vi /usr/share/elasticsearch/config/elasticsearch.yml # 跨域配置
   docker run --name es_admin -d -p 9100:9100 mobz/elasticsearch-head #参考 github.com/mobz/elasticsearch-head

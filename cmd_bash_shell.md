@@ -46,6 +46,14 @@
   yum update -y kernel
   yum install -y kernel-headers kernel-devel gcc make
   init 6  # 重启系统
+
+  # 系统清理
+  journalctl --vacuum-size=512M          # 系统日志大小限制
+  package-cleanup --oldkernels --count=1 # 清理旧内核包
+  yum clean all                          # 清理全部安装缓存
+  yum clean packages                     # 只清理下载软件包
+  yum clean headers                      # 只清理软件包源
+  du -sh * # 检查磁盘占用大小;进入目录,再次运行du;最终找到log,再清空log;
   
   # 系统…性能测试
   $ wget -qO- https://git.io/superbench.sh | bash

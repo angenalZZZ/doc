@@ -490,7 +490,7 @@ export PATH=$ORACLE_HOME/bin:$PATH
 > alter system set processes=2000 scope=spfile;    # 修改数据库最大连接数
 > alter system set SHARED_POOL_SIZE='128M' SCOPE=spfile; # 扩大共享内存
 > shutdown immediate; startup;                     # 重启数据库
-  sqlplus /as sysdba
+  sqlplus / as sysdba
 > select instance from v$thread;
 > shutdown immediate; exit;                        # 关闭数据库
   vi /home/oracle/.bash_profile                    # 修改SID为ORCL
@@ -505,7 +505,7 @@ export ORACLE_SID=ORCL
   mv spfilehellowin.ora spfileORCL.ora
   mv inithelowin.ora initORCL.ora
   orapwd file=$ORACLE_HOME/dbs/orapwORCL password=system entries=5 force=y # 重建口令文件(orapwORCL文件)
-  sqlplus /as sysdba
+  sqlplus / as sysdba
   startup                                          # 启动数据库
 > select instance from v$thread;                   # 检查SID名称
 

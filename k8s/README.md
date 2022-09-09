@@ -108,7 +108,7 @@ kernel.core_uses_pid = 1
 kernel.kptr_restrict = 1
 kernel.sysrq = 16
 kernel.shmall = 2097152
-kernel.shmmax = 2972168
+kernel.shmmax = 2972168 # kernel.shmmax 设置为物理内存的一半
 kernel.shmmni = 4096
 kernel.sem = 250 32000 100 128
 EOF

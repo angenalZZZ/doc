@@ -70,6 +70,77 @@ systemctl enable redis-stack-server && systemctl start redis-stack-server
 # 查看版本
 redis-stack-server -v
 ~~~
+> [`Redis Stack`](https://redis.io/download/#redis-stack-downloads) Centos7 手动安装
+~~~shell
+# 下载安装包
+cd /media/ShareFolder/app/redis
+wget https://packages.redis.io/redis-stack/redis-stack-server-6.2.4-v1.rhel7.x86_64.tar.gz
+# 解压安装包
+tar -xzf redis-stack-server-6.2.4-v1.rhel7.x86_64.tar.gz
+mv redis-stack-server-6.2.4-v1 /opt/redis-stack
+cd /opt/redis-stack
+# 创建数据目录
+mkdir -p data
+# 修改端口号等
+# vi etc/redis-stack.conf /opt/redis-stack/etc/redis-stack-service.conf
+# bind 192.168.1.207
+# port 16379
+# timeout 0
+# daemonize yes
+# requirepass 123456 # 设置密码
+
+# 手动启动(测试)
+/opt/redis-stack/bin/redis-server /opt/redis-stack/etc/redis-stack-service.conf --dir /opt/redis-stack/data
+# 退出程序 Ctrl+C 
+# 创建系统用户(忽略)
+# useradd --system --user-group --no-create-home redis
+# chown -R redis:redis /opt/redis-stack
+
+# 安装系统服务
+# cp /media/ShareFolder/app/redis/redis-stack-server.service /usr/lib/systemd/system/redis-stack-server.service
+cat > /usr/lib/systemd/system/redis-stack-server.service <<EOF
+[Unit]
+Description=Redis stack server
+Documentation=https://redis.io/docs
+After=syslog.target network.target
+
+[Service]
+Type=forking
+ExecStart=/bin/bash -c '/opt/redis-stack/bin/redis-server /opt/redis-stack/etc/redis-stack-service.conf --dir /opt/redis-stack/data --daemonize yes'
+ExecStop=/bin/bash -c '/opt/redis-stack/bin/redis-cli shutdown'
+PrivateTmp=true
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOF
+# 重新加载系统配置
+systemctl daemon-reload
+
+# 查看启动的服务列表
+systemctl list-unit-files | grep enabled
+# 查看失败的服务列表
+systemctl --failed
+# 开机启动或禁用
+systemctl is-enabled redis-stack-server
+systemctl enable redis-stack-server
+systemctl disable redis-stack-server
+# 手动启动服务
+systemctl start redis-stack-server
+# 查看服务状态与日志
+systemctl status redis-stack-server
+# 卸载服务
+systemctl stop redis-stack-server
+rm -f /usr/lib/systemd/system/redis-stack-server.service
+systemctl daemon-reload
+rm -rf /opt/redis-stack
+
+# 客户端命令Redis
+redis-cli -h 192.168.1.207 -p 16379 # -a "123456"
+> MODULE LIST # 查看加载的模块, 加载更多模块请访问 https://redis.io/docs/modules
+> auth 123456 # 密码认证;再执行其它命令.
+> exit
+~~~
 
 [`Redis`高性能内存数据库](http://www.redis.cn)
 ~~~shell
@@ -100,11 +171,12 @@ redis-stack-server -v
   # sudo cp /tmp/redis-stable/redis.conf /etc/redis/
   # sudo vim /etc/systemd/system/redis.service                 # 创建 Redis service
 ~~~
+> redis-server.service
 ~~~
 [Unit]
 Description=Redis server
+Documentation=https://redis.io/docs
 After=network.target
-Documentation=http://redis.io/documentation, man:redis-server(1)
 
 [Service]
 Type=forking
@@ -135,6 +207,23 @@ ProtectSystem=full
 [Install]
 WantedBy=multi-user.target
 Alias=redis.service
+~~~
+> redis-stack-server.service
+~~~
+[Unit]
+Description=Redis stack server
+Documentation=https://redis.io/docs
+After=syslog.target network.target
+
+[Service]
+Type=forking
+ExecStart=/bin/bash -c '/opt/redis-stack/bin/redis-server /opt/redis-stack/etc/redis-stack-service.conf --dir /opt/redis-stack/data --daemonize yes'
+ExecStop=/bin/bash -c '/opt/redis-stack/bin/redis-cli shutdown'
+PrivateTmp=true
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
 ~~~
 ~~~shell
   $ sudo cp /etc/redis/redis.conf /etc/redis/6379.conf

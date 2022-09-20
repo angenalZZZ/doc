@@ -61,7 +61,8 @@ scp -r .ssh root@k8s03:/root   # 同上
 ~~~bash
 # 更新Centos内核
 yum update -y kernel
-yum install -y kernel-headers kernel-devel gcc make
+yum install -y kernel-headers kernel-devel libicu-devel gcc make
+#yum install -y icu libicu libunwind
 init 6  # 重启系统
 # 关闭防火器(K8S会创建防火器规则,导致防火器规则重复) [应用部署K8S时应该开启防火器]
 systemctl disable firewalld && systemctl stop firewalld

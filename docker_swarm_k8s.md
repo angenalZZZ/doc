@@ -574,6 +574,30 @@ export PATH=$ORACLE_HOME/bin:$PATH
   docker exec -it es /bin/bash > vi /usr/share/elasticsearch/config/elasticsearch.yml # 跨域配置
   docker run --name es_admin -d -p 9100:9100 mobz/elasticsearch-head #参考 github.com/mobz/elasticsearch-head
   
+  # 文档数据库 CockroachDB
+  docker pull cockroachdb/cockroach:v22.1.8
+  #docker pull cockroachdb/cockroach:v21.2.16
+  # Step 1. Create a bridge network
+  docker network create -d bridge roachnet
+  # Step 2. Start the cluster
+  docker volume create roach1
+  docker volume create roach2
+  docker volume create roach3
+  # .Start the first node.
+  docker run -d --name=roach1 --hostname=roach1 --net=roachnet -p 26257:26257 -p 8080:8080 \
+    -v "roach1:/cockroach/cockroach-data" cockroachdb/cockroach:v22.1.8 start --insecure --join=roach1,roach2,roach3
+  # .Start two more nodes.
+  docker run -d --name=roach2 --hostname=roach2 --net=roachnet \
+    -v "roach2:/cockroach/cockroach-data" cockroachdb/cockroach:v22.1.8 start --insecure --join=roach1,roach2,roach3
+  docker run -d --name=roach3 --hostname=roach3 --net=roachnet \
+    -v "roach3:/cockroach/cockroach-data" cockroachdb/cockroach:v22.1.8 start --insecure --join=roach1,roach2,roach3
+  # .Perform a one-time initialization of the cluster.
+  docker exec -it roach1 ./cockroach init --insecure
+  # Step 3. Use the built-in SQL client
+  docker exec -it roach1 ./cockroach sql --insecure
+  # .Run some basic CockroachDB SQL statements: https://www.cockroachlabs.com/docs/v22.1/learn-cockroachdb-sql
+  # https://www.cockroachlabs.com/docs/v22.1/start-a-local-cluster-in-docker-linux#step-4-run-a-sample-workload
+  
   # 开源时序数据库 influxdb  portal.influxdata.com
   docker run --name influxdb -d -p 9999:9999 quay.io/influxdb/influxdb:2.0.0-alpha
   # 开源时序数据库 opentsdb  opentsdb.net/docs/build/html/resources.html

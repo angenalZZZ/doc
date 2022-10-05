@@ -69,6 +69,8 @@
 - [`开放资源`收录`小纸条`](https://u.gitcafe.net/)、[`开源`音乐软件](https://github.com/lyswhut/lx-music-desktop)
 - [`含羞草`](https://www.hxcpp101.com/)、[茶杯狐](https://cupfox.app/)`小众`
 
+## [音乐下载](https://music.y444.cn/)
+
 
 ## [休闲娱乐](https://vip.jokerps.com/favorites/play)
 - [Sleazy Fork](https://sleazyfork.org/zh-CN "提供成人用户脚本的网站")、[致美化](https://zhutix.com/ "最专业的电脑美化平台")、[PHOTOMOSH](https://photomosh.com/ "故障效果生成器")、[BigPixel](http://www.bigpixel.cn/ "千亿像素看中国")、[熊猫搜书](https://ebook.huzerui.com/ "电子书搜索平台合集")、[Pinterest](https://www.pinterest.com/ "世界上最大的图片社交分享网站")、[快速涂鸦](https://quickdraw.withgoogle.com/ "协助训练神经网络辨识涂鸦")、[Duotone](https://duotone.shapefactory.co/ "双色图片生成器")、[更多](https://vip.jokerps.com/favorites/play)

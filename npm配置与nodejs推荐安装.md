@@ -49,6 +49,7 @@ userconfig=D:\Program\nodejs\.npmrc
  npm i -g cnpm --unsafe-perm=true --allow-root            [如果root安装时]
  yarn global add cnpm --registry=https://registry.npm.taobao.org [当 npm i -g cnpm 无法安装时]
  npm i -g nrm	                                            [代理切换nrm]
+ # https://github.com/nvm-sh/nvm                          [版本切换nvm]
  # install yarn from https://yarn.bootcss.com/docs/install/
  npm i -g yarn > yarn | yarnpkg                           [包管理器yarn]
 ~~~

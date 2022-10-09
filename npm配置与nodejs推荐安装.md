@@ -48,13 +48,14 @@ userconfig=D:\Program\nodejs\.npmrc
  npm i -g cnpm --registry=https://registry.npm.taobao.org [代理taobao]
  npm i -g cnpm --unsafe-perm=true --allow-root            [如果root安装时]
  yarn global add cnpm --registry=https://registry.npm.taobao.org [当 npm i -g cnpm 无法安装时]
- npm i -g nrm	                                            [代理切换nrm]
+ npm i -g nrm	                                         [代理切换nrm]
+ # https://pnpm.io/zh/installation                        []
  # https://github.com/nvm-sh/nvm                          [版本切换nvm]
  # install yarn from https://yarn.bootcss.com/docs/install/
  npm i -g yarn > yarn | yarnpkg                           [包管理器yarn]
 ~~~
 
- # npm 如何安装 (npm|yarn)
+ # npm 如何安装 (npm|pnpm|yarn)
 
 ~~~
 # Unix风格: -S -单个字母, GNU风格: --save --英文字符，node-cli参考: commander.js,chalk.js,Lnquirer.js,Yargs.
@@ -62,6 +63,8 @@ npm init -f                                               [初始化项目packag
 npm i -S [--save --no-save]                               [添加项目运行时依赖包到dependencies]
 npm i -D [--save-dev]                                     [添加项目开发时依赖包到devDependencies]
 npm install --loglevel verbose                            [还原项目依赖,打印详细信息,检查异常!]
+npm install -g pnpm                                       # https://pnpm.io/zh/installation
+npm install -g yarn                                       # https://yarnpkg.com
 ~~~
 
  # npm 全局安装包 npm install -g

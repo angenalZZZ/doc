@@ -7,9 +7,7 @@
 %USERPROFILE%\AppData\Local\Microsoft\WindowsApps
 %USERPROFILE%\AppData\Local\Programs\Python\Python37-32
 %USERPROFILE%\AppData\Local\Programs\Python\Python37-32\Scripts
-%USERPROFILE%\AppData\Local\Programs\Microsoft VS Code\bin
 %USERPROFILE%\scoop\shims
-%CARGO_HOME%\bin
 %USERPROFILE%\.dotnet\tools
 ```
 
@@ -20,25 +18,22 @@ C:\Windows\system32
 C:\Windows\System32\wbem
 C:\Windows\System32\OpenSSH\
 C:\Windows\System32\WindowsPowerShell\v1.0\
-D:\Program\Python\Python39-32\Scripts\
-D:\Program\Python\Python39-32\
-C:\Program Files (x86)\Common Files\Oracle\Java\javapath
-C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common
-C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR
-C:\Program Files (x86)\Graphviz2.38\bin
-C:\Program Files\Git\cmd
-D:\Program\Go\bin
+C:\Program Files\Common Files\Oracle\Java\javapath
 D:\Program\CMake\bin
 D:\Program\D-Bus\bin
+D:\Program\Go\bin
 D:\Program\erl10.5\bin
 D:\Program\Lua\5.1
 D:\Program\Lua\5.1\clibs
 D:\Program\nng\bin
 D:\Program\nanomsg\bin
+D:\Program\NSIS\bin
 D:\Program\nodejs
 D:\Program\nodejs\node_global
 D:\Program\msys64\mingw64\bin
 D:\Program\MongoDB\mongosh\
+D:\Program\Python\Python39-32\Scripts\
+D:\Program\Python\Python39-32\
 D:\Program\R\R-3.6.1\bin
 D:\Program\Redis
 D:\Program\v\.bin
@@ -50,25 +45,29 @@ D:\Program\apache-maven-3.8.1\bin
 D:\Program\Strawberry\c\bin
 D:\Program\Strawberry\perl\bin
 D:\Program\Strawberry\perl\site\bin
-D:\Tool\SysinternalsSuite
+D:\Program\Android\apache-ant-1.10.5\bin
+D:\Program\Android\sdk\platform-tools
+D:\Tool\Decompile\Dotfuscator\
 D:\Tool\SysinternalsSuite\platform-tools
-A:\go\bin
+D:\Tool\SysinternalsSuite
 A:\deno\bin
+A:\go\bin
 A:\rust\bin
+A:\rust\.cargo\bin
 C:\tools\lxrunoffline
+C:\Program Files\Git\cmd
 C:\ProgramData\chocolatey\bin
+C:\Windows\System32\OraHomeX64
+C:\Windows\System32\OraHomeX64\bin
 C:\Program Files\Microsoft VS Code\bin
+C:\Program Files\Microsoft\Web Platform Installer
 C:\Program Files\Microsoft SQL Server\130\Tools\Binn\
 C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\
 C:\Program Files\Microsoft SQL Server\150\Tools\Binn\
 C:\Program Files\Microsoft SQL Server\150\DTS\Binn\
 C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn\
 C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn\
-D:\Program Files (x86)\NetSarang\Xshell 7\
-D:\Program Files (x86)\NetSarang\Xftp 7\
-%android%
-%ANT_HOME%
-%DOTFUSCATOR_HOME%
+D:\Program Files\Devart\EntityDeveloper\Console
 C:\Program Files\dotnet\
 ```
 
@@ -86,15 +85,19 @@ DENO_DIR          A:\deno
 DENO_INSTALL_ROOT A:\deno\bin
 DOCKER_HOST   tcp://localhost:2375
 DOTFUSCATOR_HOME D:\Tool\Decompile\Dotfuscator\
+DOTNET_REACTOR D:\Program Files (x86)\Eziriz\.NET Reactor
 ERLANG_HOME   D:\Program\erl10.5
 GO111MODULE   auto
 GOENV         A:\go\env
 GOPATH        A:\go
+GOROOT        D:\Program\Go
+GOTOOLS       %GOROOT%/pkg/tool
 GOPROXY       https://goproxy.io,direct
+GOCACHE       D:\Users\Administrator\AppData\Local\go-build
 IPFS_PATH     A:\database\ipfs\.ipfs
 Include       .;%JAVA_HOME%\lib;
 JAVA_BIN      %JAVA_HOME%\bin
-JAVA_HOME     C:\Program Files (x86)\Java\jdk1.8.0_271
+JAVA_HOME     C:\Program Files\Java\jdk-11.0.16.1
 JAVA_OPTS     -Xms512m -Xmx1024m -XX:PermSize=256M -Dfile.encoding=utf-8  #// _JAVA_OPTIONS -Xms512m -Xmx512m
 JRE_HOME      %JAVA_HOME%\jre
 M2_HOME       D:\Program\apache-maven-3.8.1
@@ -106,6 +109,9 @@ LUA_PATH      ;;D:\Program\Lua\5.1\lua\?.luac
 NN_STATIC_LIB   D:\Program\nanomsg\lib
 NODE_PATH       D:\Program\nodejs\node_global\node_modules
 PKG_CONFIG_PATH D:\Program\msys64\mingw64\lib\pkgconfig
+VBOX_MSI_INSTALL_PATH D:\Program Files\Oracle\VirtualBox\
+TNS_ADMIN     C:\Windows\System32\OraHomeX64\network\admin #// Oracle客户端连接别名
+NLS_LANG      AMERICAN_AMERICA.US7ASCII                    #// Oracle客户端字符编码
 SOLR_INSTALL  D:\Program\solr
 ZONEINFO      A:\go\bin\zoneinfo.zip
 ```

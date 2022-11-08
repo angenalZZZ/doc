@@ -39,6 +39,17 @@
 .woff2  application/x-font-woff
 ```
 
+> `手动添加静态资源文件类型`
+~~~xml
+<configuration>
+  <system.webServer>
+    <staticContent>
+      <mimeMap fileExtension=".apk" mimeType="application/octet-stream" />
+    </staticContent>
+  </system.webServer>
+</configuration>
+~~~
+
 > `默认文档` 添加到`网站`配置 ... +应用程序池`.NET v4.5` +[发布 ClickOnce 应用程序](https://docs.microsoft.com/zh-cn/visualstudio/deployment/publishing-clickonce-applications?view=vs-2019)
 ```xml
   <system.webServer>
@@ -155,7 +166,7 @@
 ~~~
 
 
-> `**无法验证强名称签名**` [`1.引用dll错误 ASP.Net Projects must disable shadow copy`](https://blog.csdn.net/aoshilang2249/article/details/78111409) `2.修改Web.config`
+> `无法验证强名称签名` [`1.引用dll错误 ASP.Net Projects must disable shadow copy`](https://blog.csdn.net/aoshilang2249/article/details/78111409) `2.修改Web.config`
 ~~~xml
 <configuration>
   <system.web>
@@ -165,7 +176,7 @@
 </configuration>
 ~~~
 
-> [`**防止ASP.NET版本泄露**`](https://docs.microsoft.com/en-us/dotnet/api/system.web.configuration.httpruntimesection.enableversionheader?redirectedfrom=MSDN&view=netframework-4.8#System_Web_Configuration_HttpRuntimeSection_EnableVersionHeader)
+> [`防止ASP.NET版本泄露`](https://docs.microsoft.com/en-us/dotnet/api/system.web.configuration.httpruntimesection.enableversionheader?redirectedfrom=MSDN&view=netframework-4.8#System_Web_Configuration_HttpRuntimeSection_EnableVersionHeader)
 ~~~xml
 <configuration>
   <system.web>
@@ -175,7 +186,7 @@
 </configuration>
 ~~~
 
-> `**XSS跨站攻击漏洞**`
+> `XSS跨站攻击漏洞`
 ~~~xml
 <configuration>
   <system.webServer>
@@ -199,24 +210,13 @@
 </configuration>
 ~~~
 
-> `**程序集需要完全信任时**`
+> `程序集需要完全信任时`
 ~~~xml
 <configuration>
   <system.web>
     <!-- 当在共享Web主机上时 -->
     <trust level="Full" />
   </system.web>
-</configuration>
-~~~
-
-> `**手动添加静态资源文件类型**`
-~~~xml
-<configuration>
-  <system.webServer>
-    <staticContent>
-      <mimeMap fileExtension=".apk" mimeType="application/octet-stream" />
-    </staticContent>
-  </system.webServer>
 </configuration>
 ~~~
 

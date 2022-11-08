@@ -157,54 +157,67 @@
 
 > `**无法验证强名称签名**` [`1.引用dll错误 ASP.Net Projects must disable shadow copy`](https://blog.csdn.net/aoshilang2249/article/details/78111409) `2.修改Web.config`
 ~~~xml
+<configuration>
   <system.web>
     <!--不需要验证强名称签名-->
     <hostingEnvironment shadowCopyBinAssemblies="false" />
   </system.web>
+</configuration>
 ~~~
 
 > [`**防止ASP.NET版本泄露**`](https://docs.microsoft.com/en-us/dotnet/api/system.web.configuration.httpruntimesection.enableversionheader?redirectedfrom=MSDN&view=netframework-4.8#System_Web_Configuration_HttpRuntimeSection_EnableVersionHeader)
 ~~~xml
+<configuration>
   <system.web>
-    <!--防止ASP.NET版本泄露-->
-    <httpRuntime enableVersionHeader="false" />
+    <!--防止ASP.NET版本泄露X-AspNet-Version-->
+    <httpRuntime targetFramework="4.6.1" enableVersionHeader="false" />
   </system.web>
+</configuration>
 ~~~
 
 > `**XSS跨站攻击漏洞**`
 ~~~xml
+<configuration>
   <system.webServer>
     <httpProtocol>
       <customHeaders>
         <!--XSS跨站攻击漏洞-->
+        <!--<remove name="Server" />--><!--https://learn.microsoft.com/zh-cn/archive/blogs/varunm/remove-unwanted-http-response-headers-->
         <remove name="X-Powered-By" />
         <remove name="X-AspNet-Version" />
         <add name="X-Frame-Options" value="SAMEORIGIN" />
         <add name="X-XSS-Protection" value="1; mode=block" />
         <!--跨域访问攻击漏洞[屏蔽禁用]-->
-        <!--<add name="Access-Control-Allow-Headers" value="*, Accept, Access-Control-Allow-Origin, Content-Type, Content-Encoding, X-Powered-By" />
+        <!--<add name="Access-Control-Allow-Origin" value="https://www.example.com"/>
+        <add name="Access-Control-Allow-Credentials" value="true"/>
+        <add name="Access-Control-Allow-Headers" value="*, Accept, Access-Control-Allow-Origin, Content-Type, Content-Encoding, X-Powered-By" />
         <add name="Access-Control-Allow-Methods" value="GET, POST, PUT, DELETE, OPTIONS" />
         <add name="Access-Control-Max-Age" value="86400" />-->
       </customHeaders>
     </httpProtocol>
   </system.webServer>
+</configuration>
 ~~~
 
 > `**程序集需要完全信任时**`
 ~~~xml
+<configuration>
   <system.web>
     <!-- 当在共享Web主机上时 -->
     <trust level="Full" />
   </system.web>
+</configuration>
 ~~~
 
 > `**手动添加静态资源文件类型**`
 ~~~xml
+<configuration>
   <system.webServer>
     <staticContent>
       <mimeMap fileExtension=".apk" mimeType="application/octet-stream" />
     </staticContent>
   </system.webServer>
+</configuration>
 ~~~
 
 ----

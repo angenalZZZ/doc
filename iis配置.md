@@ -192,18 +192,20 @@
   <system.webServer>
     <httpProtocol>
       <customHeaders>
-        <!--XSS跨站攻击漏洞-->
+        <!--XSS跨站漏洞-->
         <!--<remove name="Server" />--><!--https://learn.microsoft.com/zh-cn/archive/blogs/varunm/remove-unwanted-http-response-headers-->
         <remove name="X-Powered-By" />
         <remove name="X-AspNet-Version" />
         <add name="X-Frame-Options" value="SAMEORIGIN" />
         <add name="X-XSS-Protection" value="1; mode=block" />
-        <!--跨域访问攻击漏洞[屏蔽禁用]-->
-        <!--<add name="Access-Control-Allow-Origin" value="https://www.example.com"/>
-        <add name="Access-Control-Allow-Credentials" value="true"/>
-        <add name="Access-Control-Allow-Headers" value="*, Accept, Access-Control-Allow-Origin, Content-Type, Content-Encoding, X-Powered-By" />
-        <add name="Access-Control-Allow-Methods" value="GET, POST, PUT, DELETE, OPTIONS" />
-        <add name="Access-Control-Max-Age" value="86400" />-->
+        <add name="X-Content-Type-Options" value="nosniff" />
+        <!--跨域访问漏洞[建议禁用]主要用于前后端分离的项目-->
+        <!--<add name="Access-Control-Allow-Origin" value="http://www.example.com,https://www.example.com"/>-->
+        <!--允许客户端携带验证信息Credentials例如Cookie,TLS客户端证书,授权标头-->
+        <!--<add name="Access-Control-Allow-Credentials" value="false"/>-->
+        <!--<add name="Access-Control-Allow-Headers" value="*, Accept, Access-Control-Allow-Origin, Content-Type, Content-Encoding, X-Powered-By" />-->
+        <!--<add name="Access-Control-Allow-Methods" value="GET, POST, PUT, DELETE, OPTIONS" />-->
+        <!--<add name="Access-Control-Max-Age" value="86400" />-->
       </customHeaders>
     </httpProtocol>
   </system.webServer>

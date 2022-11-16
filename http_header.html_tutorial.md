@@ -47,9 +47,9 @@ Strict-Transport-Security: max-age=31536000; includeSubdomains; preload
 Set-Cookie: user_session=1OUjiNMkXZPGHlteIdQpWACqfgchWAqLqFFN44SXv1-_tXMn; \
             path=/; expires=Tue, 07 Apr 2020 01:15:43 GMT; secure; HttpOnly
 
-Access-Control-Allow-Credentials: true # 允许跨域请求凭据
+Access-Control-Allow-Credentials: true # 允许客户端携带跨域请求凭据Credentials例如Cookie,TLS客户端证书,授权标头
 Access-Control-Allow-Methods: GET,PUT,POST,DELETE,PATCH,HEAD,CONNECT,OPTIONS,TRACE # 可填写*
-Access-Control-Allow-Origin: *    # 请求来源网址 [*-Origin-Host-Name-*]
+Access-Control-Allow-Origin: http://www.example.com,https://www.example.com # 限制请求来源网址
 Access-Control-Allow-Headers: Origin,Content-Type,Accept,User-Agent,Cookie,Authorization,X-Auth-Token,X-Requested-With,X-Request-Id
 Access-Control-Expose-Headers: Cache-Control,Content-Disposition,Content-Language,Content-Type,Expires,Last-Modified,Pragma,X-...
 Access-Control-Max-Age: 3628800   # 预检请求凭据有效期(秒)42天＝42×86400(天)防止过量的OPTIONS预检请求; -Expose-Headers让前端js可访问√
@@ -58,6 +58,9 @@ X-Content-Type-Options: nosniff   # 开启*内容保护 "Web应用防火墙"WAF:
 X-XSS-Protection: 1; mode=block   # 开启*XSS*保护 Cross-site-scripting (XSS),
 X-Frame-Options: SAMEORIGIN       # 相同域名*才允许frame加载网页 Cross-site request forgery (CSRF),
 X-Request-Id: EE0A:452CE:3F6D51:5D1749:5E795F3E  # 防止重放攻击 Identification of each web page request.
+
+# 启用CSP后,不符合的外部资源就会被阻止加载
+Content-Security-Policy: script-src 'self' cdn.bootcdn.net cdnjs.cloudflare.com; style-src 'self' https: cdn.bootcdn.net cdnjs.cloudflare.com; img-src 'self' https:; media-src 'self' https:; connect-src https:; font-src https:; frame-src 'self'; object-src 'none';
 
 Date: Tue, 17 Mar 2020 08:55:13 GMT
 ```

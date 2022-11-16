@@ -201,11 +201,16 @@
         <add name="X-Content-Type-Options" value="nosniff" />
         <!--跨域访问漏洞[建议禁用]主要用于前后端分离的项目-->
         <!--<add name="Access-Control-Allow-Origin" value="http://www.example.com,https://www.example.com"/>-->
-        <!--允许客户端携带验证信息Credentials例如Cookie,TLS客户端证书,授权标头-->
+        <!--允许客户端携带跨域请求凭据Credentials例如Cookie,TLS客户端证书,授权标头-->
         <!--<add name="Access-Control-Allow-Credentials" value="false"/>-->
         <!--<add name="Access-Control-Allow-Headers" value="*, Accept, Access-Control-Allow-Origin, Content-Type, Content-Encoding, X-Powered-By" />-->
         <!--<add name="Access-Control-Allow-Methods" value="GET, POST, PUT, DELETE, OPTIONS" />-->
+        <!--预检请求凭据有效期(秒)42天＝42×86400(天)防止过量的OPTIONS预检请求;-Expose-Headers让前端js可访问-->
         <!--<add name="Access-Control-Max-Age" value="86400" />-->
+        <!--<add name="Access-Control-Expose-Headers" value="Expires,Last-Modified,X-Auth-Token,X-Request-Id" />-->
+
+        <!--启用CSP后,不符合的外部资源就会被阻止加载-->
+        <add name="Content-Security-Policy" value="script-src 'self' cdn.bootcdn.net cdnjs.cloudflare.com; style-src 'self' https: cdn.bootcdn.net cdnjs.cloudflare.com; img-src 'self' https:; media-src 'self' https:; connect-src https:; font-src https:; frame-src 'self'; object-src 'none';" />
       </customHeaders>
     </httpProtocol>
   </system.webServer>

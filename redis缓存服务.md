@@ -15,6 +15,53 @@ docker > docker pull redis ; docker run --name redis-server -d -p6379:6379 redis
 ~~~
 
 [`Redis Stack`](https://redis.io/download/)as json document, graph, time series. clients library: [`.NET`](https://redis.io/docs/stack/get-started/tutorials/stack-dotnet/)、[`Java`](https://redis.io/docs/stack/get-started/tutorials/stack-spring/)、[`Node.js`](https://redis.io/docs/stack/get-started/tutorials/stack-node/)
+
+[安装](https://www.kancloud.cn/yami/mall4j/1250375)
+~~~
+#安装redis编译时依赖tcl
+wget http://downloads.sourceforge.net/tcl/tcl8.6.8-src.tar.gz
+tar xzf tcl8.6.8-src.tar.gz -C /usr/local/
+cd /usr/local/tcl8.6.8/unix/
+./configure
+make && make install
+
+#下载安装redis
+wget http://download.redis.io/releases/redis-4.0.14.tar.gz
+# wget http://download.redis.io/releases/redis-5.0.14.tar.gz
+# wget http://download.redis.io/releases/redis-6.0.16.tar.gz
+# wget http://download.redis.io/releases/redis-6.2.7.tar.gz
+tar xzvf redis-4.0.14.tar.gz -C /usr/local/
+cd  /usr/local/redis-4.0.14/
+make && make test && make install
+#配置开机启动
+cp ./utils/redis_init_script /etc/init.d/
+mv /etc/init.d/redis_init_script /etc/init.d/redis_6379
+mkdir -p /etc/redis /var/redis/6379
+cp ./redis.conf /etc/redis/
+mv /etc/redis/redis.conf /etc/redis/6379.conf
+#修改配置文件
+vi /etc/redis/6379.conf
+daemonize	yes				#让redis以daemon进程运行
+port		6379			        #设置redis的监听端口号
+pidfile		/var/run/redis_6379.pid 	#设置redis的pid文件位置
+dir 		/var/redis/6379			#设置持久化文件的存储位置
+#修改启动文件
+cd /etc/init.d
+vi redis_6379 # 文件顶部加入以下两行注释
+# chkconfig:   2345 90 10
+# description:  Redis is a persistent key-value database
+#启用开机启动
+chkconfig redis_6379 on
+#添加执行权限
+chmod 777 redis_6379
+#启动服务
+./redis_6379 start
+#使用客户端
+redis-cli SHUTDOWN # 连接本机的6379端口停止redis进程
+redis-cli -h 127.0.0.1 -p 6379 SHUTDOWN # 制定要连接的ip和端口号
+redis-cli PING # ping redis的端口，看是否正常
+redis-cli # 进入交互式命令行
+~~~
 ~~~
 # 更新Centos内核
 yum update -y kernel

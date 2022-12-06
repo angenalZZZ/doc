@@ -118,8 +118,36 @@ $ sudo dscacheutil -flushcache
 
 # 设置SSH-Key: github.com/settings/keys
 > ssh-keygen -t rsa -C "angenal@hotmail.com"
-# 1.创建SSHKey # 2.复制公钥文件 $ pbcopy < ~/.ssh/id_rsa.pub >> github.com/settings/ssh
-# 3.测试SSHKey>ssh -T git@github.com # 4.设置(可选)<hosts> 52.74.223.119 github.com
+# 1.创建SSH-Key # 2.复制公钥文件 $ pbcopy < ~/.ssh/id_rsa.pub >> github.com/settings/ssh
+# 3.验证SSH-Key> ssh -T git@github.com
+# 4.设置(可选)<hosts> 52.74.223.119 github.com <<获取DNS解析IP：nslookup github.com
+
+# 设置SSH配置文件 ~/.ssh/config 然后验证SSH-Key
+Host github.com
+Hostname ssh.github.com
+PreferredAuthentications publickey
+Port 443
+User angenal@hotmail.com
+IdentityFile ~/.ssh/id_rsa
+
+# For other account1
+Host github_account1（别名1）
+HostName ssh.github.com
+PreferredAuthentications publickey
+Port 443
+User account1@hotmail.com
+IdentityFile ~/.ssh/id_rsa_account1
+
+# For other account2
+Host github_account2（别名2）
+HostName ssh.github.com
+PreferredAuthentications publickey
+Port 443
+User account2@hotmail.com
+IdentityFile ~/.ssh/id_rsa_account2
+## 设置远程仓库连接时（用别名）
+[remote "origin"]
+    url = git@github_account1:account1/my_repo.git
 ~~~
 
 #### Create a new repository from your `LAN(local area network)` `origin`.

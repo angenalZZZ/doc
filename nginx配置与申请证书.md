@@ -346,7 +346,7 @@ server {
     }
 }
 ~~~
-
+ * 配置安全信息`XSS跨站攻击漏洞`
 ```
 //-配置Nginx响应`头信息`：http.server.add_header, http.server.location.proxy_set_header
 {
@@ -366,6 +366,121 @@ server {
     "x-rate-limit-reset": "18"   // request: reset times after 18 seconds
 }
 ```
+
+
+# **115配置HTTPS和HTTP使用同一个端口**
+### 115配置原理
+NGINX 1.15.2版本中新增了一个关键功能，`stream_ssl_preread`模块允许在协议握手阶段，从消息中提取协议类型或域名信息，根据不同的协议或域名进行转发。
+
+在使用TCP(stream)代理转发流量时,可以使用`ssl_preread_protocol`变量区分SSL/TLS和其他协议。
+
+`ssl_preread_protocol`变量从消息字段中提取SSL/TLS 版本号。如果不是 SSL 或 TLS 连接，则变量将为空，表示连接使用的是 SSL/TLS 以外的协议。
+`ssl_preread_protocol`变量值：
+- TLSv1
+- TLSv1.1
+- TLSv1.2
+- TLSv1.3
+- **""    非**SSL/TLS协议
+### 115配置示例
+`/etc/nginx/nginx.conf`
+```nginx
+# 新增配置
+stream {
+    upstream web {
+        server 192.168.56.114:8080;
+    }
+
+    upstream https {
+        server 192.168.56.114:8443;
+    }
+
+    log_format basic 'ssl_version: $ssl_preread_protocol | upstream: $upstream';
+    access_log /var/log/nginx/nginx-access.log basic ;
+    
+    map $ssl_preread_protocol $upstream {
+        "" web;
+        "TLSv1.3" https;
+        default https;
+    }
+
+    # HTTPS and HTTP on the same port
+    server {
+        listen 80;
+        
+        proxy_pass $upstream;
+        ssl_preread on;
+    }
+}
+```
+`/etc/nginx/conf.d/default.conf`
+```nginx
+server {
+    listen       8080;
+    listen       8443  ssl;
+    server_name  localhost;
+
+    ssl_certificate     /home/ssl/server.crt;
+    ssl_certificate_key /home/ssl/server.key;
+    ssl_protocols       TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
+    ssl_password_file   /home/ssl/cert.pass;
+
+    location / {
+        root   /usr/share/nginx/html;
+        index  index.html index.htm;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+}
+```
+如果要通过（例如）在同一端口上运行** SSL/TLS **和 其他TCP服务(例如SSH或数据库)来避免防火墙限制，这将非常有用。
+除了`ssl_preread_protocol`变量，还支持以下变量：
+
+- `ssl_preread_server_name`	获取请求的服务器名称
+- `ssl_preread_alpn_protocols`获取**ALPN** 协议列表,这些值用逗号分隔(例如`h2,http/1.1`）
+### 115配置测试
+开启防火墙，只放行80端口
+```bash
+systemctl start firewalld
+# 放行80端口
+firewall-cmd --zone=public --permanent --add-service=http
+firewall-cmd --reload
+```
+### 115配置将http重定向到https
+`/etc/nginx/conf.d/default.conf`
+```nginx
+server {
+    listen       8080; 
+    server_name  localhost;
+    return 301 https://192.168.56.109:80$request_uri;
+}
+
+server {
+    listen       8443  ssl;
+    server_name  localhost;
+
+    ssl_certificate     /home/ssl/server.crt;
+    ssl_certificate_key /home/ssl/server.key;
+    ssl_protocols       TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
+    ssl_password_file   /home/ssl/cert.pass;
+
+    location / {
+        root   /usr/share/nginx/html;
+        index  index.html index.htm;
+    }
+   
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+}
+```
+
+
 
 > [聊天平台 Rocket.Chat](https://docs.rocket.chat/installation/manual-installation) : /etc/nginx/conf.d/rocketchat.conf
 ~~~nginx

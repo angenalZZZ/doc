@@ -76,8 +76,9 @@ yum install -y curl wget vim ntpdate        # 安装*curl/wget/vim/ntpdate(同�
 ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime # 统一时区为上海时区
 ntpdate ntp1.aliyun.com                     # 统一使用(阿里云)服务器进行时间同步
 # 基础软件安装[第二步] [可选]
-yum install -y gcc make icu libicu libunwind libicu-devel libzstd
-yum install -y gcc-c++ make net-tools       # 安装*gcc/make/net-tools
+yum install -y icu libicu libunwind libicu-devel
+yum install -y autoconf-archive cmake g++ ninja-build libtool libunwind-dev libboost-fiber-dev libssl-dev libzstd-dev
+yum install -y gcc gcc-c++ make net-tools   # 安装*gcc/make/net-tools
 yum install -y glibc glibc.i686             # 安装*glibc*x86_64, i686(32位) [可选]
 yum install -y gnupg                        # 安装*gnupg [可选]
 yum install -y sudo                         # 安装*sudo(为普通用户临时使用root权限时)

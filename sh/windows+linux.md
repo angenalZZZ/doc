@@ -172,6 +172,10 @@ DNS1=8.8.8.8          # DNS2与主机一致(谷歌)
 # 然后重启网络 > service network restart 或重启虚机 > reboot
 # 查看系统信息 CentOS Linux release 7.9.2009 (Core)
 cat /etc/system-release && cat /usr/lib/os-release
+# 更新Centos内核
+yum update -y kernel
+yum install -y kernel-headers kernel-devel
+init 6  # 重启系统
 # 查看IP地址
 ip addr | grep inet # Centos7命令
 # 更新软件源[第一步][腾讯云阿里云CVM跳过]
@@ -185,8 +189,9 @@ yum install -y curl wget vim ntpdate        # 安装*curl/wget/vim/ntpdate(同�
 ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime # 统一时区为上海时区
 ntpdate ntp1.aliyun.com                     # 统一使用(阿里云)服务器进行时间同步
 # 基础软件安装[第二步] [可选]
-yum install -y gcc make icu libicu libunwind libicu-devel libzstd
-yum install -y gcc-c++ make net-tools       # 安装*gcc/make/net-tools
+yum install -y icu libicu libunwind libicu-devel
+yum install -y autoconf-archive cmake g++ ninja-build libtool libunwind-dev libboost-fiber-dev libssl-dev libzstd-dev
+yum install -y gcc gcc-c++ make net-tools   # 安装*gcc/make/net-tools
 yum install -y glibc glibc.i686             # 安装*glibc*x86_64, i686(32位) [可选]
 yum install -y gnupg                        # 安装*gnupg [可选]
 yum install -y sudo                         # 安装*sudo(为普通用户临时使用root权限时)

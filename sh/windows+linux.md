@@ -183,6 +183,7 @@ cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak # 先
 wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo #获取阿里镜像源
 sed -i 's/http:/https:/g' /etc/yum.repos.d/CentOS-Base.repo # 批量替换http为https
 yum clean all & yum makecache               # 更新镜像源缓存
+yum repolist                                # 查看软件源列表
 rpm -vih http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-14.noarch.rpm
 yum install -y epel-release                 # 安装*epel软件源
 yum install -y curl wget vim ntpdate        # 安装*curl/wget/vim/ntpdate(同步时区)

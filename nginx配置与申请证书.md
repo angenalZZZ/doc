@@ -233,7 +233,7 @@ server {
     return 301 https://$host$request_uri;
 }
 ~~~
-~~~
+~~~nginx
 # vi /etc/nginx/nginx.conf
 # 小程序接口的域名配置，小程序规定要https，填写对应域名，并把https证书上传至服务器
 server {
@@ -248,16 +248,16 @@ server {
         ssl_prefer_server_ciphers on;
         location / {
             proxy_pass http://127.0.0.1:8082;
-			      proxy_set_header Host $host;
-			      proxy_set_header X-Real-IP $remote_addr;
-			      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         }
     }
 
 # 后台域名配置，后台vue页面代码上传至 /usr/share/nginx/admin
 server {
     listen       80;
-	  server_name  mini-admin.gz-yami.com;
+    server_name  mini-admin.gz-yami.com;
     root         /usr/share/nginx/admin;
 
     # Load configuration files for the default server block.
@@ -266,10 +266,10 @@ server {
     location / {
     }
 
-	  # 跨域配置
-	  location /apis {
-		  rewrite  ^/apis/(.*)$ /$1 break;
-		  proxy_pass   http://127.0.0.1:8081;
+    # 跨域配置
+    location /apis {
+    	rewrite    ^/apis/(.*)$ /$1 break;
+    	proxy_pass http://127.0.0.1:8081;
     }
 }
 ~~~

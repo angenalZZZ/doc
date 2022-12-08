@@ -61,9 +61,28 @@ scp -r .ssh root@k8s03:/root   # 同上
 ~~~bash
 # 更新Centos内核
 yum update -y kernel
-yum install -y kernel-headers kernel-devel libicu-devel gcc make
-#yum install -y icu libicu libunwind
+yum install -y kernel-headers kernel-devel
 init 6  # 重启系统
+# 查看IP地址
+ip addr | grep inet # Centos7命令
+# 更新软件源[第一步][腾讯云阿里云CVM跳过]
+cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak # 先备份repo
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo #获取阿里镜像源
+sed -i 's/http:/https:/g' /etc/yum.repos.d/CentOS-Base.repo # 批量替换http为https
+yum clean all & yum makecache               # 更新镜像源缓存
+rpm -vih http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-14.noarch.rpm
+yum install -y epel-release                 # 安装*epel软件源
+yum install -y curl wget vim ntpdate        # 安装*curl/wget/vim/ntpdate(同步时区)
+ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime # 统一时区为上海时区
+ntpdate ntp1.aliyun.com                     # 统一使用(阿里云)服务器进行时间同步
+# 基础软件安装[第二步] [可选]
+yum install -y gcc make icu libicu libunwind libicu-devel libzstd
+yum install -y gcc-c++ make net-tools       # 安装*gcc/make/net-tools
+yum install -y glibc glibc.i686             # 安装*glibc*x86_64, i686(32位) [可选]
+yum install -y gnupg                        # 安装*gnupg [可选]
+yum install -y sudo                         # 安装*sudo(为普通用户临时使用root权限时)
+yum install -y ca-certificates openssl      # 安装*ca/openssl [可选]
+yum install -y GraphicsMagick               # 安装*GraphicsMagick(2D图库) [可选]
 # 关闭防火器(K8S会创建防火器规则,导致防火器规则重复) [应用部署K8S时应该开启防火器]
 systemctl disable firewalld && systemctl stop firewalld
 # 关闭Swap分区及SELinux

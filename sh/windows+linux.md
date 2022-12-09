@@ -210,6 +210,37 @@ chown -R <name>:<name> /<dir>               # 指定目录<dir>及子目录的�
 
 # 安装Redis的高性能分支KeyDB: https://github.com/angenalZZZ/doc/blob/master/redis缓存服务.md
 
+
+# 安装数据库 Mysql 5.7 (推荐)
+# 下载安装mysql源
+wget http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm
+yum localinstall mysql57-community-release-el7-8.noarch.rpm
+# 检查mysql源是否安装成功
+yum repolist enabled | grep "mysql.*-community.*"
+# 安装MySQL 5.7
+yum install mysql-community-server
+# 配置默认编码为utf8
+vi /etc/my.cnf >>END
+[mysqld]
+character_set_server=utf8
+init_connect='SET NAMES utf8'
+#lower_case_table_names=1  #不区分大小写#
+<<END
+# 启动MySQL服务
+systemctl start mysqld
+# 开机启动
+systemctl enable mysqld 
+systemctl daemon-reload
+# 修改root默认密码 MySQL 5.7
+grep 'temporary password' /var/log/mysqld.log
+mysql -uroot -p # 登录，输入"临时生成的root密码"
+ALTER USER 'root'@'localhost' IDENTIFIED BY '******';
+# set password for 'root'@'localhost'=password('****');
+# 创建数据库，添加远程登录用户
+create database mydb CHARACTER SET utf8 COLLATE utf8_general_ci;
+GRANT ALL PRIVILEGES ON mydb.* TO 'myname'@'%' IDENTIFIED BY '******';
+
+
 # 安装数据库 Mysql 8.0 参考 https://dev.mysql.com/doc/refman/8.0/en/linux-installation-yum-repo.html
 cd /tmp # 需提前安装依赖 # yum install -y epel-release glibc glibc.i686 gcc-c++ wget net-tools
 # sudo wget -O /etc/yum.repos.d/ http://repo.mysql.com/mysql-community-release-el7-7.noarch.rpm #低版本

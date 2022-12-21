@@ -69,9 +69,9 @@ Date: Tue, 17 Mar 2020 08:55:13 GMT
 #### Response script
 
 ~~~js
-<script> (function (d) { var t=d.createElement("script"); t.type="text/javascript"; t.id="beacon-aplus";
+<script> (function (d) { var t=d.createElement("script"); t.type="text/javascript"; t.id="aplus";
 t.src="//g.m.com/a/v1.js"; //自动识别当前网页请求是http还是https
-t.setAttribute("exparams","sid=x&ck=plusA"); t.async=true;
+t.setAttribute("params","id=a&ck=aplus"); t.async=true;
 with(document)with(body)with(insertBefore(t,firstChild));})(document); </script>
 ~~~
 

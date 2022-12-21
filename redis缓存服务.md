@@ -176,6 +176,10 @@ systemctl disable redis-stack-server
 systemctl start redis-stack-server
 # 查看服务状态与日志
 systemctl status redis-stack-server
+# 防火墙配置
+firewall-cmd --zone=public --add-port=6379/tcp --permanent
+firewall-cmd --zone=public --add-port=16379/tcp --permanent
+systemctl reload firewalld
 # 卸载服务
 systemctl stop redis-stack-server
 rm -f /usr/lib/systemd/system/redis-stack-server.service

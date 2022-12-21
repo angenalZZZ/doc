@@ -65,6 +65,14 @@ Content-Security-Policy: script-src 'self' cdn.bootcdn.net cdnjs.cloudflare.com;
 Date: Tue, 17 Mar 2020 08:55:13 GMT
 ```
 
+
+#### Response script
+
+~~~js
+<script> (function (d) { var t=d.createElement("script"); t.type="text/javascript"; t.id="beacon-aplus"; t.src="//g.m.com/a/v1.js"; t.setAttribute("exparams","sid=x&ck=plusA"); t.async=true; with(document)with(body)with(insertBefore(t,firstChild));})(document); </script>
+~~~
+
+
 #### Response data
 
 

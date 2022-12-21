@@ -15,6 +15,8 @@ ls /etc/nginx/sites-available # 设置Nginx服务器模块(类似Apache虚拟主
 sudo apt install certbot      # 使用Let's Encrypt保护Nginx  www.linuxidc.com/Linux/2018-05/152259.htm
 > nssm install nginx          # <Windows>服务安装，可用 https://nssm.cc
 ~~~
+* [Tengine](http://tengine.taobao.org/index_cn.html)是由淘宝网发起的Web服务器项目。它在Nginx的基础上，针对大访问量网站的需求，添加了很多高级功能和特性。Tengine的性能和稳定性已经在大型的网站如淘宝网，天猫商城等得到了很好的检验。它的最终目标是打造一个高效、稳定、安全、易用的Web平台。
+
 * 常用命令
 ~~~shell
 which nginx         # 查找 Nginx 命令所在路径

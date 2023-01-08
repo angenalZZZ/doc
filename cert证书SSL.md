@@ -99,6 +99,7 @@
 </tr>
 </tbody></table>
 
+ - [[Let’s Encrypt 免费证书/GUI](https://certifytheweb.com/)
  - [Let’s Encrypt 免费证书/lego](https://go-acme.github.io/lego/usage/cli/examples/)
 ~~~bash
 $ lego --email="foo@bar.com" --domains="example.com" --http run   # 获取证书 ACME v2 版本支持申请通配符证书了

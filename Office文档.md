@@ -13,7 +13,7 @@ https://preview.tita.com/op/view.aspx?src=
 
 * [`Asp.Net` `C#` SDK](https://github.com/angenal/AspNet/tree/master/src/Office)
 
-* [`毕升Office`](https://wiki.bishengoffice.com/install/)
+* [`毕升Office`](https://wiki.bishengoffice.com/install/)、[`集成`](https://wiki.bishengoffice.com/zh/integrate/)
 
 * [`LibreOffice`](https://zh-cn.libreoffice.org/download/libreoffice/)
   * [`Gotenberg` · API convert HTML Markdown Office to PDF](https://thecodingmachine.github.io/gotenberg/#webhook.timeout) [using `unoconv`](https://github.com/dagwieers/unoconv)、[Install using `docker`](https://github.com/thecodingmachine/gotenberg)

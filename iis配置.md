@@ -227,10 +227,10 @@
 </configuration>
 ~~~
 
-> `注册COM`
-~~~cmd
-cd /d %~dp0
-RegSvr32 /s pZemsdkDemo.ocx
+> `注册COM服务/ActiveX控件/互操作程序集`
+~~~shell
+cd /d %~dp0                 # 进入当前目录
+RegSvr32 /s pZemsdkDemo.ocx # 注册COM服务/ActiveX控件
 ~~~
 
 ----

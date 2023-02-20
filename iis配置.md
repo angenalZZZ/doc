@@ -227,5 +227,11 @@
 </configuration>
 ~~~
 
+> `注册COM`
+~~~cmd
+cd /d %~dp0
+RegSvr32 /s pZemsdkDemo.ocx
+~~~
+
 ----
 

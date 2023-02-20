@@ -193,7 +193,7 @@ yarn add headless-chrome-crawler # 分布式抓取引擎(推荐) https://github.
 # node 桌面应用推荐
  > [node-webkit](https://github.com/nwjs/nw.js)<br>
  > [Electron](https://www.cnblogs.com/cczw/archive/2016/10/21/5984012.html)<br>
- > Rust打包网页生成很小的桌面App: github.com/tw93/Pake 、[在线编译多系统版本](https://github.com/tw93/Pake/wiki/GitHub-Actions-在线编译多系统版本)
+ > [Pake](https://github.com/tw93/Pake)Rust打包网页生成很小的桌面App [在线编译多系统版本](https://github.com/tw93/Pake/wiki/GitHub-Actions-在线编译多系统版本)
 ~~~
 # 安装命令行工具
 npm install -g pake-cli

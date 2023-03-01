@@ -13,7 +13,7 @@
 ~~~bash
   # 帮助
   > help cmd
-  > chcp 65001 # 编码切换: UTF-8
+  > chcp 65001 # 编码切换: UTF-8 (保存文件*.bat - 编码UTF-8) 一般放于文件首行。
   > chcp 936   # 编码切换: GBK (ANSI/OEM - 简体中文GBK)
   $ info       # 系统菜单信息: Basics,Compression,Editors,Screen.…… 菜单导航&帮助文档;
   # 系统菜单信息: GNU Utilities,Individual utilities,Libraries,Math,Network applications,Text manipulation

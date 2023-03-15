@@ -193,6 +193,8 @@ ntpdate ntp1.aliyun.com                     # 统一使用(阿里云)服务器�
 yum install -y icu libicu libunwind libicu-devel
 yum install -y autoconf-archive cmake g++ ninja-build libtool libunwind-dev libboost-fiber-dev libssl-dev libzstd-dev
 yum install -y gcc gcc-c++ make net-tools   # 安装*gcc/make/net-tools
+yum install -y gcc-8                        # 安装*gcc版本8
+yum install -y gcc-9                        # 安装*gcc版本9
 yum install -y glibc glibc.i686             # 安装*glibc*x86_64, i686(32位) [可选]
 yum install -y gnupg                        # 安装*gnupg [可选]
 yum install -y sudo                         # 安装*sudo(为普通用户临时使用root权限时)

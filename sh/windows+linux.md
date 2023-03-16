@@ -189,6 +189,11 @@ yum install -y epel-release                 # 安装*epel软件源
 yum install -y curl wget vim ntpdate        # 安装*curl/wget/vim/ntpdate(同步时区)
 ln -snf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime # 统一时区为上海时区
 ntpdate ntp1.aliyun.com                     # 统一使用(阿里云)服务器进行时间同步
+# 安装中文字体
+yum -y install bitmap-fonts bitmap-fonts-cjk
+yum install -y fontconfig mkfontscale       # 安装字体管理工具
+   # 打开系统目录 C:\Windows\Fonts 把需要的字体复制出来， 然后上传到服务器上 /usr/share/fonts
+   # 执行命令# mkfontscale && mkfontdir && fc-cache -fv 然后重启服务器（reboot）
 # 基础软件安装[第二步] [可选]
 yum install -y icu libicu libunwind libicu-devel
 yum install -y autoconf-archive cmake g++ ninja-build libtool libunwind-dev libboost-fiber-dev libssl-dev libzstd-dev

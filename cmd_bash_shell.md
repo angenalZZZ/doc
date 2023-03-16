@@ -634,6 +634,39 @@ sudo reboot now
   ##启动zsh(3) 输入命令zsh
 ~~~
 
+> `安装gcc-8.2`
+~~~
+#下载
+http://ftp.tsukuba.wide.ad.jp/software/gcc/releases/gcc-8.2.0/gcc-8.2.0.tar.gz
+#用root
+su - root
+#解压
+tar -C /tmp -xf gcc-8.2.0.tar.gz
+
+#下载编译所需依赖项
+cd /tmp/gcc-8.2.0/
+vi contrib/download_prerequisites
+更换 ftp://gcc.gnu.org/pub/gcc/infrastructure/
+来源 http://www.mirrorservice.org/sites/sourceware.org/pub/gcc/infrastructure/
+contrib/download_prerequisites --no-verify
+cd ..
+
+#建立编译输出目录
+mkdir gcc-build-8.2.0
+
+#编译
+cd gcc-build-8.2.0
+../gcc-8.2.0/configure --enable-checking=release --enable-languages=c,c++ --disable-multilib
+make -j4
+
+#安装
+make install
+cd ~
+rm -rf /tmp/gcc-8.2.0/
+#检查版本
+gcc --version
+~~~
+
 > `开发环境搭建` 安装gcc/g++/gdb/make, gtk/glib/gnome, java, dot.NET Core, R, python, nodejs等
 ~~~shell
   # < Windows Subsystem for Linux WSL - ubuntu >---------------------------

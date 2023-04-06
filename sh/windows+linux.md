@@ -53,6 +53,9 @@ DISM.exe /Online /Cleanup-image /Restorehealth  # 恢复系统组件
 #.或者重置->当前的WinHTTP代理服务器设置->以管理员身份运行CMD
 netsh winhttp reset proxy
 netsh winhttp import proxy source=ie
+
+#网络和共享的依赖服务被禁用或组件无法启动时->以管理员身份运行CMD->然后重启
+netsh winsock reset catalog
 ~~~
 
 

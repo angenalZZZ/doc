@@ -117,10 +117,17 @@ $ sudo dscacheutil -flushcache
 > git submodule update --init --recursive
 
 # 设置SSH-Key: github.com/settings/keys
-> ssh-keygen -t rsa -C "angenal@hotmail.com"
+> ssh-keygen -t rsa -C "angenal@hotmail.com"  # -C 可选注释，通常写自己的邮箱
 # 1.创建SSH-Key # 2.复制公钥文件 $ pbcopy < ~/.ssh/id_rsa.pub >> github.com/settings/ssh
 # 3.验证SSH-Key> ssh -T git@github.com
 # 4.设置(可选)<hosts> 52.74.223.119 github.com <<获取DNS解析IP：nslookup github.com
+
+# 设置SSH-Key: 使用公钥更紧凑(签名验证更快)的ed25519密钥
+ssh-keygen -o -a 100 -t ed25519 -f ~/.ssh/id_ed25519 -C "angenal@hotmail.com"
+#  -o 使用新的OpenSSH格式来存储私钥，当使用ed25519格式时，默认会启用此选项
+#  -a 进行几轮KDF，值越大则密码验证越慢，也能更好的抗暴力破解
+#  -t 创建的key的类型 ed25519
+#  -f 生成的文件名
 
 # 设置SSH配置文件 ~/.ssh/config 然后验证SSH-Key
 Host github.com
@@ -138,13 +145,22 @@ Port 443
 User account1@hotmail.com
 IdentityFile ~/.ssh/id_rsa_account1
 
-# For other account2
+# For 自定义 key
 Host github_account2（别名2）
 HostName ssh.github.com
 PreferredAuthentications publickey
 Port 443
 User account2@hotmail.com
-IdentityFile ~/.ssh/id_rsa_account2
+IdentityFile ~/.ssh/id_ed25519
+IdentitiesOnly yes
+
+# 对于macOS用户，自动使用keys，并将私钥添加到ssh-agent> ssh-add -K ~/.ssh/id_ed25519
+Host *
+AddKeysToAgent yes
+UseKeychain yes
+IdentityFile ~/.ssh/id_ed25519
+IdentityFile ~/.ssh/id_rsa # Keep any old key files if you want
+
 ## 设置远程仓库连接时（用别名）
 [remote "origin"]
     url = git@github_account1:account1/my_repo.git

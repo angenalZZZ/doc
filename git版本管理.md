@@ -122,8 +122,8 @@ $ sudo dscacheutil -flushcache
 # 3.验证SSH-Key> ssh -T git@github.com
 # 4.设置(可选)<hosts> 52.74.223.119 github.com <<获取DNS解析IP：nslookup github.com
 
-# 设置SSH-Key: 使用公钥更紧凑(签名验证更快)的ed25519密钥
-ssh-keygen -o -a 100 -t ed25519 -f ~/.ssh/id_ed25519 -C "angenal@hotmail.com"
+# 设置SSH-Key: 推荐使用 ed25519 公钥更紧凑(签名验证更快)
+> ssh-keygen -o -a 100 -t ed25519 -f ~/.ssh/id_ed25519 -C "angenal@hotmail.com"
 #  -o 使用新的OpenSSH格式来存储私钥，当使用ed25519格式时，默认会启用此选项
 #  -a 进行几轮KDF，值越大则密码验证越慢，也能更好的抗暴力破解
 #  -t 创建的key的类型 ed25519

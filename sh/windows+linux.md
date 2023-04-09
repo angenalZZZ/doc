@@ -551,6 +551,12 @@ deb-src http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe
 #deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
 sudo apt-get update && sudo apt-get upgrade --fix-missing # 更新软件源-操作完毕!
 
+# 设置分辨率
+sudo displayconfig-gtk  # 打开显示器和显卡设置
+#   1.选择"显卡"-点击"驱动程序"-进入"按名称选择驱动程序"-选择"vboxvideo" 
+#   2.选择"显示屏"-点击"型号"-选择"通用"-"LCD Panel 1024×768"
+#   3.选择"分辨率"-"1024×768"-频率-"60Hz"-重启系统
+
 # 安装开发环境
 sudo apt install -y gnupg libfreetype6-dev language-pack-zh-hans # 安装freetype/中文语言包
 sudo apt install -y apt-transport-https ca-certificates x509-util # 安装ca/https/X.509

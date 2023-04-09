@@ -551,6 +551,12 @@ deb-src http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe
 #deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
 sudo apt-get update && sudo apt-get upgrade --fix-missing # 更新软件源-操作完毕!
 
+# 启用 SSH
+sudo apt install openssh-server  # 安装openssh软件
+sudo systemctl status ssh        # 查看SSH服务运行状态
+sudo ufw allow ssh               # 配置防火墙:允许SSH的远程连接
+sudo ip a | grep inet            # 获取IP地址:用于SSH客户端连接
+
 # 设置分辨率
 sudo displayconfig-gtk  # 打开显示器和显卡设置
 #   1.选择"显卡"-点击"驱动程序"-进入"按名称选择驱动程序"-选择"vboxvideo" 

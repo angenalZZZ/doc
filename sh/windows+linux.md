@@ -534,10 +534,11 @@ deb http://mirrors.tencentyun.com/ubuntu/ bionic-updates main restricted univers
 deb-src http://mirrors.tencentyun.com/ubuntu/ bionic main restricted universe multiverse
 deb-src http://mirrors.tencentyun.com/ubuntu/ bionic-security main restricted universe multiverse
 deb-src http://mirrors.tencentyun.com/ubuntu/ bionic-updates main restricted universe multiverse
-#deb http://mirrors.tencentyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
-#deb-src http://mirrors.tencentyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
-#deb http://mirrors.tencentyun.com/ubuntu/ bionic-backports main restricted universe multiverse
-#deb-src http://mirrors.tencentyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+deb http://mirrors.tencentyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+deb-src http://mirrors.tencentyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+deb http://mirrors.tencentyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+deb-src http://mirrors.tencentyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+
 $ sudo vi /etc/apt/sources.list    # ubuntu`20.04``focal` 阿里云源 (esc-vi按 :wq! 保存)
 deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
 deb-src http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
@@ -545,17 +546,25 @@ deb http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe mu
 deb-src http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
 deb-src http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
-#deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
-#deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
-#deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
-#deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
+
+$ sudo vi /etc/apt/sources.list    # ubuntu`22.04``jammy` 阿里云源 (esc-vi按 :wq! 保存)
+deb http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse
+
 sudo apt-get update && sudo apt-get upgrade --fix-missing # 更新软件源-操作完毕!
 
-# 启用 SSH
-sudo apt install openssh-server  # 安装openssh软件
-sudo systemctl status ssh        # 查看SSH服务运行状态
-sudo ufw allow ssh               # 配置防火墙:允许SSH的远程连接
-sudo ip a | grep inet            # 获取IP地址:用于SSH客户端连接
 
 # 设置分辨率
 sudo displayconfig-gtk  # 打开显示器和显卡设置
@@ -569,21 +578,40 @@ sudo apt install -y apt-transport-https ca-certificates x509-util # 安装ca/htt
 sudo apt install -y acmetool lecm # 安装 Let's Encrypt Certificate 自动化证书获取工具/管理工具
 sudo apt install -y --no-install-recommends git curl wget libssl-dev # 安装git/curl/wget/ssl-toolkit
 sudo apt install -y --no-install-recommends openssl ssl-cert tcl-tls # 安装openssl/tls
-sudo apt install -y --no-install-recommends openssh-server openvpn # 安装SSH/openvpn
-sudo apt install -y build-essential graphicsmagick  # 安装gcc/g++/gdb/make工具链/graphics库
-sudo apt install clang cmake zlib1g-dev libboost-dev libboost-thread-dev  # 安装clang/cmake/boost工具链
-sudo apt install cmake cmake-data cmake-doc cmake-curses-gui cmake-qt-gui # 安装ccmake/qt-gui桌面开发
+# 启用 SSH & openvpn
+sudo apt install -y --no-install-recommends openssh-server openvpn # 安装SSH&openvpn
+sudo systemctl status ssh        # 查看SSH服务运行状态
+sudo ufw allow ssh               # 配置防火墙:允许SSH的远程连接
+sudo ip a | grep inet            # 获取IP地址:用于SSH客户端连接
+sudo apt install -y build-essential # 安装gcc/g++/gdb/make工具链
+sudo apt install -y clang cmake zlib1g-dev libboost-dev libboost-thread-dev # 安装clang/cmake/boost工具链
+sudo apt install -y graphicsmagick  # 安装graphics库
+sudo apt install cmake-data cmake-doc cmake-curses-gui cmake-qt-gui # 安装qt-gui桌面开发
 sudo apt install autoconf automake pkg-config libtool gnome-core  # 安装automake/glib/gnome桌面开发
 sudo apt-get install libgtk-3-dev libcairo2-dev libglib2.0-dev --fix-missing   # 安装桌面开发gtk3工具链
 sudo apt-get install libwebkit2gtk-4.0-dev javascriptcoregtk-3.0 --fix-missing # 安装桌面开发webkit2gtk
 
+# 安装 Docker 容器
+sudo curl -sSL https://get.daocloud.io/docker | sh  # 安装,镜像 daocloud
+sudo curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://{your-id}.m.daocloud.io
+sudo curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh - # 安装,镜像 阿里云
+# 安装 Docker 容器 Ubuntu 22.04
+sudo apt install apt-transport-https ca-certificates curl software-properties-common gnupg lsb-release
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io docker-compose docker-compose-plugin
+sudo systemctl status docker  # 检查运行状态
+sudo systemctl start docker   # 启动容器服务
+sudo systemctl enable docker  # 开机自动启动
+
 # 安装K8s集成到WSL(需修改<linux>为 WSL 2) Ubuntu20.04 参考 https://blog.csdn.net/weixin_43168190/article/details/107179715
 
 # 安装 Java 语言
+sudo apt-get update && sudo apt-get upgrade        # 安装java之前
 sudo add-apt-repository universe                   # 安装java运行时(当报错提示无法下载时需启用universe)
-sudo apt-get update && sudo apt-get upgrade        # 安装java运行时之前
-sudo apt-get install apt-transport-https openjdk-8-jre-headless uuid-runtime pwgen # 最小化安装jre-8(推荐)
-sudo apt-get clean && apt-get update --fix-missing
+sudo apt install -y apt-transport-https openjdk-8-jre-headless uuid-runtime pwgen # 最小化安装jre-8(推荐)
+sudo apt clean && apt-get update --fix-missing
 sudo apt install -y --fix-missing default-jre      # 安装jre > java -version  (安装java选项1)
 sudo apt install -y --fix-missing default-jdk      # 安装jdk > java -version  (安装java选项2)
 sudo apt install -y --fix-missing openjdk-8-jdk    # 安装OpenJDK              (安装java选项3)
@@ -599,8 +627,18 @@ sudo dpkg -i packages-microsoft-prod.deb
 sudo rm packages-microsoft-prod.deb
 sudo apt-get update
 sudo apt-get install dotnet-runtime-3.1 aspnetcore-runtime-3.1  # 仅安装 .NET Core Runtime
-sudo apt-get install apt-transport-https aspnetcore-runtime-5.0 # 仅安装运行时(推荐)
-sudo apt-get install dotnet-sdk-3.1                             # 安装 .NET Core SDK  > dotnet -h
+sudo apt-get install apt-transport-https aspnetcore-runtime-3.1 # 仅安装运行时(推荐)
+sudo apt-get install -y dotnet-sdk-3.1  # 安装 .NET Core SDK  > dotnet -h
+# Ubuntu 22.04 支持 .NET 6.0, 7.0
+#   1.注册 Microsoft 包存储库
+declare repo_version=$(if command -v lsb_release &> /dev/null; then lsb_release -r -s; else grep -oP '(?<=^VERSION_ID=).+' /etc/os-release | tr -d '"'; fi)
+wget https://packages.microsoft.com/config/ubuntu/$repo_version/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+sudo dpkg -i packages-microsoft-prod.deb && rm packages-microsoft-prod.deb
+sudo apt update
+#   2.安装 .NET 6.0, 7.0
+sudo apt-get install -y dotnet-runtime-6.0 aspnetcore-runtime-6.0 # 仅安装运行时(推荐)
+sudo apt-get install -y dotnet-sdk-6.0 # 安装 .NET SDK
+sudo apt-get remove dotnet-sdk-6.0     # 卸载 .NET
 
 # 安装 R 语言(用于统计计算) > /usr/bin/R --help # 大写R
 sudo apt-get -y install r-recommended --fix-broken
@@ -1041,6 +1079,20 @@ alias lht='ls -lht'  # 文件列表-按时间倒序
 alias lhs='ls -lhS'  # 文件列表-按大小倒序
 alias start-pg='sudo service postgresql start'
 alias run-pg='sudo -u postgres psql'
+
+
+# 统一认证服务 CAS
+# 拉取镜像 https://hub.docker.com/r/apereo/cas/tags
+docker pull apereo/cas:6.5.7
+# 启动容器
+docker run --name cas -p 6443:8443 -p 6080:8080 apereo/cas:6.5.7 /bin/sh /cas-overlay/bin/run-cas.sh
+# 配置容器
+keytool -genkeypair -alias cas -keyalg RSA -keypass 123456 -storepass 123456 -keystore ./thekeystore -dname "CN=cas.example.com,OU=Org,C=AU" -ext SAN="dns:example.com,dns:localhost,ip:127.0.0.1"
+docker cp thekeystore cas:/etc/cas/thekeystore
+# 添加 cas.example.com 到 hosts 文件
+echo '127.0.0.1 cas.example.com' >> /etc/hosts
+# 配置和构建后，重启容器，访问 https://127.0.0.1:6443/cas/login
+docker restart cas
 
 ~~~
 

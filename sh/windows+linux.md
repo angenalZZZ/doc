@@ -1106,15 +1106,15 @@ alias run-pg='sudo -u postgres psql'
 
 # 统一认证服务 CAS
 # 拉取镜像 https://hub.docker.com/r/apereo/cas/tags
-docker pull apereo/cas:6.5.7  # 其它版本 apereo/cas:6.4.6.4 最新版本 apereo/cas:latest
+docker pull apereo/cas:latest  # 其它版本 apereo/cas:6.4.6.4  apereo/cas:6.5.7
 # 启动容器
-docker run --name cas -p 5443:8443 -p 5080:8080 apereo/cas:6.5.7 /bin/sh /cas-overlay/bin/run-cas.sh
-# 配置容器
-keytool -genkeypair -alias cas -keyalg RSA -keypass 123456 -storepass 123456 -keystore ./thekeystore -dname "CN=cas.example.com,OU=Org,C=AU" -ext SAN="dns:example.com,dns:localhost,ip:127.0.0.1"
-docker cp thekeystore cas:/etc/cas/thekeystore
+docker run --name cas -p 5443:8443 -p 5080:8080 apereo/cas:latest /bin/sh /cas-overlay/bin/run-cas.sh
+# 配置容器(上面运行失败后)
+keytool -genkeypair -alias cas -keyalg RSA -keypass 123456 -storepass 123456 -keystore ./thekeystore -dname "CN=cas.example.com,OU=Example,OU=Org,C=AU" -ext SAN="dns:example.com,dns:localhost,ip:127.0.0.1"
+docker cp thekeystore cas:/etc/cas/
 # 添加 cas.example.com 到 hosts 文件
 echo '127.0.0.1 cas.example.com' >> /etc/hosts
-# 配置和构建后，重启容器，访问 https://127.0.0.1:5443/cas/login
+# 配置和构建后，重启容器，访问  https://127.0.0.1:5443/cas/login  https://cas.example.com:5443/cas/login
 docker restart cas
 
 ~~~

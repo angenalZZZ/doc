@@ -604,6 +604,29 @@ sudo apt install docker-ce docker-ce-cli containerd.io docker-compose docker-com
 sudo systemctl status docker  # 检查运行状态
 sudo systemctl start docker   # 启动容器服务
 sudo systemctl enable docker  # 开机自动启动
+# 配置镜像加速器
+vi /etc/docker/daemon.json
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "registry-mirrors": [
+     "https://4txtc8r4.mirror.aliyuncs.com","http://8fe1b42e.m.daocloud.io",
+     "https://docker.mirrors.ustc.edu.cn","https://registry.docker-cn.com"
+  ],
+  "log-driver": "json-file",
+  "log-opts": { "max-size": "20m" },
+  "debug": false,
+  "experimental": true,
+  "storage-driver": "overlay2",
+  "insecure-registries": [],
+  "features": {}
+}
+# 重新加载配置
+systemctl daemon-reload
+# 将当前用户加入到docker组(获取执行docker的权限)
+gpasswd -a ${USER} docker && newgrp - docker
+gpasswd -a ubuntu docker && newgrp - docker
+# 重启docker
+systemctl restart docker
 
 # 安装K8s集成到WSL(需修改<linux>为 WSL 2) Ubuntu20.04 参考 https://blog.csdn.net/weixin_43168190/article/details/107179715
 
@@ -1083,15 +1106,15 @@ alias run-pg='sudo -u postgres psql'
 
 # 统一认证服务 CAS
 # 拉取镜像 https://hub.docker.com/r/apereo/cas/tags
-docker pull apereo/cas:6.5.7
+docker pull apereo/cas:6.5.7  # 其它版本 apereo/cas:6.4.6.4 最新版本 apereo/cas:latest
 # 启动容器
-docker run --name cas -p 6443:8443 -p 6080:8080 apereo/cas:6.5.7 /bin/sh /cas-overlay/bin/run-cas.sh
+docker run --name cas -p 5443:8443 -p 5080:8080 apereo/cas:6.5.7 /bin/sh /cas-overlay/bin/run-cas.sh
 # 配置容器
 keytool -genkeypair -alias cas -keyalg RSA -keypass 123456 -storepass 123456 -keystore ./thekeystore -dname "CN=cas.example.com,OU=Org,C=AU" -ext SAN="dns:example.com,dns:localhost,ip:127.0.0.1"
 docker cp thekeystore cas:/etc/cas/thekeystore
 # 添加 cas.example.com 到 hosts 文件
 echo '127.0.0.1 cas.example.com' >> /etc/hosts
-# 配置和构建后，重启容器，访问 https://127.0.0.1:6443/cas/login
+# 配置和构建后，重启容器，访问 https://127.0.0.1:5443/cas/login
 docker restart cas
 
 ~~~

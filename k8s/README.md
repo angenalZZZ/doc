@@ -173,25 +173,26 @@ systemctl enable docker && systemctl start docker
 # 配置镜像加速器, 通过修改系统配置文件/etc/docker/daemon.json 可设置多个镜像, 加速拉取推送images
 #  @"exec-opts": 设置兼容cgroup驱动systemd  @"insecure-registries": 设置http://[私有库IP]:[私有库Port]
 #  @"features": { "buildkit": true # syntax = docker/dockerfile:experimental }
-vi /etc/docker/daemon.json # 或设置当前用户 ~/.docker/daemon.json
+vi /etc/docker/daemon.json
 {
   "exec-opts": ["native.cgroupdriver=systemd"],
   "registry-mirrors": ["https://4txtc8r4.mirror.aliyuncs.com"]
 }
-# {
-#   "exec-opts": ["native.cgroupdriver=systemd"],
-#   "registry-mirrors": [
-#      "https://4txtc8r4.mirror.aliyuncs.com","http://8fe1b42e.m.daocloud.io",
-#      "https://docker.mirrors.ustc.edu.cn","https://registry.docker-cn.com"
-#   ],
-#   "log-driver": "json-file",
-#   "log-opts": { "max-size": "100m" },
-#   "debug": false,
-#   "experimental": true,
-#   "storage-driver": "overlay2",
-#   "insecure-registries": [],
-#   "features": {}
-# }
+# 或设置当前用户 ~/.docker/daemon.json
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "registry-mirrors": [
+     "https://4txtc8r4.mirror.aliyuncs.com","http://8fe1b42e.m.daocloud.io",
+     "https://docker.mirrors.ustc.edu.cn","https://registry.docker-cn.com"
+  ],
+  "log-driver": "json-file",
+  "log-opts": { "max-size": "100m" },
+  "debug": false,
+  "experimental": true,
+  "storage-driver": "overlay2",
+  "insecure-registries": [],
+  "features": {}
+}
 # 重新加载配置
 systemctl daemon-reload
 # 将当前用户加入到docker组(获取执行docker的权限)

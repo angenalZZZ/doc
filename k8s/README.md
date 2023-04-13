@@ -23,6 +23,14 @@ DNS1=8.8.8.8          # DNS2与主机一致(谷歌)
 DNS2=223.5.5.5        # DNS1与主机一致(阿里) [可选]
 DNS3=114.114.114.114  # DNS3与主机一致(国内/移动/联通/电信)
 ONBOOT=yes            # 修改开机启动 no 换成 yes
+# 开启IPv6(可选)
+IPV6INIT=yes
+IPV6_ADDR_GEN_MODE=stable-privacy
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_PEERDNS=yes
+IPV6_PEERROUTES=yes
 # 重启网络
 systemctl restart network  #或 > service network restart
 # 查看IP地址

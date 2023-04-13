@@ -210,8 +210,8 @@ ip样式：
       VboxManagemodifyvm"VMname"—natpf1"linkName,tcp,,8080,,8000"
 配置：界面操作-要求VirtualBox-V6-以上
    1、添加+
-      名称	协议	主机IP	主机端口	子系统IP	子系统端口
-      Rule 1	TCP	0.0.0.0	 8080	0.0.0.0	 8000
+      名称	协议	主机IP	主机端口  子系统IP  子系统端口
+      Rule 1	TCP	0.0.0.0	 8080	 0.0.0.0   8000
 ~~~
 
 

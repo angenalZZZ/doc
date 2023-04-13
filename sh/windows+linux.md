@@ -124,8 +124,8 @@ PS> scoop install -g lsd   # 漂亮的 ls 命令
 
 #### 虚拟机[VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 > [安装 macOS & Windows](https://www.freedidi.com/6584.html)
-> [网络连接方式](https://www.virtualbox.org/)
-    * NAT 模式
+> [网络连接方式](https://www.virtualbox.org/manual/UserManual.html)
+> NAT 模式
 ~~~
 特点：虚拟机只要求可以上网，无其它特殊要求，满足一般需求
 1、如果主机可以上网，虚拟机可以上网
@@ -141,7 +141,7 @@ IP样式：
 ip 10.0.2.15
 网关 10.0.2.2
 ~~~
-    * Bridged Adapter 桥接模式
+> Bridged Adapter 桥接模式
 ~~~
 特点：虚拟机可以上网，且虚拟机完全模拟一台实体机
 1、如果主机可以上网，虚拟机可以上网
@@ -159,7 +159,7 @@ IP样式：
 ip 与本机在同一网段
 网关 与本机网关相同
 ~~~
-    * Host-only Adapter 模式
+> Host-only Adapter 模式
 ~~~
 特点：在主机无法上网的情况下（主机可以上网时可用host-only也可用桥接），需要搭建一个模拟局域网，所有虚拟机可以互访
 1、虚拟机不可以上网
@@ -176,7 +176,7 @@ IP样式：
 ip 与本机VirtualBox Host-Only Network的网卡ip在同一网段内（默认192.168.56.*）
 网关 本机VirtualBox Host-Only Network的网卡ip（默认192.168.56.1）
 ~~~
-    * Internal 内网模式
+> Internal 内网模式
 ~~~
 特点：让各台虚拟机处于隔离的局域网内，只让它们相互通信，与外界(包括主机)隔绝(安全性高可防止外部抓包)
 1、虚拟机不可以上网
@@ -194,7 +194,7 @@ ip 169.254.147.9
 子网掩码 255.255.0.0
 网关 无
 ~~~
-    * NAT 模式 + 端口映射
+> NAT 模式 + 端口映射
 ~~~
 特点：将虚拟机端口映射到主机端口，可以使主机和外部机器访问虚拟机提供的服务
 配置：命令行模式

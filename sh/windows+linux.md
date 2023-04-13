@@ -170,7 +170,7 @@ IP样式：
    3、虚拟机可以ping通主机（通过主机 VirtualBox Host-Only Network 网卡，因此ip是该网卡的192.168.56.*）
    4、主机可以ping通虚拟机
 配置：
-   1、连接方式 选择 仅主机（Host-Only）适配器
+   1、连接方式 选择 仅主机（Host-Only）网络
    2、界面名称 选择 VirtualBox Host-Only Ethernet Adapter
    3、高级-控制芯片 PCnet-FAST*
    4、高级-混杂模式 拒绝
@@ -211,7 +211,7 @@ ip样式：
 配置：界面操作-要求VirtualBox-V6-以上
    1、添加+
       名称	协议	主机IP	主机端口  子系统IP  子系统端口
-      Rule 1	TCP	0.0.0.0	  8080	  0.0.0.0   8000
+      Rule 1	TCP	0.0.0.0	 8080	  0.0.0.0   8000
 ~~~
 
 

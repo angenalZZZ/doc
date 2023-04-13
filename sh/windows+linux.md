@@ -197,10 +197,10 @@ ip样式：
    子网掩码 255.255.0.0
    网关 无
 ~~~
-> NAT 模式 + 端口映射
+> NAT 模式 + 端口转发
 ~~~
 特点：将虚拟机端口映射到主机端口，可以使主机和外部机器访问虚拟机提供的服务
-配置：命令行模式（或界面操作-要求VirtualBox-V6以上）
+配置：命令行模式
    1、CD到VirtualBox安装目录
       cd %VBOX_INSTALL_PATH%
       vboxmanage setextradata "VBoxInternal/Devices/pcnet/0/LUN#0/Config//Protocol" TCP
@@ -208,6 +208,10 @@ ip样式：
       vboxmanage setextradata "VBoxInternal/Devices/pcnet/0/LUN#0/Config//HostPort" 8000
    2、将主机8080端口的tcp连接转发到虚拟机的8000端口
       VboxManagemodifyvm"VMname"—natpf1"linkName,tcp,,8080,,8000"
+配置：界面操作-要求VirtualBox-V6-以上
+   1、添加+
+      名称	协议	主机IP	主机端口	子系统IP	子系统端口
+      Rule 1	TCP	0.0.0.0		8080	0.0.0.0		8000
 ~~~
 
 

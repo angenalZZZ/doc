@@ -138,6 +138,7 @@ $ tree /etc/letsencrypt/archive/newyingyong.cn            # 2.2证书申请成�
 $ openssl x509 -in /etc/letsencrypt/archive/newyingyong.cn/cert1.pem -noout -text # 2.3校验证书
 $ certbot-auto certificates                               # 2.4查看机器上有多少证书？
 ~~~
+ - [OpenSSH入门](https://learn.microsoft.com/zh-cn/windows-server/administration/openssh/openssh_install_firstuse)、[适用于Windows的OpenSSH密钥管理](https://learn.microsoft.com/zh-cn/windows-server/administration/openssh/openssh_keymanagement)
  - [OpenSSL管理证书docs](https://www.openssl.org/docs/manmaster/man1/)
 ~~~bash
 #创建数字签名认证

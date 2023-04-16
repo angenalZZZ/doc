@@ -39,6 +39,11 @@ slmgr /upk                                # 卸载密钥(当无法激活时) www
 * [调试 Windows 诊断跟踪|内存分析|WinDbg|Tools...](http://windbg.org/)
 * [禁用 Windows 安全中心 Microsoft Defender 防病毒程序](https://www.sordum.org/9480/)
 * [禁止 Windows 自动更新](https://www.sordum.org/9470/)
+~~~cmd
+REG add "HKLM\SYSTEM\CurrentControlSet\Services\wuauserv" /v Start /t REG_DWORD /d 4 /f
+REG add "HKLM\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc" /v Start /t REG_DWORD /d 4 /f
+REG add "HKLM\SYSTEM\CurrentControlSet\Services\UsoSvc" /v Start /t REG_DWORD /d 4 /f
+~~~
 
 
 > Windows 10 系统问题排查
@@ -57,6 +62,66 @@ netsh winhttp import proxy source=ie
 
 #网络和共享的依赖服务被禁用或组件无法启动时->以管理员身份运行CMD->然后重启
 netsh winsock reset catalog
+~~~
+
+> Windows WiFi 密码
+~~~bash
+netsh wlan show profiles          # 1.获取WiFi信号
+netsh wlan show profile name="*"  # 2.查看WiFi密码
+~~~
+
+> Windows 常见CMD命令行
+~~~cmd
+REM 查看外网IP(重启路由且未向电信供应商申请固定IP时会发生改变)
+curl -L ip.tool.lu
+
+REM 当前系统用户列表
+net user
+net user /del [用户名]
+
+REM 远程桌面连接
+mstsc
+
+REM 局域网内推送消息
+MSG /server:192.168.1.2 * "嗨！您好！"
+
+
+REM 端口转发列表
+netsh interface portproxy show v4tov4
+REM 添加端口转发(内网)
+REM 条件: 需要考虑防火墙,用netsh添加入站端口访问规则；需要开启telnet服务,设置访问控制,允许特定主机连接。
+REM 1.如果未安装IPV6 请先执行 netsh interface ipv6 install
+REM 2.不用指定本地监听ip地址listenaddress
+REM netsh interface portproxy add v4tov4 listenaddress=本地ip listenport=本地port connectaddress=内网ip connectport=内网port
+netsh interface portproxy add v4tov4 listenport=14941 connectaddress=192.168.1.2 connectport=1494
+
+REM 删除端口转发(内网)
+REM netsh interface portproxy delete v4tov4 listenaddress=本地ip listenport=本地port
+netsh interface portproxy delete v4tov4 listenaddress=192.168.1.8 listenport=14941
+
+
+REM 仿黑客帝国数字雨
+@echo off
+:line
+color 0a
+setlocal ENABLEDELAYEDEXPANSION
+for /l %%i in (0) do (
+set "line="
+for /l %%j in (1,1,80) do (
+set /a Down%%j-=2
+set "x=!Down%%j!"
+if !x! LSS 0 (
+set /a Arrow%%j=!random!%%3
+set /a Down%%j=!random!%%15+10
+)
+set "x=!Arrow%%j!"
+if "!x!" == "2" (
+set "line=!line!!random:~-1! "
+) else (set "line=!line! ")
+)
+set /p=!line!<nul
+)
+goto line
 ~~~
 
 

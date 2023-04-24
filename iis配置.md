@@ -70,14 +70,14 @@
     <directoryBrowse enabled="false" />
     <security>
       <requestFiltering>
-        <!-- 当前限制：2147483647 (2GB) ; 默认值：30000000 (28.6MB), 最大限制：4294967295 (4GB) -->
-        <requestLimits maxAllowedContentLength="2147483647" />
+        <!-- 当前限制：2147483648 (2GB) ; 默认值：30000000 (28.6MB), 最大限制：4294967295 (4GB) -->
+        <requestLimits maxAllowedContentLength="2147483648" maxQueryString="32768" maxUrl="4096" />
       </requestFiltering>
     </security>
   </system.webServer>
   <system.web>
-    <!-- 仅当服务器 ASP.NET 运行时版本小于 4.5 时，设置当前限制：2097151 (2GB) ; 默认值：4096 (4MB) -->
-    <httpRuntime maxRequestLength="2097151"/>
+    <!-- 仅当服务器 ASP.NET 运行时版本小于 4.5 时，设置当前限制：2097152 (2GB) ; 默认值：4096 (4MB) -->
+    <httpRuntime maxRequestLength="2097152"/>
   </system.web>
   <!-- 可以指定访问地址后限制 -->
   <location path="file/upload">
@@ -85,8 +85,8 @@
       <directoryBrowse enabled="false" />
       <security>
         <requestFiltering>
-          <!-- 当前限制：2147483647 (2GB) ; 默认值：30000000 (28.6MB), 最大限制：4294967295 (4GB) -->
-          <requestLimits maxAllowedContentLength="2147483647" />
+          <!-- 当前限制：2147483648 (2GB) ; 默认值：30000000 (28.6MB), 最大限制：4294967295 (4GB) -->
+          <requestLimits maxAllowedContentLength="2147483648" maxQueryString="32768" maxUrl="4096" />
         </requestFiltering>
       </security>
     </system.webServer>

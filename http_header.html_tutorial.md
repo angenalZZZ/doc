@@ -54,9 +54,14 @@ Access-Control-Allow-Headers: Origin,Content-Type,Accept,User-Agent,Cookie,Autho
 Access-Control-Expose-Headers: Cache-Control,Content-Disposition,Content-Language,Content-Type,Expires,Last-Modified,Pragma,X-...
 Access-Control-Max-Age: 3628800   # 预检请求凭据有效期(秒)42天＝42×86400(天)防止过量的OPTIONS预检请求; -Expose-Headers让前端js可访问√
 
+Strict-Transport-Security: max-age=63072000; includeSubdomains; preload
+X-Download-Options: noopen        # 默认开启，禁用IE下载框，防止IE下载文件默认被打开
 X-Content-Type-Options: nosniff   # 开启*内容保护 "Web应用防火墙"WAF: https://www.cloudwaf.cc
-X-XSS-Protection: 1; mode=block   # 开启*XSS*保护 Cross-site-scripting (XSS),
 X-Frame-Options: SAMEORIGIN       # 相同域名*才允许frame加载网页 Cross-site request forgery (CSRF),
+X-Frame-Options: ALLOW-FROM https://*.*.cn/,https://*.com/ # 允许不同域名frame加载网页
+X-Permitted-Cross-Domain-Policies: none # 针对flash的安全策略，用于指定客户端能够访问的跨域策略文件crossdomain.xml
+X-XSS-Protection: 1; mode=block   # 开启*XSS*保护 Cross-site-scripting (XSS),
+
 X-Request-Id: EE0A:452CE:3F6D51:5D1749:5E795F3E  # 防止重放攻击 Identification of each web page request.
 
 # 启用CSP后,不符合的外部资源就会被阻止加载

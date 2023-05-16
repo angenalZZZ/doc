@@ -11,7 +11,7 @@
 - [`DownloadlyIR`](https://downloadlyir.com/)、[`大眼仔`](http://www.dayanzai.me/)、[`亿破姐`](https://www.ypojie.com/)、[`汉化博客网`](http://www.th-sjy.com/)、[`分享者网`](https://www.sharerw.com/)、[`求资源网`](https://www.qiuziyuan.net/)、[bit.ly`短链接`](https://bitly.com/)
 
 ## [开源资源](#)
-- [Wei's OneDrive](https://od.cloudsploit.top/en/tools/)
+- [`破解`Wei's OneDrive](https://od.cloudsploit.top/en/tools/)
 - [佰阅部落](https://baiyue.one/)、[懒得勤快](https://masuit.com/cat/41)
 
 ## [开发工具](https://www.jb51.net/softs/)

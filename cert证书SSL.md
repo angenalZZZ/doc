@@ -19,7 +19,7 @@
 
 OV证书：显示组织
   路径： Certum Trusted Network CA        # CA根证书
-            UCA Global G2 Root            # 根证书(证书链)
+            UCA Global G2 Root            # 根证书(证书链信息)
                 SHECA OV Server CA G5      # 中间证书(证书链)
                       *.yourdomain.com      # 服务器SSL证书
 EV证书：显示组织单位
@@ -113,7 +113,19 @@ EV证书：显示组织单位
 <td> [Nginx For Windows 服务器国密证书安装](https://cloud.tencent.com/document/product/400/47361) </td>
 </tr>
 </tbody></table>
-
+~~~
+#####安装.中间.证书链信息.####
+##_.*.*_zheng_shu_lian.cer##
+-----BEGIN CERTIFICATE-----
+MIIFnTCCA4WgAwIBAgIQWdOdl..# CA根证书
+-----END CERTIFICATE-----
+-----BEGIN CERTIFICATE-----
+MIIFvzCCBKegAwIBAgIRAOXkc..# 根证书(证书链信息)
+-----END CERTIFICATE-----
+-----BEGIN CERTIFICATE-----
+MIIDuzCCAqOgAwIBAgIDBETAM..# 中间证书(证书链)
+-----END CERTIFICATE-----
+~~~
 
  - [Let’s Encrypt 免费证书/GUI manage free automated https certificates](https://certifytheweb.com/)
  - [Let’s Encrypt 免费证书/lego](https://go-acme.github.io/lego/usage/cli/examples/)

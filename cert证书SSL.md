@@ -16,6 +16,16 @@
                  #self.sign-> Digital Signature, Key Encipherment (a0) #自签名,未经CA认证$
 *基本约束         Subject Type=CA \ Path Length Constraint=None
 *指纹             a79be724538b668fa817e8578d6a8078337fd3ad
+
+OV证书：显示组织
+  路径： Certum Trusted Network CA        # CA根证书
+            UCA Global G2 Root            # 根证书(证书链)
+                SHECA OV Server CA G5      # 中间证书(证书链)
+                      *.yourdomain.com      # 服务器SSL证书
+EV证书：显示组织单位
+  层次： DigiCert Global Root CA       # CA根证书
+             GeoTrust CN RSA CA G1     # 中间证书(证书链)
+                 *.yourdomain.com       # 服务器SSL证书
 ```
 
 > `证书密钥常用后缀`
@@ -98,6 +108,7 @@
 <td> [Nginx For Windows 服务器国密证书安装](https://cloud.tencent.com/document/product/400/47361) </td>
 </tr>
 </tbody></table>
+
 
  - [Let’s Encrypt 免费证书/GUI manage free automated https certificates](https://certifytheweb.com/)
  - [Let’s Encrypt 免费证书/lego](https://go-acme.github.io/lego/usage/cli/examples/)

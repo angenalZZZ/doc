@@ -115,7 +115,8 @@ EV证书：显示组织单位
 </tbody></table>
 
 ~~~bash
-#####安装.中间.证书链信息.####
+#####安装.证书链信息.####
+##打开：证书管理(本地计算机)-控制台.msc 分别导入指定的存储区。
 ##_.*.*_zheng_shu_lian.cer##
 -----BEGIN CERTIFICATE-----
 MIIFnTCCA4WgAwIBAgIQWdOdl..# CA根证书

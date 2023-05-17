@@ -1,6 +1,6 @@
 # 证书
 
-#### 获取证书
+#### 获取证书 [沃通WoTrus](https://www.wosign.com/price.htm)
 
 ```
 证书：           CA根证书(服务器身份验证)                               # apiserver.crt <=> apiserver.key
@@ -58,6 +58,7 @@ EV证书：显示组织单位
 
 
 #### [安装证书](https://cloud.tencent.com/document/product/400/4143)
+- [证书部署使用指南`沃通WoTrus`](https://www.wosign.com/Docdownload/)
 
 <table>
 <tbody><tr>

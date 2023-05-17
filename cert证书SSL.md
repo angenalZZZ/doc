@@ -59,6 +59,10 @@ EV证书：显示组织单位
 
 #### [安装证书](https://cloud.tencent.com/document/product/400/4143)
 - [证书部署使用指南`沃通WoTrus`](https://www.wosign.com/Docdownload/)
+  - [Apache SSL 证书申请部署指南](https://www.wosign.com/Docdownload/Apache_csr证书部署指南.pdf)
+  - [IIS SSL 证书申请部署指南](https://www.wosign.com/Docdownload/IIS8.0_csr证书安装指南.pdf)
+  - [Nginx SSL 证书申请部署指南](https://www.wosign.com/Docdownload/Nginx_csr证书部署指南.pdf)
+  - [Tomcat SSL 证书申请部署指南](https://www.wosign.com/Docdownload/Tomcat_csr证书部署指南.pdf)
 
 <table>
 <tbody><tr>

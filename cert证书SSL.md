@@ -1,6 +1,6 @@
 # 证书
 
-#### 获取证书 [沃通WoTrus](https://www.wosign.com/price.htm)
+#### 获取证书 [亚洲诚信/TrustAsia`DigiCert`](https://www.trustasia.com/guide)、[天威诚信`DigiCert`](https://www.itrus.cn/product.html)、[安信证书/AnTrust`Geotrust`](https://www.anxinssl.com/geotrust/)、[沃通WoTrus](https://www.wosign.com/price.htm)
 
 ```
 证书：           CA根证书(服务器身份验证)                               # apiserver.crt <=> apiserver.key

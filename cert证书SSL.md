@@ -113,7 +113,8 @@ EV证书：显示组织单位
 <td> [Nginx For Windows 服务器国密证书安装](https://cloud.tencent.com/document/product/400/47361) </td>
 </tr>
 </tbody></table>
-~~~
+
+~~~bash
 #####安装.中间.证书链信息.####
 ##_.*.*_zheng_shu_lian.cer##
 -----BEGIN CERTIFICATE-----

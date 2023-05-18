@@ -82,6 +82,13 @@ net user /del [用户名]
 REM 远程桌面连接
 mstsc
 
+REM 建立防火墙规则，禁止应用程序连网
+netsh advfirewall firewall add rule name="规则名称" dir=out program="禁止程序的路径" action=block
+REM 禁用防火墙规则
+netsh advfirewall firewall set rule name='规则名称' new enable=no
+REM 启用防火墙规则
+netsh advfirewall firewall set rule name='规则名称' new enable=yes
+
 REM 局域网内推送消息
 MSG /server:192.168.1.2 * "嗨！您好！"
 

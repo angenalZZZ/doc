@@ -1,7 +1,7 @@
 # 证书
 
 #### 获取证书 [亚洲诚信/TrustAsia`DigiCert`](https://www.trustasia.com/guide)、[天威诚信`DigiCert`](https://www.itrus.cn/product.html)、[安信证书/AnTrust`Geotrust`](https://www.anxinssl.com/geotrust/)、[沃通WoTrus](https://www.wosign.com/price.htm)
-> [在线工具地址](https://tools.imtrust.cn)、[SSL工具/证书分析/下载中间证书](https://www.myssl.cn/tools/downloadchain.html)
+> [SSL工具/在线转换格式](https://tools.imtrust.cn)、[SSL工具/证书分析/下载中间证书](https://www.myssl.cn/tools/downloadchain.html)
 
 ```
 证书：           CA根证书(服务器身份验证)                               # apiserver.crt <=> apiserver.key

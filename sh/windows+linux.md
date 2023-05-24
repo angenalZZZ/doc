@@ -11,8 +11,9 @@
 * [注册表](#注册表)
 * [磁盘备份`DiskGenius`](https://www.freedidi.com/3905.html)
 * [安装*ca/openssl](https://slproweb.com/products/Win32OpenSSL.html)
-* [安装*OpenJDK 11](https://developers.redhat.com/products/openjdk/download)
-* [安装*WIX Toolset 创建*Windows installer](https://wixtoolset.org/)
+* [安装*OpenJDK 11 On redhat](https://developers.redhat.com/products/openjdk/download)
+* [安装*WIX Toolset创建*Windows Installer](https://wixtoolset.org/)
+
 
 #### 系统升级
 

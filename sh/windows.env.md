@@ -143,9 +143,9 @@ SOLR_INSTALL  D:\Program\solr
 ZONEINFO      A:\go\bin\zoneinfo.zip
 ```
 
-- 专用dns服务器工具`Acrylic`使用`sni`反向代理服务解锁网络
-  * [获取sni反代工具]()
-  * [获取DNS服务的`Acrylic`工具](https://sourceforge.net/projects/acrylic/files/Acrylic/2.1.1/Acrylic.exe/download)
+- 专用dns服务器工具`Acrylic`使用`sni`反代服务解锁网络
+  * [获取sni反代服务](https://fofa.info/result?qbase64=Ym9keT0iQmFja2VuZCBub3QgYXZhaWxhYmxlIg%3D%3D)
+  * [获取`Acrylic`DNS服务](https://sourceforge.net/projects/acrylic/files/Acrylic/2.1.1/Acrylic.exe/download)
   * Acrylic hosts
 ```
 6.6.6.6   /^(.+\.)*akadns\.net$

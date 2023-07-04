@@ -44,7 +44,12 @@
 <configuration>
   <system.webServer>
     <staticContent>
+      <remove fileExtension=".apk" />
       <mimeMap fileExtension=".apk" mimeType="application/octet-stream" />
+      <remove fileExtension=".woff" />
+      <mimeMap fileExtension=".woff" mimeType="application/x-font-woff"/>
+      <remove fileExtension=".svg" />
+      <mimeMap fileExtension=".svg" mimeType="image/svg+xml" />
     </staticContent>
   </system.webServer>
 </configuration>

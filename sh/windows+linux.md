@@ -81,6 +81,9 @@ curl -L ip.tool.lu
 REM 下载文件
 curl -L -C - "https://cn-beijing-data.aliyundrive.net/App.zip" -o "App.zip" -e "https://www.aliyundrive.com/"
 
+REM 目录树状列表
+tree "来源目录" /A > "输出文件.txt"
+
 REM 当前系统用户列表
 net user
 net user /del [用户名]

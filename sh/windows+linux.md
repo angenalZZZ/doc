@@ -78,6 +78,9 @@ netsh wlan show profile name="*"  # 2.查看WiFi密码
 REM 查看外网IP(重启路由且未向电信供应商申请固定IP时会发生改变)
 curl -L ip.tool.lu
 
+REM 下载文件
+curl -L -C - "https://cn-beijing-data.aliyundrive.net/App.zip" -o "App.zip" -e "https://www.aliyundrive.com/"
+
 REM 当前系统用户列表
 net user
 net user /del [用户名]

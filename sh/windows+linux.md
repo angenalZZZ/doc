@@ -294,6 +294,7 @@ ip样式：
       名称	协议	主机IP	主机端口  子系统IP  子系统端口
       Rule 1	TCP	0.0.0.0	 8080	  0.0.0.0   8000
 ~~~
+![](https://github.com/angenalZZZ/doc/raw/master/screenshots/VirtualBox2023081709.png)
 
 
 #### 子系统[android](https://www.microsoft.com/store/productId/9P3395VX91NR)

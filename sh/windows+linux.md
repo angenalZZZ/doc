@@ -48,14 +48,6 @@ REG add "HKLM\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc" /v Start /t REG_DW
 REG add "HKLM\SYSTEM\CurrentControlSet\Services\UsoSvc" /v Start /t REG_DWORD /d 4 /f
 ~~~
 
-> Windows 系统命令
-~~~cmd
-HELP chcp           # 控制输出 https://baike.baidu.com/item/CHCP/9061635 字符集编码 https://baike.baidu.com/item/代码页/11025504
-NET HELP user       # 用户账号 命令说明
-NET HELP localgroup # 用户组 命令说明
-~~~
-
-
 > Windows 10 系统问题排查
 ~~~bash
 sfc /SCANNOW                                    # 检查系统组件是否有问题？
@@ -82,6 +74,17 @@ netsh wlan show profile name="*"  # 2.查看WiFi密码
 
 > Windows 常见CMD命令行
 ~~~cmd
+HELP chcp           # 控制输出 https://baike.baidu.com/item/CHCP/9061635 字符集编码 https://baike.baidu.com/item/代码页/11025504
+NET HELP user       # 用户账号 命令说明
+NET HELP localgroup # 用户组 命令说明
+
+REM 当前系统用户组列表
+net localgroup
+
+REM 当前系统用户列表
+net user
+net user /del [用户名]
+
 REM 查看外网IP(重启路由且未向电信供应商申请固定IP时会发生改变)
 curl -L ip.tool.lu
 
@@ -90,10 +93,6 @@ curl -L -C - "https://cn-beijing-data.aliyundrive.net/App.zip" -o "App.zip" -e "
 
 REM 目录树状列表
 tree "来源目录" /A > "输出文件.txt"
-
-REM 当前系统用户列表
-net user
-net user /del [用户名]
 
 REM 远程桌面连接
 mstsc

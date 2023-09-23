@@ -48,6 +48,13 @@ REG add "HKLM\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc" /v Start /t REG_DW
 REG add "HKLM\SYSTEM\CurrentControlSet\Services\UsoSvc" /v Start /t REG_DWORD /d 4 /f
 ~~~
 
+> Windows 系统命令
+~~~cmd
+HELP chcp           # 控制输出 https://baike.baidu.com/item/CHCP/9061635 字符集编码 https://baike.baidu.com/item/代码页/11025504
+NET HELP user       # 用户账号 命令说明
+NET HELP localgroup # 用户组 命令说明
+~~~
+
 
 > Windows 10 系统问题排查
 ~~~bash

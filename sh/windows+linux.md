@@ -97,6 +97,12 @@ tree "来源目录" /A > "输出文件.txt"
 REM 远程桌面连接
 mstsc
 
+REM 服务器管理
+runas /user:administrator ServerManager.exe
+
+REM IIS管理
+runas /user:administrator "C:\WINDOWS\system32\inetsrv\InetMgr.exe"
+
 REM 建立防火墙规则，禁止应用程序连网
 netsh advfirewall firewall add rule name="规则名称" dir=out program="禁止程序的路径" action=block
 REM 禁用防火墙规则

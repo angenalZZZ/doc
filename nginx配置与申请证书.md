@@ -277,6 +277,19 @@ server {
 }
 ~~~
 
+ * 禁用 IP 访问网站
+~~~nginx
+# vi /usr/local/openresty/nginx/conf/nginx.conf
+
+server {
+    listen 80 default_server;
+    server_name _; # "_"表示匹配所有域名
+    return 444;    # 直接关闭连接
+}
+
+# sudo /usr/local/openresty/nginx/sbin/nginx -s reload
+~~~
+
  * 配置代理 https
 ~~~nginx
 server {

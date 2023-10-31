@@ -32,6 +32,12 @@
   <processModel autoConfig="false" enable="true" maxWorkerThreads="500" maxIoThreads="500" minWorkerThreads="100" minIoThreads="100" requestQueueLimit="100000" />
 ~~~
 
+> `IIS锁定默认配置overrideModeDefault="Deny"`
+~~~shell
+C:\Windows\system32> inetsrv\appcmd unlock config -section:system.webServer/modules
+C:\Windows\system32> inetsrv\appcmd unlock config -section:system.webServer/handlers
+~~~
+
 > `MIME类型` 添加 svg woff ...
 ```
 .svg    image/svg+xml
@@ -240,12 +246,6 @@
 cd /d %~dp0                 # 进入当前目录
 RegSvr32 /s pZemsdkDemo.ocx # 注册COM服务/ActiveX控件
 RegSvr32 /u pZemsdkDemo.ocx # 卸载ActiveX控件
-~~~
-
-> `IIS锁定是默认配置overrideModeDefault="Deny"`
-~~~shell
-C:\Windows\system32> inetsrv\appcmd unlock config -section:system.webServer/modules
-C:\Windows\system32> inetsrv\appcmd unlock config -section:system.webServer/handlers
 ~~~
 
 ----

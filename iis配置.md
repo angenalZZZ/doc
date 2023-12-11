@@ -210,9 +210,13 @@ C:\Windows\system32> inetsrv\appcmd unlock config -section:system.webServer/hand
         <!--<remove name="Server" />--><!--https://learn.microsoft.com/zh-cn/archive/blogs/varunm/remove-unwanted-http-response-headers-->
         <remove name="X-Powered-By" />
         <remove name="X-AspNet-Version" />
-        <add name="X-Frame-Options" value="SAMEORIGIN" />
         <add name="X-XSS-Protection" value="1; mode=block" />
         <add name="X-Content-Type-Options" value="nosniff" />
+        <add name="X-Download-Options" value="noopen" />
+        <add name="X-Permitted-Cross-Domain-Policies" value="none" />
+        <!--Frame加载漏洞[建议禁用]主要用于共享-->
+        <!-- <add name="X-Frame-Options" value="SAMEORIGIN" /> -->
+        <add name="X-Frame-Options" value="ALLOW-FROM https://***.cn/,https://***.com/" />
         <!--跨域访问漏洞[建议禁用]主要用于前后端分离的项目-->
         <!--<add name="Access-Control-Allow-Origin" value="http://www.example.com,https://www.example.com"/>-->
         <!--允许客户端携带跨域请求凭据Credentials例如Cookie,TLS客户端证书,授权标头-->
@@ -223,8 +227,10 @@ C:\Windows\system32> inetsrv\appcmd unlock config -section:system.webServer/hand
         <!--<add name="Access-Control-Max-Age" value="86400" />-->
         <!--<add name="Access-Control-Expose-Headers" value="Expires,Last-Modified,X-Auth-Token,X-Request-Id" />-->
 
-        <!--启用CSP后,不符合的外部资源就会被阻止加载-->
-        <add name="Content-Security-Policy" value="script-src 'self' cdn.bootcdn.net cdnjs.cloudflare.com; style-src 'self' https: cdn.bootcdn.net cdnjs.cloudflare.com; img-src 'self' https:; media-src 'self' https:; connect-src https:; font-src https:; frame-src 'self'; object-src 'none';" />
+        <!--启用CSP后,不符合的外部资源就会被阻止加载(使用分号;设置多项)-->
+        <add name="Content-Security-Policy" value="frame-ancestors 'self' ***.cn ***.com; frame-src 'self'; script-src 'self' cdn.bootcdn.net cdnjs.cloudflare.com; style-src 'self' https: cdn.bootcdn.net cdnjs.cloudflare.com; img-src 'self' https:; media-src 'self' https:; connect-src https:; font-src https:; object-src 'none';" />
+        <!--强制https访问-->
+        <add name="Strict-Transport-Security" value="max-age=63072000; includeSubdomains; preload" />
       </customHeaders>
     </httpProtocol>
   </system.webServer>

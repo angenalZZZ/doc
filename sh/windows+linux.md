@@ -85,6 +85,9 @@ REM 当前系统用户列表
 net user
 net user /del [用户名]
 
+REM 本地用户和组.管理
+lusrmgr.msc
+
 REM 查看外网IP(重启路由且未向电信供应商申请固定IP时会发生改变)
 curl -L ip.tool.lu
 

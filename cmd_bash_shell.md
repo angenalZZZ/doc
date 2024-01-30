@@ -36,6 +36,19 @@
   $ egrep -c ' lm ' /proc/cpuinfo  &&  egrep -c '(vmx|svm)' /proc/cpuinfo
   $ cat /proc/cpuinfo & cat /proc/meminfo      # 查看CPU&MEM信息
   $ cat /proc/mounts & cat /proc/filesystems   # 查看/mnt/&fs信息
+
+  # 1.文件描述符限制，每个 TCP 连接都是一个文件，如果文件描述符被占满了，会发生 Too many open files。Linux 对可打开的文件描述符的数量分别作了三个方面的限制：
+  # 系统级：当前系统可打开的最大数量，通过 cat /proc/sys/fs/file-max 查看；
+  # 用户级：指定用户可打开的最大数量，通过 cat /etc/security/limits.conf 查看；
+  # 进程级：单个进程可打开的最大数量，通过 cat /proc/sys/fs/nr_open 查看；
+  # 2.内存限制，每个 TCP 连接都要占用一定内存，操作系统的内存是有限的，如果内存资源被占满后，会发生 OOM
+
+  # 一个服务端进程最多能支持多少条 TCP 连接？
+  #   理论上一个服务端进程最多能支持约为 2 的 48 次方（2^32 (ip数) * 2^16 (端口数），约等于两百多万亿
+  # 一台服务器最大最多能支持多少条 TCP 连接？
+  #   Linux维护一条TCP连接要花费内存资源的，每一条静止状态ESTABLISH（不发送接收数据）的TCP连接约需要 3.44K 内存，
+  #   那么 8 GB 物理内存的服务器，最大能支持的 TCP 连接数 = 8GB / 3.44KB = 2,438,956（约240万）实际过程中的 TCP 连接，并发很难达到百万级别。
+
   # 系统版本号'发行版本'*** Linux-redhat > cat /etc/redhat-release
   $ cat /etc/os-release # 系统完整信息 NAME="Ubuntu" VERSION="18.04.3 LTS (Bionic Beaver)" 
   $ cat /etc/system-release && cat /usr/lib/os-release # CentOS Linux release 7.9.2009 (Core)

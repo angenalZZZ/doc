@@ -1,5 +1,5 @@
 # [Nginx](http://nginx.org/en/docs/)  [中文](http://www.nginx.cn/doc/)
-# [`腾讯云文档`SSL证书安装部署（Windows）](https://cloud.tencent.com/document/product/400/94492)、[（Linux）](https://cloud.tencent.com/document/product/400/35244)
+# [`腾讯云文档`SSL证书安装部署（Windows）](https://cloud.tencent.com/document/product/400/94492)[（Linux）](https://cloud.tencent.com/document/product/400/35244)
 
 * 安装
 ~~~shell

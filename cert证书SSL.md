@@ -170,7 +170,7 @@ $ openssl x509 -in /etc/letsencrypt/archive/newyingyong.cn/cert1.pem -noout -tex
 $ certbot-auto certificates                               # 2.4查看机器上有多少证书？
 ~~~
  - [OpenSSH入门](https://learn.microsoft.com/zh-cn/windows-server/administration/openssh/openssh_install_firstuse)、[适用于Windows的OpenSSH密钥管理](https://learn.microsoft.com/zh-cn/windows-server/administration/openssh/openssh_keymanagement)
- - [OpenSSL管理证书docs](https://www.openssl.org/docs/manmaster/man1/)
+ - [OpenSSL管理证书docs](https://www.openssl.org/docs/manmaster/man1/)、[Create a self-signed SSL certificate](https://www.wowza.com/docs/how-to-create-a-self-signed-ssl-certificate)
 ~~~bash
 #创建数字签名认证
 > openssl req -new -nodes -x509 -out server.crt -keyout server.key -days 3650 \

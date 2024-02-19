@@ -106,6 +106,18 @@ runas /user:administrator ServerManager.exe
 REM IIS管理
 runas /user:administrator "C:\WINDOWS\system32\inetsrv\InetMgr.exe"
 
+REM 将Windows防火墙服务配置为自动启动
+sc config mpssvc start=auto
+REM 启动Windows防火墙
+net stop mpssvc && net start mpssvc
+REM 启用Windows防火墙配置文件
+netsh advfirewall set allprofiles state on
+
+REM 拒绝从特定IP地址输入 block IP in your firewall
+netsh advfirewall firewall add rule name="*App* Block *IP*" dir=in action=block remoteip=*IP*
+REM 拒绝输出到特定IP地址 block IP in your firewall
+netsh advfirewall firewall add rule name="*App* Block *IP*" dir=out action=block remoteip=*IP*
+
 REM 建立防火墙规则，禁止应用程序连网
 netsh advfirewall firewall add rule name="规则名称" dir=out program="禁止程序的路径" action=block
 REM 禁用防火墙规则

@@ -767,6 +767,28 @@ deb-src http://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted univer
 
 sudo apt-get update && sudo apt-get upgrade --fix-missing # 更新软件源-操作完毕!
 
+# 安装中文字体
+# 1.install Microsoft TrueType core fonts https://linuxconfig.org/install-microsoft-fonts-on-ubuntu-20-04-focal-fossa-desktop
+sudo apt install ttf-mscorefonts-installer
+# 2.install Other TrueType core fonts
+wget -O fonts.tar https://sautinsoft.com/components/fonts.tar
+mkdir -p /usr/share/fonts/truetype
+tar -zxf fonts.tar -C /usr/share/fonts/truetype
+cd /usr/share/fonts/truetype
+# Create fonts.scale and fonts.dir
+mkfontscale && mkfontdir
+fc-cache
+# Add the new font directory to the font path
+chkfontpath --add /usr/share/fonts/truetype
+# Restart font server
+/etc/rc.d/init.d/xfs restart
+
+# .NET graphics library System.Drawing.Common on macOS and Linux, it uses https://github.com/mono/libgdiplus
+sudo add-apt-repository ppa:quamotion/ppa
+sudo apt-get update
+sudo apt-get install -y libgdiplus
+# Using libgdiplus on macOS
+dotnet add package runtime.osx.10.10-x64.CoreCompat.System.Drawing
 
 # 设置分辨率
 sudo displayconfig-gtk  # 打开显示器和显卡设置

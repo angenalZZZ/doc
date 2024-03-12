@@ -413,6 +413,11 @@ git stash apply stash@{0}    # 还原暂存区到工作区
 git checkout .               # 还原所有修改，不会删除新增的文件
 git checkout -- [file]                    # 取消对文件file的修改
 git checkout branch|tag|commit -- [file]  # 从仓库取出file覆盖当前分支文件file
+
+# 回滚push的最后一次提交
+git reset --hard HEAD^       # 删除本地最后一次提交
+git push --force-with-lease  # 删除远程最后一次提交
+git cherry-pick HASH         # 恢复本地最后一次提交
 ~~~
 
 ####  21.提交到本地git仓库的当前分支

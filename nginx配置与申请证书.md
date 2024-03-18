@@ -76,6 +76,23 @@ certbot delete --cert-name example.com
 ## 在阿里云上，OSS和CDN的配置上，选择直接输入证书内容替换原来直接选择的阿里云证书。
 ~~~
 
+* 安全加固
+  * 禁止服务信息泄露(禁止目录浏览,隐藏版本信息)
+  * 开启 SSL/TLS 加密
+  * 防止 DDOS 攻击
+  * 设置缓冲区，防止缓冲区溢出攻击
+  * 日志配置、日志切割
+  * 错误页面重定向
+  * 防止 SQL 注入攻击
+  * 限制 HTTP 请求方法
+  * 限制 IP 访问
+  * 限制并发速度
+  * 控制超时时间
+  * Nginx 降权
+  * Nginx 防盗链
+  * 配置WAF(防火墙)
+
+
 * [配置参数说明](https://github.com/digitalocean/nginxconfig.io)与[✨在线编辑器](https://nginxconfig.io/)、[托管 ASP.NET Core](https://docs.microsoft.com/zh-cn/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-5.0#configure-nginx)
 ~~~nginx
 # 进程用户

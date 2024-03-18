@@ -78,19 +78,133 @@ certbot delete --cert-name example.com
 
 * 安全加固
   * 禁止服务信息泄露(禁止目录浏览,隐藏版本信息)
+~~~nginx
+autoindex off;           # 禁止目录浏览
+server_tokens off;       # 隐藏版本信息
+~~~
   * 开启 SSL/TLS 加密
+~~~nginx
+listen               443 ssl;
+ssl_certificate      /path/cert.pem;
+ssl_certificate_key  /path/key.pem;
+~~~
   * 防止 DDOS 攻击
+~~~nginx
+limit_conn_zone $binary_remote_addr zone=addr:10m;
+limit_conn addr 100;
+~~~
   * 设置缓冲区，防止缓冲区溢出攻击
+~~~nginx
+# 在server模块中要限制的location中添加以下参数
+client_body_buffer_size  1K;
+client_header_buffer_size 1k;
+client_max_body_size 1k;
+large_client_header_buffers 2 1k;
+~~~
   * 日志配置、日志切割
+~~~nginx
+# 在http模块中添加如下参数
+log_format main
+'$remote_addr - $remote_user [$time_local] "$request" ' 
+'$status $body_bytes_sent "$http_referer" ' 
+'"$http_user_agent" "$http_x_forwarded_for"'
+access_log logs/host.access.log main;
+
+#日志切割脚本如下
+#!/bin/bash
+# 设置日志文件存放目录
+logspath="/usr/local/nginx/logs/"
+# 设置pid文件
+pidpath="/usr/local/nginx/nginx.pid"
+# 重命名日志文件
+mv ${logspath}access.log ${logspath}access$(date -d "yesterday" +"%Y%m%d").log
+# 向nginx主进程发信号重新打开日志
+kill -USR1 `cat ${pidpath}`
+~~~
   * 错误页面重定向
+~~~nginx
+# 新建错误页面,放到静态目录中;在http模块中添加如下参数
+fastcgi_intercept_errors on;
+errorpage 401 /401.html;
+errorpage 402 /402.html;
+errorpage 403 /403.html;
+errorpage 404 /404.html;
+errorpage 405 /405.html;
+errorpage 500 /500.html
+~~~
   * 防止 SQL 注入攻击
+~~~nginx
+# 我们应该对输入进行过滤和验证，并使用参数化查询等安全措施。
+~~~
   * 限制 HTTP 请求方法
+~~~nginx
+if ($request_method !~ ^(GET|HEAD|POST)$) {
+  return 444;
+}
+~~~
   * 限制 IP 访问
+~~~nginx
+location / {
+  deny 192.168.1.1;     # 拒绝IP
+  allow 192.168.1.0/24; # 允许IP
+  allow 10.1.1.0/16;    # 允许IP
+  deny all;             # 拒绝其它所有IP
+}
+~~~
   * 限制并发速度
+~~~nginx
+# 限制用户连接数及速度来预防DOS攻击
+limit_zone one $binary_remote_addr 10m;
+server
+{
+     listen   80;
+     server_name www.test.com;
+     index index.htm index.html index.php;
+     root  /usr/local/www;
+     #Zone limit;
+     location / {
+         limit_conn one 1;
+         limit_rate 20k;
+     }
+    … … …
+}
+~~~
   * 控制超时时间
+~~~nginx
+# 在http模块下，配置如下配置，具体时间根据业务需要进行调整;
+client_body_timeout 10;  # 客户端请求主体读取超时时间
+client_header_timeout 10;  # 客户端请求头读取超时时间
+keepalive_timeout 5 5;  # 第一个参数指客户端连接保持活动的超时时间，第二个参数是可选的，指消息头保持活动的有效时间
+send_timeout10;  # 响应客户端的超时时间
+~~~
   * Nginx 降权
+~~~nginx
+user nobody;
+~~~
   * Nginx 防盗链
+~~~nginx
+location ~* ^.+\.(gif|jpg|png|swf|flv|rar|zip)$ {
+    valid_referers none blocked server_names *.nsfocus.com http://localhost baidu.com;
+    if ($invalid_referer) {
+        rewrite ^/ [img]http://www.XXX.com/images/default/logo.gif[/img];
+        # return 403;
+    }
+}
+~~~
   * 配置WAF(防火墙)
+~~~nginx
+# 下载waf模块: wget https://github.com/loveshell/ngx_lua_waf/archive/master.zip
+# 配置waf相关Lua、目录、脚本等(nginx需加载nginx_lua_module模块)
+# 编辑配置文件，在http模块中添加如下参数:
+lua_package_path "/usr/local/nginx/conf/waf/?.lua";
+lua_shared_dict limit 10m;
+init_by_lua_file /usr/local/nginx/conf/waf/init.lua;
+access_by_lua_file /usr/local/nginx/conf/waf/waf.lua;
+# 新建攻击日志目录;然后重启nignx服务.
+mkdir -p /data/logs/hack/
+chown -R nobody:nobody /data/logs/hack/
+chmod -R 755 /data/logs/hack/
+~~~
 
 
 * [配置参数说明](https://github.com/digitalocean/nginxconfig.io)与[✨在线编辑器](https://nginxconfig.io/)、[托管 ASP.NET Core](https://docs.microsoft.com/zh-cn/aspnet/core/host-and-deploy/linux-nginx?view=aspnetcore-5.0#configure-nginx)

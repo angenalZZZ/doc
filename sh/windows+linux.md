@@ -481,6 +481,32 @@ mysql_tzinfo_to_sql /usr/share/zoneinfo | mysql -u root -p mysql
 mysql> select count(*) from mysql.time_zone;
 
 
+# 安装数据库 SQL Server 2017 参考 https://docs.microsoft.com/zh-cn/sql/linux/sql-server-linux-setup
+# 安装依赖
+yum install -y python3
+yum install -y cyrus-sasl cyrus-sasl-gssapi libatomic libsss_nss_idmap
+# 下载 Microsoft SQL Server Red Hat 存储库配置文件
+curl -o /etc/yum.repos.d/mssql-server.repo https://packages.microsoft.com/config/rhel/7/mssql-server-2017.repo
+# 离线安装
+mkdir /tmp/mssql
+yum install -y --downloadonly --downloaddir=/tmp/mssql mssql-server
+scp mssql-server-*.rpm 10.0.0.2:/tmp/mssql/
+sudo yum localinstall -y mssql-server-*.rpm
+# 在线安装
+sudo yum install -y mssql-server
+# 配置
+sudo /opt/mssql/bin/mssql-conf setup
+#*Key*
+Standard: PHDV4-3VJWD-N7JVP-FGPKY-XBV89
+Enterprise: TDKQD-PKV44-PJT4N-TCJG2-3YJ6B
+Enterprise Core: 6GPYM-VHN83-PHDM2-Q9T2R-KBV83
+# 验证
+systemctl status mssql-server  #or: ps -ef | grep mssql
+# 远程连接(设置防火墙)
+firewall-cmd --zone=public --add-port=1433/tcp --permanent
+firewall-cmd --reload
+
+
 # 安装数据库 MongoDB 参考 https://www.mongodb.org.cn  https://mongodb.net.cn/manual/tutorial/install-mongodb-on-red-hat/
 # 先创建mongodb-org安装源; MongoDB不支持Linux的Windows子系统（WSL）
 cat <<EOF > /etc/yum.repos.d/mongodb-org-4.2.repo

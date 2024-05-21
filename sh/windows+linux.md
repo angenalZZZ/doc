@@ -103,8 +103,30 @@ mstsc
 REM 服务器管理
 runas /user:administrator ServerManager.exe
 
-REM IIS管理
-runas /user:administrator "C:\WINDOWS\system32\inetsrv\InetMgr.exe"
+REM 计算机管理
+runas /user:administrator "mmc "%windir%\system32\compmgmt.msc /s"
+
+REM IIS管理器
+runas /user:administrator "%windir%\system32\inetsrv\InetMgr.exe"
+
+REM 本地安全策略(包括账户策略)
+runas /user:administrator "mmc %windir%\system32\secpol.msc /s"
+
+REM 本地组策略
+runas /user:administrator "mmc %windir%\system32\gpedit.msc"
+
+REM 注册表编辑器
+runas /user:administrator "%windir%\regedit.exe"
+
+REM 任务计划程序
+runas /user:administrator "mmc %windir%\system32\taskschd.msc /s"
+
+REM 事件查看器
+runas /user:administrator "mmc %windir%\system32\eventvwr.msc /s"
+
+REM 服务
+runas /user:administrator "mmc %windir%\system32\services.msc"
+
 
 REM 将Windows防火墙服务配置为自动启动
 sc config mpssvc start=auto

@@ -115,6 +115,10 @@ runas /user:administrator "mmc %windir%\system32\secpol.msc /s"
 REM 本地组策略
 runas /user:administrator "mmc %windir%\system32\gpedit.msc"
 
+REM	本地计算机策略\计算机配置\Windows设置\安全设置\账户策略\密码策略
+REM	密码必须符合复杂性要求：已启用（默认为禁用所有规则）
+REM	密码最长使用期限：42 天（默认）建议修改账户密码过期时间
+
 REM 注册表编辑器
 runas /user:administrator "%windir%\regedit.exe"
 

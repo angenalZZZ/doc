@@ -37,8 +37,8 @@ D:\Program\nanomsg\bin
 D:\Program\NSIS\bin
 D:\Program\nodejs
 D:\Program\nodejs\node_global
-D:\python37
-D:\python37\Scripts
+D:\Program\Python\Python39\Scripts
+D:\Program\Python\Python39
 D:\Program\msys64\mingw64\bin
 D:\Program\MongoDB\mongosh
 D:\Program\R\R-3.6.1\bin

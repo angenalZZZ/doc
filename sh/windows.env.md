@@ -10,13 +10,22 @@
 ```
 
 - 系统变量/Path
+    当出现超过长度限制时，可通过注册表进行修改。 
+    Environment-Path.reg
+```regedit
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment]
+"Path"="C:\\Windows;C:\\Windows\\system32;C:\\Windows\\System32\\wbem;C:\\Windows\\System32\\OpenSSH;C:\\Windows\\System32\\WindowsPowerShell\\v1.0;C:\\Program Files\\Common Files\\Oracle\\Java\\javapath;C:\\Program Files\\dotnet;......"
+```
 ```
 C:\Windows
 C:\Windows\system32
 C:\Windows\System32\wbem
-C:\Windows\System32\OpenSSH\
-C:\Windows\System32\WindowsPowerShell\v1.0\
+C:\Windows\System32\OpenSSH
+C:\Windows\System32\WindowsPowerShell\v1.0
 C:\Program Files\Common Files\Oracle\Java\javapath
+C:\Program Files\dotnet
 D:\Program\CMake\bin
 D:\Program\D-Bus\bin
 D:\Program\Go\bin
@@ -28,10 +37,10 @@ D:\Program\nanomsg\bin
 D:\Program\NSIS\bin
 D:\Program\nodejs
 D:\Program\nodejs\node_global
-D:\Program\Python\Python39-32\
-D:\Program\Python\Python39-32\Scripts\
+D:\Program\Python\Python3.7.9
+D:\Program\Python\Python3.7.9\Scripts
 D:\Program\msys64\mingw64\bin
-D:\Program\MongoDB\mongosh\
+D:\Program\MongoDB\mongosh
 D:\Program\R\R-3.6.1\bin
 D:\Program\Redis
 D:\Program\v\.bin
@@ -52,25 +61,24 @@ A:\rust\.cargo\bin
 C:\tools\lxrunoffline
 C:\Program Files\Git\cmd
 C:\ProgramData\chocolatey\bin
-D:\Tool\Decompile\Dotfuscator\
 D:\Tool\SysinternalsSuite\platform-tools
 D:\Tool\SysinternalsSuite
+D:\Tool\Decompile\Dotfuscator
 C:\Windows\System32\OraHomeX64
 C:\Windows\System32\OraHomeX64\bin
 C:\Program Files\Microsoft VS Code\bin
 C:\Program Files\Microsoft\Web Platform Installer
-C:\Program Files\Microsoft SQL Server\130\Tools\Binn\
-C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\
-C:\Program Files\Microsoft SQL Server\150\Tools\Binn\
-C:\Program Files\Microsoft SQL Server\150\DTS\Binn\
-C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn\
-C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn\
+C:\Program Files\Microsoft SQL Server\130\Tools\Binn
+C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn
+C:\Program Files\Microsoft SQL Server\150\Tools\Binn
+C:\Program Files\Microsoft SQL Server\150\DTS\Binn
+C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn
+C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn
 C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.6\bin
 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.6\libnvvp
-C:\Program Files\NVIDIA Corporation\Nsight Compute 2022.1.0\
+C:\Program Files\NVIDIA Corporation\Nsight Compute 2022.1.0
 C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR
-C:\Program Files\dotnet\
 ```
 
 - 系统变量

@@ -43,6 +43,7 @@ D:\Program\msys64\mingw64\bin
 D:\Program\MongoDB\mongosh
 D:\Program\R\R-3.6.1\bin
 D:\Program\Redis
+D:\Program\vcpkg
 D:\Program\v\.bin
 D:\Program\zstd
 D:\Program\rocksdb

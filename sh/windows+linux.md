@@ -151,6 +151,11 @@ netsh advfirewall firewall set rule name='规则名称' new enable=no
 REM 启用防火墙规则
 netsh advfirewall firewall set rule name='规则名称' new enable=yes
 
+REM 建立路由规则，禁用指定范围的端口访问
+net stop winnat
+netsh int ipv4 add excludedportrange protocol=tcp startport=49450 numberofports=100
+net start winnat
+
 REM 局域网内推送消息
 MSG /server:192.168.1.2 * "嗨！您好！"
 

@@ -195,7 +195,11 @@ yarn add headless-chrome-crawler # 分布式抓取引擎(推荐) https://github.
  > [Electron](https://www.cnblogs.com/cczw/archive/2016/10/21/5984012.html)<br>
  > [Pake](https://github.com/tw93/Pake) `Rust`打包网页生成很小的桌面App [`在线编译多系统版本`](https://github.com/tw93/Pake/wiki/GitHub-Actions-在线编译多系统版本)
 ~~~
-# 安装命令行工具
+# Build cross-platform desktop apps with JavaScript, HTML, CSS
+# https://www.electronjs.org/zh
+npm install electron@v29.4.2
+
+# 打包网页生成很小的桌面App
 npm install -g pake-cli
 # pake url [OPTIONS]...
 pake https://weekly.tw93.fun --name Weekly --transparent

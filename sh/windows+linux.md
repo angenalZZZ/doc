@@ -1087,7 +1087,9 @@ $ ./bootstrap.sh && ./configure --without-go --without-java --without-nodejs --w
 $ make && make install
 #2、NATS高性能通讯、消息中间件: docs.nats.io 远程过程调用（RPC）通讯框架
 > nssm install nats-server %GOPATH%\bin\nats\nats-server.exe --auth=HGJ766GR767FKJU0  #安装Windows服务
-> sc create nats-server binPath= "%GOPATH%\bin\nats\nats-server.exe -a=0.0.0.0 -p=4222 --auth=HGJ766GR767FKJU0"
+> sc create nats-server binPath= "%GOPATH%\bin\nats\nats-server.exe -a=0.0.0.0 -p=4222 --auth=HGJ766GR767FKJU0" DisplayName= "Nats Server Instance"
+> sc description *-* "服务详细描述"
+> sc config *-* start= auto # 开机启动
 > sc start nats-server  # 启动服务
 > nats-server.exe --signal reload|reopen|stop # reload加载配置|reopen重新打开日志文件以进行日志轮换|stop停止服务器
 > nats-top [-s server] [-m monitor] [-n num_conns=1024] [-d delay_secs=1] [-sort by=subs|msgs_to|bytes_to|msgs_from|bytes_from]
@@ -1457,7 +1459,7 @@ export LD_LIBRARY_PATH=$HOME/ffmpeg/lib
 #### 系统服务
 
 > Windows 后台服务管理工具
-  - `sc create <服务名> start= auto binPath= "可执行命令行"`
+  - `sc create <服务名> start= auto binPath= "可执行命令行" DisplayName= "服务显示名称"`
   - `nssm`>[`download`](https://nssm.cc/download)>[`commands`](https://nssm.cc/commands)
 ~~~cmd
 :: installation

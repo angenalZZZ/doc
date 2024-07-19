@@ -72,7 +72,7 @@ netsh wlan show profiles          # 1.获取WiFi信号
 netsh wlan show profile name="*"  # 2.查看WiFi密码
 ~~~
 
-> Windows 常见CMD命令行
+> Windows 常见CMD命令行 [安装Windows终端](https://learn.microsoft.com/zh-cn/windows/terminal/install)
 ~~~cmd
 HELP chcp           # 控制输出 https://baike.baidu.com/item/CHCP/9061635 字符集编码 https://baike.baidu.com/item/代码页/11025504
 NET HELP user       # 用户账号 命令说明

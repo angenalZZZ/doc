@@ -135,6 +135,28 @@ C:\Windows\system32> inetsrv\appcmd unlock config -section:system.webServer/hand
 <!DOCTYPE HTML><html><head><meta http-equiv="Refresh" content="0; URL=/web" /><script>window.location='/web'</script></head><body></body></html>
 ~~~
 
+> `URL重写`[`Vue-Router:history:HTML5模式`](https://router.vuejs.org/zh/guide/essentials/history-mode.html)
+~~~xml
+  <system.webServer>
+    <rewrite>
+      <rules>
+        <rule name="Handle History Mode and custom 404/500" stopProcessing="true">
+          <match url="(.*)" />
+          <conditions logicalGrouping="MatchAll">
+            <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+            <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+          </conditions>
+          <action type="Rewrite" url="/" />
+        </rule>
+        <!-- <rule name="Fallback to index.html" stopProcessing="true">
+          <match url="^([^\./]+)$" />
+          <action type="Rewrite" url="/index.html" />
+        </rule> -->
+      </rules>
+    </rewrite>
+  </system.webServer>
+~~~
+
 > `反向代理` [`1.Install IIS Application Request Routing`](https://www.iis.net/downloads/microsoft/application-request-routing) [`2.Enable proxy`](https://techcommunity.microsoft.com/t5/iis-support-blog/application-request-routing-part-2-reverse-proxy-and/ba-p/347937) `3.修改Web.config`
 ~~~xml
 <?xml version="1.0" encoding="UTF-8"?>

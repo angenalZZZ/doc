@@ -37,10 +37,14 @@
   $ cat /proc/cpuinfo & cat /proc/meminfo      # 查看CPU&MEM信息
   $ cat /proc/mounts & cat /proc/filesystems   # 查看/mnt/&fs信息
 
-  # Linux TCP通信的⒊次握手：⒈客户端→SYN→服务端 > ⒉服务端→SYN+ACK→客户端 > ⒊客户端→ACK→服务端
+  # Linux TCP通信的三次握手：⒈客户端→SYN→服务端 > ⒉服务端→SYN+ACK→客户端 > ⒊客户端→ACK→服务端
   $ cat /proc/sys/net/ipv4/tcp_retries1        # 超时重传控制参数1 〓 3  （RTO〓计算⒊次握手的前⒉次值）
   $ cat /proc/sys/net/ipv4/tcp_retries2        # 超时重传控制参数2 〓 15 （超时重传次数〓tcp_retries2和RTO计算的动态值）
-  # Windows TCP通信 # 超时重传控制参数 〓 5 > 注册表 > HKLM\System\CurrentControlSet\Services\Tcpip\Parameters/TcpMaxDataRetransmissions
+  $ cat /proc/sys/net/ipv4/tcp_syn_retries     # ⒈客户端→SYN→服务端     超时重传参数 〓 6
+  $ cat /proc/sys/net/ipv4/tcp_synack_retries  # ⒉服务端→SYN+ACK→客户端 超时重传参数 〓 5
+  # Windows TCP通信控制参数见注册表
+  # 计算机\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters
+  # HKLM\System\CurrentControlSet\Services\Tcpip6\Parameters
 
   # 1.Linux文件描述符限制，每个 TCP 连接都是一个文件，如果文件描述符被占满了，会发生 Too many open files。
   #  对可打开的文件描述符的数量分别作了三个方面的限制：

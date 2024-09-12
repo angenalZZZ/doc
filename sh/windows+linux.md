@@ -145,7 +145,9 @@ REM 拒绝输出到特定IP地址 block IP in your firewall
 netsh advfirewall firewall add rule name="*App* Block *IP*" dir=out action=block remoteip=*IP*
 
 REM 建立防火墙规则，禁止应用程序连网
-netsh advfirewall firewall add rule name="规则名称" dir=out program="禁止程序的路径" action=block
+netsh advfirewall firewall add rule name="规则名称" dir=out action=block program="禁止程序的路径"
+netsh.exe AdvFirewall Firewall Add Rule Name="Ingoing Traffic Block"  Dir="In"  Action="Block" Program="%EXE%" #REM SET EXE="..."
+netsh.exe AdvFirewall Firewall Add Rule Name="Outgoing Traffic Block" Dir="Out" Action="Block" Program="%EXE%" #REM SET EXE="..."
 REM 禁用防火墙规则
 netsh advfirewall firewall set rule name='规则名称' new enable=no
 REM 启用防火墙规则

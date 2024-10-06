@@ -1,4 +1,4 @@
-##进行软链结: ln -s /mnt/a/git/doc/sh/01-locale-profile.sh /etc/profile.d/01-locale-profile.sh
+##进行软链结: ln -s /mnt/a/git/github.com/angenalZZZ/doc/sh/01-locale-profile.sh /etc/profile.d/01-locale-profile.sh
 
 ##系统环境设置
 

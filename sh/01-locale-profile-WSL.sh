@@ -12,13 +12,13 @@ export TZ='Asia/Shanghai'
 ##本地开发环境
 
 # go
-export GO111MODULE=auto
+# export GO111MODULE=auto
 # export GOSUMDB=sum.golang.google.cn
-export GOPROXY=https://goproxy.io
-export GOPATH=$HOME/go
-export GOROOT=/usr/local/go
-export GOTOOLS=$GOROOT/pkg/tool
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+# export GOPROXY=https://goproxy.io
+# export GOPATH=$HOME/go
+# export GOROOT=/usr/local/go
+# export GOTOOLS=$GOROOT/pkg/tool
+# export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 # java
 # export JAVA_HOME=/usr/local/java/jdk1.8.0_221

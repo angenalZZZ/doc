@@ -8,12 +8,8 @@ export TZ='Asia/Shanghai'
 ##开发环境设置
 
 # go
-export GO111MODULE=auto
-export GOSUMDB=sum.golang.google.cn
-export GOPROXY=https://goproxy.io
-export GOPATH=$HOME/go
-export GOROOT=/usr/local/go
-export GOTOOLS=$GOROOT/pkg/tool
+# ln -s /mnt/a/git/github.com/angenalZZZ/doc/sh/01-config-go.env $HOME/.config/go/env
+export GOENV=$HOME/.config/go/env
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 # java

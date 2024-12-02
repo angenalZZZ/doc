@@ -259,6 +259,20 @@ C:\Windows\system32> inetsrv\appcmd unlock config -section:system.webServer/hand
 </configuration>
 ~~~
 
+> `优化客户端响应时间` [`Expires`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expires)..[`ETag`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/ETag) [`Replicant`](https://github.com/SimonCropp/Replicant)
+~~~xml
+<configuration>
+  <system.webServer>
+    <httpProtocol>
+      <customHeaders>
+        <!--预检请求凭据有效期(秒)42天＝42×86400(天)防止过量的OPTIONS预检请求;-Expose-Headers让前端js可访问-->
+        <add name="Access-Control-Max-Age" value="86400" />
+      </customHeaders>
+    </httpProtocol>
+  </system.webServer>
+</configuration>
+~~~
+
 > `程序集需要完全信任时`
 ~~~xml
 <configuration>

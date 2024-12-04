@@ -5,8 +5,14 @@
 ```
 # $HOME = %USERPROFILE% = C:\Users\Administrator
 %USERPROFILE%\AppData\Local\Microsoft\WindowsApps
+%ORA_HOME%\bin
 %USERPROFILE%\scoop\shims
 %USERPROFILE%\.dotnet\tools
+
+# 用户变量*
+ORA_HOME      %USERPROFILE%\OraHomeX64
+TNS_ADMIN     %USERPROFILE%\OraHomeX64\network\admin  #// Oracle客户端连接别名
+NLS_LANG      AMERICAN_AMERICA.US7ASCII               #// Oracle客户端字符编码
 ```
 
 - 系统变量/Path
@@ -24,50 +30,53 @@ C:\Windows\system32
 C:\Windows\System32\wbem
 C:\Windows\System32\OpenSSH
 C:\Windows\System32\WindowsPowerShell\v1.0
-C:\Program Files\Common Files\Oracle\Java\javapath
-C:\Program Files\dotnet
-D:\Program\CMake\bin
+%android%
+%ANT_HOME%\bin
+%CODE_PATH%\bin
+%CMAKE_PATH%\bin
+%CHOCO_PATH%
+%DOTNET_PATH%
+%DENO_DIR%\bin
+%ERLANG_HOME%\bin
+%GIT_DEV%
+%GOROOT%\bin
+%GOPATH%\bin
+%JAVA_DEV%
+%LUA_DEV%
+%LUA_DEV%\clibs
+%NODE_HOME%
+%NODE_HOME%\node_global
+%MINGW_PATH%\bin
+%PERL_DEV%\c\bin
+%PERL_DEV%\perl\bin
+%PERL_DEV%\perl\site\bin
+%PYTHON_DEV%
+%PYTHON_DEV%\Scripts
+%R_DEV%\bin
+%RUST%\bin
+%CARGO_HOME%\bin
+%MAVEN_HOME%\bin
+%CUDA_PATH%\lib\x64
+%CUDA_PATH%\libnvvp
+%CUDA_PATH%\bin
+%SWIG_DEV%
+%PHYSX_LIB%
+%NSIGHT_PATH%
+%NVDLISR_PATH%
+C:\tools\lxrunoffline
+D:\Tool\SysinternalsSuite
+D:\Tool\SysinternalsSuite\platform-tools
 D:\Program\D-Bus\bin
-D:\Program\Go\bin
-D:\Program\erl10.5\bin
-D:\Program\Lua\5.1
-D:\Program\Lua\5.1\clibs
 D:\Program\nng\bin
 D:\Program\nanomsg\bin
 D:\Program\NSIS\bin
-D:\Program\nodejs
-D:\Program\nodejs\node_global
-D:\Program\Python\Python39\Scripts
-D:\Program\Python\Python39
-D:\Program\msys64\mingw64\bin
 D:\Program\MongoDB\mongosh
-D:\Program\R\R-3.6.1\bin
 D:\Program\Redis
 D:\Program\vcpkg
 D:\Program\v\.bin
 D:\Program\zstd
 D:\Program\rocksdb
 D:\Program\JMeter\bin
-D:\Program\swigwin-3.0.12
-D:\Program\apache-maven-3.8.1\bin
-D:\Program\Strawberry\c\bin
-D:\Program\Strawberry\perl\bin
-D:\Program\Strawberry\perl\site\bin
-D:\Program\Android\apache-ant-1.10.5\bin
-D:\Program\Android\sdk\platform-tools
-A:\deno\bin
-A:\go\bin
-A:\rust\bin
-A:\rust\.cargo\bin
-C:\tools\lxrunoffline
-C:\Program Files\Git\cmd
-C:\ProgramData\chocolatey\bin
-D:\Tool\SysinternalsSuite\platform-tools
-D:\Tool\SysinternalsSuite
-D:\Tool\Decompile\Dotfuscator
-C:\Windows\System32\OraHomeX64
-C:\Windows\System32\OraHomeX64\bin
-C:\Program Files\Microsoft VS Code\bin
 C:\Program Files\Microsoft\Web Platform Installer
 C:\Program Files\Microsoft SQL Server\130\Tools\Binn
 C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn
@@ -75,11 +84,7 @@ C:\Program Files\Microsoft SQL Server\150\Tools\Binn
 C:\Program Files\Microsoft SQL Server\150\DTS\Binn
 C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn
 C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn
-C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common
-C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.6\bin
-C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.6\libnvvp
-C:\Program Files\NVIDIA Corporation\Nsight Compute 2022.1.0
-C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR
+
 ```
 
 - 系统变量
@@ -87,17 +92,28 @@ C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR
 android       D:\Program\Android\sdk\platform-tools
 ANT_HOME      D:\Program\Android\apache-ant-1.10.5
 
-CARGO_HOME    A:\rust\.cargo   # 在运行Rust安装`rustup-init`之前设置CARGO_HOME
+RUST          A:\rust
 RUSTUP_HOME   A:\rust\.rustup  # 同上,设置RUSTUP_HOME
+CARGO_HOME    A:\rust\.cargo   # 在运行Rust安装`rustup-init`之前设置CARGO_HOME
 
 ChocolateyInstall C:\ProgramData\chocolatey
 ChocolateyToolsLocation C:\tools
 
-CATALINA_HOME D:\Program\apache-tomcat-8.5.65
+CATALINA_HOME   D:\Program\apache-tomcat-8.5.65
 
-CUDA_PATH			C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.6
-CUDA_PATH_V11_6 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.6
+CODE_PATH       C:\Program Files\Microsoft VS Code
+CMAKE_PATH      D:\Program\CMake
+
+CHOCO_PATH      C:\ProgramData\chocolatey
+
+DOTNET_PATH     C:\Program Files\dotnet
+
+CUDA_PATH			  C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8
+CUDA_PATH_V11_8 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8
 NVTOOLSEXT_PATH C:\Program Files\NVIDIA Corporation\NvToolsExt\
+NSIGHT_PATH     C:\Program Files\NVIDIA Corporation\Nsight Compute 2022.1.0
+NVDLISR_PATH    C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR
+PHYSX_LIB       C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common
 
 DENO_DIR          A:\deno
 DENO_INSTALL_ROOT A:\deno\bin
@@ -109,21 +125,24 @@ DOTNET_REACTOR D:\Tool\Decompile\Reactor\
 
 ERLANG_HOME   D:\Program\erl10.5
 
+GIT_DEV       C:\Program Files\Git\cmd
+
 GO111MODULE   auto
 GOCACHE       D:\Users\Administrator\AppData\Local\go-build
 GOENV         A:\go\env
 GOPATH        A:\go
 GOPROXY       https://goproxy.io,direct
 GOROOT        D:\Program\Go
-GOTOOLS       %GOROOT%/pkg/tool
+GOTOOLS       D:\Program\Go\pkg\tool
 
 IPFS_PATH     A:\database\ipfs\.ipfs
 
 CLASSPATH     .;%JAVA_HOME%\lib\dt.jar:%JAVA_HOME%\lib\tools.jar;%CATALINA_HOME%\lib\servlet-api.jar;
 Include       .;%JAVA_HOME%\lib;
 JAVA_BIN      %JAVA_HOME%\bin
-JAVA_HOME     C:\Program Files\Java\jdk-11.0.16.1         #// Java系统开发环境
-JAVA_OPTS     -Xms512m -Xmx1024m -XX:PermSize=256M -Dfile.encoding=utf-8  #// _JAVA_OPTIONS -Xms512m -Xmx512m
+JAVA_DEV      C:\Program Files\Common Files\Oracle\Java\javapath
+JAVA_HOME     C:\Program Files\Java\jdk-11.0.16.1                         #// Java系统开发环境
+JAVA_OPTS     -Xms512m -Xmx1024m -XX:PermSize=256M -Dfile.encoding=utf-8  #//_JAVA_OPTIONS -Xms512m -Xmx512m
 JRE_HOME      %JAVA_HOME%\jre
 
 M2_HOME       D:\Program\apache-maven-3.8.1
@@ -138,14 +157,21 @@ LUA_PATH      ;;D:\Program\Lua\5.1\lua\?.luac
 
 NN_STATIC_LIB   D:\Program\nanomsg\lib
 
+NODE_HOME       D:\Program\nodejs
 NODE_PATH       D:\Program\nodejs\node_global\node_modules #// nodejs系统开发环境
 
+MINGW_PATH      D:\Program\msys64\mingw64
 PKG_CONFIG_PATH D:\Program\msys64\mingw64\lib\pkgconfig    #// mingw系统linux开发环境
 
-VBOX_MSI_INSTALL_PATH D:\Program Files\Oracle\VirtualBox\
+PERL_DEV      D:\Program\Strawberry
 
-TNS_ADMIN     C:\Windows\System32\OraHomeX64\network\admin #// Oracle客户端连接别名
-NLS_LANG      AMERICAN_AMERICA.US7ASCII                    #// Oracle客户端字符编码
+PYTHON_DEV    D:\Program\Python\Python39
+
+R_DEV         D:\Program\R\R-3.6.1
+
+SWIG_DEV      D:\Program\swigwin-3.0.12
+
+VBOX_MSI_INSTALL_PATH D:\Program Files\Oracle\VirtualBox\
 
 SOLR_INSTALL  D:\Program\solr
 

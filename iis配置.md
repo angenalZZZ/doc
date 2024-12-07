@@ -202,7 +202,7 @@ C:\Windows\system32> inetsrv\appcmd unlock config -section:system.webServer/hand
 ~~~
 
 
-> `无法验证强名称签名` [`1.引用dll错误 ASP.Net Projects must disable shadow copy`](https://blog.csdn.net/aoshilang2249/article/details/78111409) `2.修改Web.config`
+> `无法验证强名称签名`<br>[`1、引用dll报错：针对asp.net项目的web.config需要配置“关闭卷影复制”。卷影复制关闭后会影响iis热更新；不支持热更新，发布asp.net到iis，必须先暂停网站，再回收应用程序池，最后把程序覆盖上去，否则会导致程序更新失败。不关闭卷影复制则不影响。`](https://blog.csdn.net/aoshilang2249/article/details/78111409)
 ~~~xml
 <configuration>
   <system.web>

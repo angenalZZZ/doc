@@ -220,8 +220,13 @@ MIIDuzCCAqOgAwIBAgIDBETAM..# 中间证书(证书链)
 ~~~
 
  - [Let’s Encrypt 免费证书/GUI manage free automated https certificates](https://certifytheweb.com/)
- - [Let’s Encrypt 免费证书/lego](https://go-acme.github.io/lego/usage/cli/examples/)
+ - [Let’s Encrypt 免费证书/lego](https://go-acme.github.io/lego/usage/cli/examples/)、[安装说明](https://github.com/acmesh-official/acme.sh/wiki/说明)
 ~~~bash
+# git clone https://gitee.com/neilpang/acme.sh.git \ cd acme.sh \ ./acme.sh --install -m my@example.com #仅安装
+# curl https://get.acme.sh | sh -s email=my@example.com \ cd acme.sh \                                  #仅安装
+# acme.sh --issue -d mydomain.com -d www.mydomain.com --webroot /home/wwwroot/mydomain.com/             #生成证书/直接签发
+# acme.sh --issue --nginx -d example.com -d www.example.com -d cp.example.com                           #生成证书/用Nginx模式
+# acme.sh --issue --apache -d example.com -d www.example.com -d cp.example.com                          #生成证书/用Apache模式
 $ lego --email="foo@bar.com" --domains="example.com" --http run   # 获取证书 ACME v2 版本支持申请通配符证书了
 $ AWS_REGION=us-east-1 AWS_ACCESS_KEY_ID=my_id AWS_SECRET_ACCESS_KEY=my_key \
 $ lego --email="foo@bar.com" --domains="example.com" --dns="route53" run # 获取证书时使用AWS/DNS

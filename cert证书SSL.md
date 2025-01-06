@@ -220,7 +220,7 @@ MIIDuzCCAqOgAwIBAgIDBETAM..# 中间证书(证书链)
 ~~~
 
  - [Let’s Encrypt 免费证书/GUI manage free automated https certificates](https://certifytheweb.com/)
- - [Let’s Encrypt 免费证书/lego](https://go-acme.github.io/lego/usage/cli/examples/)、[安装说明](https://github.com/acmesh-official/acme.sh/wiki/说明)
+ - [Let’s Encrypt 免费证书/lego](https://go-acme.github.io/lego/usage/cli/examples/)、[acme.sh安装说明](https://github.com/acmesh-official/acme.sh/wiki/说明)
 ~~~bash
 # git clone https://gitee.com/neilpang/acme.sh.git \ cd acme.sh \ ./acme.sh --install -m my@example.com #仅安装
 # curl https://get.acme.sh | sh -s email=my@example.com \ cd acme.sh \                                  #仅安装

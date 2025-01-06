@@ -136,6 +136,8 @@ $ sysctl -p                               # 生效/etc/sysctl.conf 修改
 ~~~
 
 #### 构建镜像
+* [Dive](https://github.com/wagoodman/dive):分析 https://github.com/wagoodman/dive
+* [Slim](https://github.com/slimtoolkit/slim):压缩 https://github.com/slimtoolkit/slim
 
 > **Dockerfile** [文档](https://docs.docker.com/get-started) <br>
     docker build -t {USER_NAME} / {APP_NAME} : {VERSION-SYSTEM} .  # -t标记名称+版本 <br>

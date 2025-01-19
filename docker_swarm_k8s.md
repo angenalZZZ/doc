@@ -426,6 +426,8 @@ ENTRYPOINT ["dotnet", "App.Host.dll"] */
     $ rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-runtime-2.1
     $ dotnet /home/ConsoleApp2NewLife/ConsoleApp2NewLife.dll # 访问tcp://127.0.0.1:8000
 
+  # 开源数据库mongo
+  docker run --name mongo -d --rm -p 27017:27017 -v mongo/data:/data/db --network=workgroup --network-alias=mongo mongo:6.0.20
   # 开源数据库mysql
   docker run --name mysql --restart=always -itd -m 1024m -p 3306:3306 --network=workgroup --network-alias=mysql --env MYSQL_ROOT_PASSWORD=HGJ766GR767FKJU0 
     mysql:5.7 # mariadb、mongo、mysql/mysql-server、microsoft/mssql-server-linux, (--network-alias)其它容器连此容器

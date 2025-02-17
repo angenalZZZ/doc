@@ -252,6 +252,8 @@ wsl --set-default <linux>   # 设置<linux>为*默认*
 wsl -u root -d <linux>      # 以指定用户运行(默认为用户root)[先进入系统添加用户后再执行该命令]
 # 禁用 WSL 默认添加Windows环境变量
 vi /etc/wsl.conf >>END
+[boot]
+systemd = true
 [interop]
 enabled = false
 appendWindowsPath = false

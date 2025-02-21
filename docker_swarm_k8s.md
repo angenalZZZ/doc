@@ -109,15 +109,36 @@ $ sysctl -p                               # 生效/etc/sysctl.conf 修改
 > ~/.docker/daemon.json
 ~~~js
 {
+  "builder": {
+    "gc": {
+      "defaultKeepStorage": "20GB",
+      "enabled": true
+    }
+  },
+#  "debug": false,
+#  "experimental": true, // Enable实验性功能features:eg. DOCKER_BUILDKIT=1
+#  "features": {
+#    "buildkit": true // # syntax = docker/dockerfile:experimental
+#  },
+#  "registry-mirrors": [
+#    "https://{your-id}.mirror.aliyuncs.com" // Or: http://{your-id}.m.daocloud.io
+#  ],
+#  "insecure-registries": [],
   "registry-mirrors": [
-    "https://{your-id}.mirror.aliyuncs.com" // Or: http://{your-id}.m.daocloud.io
-  ],
-  "insecure-registries": [],
-  "debug": false,
-  "experimental": true, // Enable实验性功能features:eg. DOCKER_BUILDKIT=1
-  "features": {
-    "buildkit": true // # syntax = docker/dockerfile:experimental
-  }
+    "https://docker.m.daocloud.io",
+    "https://docker.unsee.tech",
+    "https://docker.chenby.cn",
+    "https://docker.1panel.live",
+    "https://proxy.1panel.live",
+    "http://mirrors.ustc.edu.cn",
+    "http://mirror.azure.cn",
+    "https://hub.rat.dev",
+    "https://dockerpull.org",
+    "https://dockerhub.icu",
+    "https://docker.1panel.top",
+    "https://docker.1ms.run",
+    "https://docker.ketches.cn"
+ ]
 }
 ~~~
 

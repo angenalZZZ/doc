@@ -9,7 +9,7 @@
 #### 安装、[配置](#配置)、[构建镜像](#构建镜像)、[容器命令](#容器命令)、[容器编排](#容器编排)、[Kubernetes](#kubernetes)
 > [docker](https://docs.docker.com/install)、[docker-hub](https://hub.docker.com/repositories)、[docker-desktop](https://hub.docker.com/?overlay=onboarding) Build构建>Compose编排>Swarm集群>>K8s稳定强大<br>
   `环境 & 版本` : [`Linux x64, Kernel^3.10 cgroups & namespaces`](https://docs.docker.com/install), [`docker-ce`社区版](https://hub.docker.com/?overlay=onboarding) + `docker-ee`企业版 <br>
-  `加速器`..   : [`阿里云`](https://cr.console.aliyun.com/#/accelerator)[..](https://4txtc8r4.mirror.aliyuncs.com)、[`DaoCloud道客`](https://dashboard.daocloud.io/packages/explore)[..](http://8fe1b42e.m.daocloud.io)、[`网易`](https://hub-mirror.c.163.com)、 [`自动mirror.py`](https://github.com/silenceshell/docker_mirror) <br>
+  `加速器`..   : [`阿里云`](https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors)[..](https://4txtc8r4.mirror.aliyuncs.com)、[`华为云`](https://console.huaweicloud.com/swr)[..](https://0d0a519fc900f42e0fd7c0196302ebc0.mirror.swr.myhuaweicloud.com)、[`DaoCloud道客`](https://dashboard.daocloud.io/packages/explore)[..](http://8fe1b42e.m.daocloud.io)、[`网易`](https://hub-mirror.c.163.com)、 [`自动mirror.py`](https://github.com/silenceshell/docker_mirror) <br>
 
 > `Dockerfile` : `docker build Image(tag=name+version)` > `push Registry` <br>
   `Registry & Disk` : `Repository` > `Image-Url` | `Image save .tar to-Disk`, `Container export .tar(snapshot)` <br>
@@ -125,7 +125,6 @@ $ sysctl -p                               # 生效/etc/sysctl.conf 修改
 #  ],
 #  "insecure-registries": [],
   "registry-mirrors": [
-    "https://4txtc8r4.mirror.aliyuncs.com",
     "https://docker.m.daocloud.io",
     "https://docker.1ms.run",
     "https://docker.xuanyuan.me"

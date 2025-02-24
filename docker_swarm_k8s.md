@@ -125,20 +125,11 @@ $ sysctl -p                               # 生效/etc/sysctl.conf 修改
 #  ],
 #  "insecure-registries": [],
   "registry-mirrors": [
+    "https://4txtc8r4.mirror.aliyuncs.com",
     "https://docker.m.daocloud.io",
-    "https://docker.unsee.tech",
-    "https://docker.chenby.cn",
-    "https://docker.1panel.live",
-    "https://proxy.1panel.live",
-    "http://mirrors.ustc.edu.cn",
-    "http://mirror.azure.cn",
-    "https://hub.rat.dev",
-    "https://dockerpull.org",
-    "https://dockerhub.icu",
-    "https://docker.1panel.top",
     "https://docker.1ms.run",
-    "https://docker.ketches.cn"
- ]
+    "https://docker.xuanyuan.me"
+  ]
 }
 ~~~
 

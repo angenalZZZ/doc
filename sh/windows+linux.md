@@ -208,7 +208,7 @@ Get-AppxPackage *store* | Remove-AppxPackage # 删除原来的 Microsoft Store
 Get-AppxPackage -AllUsers | Select Name, PackageFullName | Select-String "WindowsStore" # 查询并复制<包名>
 Add-AppxPackage -Register "C:\Program Files\WindowsApps\<包全名>\AppxManifest.xml" -DisableDevelopmentMode #安装
 ~~~
-> Windows 10 WSL (Chocolatey & LxRunOffline) [Update to WSL 2](https://docs.microsoft.com/en-au/windows/wsl/install-win10#step-2---update-to-wsl-2)
+> Windows 10 WSL [(Chocolatey & LxRunOffline)](https://geekdaxue.co/read/xiaoyulive@wsl/lm1f1s) [Update to WSL 2](https://docs.microsoft.com/en-au/windows/wsl/install-win10#step-2---update-to-wsl-2)
 ~~~bash
 # PowerShell 以管理员方式运行, 打开 WSL 程序和功能
 Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform

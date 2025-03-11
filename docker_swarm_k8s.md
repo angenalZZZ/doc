@@ -6,7 +6,7 @@
  * [`Docker+K8S学习笔记`](https://github.com/angenalZZZ/learn-docker-and-k8s)、[`GitLab+Docker+K8S集成系统`](https://github.com/angenalZZZ/gitlab-docker-k8s)
 
 
-#### 安装、[配置](#配置)、[构建镜像](#构建镜像)、[容器命令](#容器命令)、[容器编排](#容器编排)、[Kubernetes](#kubernetes)
+#### 安装、[配置](#配置)、[构建镜像](#构建镜像)、[容器命令](#容器命令)、[容器编排](#容器编排)、[Kubernetes](#kubernetes)、[CI/CD/持续集成发布/Jenkins/GitLab](#持续集成发布)
 > [docker](https://docs.docker.com/install)、[docker-hub](https://hub.docker.com/repositories)、[docker-desktop](https://hub.docker.com/?overlay=onboarding) Build构建>Compose编排>Swarm集群>>K8s稳定强大<br>
   `环境 & 版本` : [`Linux x64, Kernel^3.10 cgroups & namespaces`](https://docs.docker.com/install), [`docker-ce`社区版](https://hub.docker.com/?overlay=onboarding) + `docker-ee`企业版 <br>
   `加速器`..   : [`阿里云`](https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors)[..](https://4txtc8r4.mirror.aliyuncs.com)、[`华为云`](https://console.huaweicloud.com/swr)[..](https://0d0a519fc900f42e0fd7c0196302ebc0.mirror.swr.myhuaweicloud.com)、[`DaoCloud道客`](https://dashboard.daocloud.io/packages/explore)[..](http://8fe1b42e.m.daocloud.io)、[`网易`](https://hub-mirror.c.163.com)、 [`自动mirror.py`](https://github.com/silenceshell/docker_mirror) <br>
@@ -695,7 +695,15 @@ export PATH=$ORACLE_HOME/bin:$PATH
     -e trackers=192.168.1.172:1022 -e advertise_addr=192.168.1.187 -e port=1024  -e instance_id="01" 
     hehety/godfs storage  #2.start storage
   docker run -d --name godfs-dashboard -p 8080:9080 --restart always hehety/godfs-dashboard #3.godfs monitoring
-  
+
+  # 搭建 OpenVPN 服务器 安全通信-基于-EasyRSA PKI CA
+  git clone https://github.com/kylemanna/docker-openvpn
+  git clone https://github.com/hwdsl2/docker-ipsec-vpn-server
+~~~
+
+
+#### 持续集成发布
+~~~bash
   # 基于 Jenkins 快速搭建持续集成环境
   git clone https://github.com/AliyunContainerService/docker-jenkins 
   cd docker-jenkins/jenkins && docker build -t denverdino/jenkins .
@@ -728,11 +736,7 @@ port: 18480
   gitlab-ctl reconfigure && gitlab-ctl restart
   # open http://gitlab.local.cn:18480/
 
-  # 搭建 OpenVPN 服务器 安全通信-基于-EasyRSA PKI CA
-  git clone https://github.com/kylemanna/docker-openvpn
-  git clone https://github.com/hwdsl2/docker-ipsec-vpn-server
 ~~~
-
 
 #### 容器编排
 > **docker-compose.yml** [安装Compose](https://docs.docker.com/compose/install/) [文档v3](https://docs.docker.com/compose/overview) | [老版本v2](https://www.jianshu.com/p/2217cfed29d7) | [votingapp例子](https://github.com/angenal/labs/blob/master/beginner/chapters/votingapp.md)<br>

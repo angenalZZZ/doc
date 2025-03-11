@@ -704,6 +704,11 @@ export PATH=$ORACLE_HOME/bin:$PATH
   # 查看初始密码文件：d:\docker\app\jenkins_home\jenkins\secrets\initialAdminPassword
   # docker run --name jenkins -d -p 18080:8080 -v E:\Program\Docker\data\jenkins:/var/jenkins_home jenkinsci/blueocean
   # docker run --name jenkins -d -p 18080:8080 -v E:\Program\VMs\ShareFolder\docker\app\jenkins:/var/jenkins_home jenkinsci/blueocean
+  # 插件.换源. 在”插件管理”中，找到 “高级” 选项卡，将”升级站点”替换为"国内源"后重启jenkins：
+  # https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json
+  # 备份：docker run --name jenkins-backup --rm --volumes-from jenkins -v E:\Administrator\Downloads:/home centos \
+    tar cvf /home/jenkins.tar /var/jenkins_home
+  # 用centos镜像创建一个容器，用于存储jenkins数据：docker run -it --name jenkins-data --volumes-from jenkins centos
 
   # 搭建 OpenVPN 服务器 安全通信-基于-EasyRSA PKI CA
   git clone https://github.com/kylemanna/docker-openvpn

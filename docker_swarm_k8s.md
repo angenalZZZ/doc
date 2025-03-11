@@ -718,8 +718,8 @@ export PATH=$ORACLE_HOME/bin:$PATH
     --privileged=true twang2218/gitlab-ce-zh
   docker exec -it gitlab bash
   vim /etc/gitlab/gitlab.rb >>END
-external_url 'http://gitlab.xiaoyulive.top'
-gitlab_rails['gitlab_ssh_host'] = 'gitlab.xiaoyulive.top'
+external_url 'http://gitlab.local.cn'
+gitlab_rails['gitlab_ssh_host'] = 'gitlab.local.cn'
 gitlab_rails['gitlab_shell_ssh_port'] = 18422
   <<END
   vim /opt/gitlab/embedded/service/gitlab-rails/config/gitlab.yml >>END

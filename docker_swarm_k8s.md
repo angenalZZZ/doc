@@ -701,6 +701,9 @@ export PATH=$ORACLE_HOME/bin:$PATH
   cd docker-jenkins/jenkins && docker build -t denverdino/jenkins .
   docker run --name jenkins -d -p 8080:8080 -p 50000:50000 -v d:\docker\app\jenkins_home:/var/jenkins_home denverdino/jenkins
   # docker run --name jenkins -d -p 8080:8080 -p 50000:50000 -v d:\docker\app\jenkins_home:/var/jenkins_home jenkins
+  # 查看初始密码文件：d:\docker\app\jenkins_home\jenkins\secrets\initialAdminPassword
+  # docker run --name jenkins -d -p 18080:8080 -v E:\Program\Docker\data\jenkins:/var/jenkins_home jenkinsci/blueocean
+  # docker run --name jenkins -d -p 18080:8080 -v E:\Program\VMs\ShareFolder\docker\app\jenkins:/var/jenkins_home jenkinsci/blueocean
 
   # 搭建 OpenVPN 服务器 安全通信-基于-EasyRSA PKI CA
   git clone https://github.com/kylemanna/docker-openvpn

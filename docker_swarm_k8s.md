@@ -710,6 +710,24 @@ export PATH=$ORACLE_HOME/bin:$PATH
     tar cvf /home/jenkins.tar /var/jenkins_home
   # 用centos镜像创建一个容器，用于存储jenkins数据：docker run -it --name jenkins-data --volumes-from jenkins centos
 
+  # 基于 GitLab 快速搭建持续集成环境
+  docker run --name gitlab -d -p 18443:443 -p 18480:80 -p 18422:22 --restart always --hostname gitlab.local.cn \
+    -v E:\Program\Docker\data\gitlab\config:/etc/gitlab 
+    -v E:\Program\Docker\data\gitlab\logs:/var/log/gitlab 
+    -v E:\Program\Docker\data\gitlab\data:/var/opt/gitlab 
+    --privileged=true twang2218/gitlab-ce-zh
+  docker exec -it gitlab bash
+  vim /etc/gitlab/gitlab.rb >>END
+external_url 'http://gitlab.xiaoyulive.top'
+gitlab_rails['gitlab_ssh_host'] = 'gitlab.xiaoyulive.top'
+gitlab_rails['gitlab_shell_ssh_port'] = 18422
+  <<END
+  vim /opt/gitlab/embedded/service/gitlab-rails/config/gitlab.yml >>END
+port: 18480
+  <<END
+  gitlab-ctl reconfigure && gitlab-ctl restart
+  # open http://gitlab.local.cn:18480/
+
   # 搭建 OpenVPN 服务器 安全通信-基于-EasyRSA PKI CA
   git clone https://github.com/kylemanna/docker-openvpn
   git clone https://github.com/hwdsl2/docker-ipsec-vpn-server

@@ -48,6 +48,14 @@ REG add "HKLM\SYSTEM\CurrentControlSet\Services\WaaSMedicSvc" /v Start /t REG_DW
 REG add "HKLM\SYSTEM\CurrentControlSet\Services\UsoSvc" /v Start /t REG_DWORD /d 4 /f
 ~~~
 
+> Windows 系统文件.路径长度限制
+~~~
+历史上Windows的路径长度限制为260个字符。这意味着长于此的路径将无法解决并导致错误。
+
+在最新版本的 Windows 中，此限制可被扩展到大约 32000 个字符。 
+但需要让管理员激活“启用 Win32 长路径”组策略，
+或在注册表键 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem 中设置 LongPathsEnabled 为 1
+~~~
 > Windows 10 系统问题排查
 ~~~bash
 sfc /SCANNOW                                    # 检查系统组件是否有问题？

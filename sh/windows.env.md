@@ -1,8 +1,8 @@
 # Windows系统环境
 
-# 迁移目录 C 盘 → E 盘
+#### 迁移目录 C 盘 → E 盘
 ```cmd
-:: 先剪切C盘的目录到E盘后执行：
+:: 先剪切C盘的目录到E盘
 xcopy /e "C:\Users\Administrator\.dotnet" "E:\Administrator\.dotnet"
 rd /s /q "C:\Users\Administrator\.dotnet"
 

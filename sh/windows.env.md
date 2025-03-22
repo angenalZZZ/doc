@@ -1,5 +1,30 @@
-# Windows系统环境变量
+# Windows系统环境
 
+# 迁移目录 C 盘 → E 盘
+```cmd
+:: 先剪切C盘的目录到E盘后执行：
+xcopy /e "C:\Users\Administrator\.dotnet" "E:\Administrator\.dotnet"
+rd /s /q "C:\Users\Administrator\.dotnet"
+
+mklink /d "C:\Users\Administrator\.dotnet" "E:\Administrator\.dotnet"
+mklink /d "C:\Users\Administrator\.vscode" "E:\Administrator\.vscode"
+
+mklink /d "C:\Users\Administrator\AppData\Local\AzureFunctionsTools" "E:\Administrator\AppData\Local\AzureFunctionsTools"
+mklink /d "C:\Users\Administrator\AppData\Local\JetBrains" "E:\Administrator\AppData\Local\JetBrains"
+mklink /d "C:\Users\Administrator\AppData\Local\qq-chat-updater" "E:\Administrator\AppData\Local\qq-chat-updater"
+mklink /d "C:\Users\Administrator\AppData\Local\Sublime Text" "E:\Administrator\AppData\Local\Sublime Text"
+mklink /d "C:\Users\Administrator\AppData\Local\Tencent" "E:\Administrator\AppData\Local\Tencent"
+mklink /d "C:\Users\Administrator\AppData\Local\visualstudio-updater" "E:\Administrator\AppData\Local\visualstudio-updater"
+
+mklink /d "C:\Users\Administrator\AppData\Roaming\MobaXterm" "E:\Administrator\AppData\Roaming\MobaXterm"
+mklink /d "C:\Users\Administrator\AppData\Roaming\NuGet" "E:\Administrator\AppData\Roaming\NuGet"
+mklink /d "C:\Users\Administrator\AppData\Roaming\PotPlayerMini64" "E:\Administrator\AppData\Roaming\PotPlayerMini64"
+mklink /d "C:\Users\Administrator\AppData\Roaming\qq_guild" "E:\Administrator\AppData\Roaming\qq_guild"
+mklink /d "C:\Users\Administrator\AppData\Roaming\Tencent" "E:\Administrator\AppData\Roaming\Tencent"
+
+```
+
+---
 
 - 用户变量/Path
 ```

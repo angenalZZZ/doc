@@ -209,14 +209,22 @@ openssl req -new -key server.key -out server.csr
 ##打开：证书管理(本地计算机)-控制台.msc 分别导入指定的存储区。
 ##_.*.*_zheng_shu_lian.cer##
 -----BEGIN CERTIFICATE-----
-MIIFnTCCA4WgAwIBAgIQWdOdl..# CA根证书
+MIIFnTCCA4WgAwIBAgIQWdOdl..# CA根证书(全球少数根服务商)
 -----END CERTIFICATE-----
 -----BEGIN CERTIFICATE-----
-MIIFvzCCBKegAwIBAgIRAOXkc..# 根证书(证书链信息)
+MIIFvzCCBKegAwIBAgIRAOXkc..# 根证书(证书链:本国根服务商)
 -----END CERTIFICATE-----
 -----BEGIN CERTIFICATE-----
-MIIDuzCCAqOgAwIBAgIDBETAM..# 中间证书(证书链)
+MIIDuzCCAqOgAwIBAgIDBETAM..# 中间证书(证书链:本国中间服务商)
 -----END CERTIFICATE-----
+~~~
+
+ - `合并证书`或`证书链`(用于HAProxy等WEB中间件)
+~~~
+sudo cat /etc/letsencrypt/live/*.ddns.net/fullchain.pem \
+  /etc/letsencrypt/live/*.ddns.net/privkey.pem \
+  | sudo tee /app/cert/haproxy/*.ddns.net.pem
+
 ~~~
 
  - [Let’s Encrypt 免费证书/GUI manage free automated https certificates](https://certifytheweb.com/)

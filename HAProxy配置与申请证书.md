@@ -1,10 +1,10 @@
 # [HAProxy](https://www.haproxy.org)
 [The Reliable, High Performance TCP/HTTP Load Balancer](https://docs.haproxy.org)
 
-#### [Starter Guide and Summary](https://docs.haproxy.org/2.8/intro.html)
+#### [Starter Guide](https://docs.haproxy.org/2.8/intro.html) and [Configuration](https://docs.haproxy.org/2.8/configuration.html)
 
-#### Demo Application
-    `haproxy [-f <cfgfile|cfgdir>]`
+#### Demo
+    haproxy [-f <cfgfile|cfgdir>]
 - `demo.cfg`
 ~~~
 defaults

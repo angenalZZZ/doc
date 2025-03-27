@@ -215,7 +215,7 @@ MIIFnTCCA4WgAwIBAgIQWdOdl..# CA根证书(全球少数根服务商)
 MIIFvzCCBKegAwIBAgIRAOXkc..# 根证书(证书链:本国根服务商)
 -----END CERTIFICATE-----
 -----BEGIN CERTIFICATE-----
-MIIDuzCCAqOgAwIBAgIDBETAM..# 中间证书(证书链:本国中间服务商)
+MIIDuzCCAqOgAwIBAgIDBETAM..# 中间证书(证书链:中间服务商) 如：Let’s Encrypt
 -----END CERTIFICATE-----
 ~~~
 

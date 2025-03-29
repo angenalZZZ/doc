@@ -227,6 +227,7 @@ sudo cat /etc/letsencrypt/live/*.ddns.net/fullchain.pem \
 
 ~~~
 
+ - [Let’s Encrypt 免费证书/`E6`,`R11`:`Subject`设定: Root CAs + Subordinate (Intermediate) CAs + Chains](https://letsencrypt.org/certificates)
  - [Let’s Encrypt 免费证书/GUI manage free automated https certificates](https://certifytheweb.com/)
  - [Let’s Encrypt 免费证书/lego](https://go-acme.github.io/lego/usage/cli/examples/)
 ~~~bash

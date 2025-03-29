@@ -7,8 +7,12 @@
     haproxy [-f <cfgfile|cfgdir>]
 - `demo.cfg`
 ~~~
+global
+  maxconn 4096 # 最大连接数 < 65500 < 100000
+
 defaults
-  mode http # 默认模式=tcp:第4层代理 http:第7层代理
+  mode http # 模式=tcp:第4层代理  模式=http:第7层代理(支持http-request)
+  log  global
   timeout client 15s
   timeout connect 5s
   timeout server 15s

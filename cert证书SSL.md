@@ -1,5 +1,7 @@
 # 证书
 
+[`安装证书`](#安装证书)
+
 #### 获取证书 [亚洲诚信/TrustAsia`DigiCert`](https://www.trustasia.com/guide)、[天威诚信`DigiCert`](https://www.itrus.cn/product.html)、[安信证书/AnTrust`Geotrust`](https://www.anxinssl.com/geotrust/)、[沃通WoTrus](https://www.wosign.com/price.htm)
 > [SSL工具/在线转换格式](https://tools.imtrust.cn)、[SSL工具/证书分析/下载中间证书](https://www.myssl.cn/tools/downloadchain.html)
 
@@ -27,6 +29,10 @@ EV证书：显示组织单位
   层次： DigiCert Global Root CA       # CA根证书
              GeoTrust CN RSA CA G1     # 中间证书(证书链)
                  *.yourdomain.com       # 服务器SSL证书
+
+Let’s Encrypt E6 <=Certificate=> signed by ISRG Root X2 <==> https://letsencrypt.org/certs/2024/e6.pem
+Subject: O = Let's Encrypt, CN = E6
+Key type: ECDSA P-384
 ```
 
 > `证书密钥常用后缀`

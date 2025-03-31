@@ -25,7 +25,7 @@ frontend http_and_https
   # ALPN 'Application-Layer Protocol Negotiation' is a TLS extension (defined in RFC 7301)
   # H2 'HTTP2' For good measures
   # TLS 1.3 For great security and a single round trip
-  # SNI/ALPN/H2/TLS 1.3 (可关闭http/1.1)
+  # SNI/ALPN/H2/TLS 1.3  多域名证书: crt /cert/1.pem crt /cert/2.pem 扩展: alpn *接受协议* 可关闭: http/1.1
   bind :443 ssl crt /app/cert/haproxy/demo.ddns.net.pem alpn h2,http/1.1
   http-request deny deny_status 402 if { path -i -m beg /admin }
   acl app_rule1 path_beg -i /app1

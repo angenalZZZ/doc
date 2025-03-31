@@ -80,5 +80,22 @@ backend app2_servers
 - RIP (Real Server IP) 后端服务器的 IP 地址
 - CIP (Client IP) 访问客户端的 IP 地址
 
+- `/etc/keepalived/keepalived.conf`
+~~~
+vrrp_instance pi1 {
+    state MASTER
+    priority 100
+    interface eth0
+    virtual_router_id 101
+    virtual_ipaddress {
+        192.168.1.101
+    }
+    authentication {
+        auth_type PASS
+        auth_pass HGJ766GR767FKJU0
+    }
+}
+~~~
+
 ---
 

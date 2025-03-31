@@ -82,13 +82,28 @@ backend app2_servers
 
 - `/etc/keepalived/keepalived.conf`
 ~~~
-vrrp_instance pi1 {
+vrrp_instance host1 {
     state MASTER
     priority 100
     interface eth0
     virtual_router_id 101
     virtual_ipaddress {
         192.168.1.101
+    }
+    authentication {
+        auth_type PASS
+        auth_pass HGJ766GR767FKJU0
+    }
+}
+~~~
+~~~
+vrrp_instance host2 {
+    state BACKUP
+    priority 200
+    interface wlan0
+    virtual_router_id 102
+    virtual_ipaddress {
+        192.168.1.102
     }
     authentication {
         auth_type PASS

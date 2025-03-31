@@ -55,3 +55,28 @@ backend app2_servers
   server server4 127.0.0.1:8004
 
 ~~~
+
+---
+
+### [Keepalived](https://www.keepalived.org)
+[运行在`lvs`上，是一个用于做双机热备（HA）的软件，实现真实机的故障隔离及负载均衡器间的失败切换，提高系统的可用性。](https://github.com/acassen/keepalived)
+* [参考文章](https://www.keepalived.org/doc/)
+* [运行原理](https://wsgzao.github.io/post/keepalived/)
+~~~
+  keepalived通过选举（看服务器设置的权重）挑选出一台热备服务器做MASTER机器，MASTER机器会被分配到一个指定的虚拟ip，外部程序可通过该ip访问这台服务器，如果这台服务器出现故障（断网，重启，或者本机器上的keepalived crash等），keepalived会从其他的备份机器上重选（还是看服务器设置的权重）一台机器做MASTER并分配同样的虚拟IP，充当前一台MASTER的角色。
+~~~
+
+- LB (Load Balancer) 负载均衡
+- HA (High Available) 高可用
+- Failover 失败切换
+- Cluster 集群
+- LVS (Linux Virtual Server) `Linux`虚拟服务器
+- DS (Director Server) 前端负载均衡器节点
+- RS (Real Server) 后端真实的工作服务器
+- VIP (Virtual IP) 虚拟的IP地址，向外部直接面向用户请求，作为用户请求的目标 IP 地址
+- DIP (Director IP) 主要用于和内部主机通讯的 IP 地址
+- RIP (Real Server IP) 后端服务器的 IP 地址
+- CIP (Client IP) 访问客户端的 IP 地址
+
+---
+

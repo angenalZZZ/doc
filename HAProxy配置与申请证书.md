@@ -19,9 +19,10 @@ defaults
   timeout http-request 15s
 
 frontend http_and_https
-  # noip.com For free domain hosting
+  # my.noip.com For free domain hosting and DDNS Dynamic IP address
   bind :80,:8080
   # SNI 'Server Name Indication' For shared hosting
+  # ALPN 'Application-Layer Protocol Negotiation' is a TLS extension (defined in RFC 7301)
   # H2 'HTTP2' For good measures
   # TLS 1.3 For great security and a single round trip
   # SNI/ALPN/H2/TLS 1.3 (可关闭http/1.1)
@@ -32,7 +33,8 @@ frontend http_and_https
   use_backend app1_servers if app_rule1
   use_backend app2_servers if app_rule2
   #use_backend ***_servers if { dst_port 8001 }
-  default_backend apps_servers
+  #use_backend ***_servers if { hdr(host) -i ***.ddns.net }
+  default_backend apps_servers # Load: balance roundrobin
 
 backend apps_servers
   balance roundrobin # Every Request Rotation Load Balancing

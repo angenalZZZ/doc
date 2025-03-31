@@ -95,6 +95,14 @@ vrrp_instance host1 {
         auth_pass HGJ766GR767FKJU0
     }
 }
+vrrp_script check_running {
+    script "/usr/local/bin/check_running"
+    interval 10
+    weight 10
+}
+track_script {
+    check_running
+}
 ~~~
 ~~~
 vrrp_instance host2 {
@@ -109,6 +117,14 @@ vrrp_instance host2 {
         auth_type PASS
         auth_pass HGJ766GR767FKJU0
     }
+}
+vrrp_script check_running {
+    script "/usr/local/bin/check_running"
+    interval 10
+    weight 10
+}
+track_script {
+    check_running
 }
 ~~~
 

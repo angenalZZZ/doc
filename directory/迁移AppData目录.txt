@@ -1,4 +1,10 @@
-先剪切C盘的目录到E盘后执行：
+:: 先剪切C盘的目录到E盘
+xcopy /e "C:\Users\Administrator\.dotnet" "E:\Administrator\.dotnet"
+rd /s /q "C:\Users\Administrator\.dotnet"
+
+mklink /d "C:\Users\Administrator\.dotnet" "E:\Administrator\.dotnet"
+mklink /d "C:\Users\Administrator\.vscode" "E:\Administrator\.vscode"
+
 mklink /d "C:\Users\Administrator\AppData\Local\AzureFunctionsTools" "E:\Administrator\AppData\Local\AzureFunctionsTools"
 mklink /d "C:\Users\Administrator\AppData\Local\JetBrains" "E:\Administrator\AppData\Local\JetBrains"
 mklink /d "C:\Users\Administrator\AppData\Local\qq-chat-updater" "E:\Administrator\AppData\Local\qq-chat-updater"
@@ -11,3 +17,10 @@ mklink /d "C:\Users\Administrator\AppData\Roaming\NuGet" "E:\Administrator\AppDa
 mklink /d "C:\Users\Administrator\AppData\Roaming\PotPlayerMini64" "E:\Administrator\AppData\Roaming\PotPlayerMini64"
 mklink /d "C:\Users\Administrator\AppData\Roaming\qq_guild" "E:\Administrator\AppData\Roaming\qq_guild"
 mklink /d "C:\Users\Administrator\AppData\Roaming\Tencent" "E:\Administrator\AppData\Roaming\Tencent"
+
+mklink /d "C:\Users\Administrator\Desktop" "E:\Administrator\Desktop"
+mklink /d "C:\Users\Administrator\Downloads" "E:\Administrator\Downloads"
+mklink /d "C:\Users\Administrator\Music" "E:\Administrator\Music"
+mklink /d "C:\Users\Administrator\Pictures" "E:\Administrator\Pictures"
+mklink /d "C:\Users\Administrator\Videos" "E:\Videos"
+mklink /d "C:\Users\Administrator\source" "E:\Source"

@@ -16,6 +16,14 @@ docker > docker pull redis ; docker run --name redis-server -d -p6379:6379 redis
 
 [`Redis Stack`](https://redis.io/download/)as json document, graph, time series. clients library: [`.NET`](https://redis.io/docs/stack/get-started/tutorials/stack-dotnet/)、[`Java`](https://redis.io/docs/stack/get-started/tutorials/stack-spring/)、[`Node.js`](https://redis.io/docs/stack/get-started/tutorials/stack-node/)
 
+[`install.cmd` for windows](https://github.com/MicrosoftArchive/redis/releases)
+~~~
+@echo on
+cd /d %~dp0
+sc create Redis binPath= "\"%CD%\redis-server.exe\" --service-run \"%CD%\redis.windows-service.conf\"" DisplayName= "Redis" start= auto depend= TCPIP
+sc description Redis "Redis Cache Service"
+net start Redis
+~~~
 [安装](https://www.kancloud.cn/yami/mall4j/1250375)
 ~~~
 #安装redis编译时依赖tcl

@@ -2,23 +2,16 @@
 
 
 ### 域名注册
-- [阿里云](https://wanwang.aliyun.com/domain)
-- [腾讯云](https://cloud.tencent.com/product/domain)
-- [华为云](https://www.huaweicloud.com/product/domain.html)
-- [西部数码](https://faq.myhostadmin.net/services/domain) [首页](https://www.west.cn)
-- [中万网络](https://www.zw.cn)
+- [阿里云](https://wanwang.aliyun.com/domain)、[腾讯云](https://cloud.tencent.com/product/domain)、[华为云](https://www.huaweicloud.com/product/domain.html)
+- [西部数码](https://faq.myhostadmin.net/services/domain)[首页](https://www.west.cn)、[中万网络](https://www.zw.cn)
 
 
 ### ICP备案
-- [阿里云](https://beian.aliyun.com)
-- [腾讯云](https://cloud.tencent.com/product/ba)
-- [华为云](https://beian.huaweicloud.com)
+- [阿里云](https://beian.aliyun.com)、[腾讯云](https://cloud.tencent.com/product/ba)、[华为云](https://beian.huaweicloud.com)
 
 
 ### DNS解析
-- [阿里云](https://wanwang.aliyun.com/domain/dns)
-- [腾讯云](https://cloud.tencent.com/product/dns)
-- [华为云](https://www.huaweicloud.com/product/dns.html)
+- [阿里云](https://wanwang.aliyun.com/domain/dns)、[腾讯云](https://cloud.tencent.com/product/dns)、[华为云](https://www.huaweicloud.com/product/dns.html)
 - [西部数码](https://myhostadmin.net)
 ~~~
 A记录:设定域名或者子域名指向，保证域名指向对应的主机重要设置；
@@ -33,7 +26,7 @@ SRV记录:它是DNS服务器的数据库中支持的一种资源记录的类型�
 什么是TTL: TTL是指解析生效时间（单位秒），但仅影响解析记录修改的生效时间，添加是实时生效的，最低不允许低于200秒。
 ~~~
 
-    - `cncsedu.com.cn`
+- `cncsedu.com.cn`
 ~~~
 #主机名               解析类型         对应值
   @                     A           122.9.142.200
@@ -44,8 +37,7 @@ SRV记录:它是DNS服务器的数据库中支持的一种资源记录的类型�
   _dnsauth              TXT         2023041600000006vd4aog79g26xjdzhhvc6fj4kfomimn
   _acme-challenge       TXT         5cmgjNnKoRDFutzOn6lGZIcXaNk8iDMFobfpnYXY51s
 ~~~
-
-    - `codewithsusan.com`
+- `codewithsusan.com`
 ~~~
 #主机名               解析类型         对应值
   @                     A           45.79.155.61

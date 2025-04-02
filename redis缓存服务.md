@@ -36,10 +36,11 @@ make && make install
 #下载安装redis
 wget http://download.redis.io/releases/redis-4.0.14.tar.gz
 # wget http://download.redis.io/releases/redis-5.0.14.tar.gz
-# wget http://download.redis.io/releases/redis-6.0.16.tar.gz
-# wget http://download.redis.io/releases/redis-6.2.7.tar.gz
-tar xzvf redis-4.0.14.tar.gz -C /usr/local/
-cd  /usr/local/redis-4.0.14/
+# wget http://download.redis.io/releases/redis-6.0.20.tar.gz
+# wget http://download.redis.io/releases/redis-6.2.17.tar.gz
+# wget http://download.redis.io/releases/redis-7.0.15.tar.gz
+tar xzvf redis-6.2.17.tar.gz -C /usr/local/
+cd  /usr/local/redis-6.2.17/
 make && make test && make install
 #配置开机启动
 cp ./utils/redis_init_script /etc/init.d/

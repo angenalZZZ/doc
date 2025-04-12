@@ -1,5 +1,5 @@
 # `代理`
-* [电商代理](https://github.com/angenalZZZ/doc/blob/master/%E7%94%B5%E5%95%86%E4%BB%A3%E7%90%86.md)
+* [电商](https://github.com/angenalZZZ/doc/blob/master/%E7%94%B5%E5%95%86%E4%BB%A3%E7%90%86.md)
 
 
 ## [电脑工具](https://vip.jokerps.com/software)

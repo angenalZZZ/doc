@@ -30,6 +30,8 @@ mklink /d "C:\Users\Administrator\Pictures" "E:\Administrator\Pictures"
 mklink /d "C:\Users\Administrator\Videos" "E:\Videos"
 mklink /d "C:\Users\Administrator\source" "E:\Source"
 
+mklink /d "C:\Program Files\PotPlayer\Module\Whisper" "E:\Software\AI\Whisper"
+
 ```
 
 ---

@@ -22,6 +22,7 @@ mklink /d "C:\Users\Administrator\AppData\Roaming\PotPlayerMini64" "E:\Administr
 mklink /d "C:\Users\Administrator\AppData\Roaming\qq_guild" "E:\Administrator\AppData\Roaming\qq_guild"
 mklink /d "C:\Users\Administrator\AppData\Roaming\Tencent" "E:\Administrator\AppData\Roaming\Tencent"
 mklink /d "C:\Users\Administrator\AppData\Roaming\Subtitle Edit" "E:\Administrator\AppData\Roaming\Subtitle Edit"
+mklink /d "C:\Users\Administrator\AppData\Roaming\Wondershare" "E:\Administrator\AppData\Roaming\Wondershare"
 
 mklink /d "C:\Users\Administrator\Desktop" "E:\Administrator\Desktop"
 mklink /d "C:\Users\Administrator\Downloads" "E:\Administrator\Downloads"

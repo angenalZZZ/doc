@@ -24,6 +24,9 @@ mklink /d "C:\Users\Administrator\AppData\Roaming\Tencent" "E:\Administrator\App
 mklink /d "C:\Users\Administrator\AppData\Roaming\Subtitle Edit" "E:\Administrator\AppData\Roaming\Subtitle Edit"
 mklink /d "C:\Users\Administrator\AppData\Roaming\Wondershare" "E:\Administrator\AppData\Roaming\Wondershare"
 
+mklink /d "C:\ProgramData\Wondershare" "D:\ProgramData\Wondershare"
+mklink /d "C:\ProgramData\Wondershare Filmora" "D:\ProgramData\Wondershare Filmora"
+
 mklink /d "C:\Users\Administrator\Desktop" "E:\Administrator\Desktop"
 mklink /d "C:\Users\Administrator\Downloads" "E:\Administrator\Downloads"
 mklink /d "C:\Users\Administrator\Music" "E:\Administrator\Music"

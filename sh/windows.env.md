@@ -37,7 +37,6 @@ mklink /d "C:\Users\Administrator\source" "E:\Source"
 mklink /d "C:\Users\Administrator\Documents\EasyShare" "E:\Administrator\Documents\EasyShare"
 
 mklink /d "C:\Program Files\PotPlayer\Module\Whisper" "E:\Software\AI\Whisper"
-mklink /d "C:\Program Files\PotPlayer\Model" "E:\Software\AI\Whisper\Model"
 
 ```
 

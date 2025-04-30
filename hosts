@@ -10,7 +10,6 @@
 #
 # Additionally, comments (such as these) may be inserted on individual
 # lines or following the machine name denoted by a '#' symbol.
-#
 ###############################################################
 # Microsoft Connect Test
 # http://www.msftconnecttest.com/connecttest.txt
@@ -70,7 +69,6 @@
 #107.22.3.110 status.github.com
 #204.232.175.78 training.github.com
 
-# docker
 # docker desktop
 # allow same kube context to work on the host and the container
 127.0.0.1 kubernetes.docker.internal
@@ -80,20 +78,20 @@
 
 ###### Crack ##########
 
-127.0.0.1	oscount.techsmith.com
-127.0.0.1	65.52.240.48
-127.0.0.1	69.167.144.18
-127.0.0.1	updater.techsmith.com
-127.0.0.1	camtasiatudi.techsmith.com
-127.0.0.1	tsccloud.cloudapp.net
-127.0.0.1	assets.cloud.techsmith.com
-127.0.0.1	my.nalpeiron.com
-127.0.0.1	activation.cloud.techsmith.com
-127.0.0.1	activation.cloud.techsmith.com
-127.0.0.1   g.aoscdn.com
-127.0.0.1   gw.apsapp.cn
-127.0.0.1   gw.wangxutech.com
-127.0.0.1   wx-user-behavior.cn-hongkong.log.aliyuncs.com 
+127.0.0.1 oscount.techsmith.com
+127.0.0.1 65.52.240.48
+127.0.0.1 69.167.144.18
+127.0.0.1 updater.techsmith.com
+127.0.0.1 camtasiatudi.techsmith.com
+127.0.0.1 tsccloud.cloudapp.net
+127.0.0.1 assets.cloud.techsmith.com
+127.0.0.1 my.nalpeiron.com
+127.0.0.1 activation.cloud.techsmith.com
+127.0.0.1 activation.cloud.techsmith.com
+127.0.0.1 g.aoscdn.com
+127.0.0.1 gw.apsapp.cn
+127.0.0.1 gw.wangxutech.com
+127.0.0.1 wx-user-behavior.cn-hongkong.log.aliyuncs.com 
 
 ###### Keygen ##########
 

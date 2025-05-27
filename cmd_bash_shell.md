@@ -219,6 +219,8 @@
   $ ifconfig |grep inet
   $ ifconfig |grep 'inet ' |head -5  # 获取前5条ipV4
   $ ifconfig |grep 'inet6' |head -5  # 获取前5条ipV6
+  # 在 Windows 或 MacOS，分别使用 ipconfig 与 ifconfig 来寻找 IP 位址
+  $ ip a | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}' | cut -d/ -f1
 
   $ ping -s 64 -i 1 -c 10 www.baidu.com # 检查网络 -s包大小 -i每隔几秒 -c次数限制
   $ traceroute www.baidu.com         # 跟踪网络发送的数据包经过的路由及IP地址（一般30条以内）

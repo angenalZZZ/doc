@@ -32,14 +32,14 @@
 - [杀毒软件](https://www.freedidi.com/4729.html "免费杀毒软件")（[Bitdefender 卫士](https://www.bitdefender.com/solutions/free.html "免费")、[AVG 免费防毒](https://www.avg.com/en-us/free-antivirus-download "免费")、[Avira](https://www.avira.com/zh-cn/free-security "免费")、[Malwarebytes](https://www.malwarebytes.com/ "免费")、[世界反病毒实验室排行榜](https://www.av-test.org/en/antivirus/home-windows/)）
 - [System安全(堡垒机OSM、终端检测EDR、安全评估TSS、数据库审计DAS、行为管理AC、基线核查BVT等)](https://bbs.sangfor.com.cn/plugin.php?id=service:download)、[深信服](https://bbs.sangfor.com.cn/plugin.php?id=index:index)
 
-## [网页搜索引擎](#)
+## [网页搜索](https://www.baidu.com/)
 - [​Microsoft Bing​](https://www.bing.com/)、[​CC Search​](https://search.creativecommons.org/)、[​DuckDuckGo​](https://duckduckgo.com/)、[​Ecosia​](https://www.ecosia.org/)、[​F 搜​`推荐`](https://fsou.cc)
 - [​Giphy​](https://giphy.com/)、[​giveWater​](https://www.givewater.com/)、[​Internet Archive​](https://archive.org/)、[​JustWatch​](https://www.justwatch.com/)、[​Kiddle​](https://www.kiddle.co/)
 - [​NASA Image and Video Library​](https://images.nasa.gov/)、[​Peekier​](https://peekier.com/)、[​Quant​](https://www.qwant.com/)
 - [​SearchCode​](https://searchcode.com/)、[​StartPage​](https://www.startpage.com/)、[​Swisscows​](https://swisscows.com/)、[​Thangs​](https://thangs.com/)
 - [​Verizon OneSearch​](https://www.onesearch.com/)、[​WolframAlpha​](https://www.wolframalpha.com/)、[​Yippy​](https://www.yippy.com/)
 
-## [学习资源](#)
+## [学习资源](https://wenku.baidu.com/)
 - [软件工程师★学习路线](https://github.com/jwasham/coding-interview-university/blob/main/translations/README-cn.md)
 - [软件工程师C++学习《剑指Offer》](https://github.com/zhedahht/CodingInterviewChinese2)
 - [`itMind`线思维导图](https://gitmind.cn/)

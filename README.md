@@ -1,5 +1,5 @@
 # `代理`
-* [电商](https://github.com/angenalZZZ/doc/blob/master/%E7%94%B5%E5%95%86%E4%BB%A3%E7%90%86.md)
+* [电商](%E7%94%B5%E5%95%86%E4%BB%A3%E7%90%86.md)
 
 
 ## [电脑工具](https://vip.jokerps.com/software)
@@ -28,7 +28,7 @@
 - [`Android`模拟器`Nox`](https://shareappscrack.com/noxplayer-nox-app-player/)[`夜神`](https://www.yeshen.com/)、[`Android`模拟器`LD雷电`](https://www.ldplayer.net/)、[BlueStacks`模拟器`](https://www.bluestacks.com/download.html)
 - [快速检测APK程序是否安全?`MetaDefender`](https://metadefender.opswat.com/)、[`VirusTotal`免費的病毒、蠕虫、木马软件分析](https://www.virustotal.com/)
 
-## [`网络安全`](https://github.com/angenalZZZ/doc/blob/master/网络安全.md)
+## [`网络安全`](网络安全.md)
 - [杀毒软件](https://www.freedidi.com/4729.html "免费杀毒软件")（[Bitdefender 卫士](https://www.bitdefender.com/solutions/free.html "免费")、[AVG 免费防毒](https://www.avg.com/en-us/free-antivirus-download "免费")、[Avira](https://www.avira.com/zh-cn/free-security "免费")、[Malwarebytes](https://www.malwarebytes.com/ "免费")、[世界反病毒实验室排行榜](https://www.av-test.org/en/antivirus/home-windows/)）
 - [System安全(堡垒机OSM、终端检测EDR、安全评估TSS、数据库审计DAS、行为管理AC、基线核查BVT等)](https://bbs.sangfor.com.cn/plugin.php?id=service:download)、[深信服](https://bbs.sangfor.com.cn/plugin.php?id=index:index)
 

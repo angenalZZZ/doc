@@ -10,6 +10,7 @@ mklink /d "C:\Users\Administrator\.dotnet" "E:\Administrator\.dotnet"
 mklink /d "C:\Users\Administrator\.vscode" "E:\Administrator\.vscode"
 
 mklink /d "C:\Users\Administrator\AppData\Local\AzureFunctionsTools" "E:\Administrator\AppData\Local\AzureFunctionsTools"
+mklink /d "C:\Users\Administrator\AppData\Local\CapCut" "E:\Administrator\AppData\Local\CapCut"
 mklink /d "C:\Users\Administrator\AppData\Local\JetBrains" "E:\Administrator\AppData\Local\JetBrains"
 mklink /d "C:\Users\Administrator\AppData\Local\qq-chat-updater" "E:\Administrator\AppData\Local\qq-chat-updater"
 mklink /d "C:\Users\Administrator\AppData\Local\Sublime Text" "E:\Administrator\AppData\Local\Sublime Text"

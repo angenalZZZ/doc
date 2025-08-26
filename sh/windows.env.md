@@ -17,6 +17,7 @@ mklink /d "C:\Users\Administrator\AppData\Local\Sublime Text" "E:\Administrator\
 mklink /d "C:\Users\Administrator\AppData\Local\Tencent" "E:\Administrator\AppData\Local\Tencent"
 mklink /d "C:\Users\Administrator\AppData\Local\visualstudio-updater" "E:\Administrator\AppData\Local\visualstudio-updater"
 
+mklink /d "C:\Users\Administrator\AppData\Roaming\Frpc-Desktop" "E:\Administrator\AppData\Roaming\Frpc-Desktop"
 mklink /d "C:\Users\Administrator\AppData\Roaming\MobaXterm" "E:\Administrator\AppData\Roaming\MobaXterm"
 mklink /d "C:\Users\Administrator\AppData\Roaming\NuGet" "E:\Administrator\AppData\Roaming\NuGet"
 mklink /d "C:\Users\Administrator\AppData\Roaming\PotPlayerMini64" "E:\Administrator\AppData\Roaming\PotPlayerMini64"

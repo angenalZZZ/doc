@@ -45,17 +45,23 @@ mklink /d "C:\Program Files\PotPlayer\Module\Whisper" "E:\Software\AI\Whisper"
 ---
 
 - 用户变量/Path
-```
-# $HOME = %USERPROFILE% = C:\Users\Administrator
-%USERPROFILE%\AppData\Local\Microsoft\WindowsApps
+```cmd
+:: $HOME = %USERPROFILE% = C:\Users\Administrator
+%GOPATH%\bin
 %ORA_HOME%\bin
+%USERPROFILE%\AppData\Local\Microsoft\WindowsApps
 %USERPROFILE%\scoop\shims
 %USERPROFILE%\.dotnet\tools
+E:\Software\AI\Ollama
 
-# 用户变量*
-ORA_HOME      %USERPROFILE%\OraHomeX64
-TNS_ADMIN     %USERPROFILE%\OraHomeX64\network\admin  #// Oracle客户端连接别名
-NLS_LANG      AMERICAN_AMERICA.US7ASCII               #// Oracle客户端字符编码
+:: 用户变量*
+::  %TEMP% = %USERPROFILE%\AppData\Local\Temp
+GOPROXY      https://goproxy.cn,https://goproxy.io,direct
+GOCACHE      E:\Administrator\AppData\Local\go-build
+GOPATH       A:\go
+ORA_HOME     %USERPROFILE%\OraHomeX64
+TNS_ADMIN    %USERPROFILE%\OraHomeX64\network\admin  :: // Oracle客户端连接别名
+NLS_LANG     AMERICAN_AMERICA.US7ASCII               :: // Oracle客户端字符编码
 ```
 
 - 系统变量/Path
@@ -68,17 +74,21 @@ Windows Registry Editor Version 5.00
 "Path"="C:\\Windows;C:\\Windows\\system32;C:\\Windows\\System32\\wbem;C:\\Windows\\System32\\OpenSSH;C:\\Windows\\System32\\WindowsPowerShell\\v1.0;C:\\Program Files\\Common Files\\Oracle\\Java\\javapath;C:\\Program Files\\dotnet;......"
 ```
 ```
-C:\Windows
-C:\Windows\system32
-C:\Windows\System32\wbem
-C:\Windows\System32\OpenSSH
-C:\Windows\System32\WindowsPowerShell\v1.0
+%SystemRoot%
+%SystemRoot%\system32
+%SystemRoot%\System32\wbem
+%SystemRoot%\System32\WindowsPowerShell\v1.0
+%SystemRoot%\System32\OpenSSH
+
 %android%
 %ANT_HOME%\bin
 %CODE_PATH%\bin
 %CMAKE_PATH%\bin
 %CHOCO_PATH%
+
 %DOTNET_PATH%
+%EAZFUSCATOR_NET_HOME%
+
 %DENO_DIR%\bin
 %ERLANG_HOME%\bin
 %GIT_DEV%
@@ -99,14 +109,16 @@ C:\Windows\System32\WindowsPowerShell\v1.0
 %RUST%\bin
 %CARGO_HOME%\bin
 %MAVEN_HOME%\bin
+
 %CUDA_PATH%\lib\x64
 %CUDA_PATH%\libnvvp
 %CUDA_PATH%\bin
+
 %SWIG_DEV%
 %PHYSX_LIB%
 %NSIGHT_PATH%
 %NVDLISR_PATH%
-C:\tools\lxrunoffline
+
 D:\Tool\SysinternalsSuite
 D:\Tool\SysinternalsSuite\platform-tools
 D:\Program\D-Bus\bin
@@ -120,13 +132,11 @@ D:\Program\v\.bin
 D:\Program\zstd
 D:\Program\rocksdb
 D:\Program\JMeter\bin
-C:\Program Files\Microsoft\Web Platform Installer
-C:\Program Files\Microsoft SQL Server\130\Tools\Binn
-C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn
+C:\tools\lxrunoffline
+C:\Program Files\Common Files\Oracle\Java\javapath
+C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\
 C:\Program Files\Microsoft SQL Server\150\Tools\Binn
-C:\Program Files\Microsoft SQL Server\150\DTS\Binn
-C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn
-C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn
+E:\Program\Docker\resources\bin
 
 ```
 
@@ -150,9 +160,11 @@ CMAKE_PATH      D:\Program\CMake
 CHOCO_PATH      C:\ProgramData\chocolatey
 
 DOTNET_PATH     C:\Program Files\dotnet
+DOTNET_REACTOR  D:\Program Files (x86)\Eziriz\.NET Reactor
+EAZFUSCATOR_NET_HOME  C:\Program Files (x86)\Gapotchenko\Eazfuscator.NET
 
-CUDA_PATH			  C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8
-CUDA_PATH_V11_8 C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8
+CUDA_PATH		D:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8
+CUDA_PATH_V11_8 D:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8
 NVTOOLSEXT_PATH C:\Program Files\NVIDIA Corporation\NvToolsExt\
 NSIGHT_PATH     C:\Program Files\NVIDIA Corporation\Nsight Compute 2022.1.0
 NVDLISR_PATH    C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR
@@ -184,14 +196,13 @@ CLASSPATH     .;%JAVA_HOME%\lib\dt.jar:%JAVA_HOME%\lib\tools.jar;%CATALINA_HOME%
 Include       .;%JAVA_HOME%\lib;
 JAVA_BIN      %JAVA_HOME%\bin
 JAVA_DEV      C:\Program Files\Common Files\Oracle\Java\javapath
-JAVA_HOME     C:\Program Files\Java\jdk-11.0.16.1                         #// Java系统开发环境
+JAVA_HOME     D:\Program\Java\jdk-17                                      #// Java系统开发环境
 JAVA_OPTS     -Xms512m -Xmx1024m -XX:PermSize=256M -Dfile.encoding=utf-8  #//_JAVA_OPTIONS -Xms512m -Xmx512m
-JRE_HOME      %JAVA_HOME%\jre
+#JRE_HOME      %JAVA_HOME%\jre
+#JMETER_HOME   D:\Program\JMeter
 
 M2_HOME       D:\Program\apache-maven-3.8.1
 MAVEN_HOME    D:\Program\apache-maven-3.8.1
-
-JMETER_HOME   D:\Program\JMeter
 
 KUBECONFIG    C:\Users\Administrator\.kube\config
 

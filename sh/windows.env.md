@@ -9,6 +9,10 @@ rd /s /q "C:\Users\Administrator\.dotnet"
 mklink /d "C:\Users\Administrator\.dotnet" "E:\Administrator\.dotnet"
 mklink /d "C:\Users\Administrator\.vscode" "E:\Administrator\.vscode"
 
+xcopy /e "C:\Users\Administrator\sdk" "D:\Program\GoSdk"
+rmdir /s /q "C:\Users\Administrator\sdk"
+mklink /d "C:\Users\Administrator\sdk" "D:\Program\GoSdk"
+
 mklink /d "C:\Users\Administrator\AppData\Local\AzureFunctionsTools" "E:\Administrator\AppData\Local\AzureFunctionsTools"
 mklink /d "C:\Users\Administrator\AppData\Local\CapCut" "E:\Administrator\AppData\Local\CapCut"
 mklink /d "C:\Users\Administrator\AppData\Local\JetBrains" "E:\Administrator\AppData\Local\JetBrains"

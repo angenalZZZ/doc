@@ -462,26 +462,27 @@ yum install -y sudo                         # 安装*sudo(为普通用户临时�
 yum install -y ca-certificates openssl      # 安装*ca/openssl [可选]
 yum install -y GraphicsMagick               # 安装*GraphicsMagick(2D图库) [可选]
 
-# 下载源码 gcc-7 准备升级 gcc
+# 下载源码 gcc 准备编译安装升级
 sudo -u && cd /tmp
 wget -O gcc-7.5.0.tar.xz http://ftp.gnu.org/gnu/gcc/gcc-7.5.0/gcc-7.5.0.tar.xz
 tar -xf gcc-7.5.0.tar.xz
 cd gcc-7.5.0
-# 进入源码目录，下载依赖 gmp mpc mpfr isl 准备编译 gcc
+# 进入源码目录，下载依赖 gmp mpc mpfr isl 准备编译
 ./contrib/download_prerequisites
 mkdir build
 cd build
+# 生成make文件 开始编译
 ../configure --enable-checking=release --enable-languages=c,c++ --disable-multilib
 make
-# 安装 gcc-7 开始升级 gcc
+# 安装 gcc 开始升级
 make install
 # 查看 gcc 版本是否已更新
 strings /usr/lib64/libstdc++.so.6 | grep GLIBC
-# 查找编译gcc时生成的最新动态库
-find / -name "libstdc++.so*"
-# 拷贝文件到lib目录，并重新建立软链接
+# 查找编译时生成的最新动态库
+find /usr/local/ -name "libstdc++.so*"
+# 拷贝文件到lib目录，重新建立软链接
 cp /usr/local/lib64/libstdc++.so.6.0.24 /usr/lib64/
-rm libstdc++.so.6
+rm /usr/lib64/libstdc++.so.6
 ln -sf /usr/lib64/libstdc++.so.6.0.24 /usr/lib64/libstdc++.so.6
 # 确认 gcc 版本是否已更新
 strings /usr/lib64/libstdc++.so.6 | grep GLIBC

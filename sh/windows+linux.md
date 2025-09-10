@@ -462,16 +462,18 @@ yum install -y sudo                         # 安装*sudo(为普通用户临时�
 yum install -y ca-certificates openssl      # 安装*ca/openssl [可选]
 yum install -y GraphicsMagick               # 安装*GraphicsMagick(2D图库) [可选]
 
-# 编译 gcc-7 升级 gcc
+# 下载源码 gcc-7 准备升级 gcc
+sudo -u && cd /tmp
 wget -O gcc-7.5.0.tar.xz http://ftp.gnu.org/gnu/gcc/gcc-7.5.0/gcc-7.5.0.tar.xz
-tar -zxf gcc-7.5.0.tar.xz
+tar -xf gcc-7.5.0.tar.xz
 cd gcc-7.5.0
+# 进入源码目录，下载依赖 gmp mpc mpfr isl 准备编译 gcc
 ./contrib/download_prerequisites
 mkdir build
 cd build
 ../configure --enable-checking=release --enable-languages=c,c++ --disable-multilib
 make
-# 安装 gcc-7 升级 gcc
+# 安装 gcc-7 开始升级 gcc
 make install
 # 查看 gcc 版本是否已更新
 strings /usr/lib64/libstdc++.so.6 | grep GLIBC

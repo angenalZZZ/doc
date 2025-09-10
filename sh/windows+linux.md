@@ -493,7 +493,6 @@ rm -f gcc-7.5.0.tar.xz
 # 升级 make gcc glibc 参考 https://roy.wang/centos7-upgrade-glibc
 cd /tmp
 wget http://ftp.gnu.org/gnu/make/make-4.2.1.tar.gz
-wget http://ftp.gnu.org/gnu/glibc/glibc-2.28.tar.xz
 tar -xf make-4.2.1.tar.gz
 cd make-4.2.1
 mkdir build && cd build
@@ -502,7 +501,8 @@ make                                        # 编译
 make install                                # 安装
 ln -sf /usr/local/bin/make /usr/bin/make    # 软链接
 cd /tmp
-rm -rf make-4.2.1
+rm -rf make-4.2.1.tar.gz make-4.2.1
+wget http://ftp.gnu.org/gnu/glibc/glibc-2.28.tar.xz
 tar -xf glibc-2.28.tar.xz
 cd glibc-2.28
 mkdir build && cd build
@@ -511,8 +511,7 @@ make -j4                                    # 编译
 make install                                # 安装
 strings /lib64/libc.so.6 | grep GLIBC       # 查看版本是否已更新
 cd /tmp
-rm -rf glibc-2.28 node-compile-cache
-rm -f glibc-2.28.tar.xz make-4.2.1.tar.gz
+rm -rf glibc-2.28.tar.xz glibc-2.28 node-compile-cache
 
 # 添加系统用户 [可选]
 passwd root                                 # 先设置root账户的密码

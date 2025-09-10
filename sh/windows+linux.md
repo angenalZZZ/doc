@@ -268,6 +268,13 @@ appendWindowsPath = false
 <<END
 # 关闭 WSL 全部<linux>子系统
 wsl --shutdown
+# 解决 NAT 模式下 WSL 不支持 localhost 代理: %USERPROFILE%\.wslconfig :再重启WSL
+[experimental]
+autoMemoryReclaim=gradual
+networkingMode=mirrored
+dnsTunneling=true
+firewall=true
+autoProxy=true
 ~~~
 
 > Windows 10 & [PowerShell 5](https://aka.ms/wmf5download) & [Scoop](https://scoop.sh/)

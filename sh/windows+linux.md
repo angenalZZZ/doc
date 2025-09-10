@@ -461,6 +461,29 @@ yum install -y gnupg                        # 安装*gnupg [可选]
 yum install -y sudo                         # 安装*sudo(为普通用户临时使用root权限时)
 yum install -y ca-certificates openssl      # 安装*ca/openssl [可选]
 yum install -y GraphicsMagick               # 安装*GraphicsMagick(2D图库) [可选]
+
+# 编译 gcc-7 升级 gcc
+wget -O gcc-7.5.0.tar.xz http://ftp.gnu.org/gnu/gcc/gcc-7.5.0/gcc-7.5.0.tar.xz
+tar -zxf gcc-7.5.0.tar.xz
+cd gcc-7.5.0
+./contrib/download_prerequisites
+mkdir build
+cd build
+../configure --enable-checking=release --enable-languages=c,c++ --disable-multilib
+make
+# 安装 gcc-7 升级 gcc
+make install
+# 查看 gcc 版本是否已更新
+strings /usr/lib64/libstdc++.so.6 | grep GLIBC
+# 查找编译gcc时生成的最新动态库
+find / -name "libstdc++.so*"
+# 拷贝文件到lib目录，并重新建立软链接
+cp /usr/local/lib64/libstdc++.so.6.0.24 /usr/lib64/
+rm libstdc++.so.6
+ln -sf /usr/lib64/libstdc++.so.6.0.24 /usr/lib64/libstdc++.so.6
+# 确认 gcc 版本是否已更新
+strings /usr/lib64/libstdc++.so.6 | grep GLIBC
+
 # 添加系统用户 [可选]
 passwd root                                 # 先设置root账户的密码
 useradd -M centos && usermod -L centos      # 然后创建centos普通账户

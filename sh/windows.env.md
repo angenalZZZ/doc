@@ -101,6 +101,8 @@ Windows Registry Editor Version 5.00
 %JAVA_DEV%
 %LUA_DEV%
 %LUA_DEV%\clibs
+%NVM_HOME%
+%NVM_SYMLINK%
 %NODE_HOME%
 %NODE_HOME%\node_global
 %MINGW_PATH%\bin
@@ -213,8 +215,12 @@ KUBECONFIG    C:\Users\Administrator\.kube\config
 LUA_DEV       D:\Program\Lua\5.1
 LUA_PATH      ;;D:\Program\Lua\5.1\lua\?.luac
 
+LABEL_STUDIO_LOCAL_FILES_DOCUMENT_ROOT E:\Software\AI\label-studio\files
+
 NN_STATIC_LIB   D:\Program\nanomsg\lib
 
+NVM_HOME        D:\Program\nvm
+NVM_SYMLINK     D:\Program\nodejs
 NODE_HOME       D:\Program\nodejs
 NODE_PATH       D:\Program\nodejs\node_global\node_modules #// nodejs系统开发环境
 

@@ -486,6 +486,28 @@ rm /usr/lib64/libstdc++.so.6
 ln -sf /usr/lib64/libstdc++.so.6.0.24 /usr/lib64/libstdc++.so.6
 # 确认 gcc 版本是否已更新
 strings /usr/lib64/libstdc++.so.6 | grep GLIBC
+rm -rf gcc-7.5.0
+
+# 升级 make gcc glibc 参考 https://roy.wang/centos7-upgrade-glibc
+cd /tmp
+wget http://ftp.gnu.org/gnu/make/make-4.2.1.tar.gz
+wget http://ftp.gnu.org/gnu/glibc/glibc-2.28.tar.xz
+tar -xf make-4.2.1.tar.gz
+cd make-4.2.1
+mkdir build && cd build
+../configure                                # 默认  --prefix=/usr/local/  --with-binutils=/usr/local/bin
+make                                        # 编译
+make install                                # 安装
+ln -sf /usr/local/bin/make /usr/bin/make    # 软链接
+cd /tmp
+rm -rf make-4.2.1
+tar -xf glibc-2.28.tar.xz
+cd glibc-2.28
+mkdir build && cd build
+../configure --prefix=/usr --disable-profile --enable-add-ons --with-headers=/usr/include --with-binutils=/usr/bin
+make -j4                                    # 编译
+make install                                # 安装
+strings /lib64/libc.so.6 | grep GLIBC       # 查看版本是否已更新
 
 # 添加系统用户 [可选]
 passwd root                                 # 先设置root账户的密码

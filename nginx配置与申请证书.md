@@ -88,6 +88,41 @@ listen               443 ssl;
 ssl_certificate      /path/cert.pem;
 ssl_certificate_key  /path/key.pem;
 ~~~
+  * [nginx](https://github.com/nginx/nginx) v1.29 开始支持 [ACME](https://nginx.org/en/docs/http/ngx_http_acme_module.html) ^ freessl
+~~~nginx
+resolver 127.0.0.1:53;
+
+acme_issuer example {
+    uri         https://acme.example.com/directory;
+    contact     admin@example.test;
+    state_path  /var/cache/nginx/acme-example;
+    accept_terms_of_service;
+}
+
+acme_shared_zone zone=ngx_acme_shared:1M;
+
+server {
+    listen 443 ssl;
+    server_name  .example.test;
+
+    acme_certificate example;
+
+    ssl_certificate       $acme_certificate;
+    ssl_certificate_key   $acme_certificate_key;
+
+    # do not parse the certificate on each request
+    ssl_certificate_cache max=2;
+}
+
+server {
+    # listener on port 80 is required to process ACME HTTP-01 challenges
+    listen 80;
+
+    location / {
+        return 404;
+    }
+}
+~~~
   * 防止 DDOS 攻击
 ~~~nginx
 limit_conn_zone $binary_remote_addr zone=addr:10m;

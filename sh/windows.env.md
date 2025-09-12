@@ -1,5 +1,15 @@
 # Windows系统环境
 
+#### 清理 C 盘
+```cmd
+:: Del 删除临时文件
+del /q /f /s %temp%
+:: Cleanmgr 命令参数 /sageset:1 (提供图形界面) /sagerun:1 (不显示界面,直接运行预设的清理任务)
+cleanmgr /sageset:1
+:: Dism 命令参数 ResetBase (删除所有旧版系统组件，无法回退系统更新)
+DISM /Online /Cleanup-Image /StartComponentCleanup /ResetBase
+```
+
 #### 迁移目录 C 盘 → E 盘
 ```cmd
 :: 先剪切C盘的目录到E盘

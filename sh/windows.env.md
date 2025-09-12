@@ -3,15 +3,19 @@
 #### 迁移目录 C 盘 → E 盘
 ```cmd
 :: 先剪切C盘的目录到E盘
-xcopy /e "C:\Users\Administrator\.dotnet" "E:\Administrator\.dotnet"
+XCOPY /E /H /I /K /O /X "C:\Windows\Installer" "D:\Program\Windows\Installer"
+rmdir /s /q "C:\Windows\Installer"
+mklink /d "C:\Windows\Installer" "D:\Program\Windows\Installer"
+
+XCOPY /E /H /I /K /O /X "C:\Users\Administrator\sdk" "D:\Program\GoSdk"
+rmdir /s /q "C:\Users\Administrator\sdk"
+mklink /d "C:\Users\Administrator\sdk" "D:\Program\GoSdk"
+
+XCOPY /E /H /I /K /O /X "C:\Users\Administrator\.dotnet" "E:\Administrator\.dotnet"
 rd /s /q "C:\Users\Administrator\.dotnet"
 
 mklink /d "C:\Users\Administrator\.dotnet" "E:\Administrator\.dotnet"
 mklink /d "C:\Users\Administrator\.vscode" "E:\Administrator\.vscode"
-
-xcopy /e "C:\Users\Administrator\sdk" "D:\Program\GoSdk"
-rmdir /s /q "C:\Users\Administrator\sdk"
-mklink /d "C:\Users\Administrator\sdk" "D:\Program\GoSdk"
 
 mklink /d "C:\Users\Administrator\AppData\Local\AzureFunctionsTools" "E:\Administrator\AppData\Local\AzureFunctionsTools"
 mklink /d "C:\Users\Administrator\AppData\Local\CapCut" "E:\Administrator\AppData\Local\CapCut"

@@ -1,16 +1,4 @@
-﻿# Copyright (c) 1993-2009 Microsoft Corp.
-#
-# This is a sample HOSTS file used by Microsoft TCP/IP for Windows.
-#
-# This file contains the mappings of IP addresses to host names. Each
-# entry should be kept on an individual line. The IP address should
-# be placed in the first column followed by the corresponding host name.
-# The IP address and the host name should be separated by at least one
-# space.
-#
-# Additionally, comments (such as these) may be inserted on individual
-# lines or following the machine name denoted by a '#' symbol.
-###############################################################
+﻿###############################################################
 # Microsoft Connect Test
 # http://www.msftconnecttest.com/connecttest.txt
 ###############################################################
@@ -69,6 +57,7 @@
 #107.22.3.110 status.github.com
 #204.232.175.78 training.github.com
 
+# docker
 # docker desktop
 # allow same kube context to work on the host and the container
 127.0.0.1 kubernetes.docker.internal
@@ -78,20 +67,24 @@
 
 ###### Crack ##########
 
-127.0.0.1 oscount.techsmith.com
-127.0.0.1 65.52.240.48
-127.0.0.1 69.167.144.18
-127.0.0.1 updater.techsmith.com
-127.0.0.1 camtasiatudi.techsmith.com
-127.0.0.1 tsccloud.cloudapp.net
-127.0.0.1 assets.cloud.techsmith.com
-127.0.0.1 my.nalpeiron.com
-127.0.0.1 activation.cloud.techsmith.com
-127.0.0.1 activation.cloud.techsmith.com
-127.0.0.1 g.aoscdn.com
-127.0.0.1 gw.apsapp.cn
-127.0.0.1 gw.wangxutech.com
-127.0.0.1 wx-user-behavior.cn-hongkong.log.aliyuncs.com 
+127.0.0.1	oscount.techsmith.com
+127.0.0.1	65.52.240.48
+127.0.0.1	69.167.144.18
+127.0.0.1	updater.techsmith.com
+127.0.0.1	camtasiatudi.techsmith.com
+127.0.0.1	tsccloud.cloudapp.net
+127.0.0.1	assets.cloud.techsmith.com
+127.0.0.1	link.altova.com
+127.0.0.1	my.nalpeiron.com
+127.0.0.1	activation.cloud.techsmith.com
+127.0.0.1	activation.cloud.techsmith.com
+127.0.0.1   g.aoscdn.com
+127.0.0.1   gw.apsapp.cn
+127.0.0.1   gw.wangxutech.com
+127.0.0.1   wx-user-behavior.cn-hongkong.log.aliyuncs.com 
+127.0.0.1   west-wind.com
+127.0.0.1   markdownmonster.west-wind.com
+127.0.0.1   licensing.west-wind.com
 
 ###### Keygen ##########
 
@@ -121,7 +114,18 @@
 127.0.0.1 www.defraggler.piriform.com
 127.0.0.1 ccleaner.piriform.com
 127.0.0.1 www.ccleaner.piriform.com
+127.0.0.1 service.piriform.com
+127.0.0.1 healthcheck.ccleaner.com
 127.0.0.1 license-api.ccleaner.com
+127.0.0.1 ipm-provider.ff.avast.com
+127.0.0.1 license.piriform.com
+127.0.0.1 www.ccleaner.com
+127.0.0.1 analytics.ff.avast.com
+127.0.0.1 ncc.avast.com
+127.0.0.1 analytics.avcdn.net
+127.0.0.1 shepherd.ff.avast.com
+127.0.0.1 ip-info.ff.avast.com
+127.0.0.1 emupdate.avcdn.net
 # mongobooster
 0.0.0.0 www.nosqlbooster.com
 # xunlei crack
@@ -155,8 +159,14 @@
 127.0.0.1 media.macphun.com
 127.0.0.1 luminaraiwin.skylum.com
 127.0.0.1 luminarneowin.skylum.com
+# TSplus AdvancedSecurity Monitoring RemoteAccess
+127.0.0.1 licenseapi.dl-files.com
+127.0.0.1 apm.dl-files.com
+127.0.0.1 dl-files.com
+
 
 # D:/Tool/Crack/b4a-license-platform/run/apps
+127.0.0.1 9xunk3m414.execute-api.us-east-1.amazonaws.com
 127.0.0.1 icu.by
 127.0.0.1 license.block-edge.com
 127.0.0.1 license.barcodetopc.com
@@ -165,6 +175,7 @@
 127.0.0.1 api-iam.intercom.io
 127.0.0.1 api.certifytheweb.com
 127.0.0.1 api.dida365.com
+127.0.0.1 api.divmagic.com
 127.0.0.1 gunaui.com
 127.0.0.1 powerof7.io
 127.0.0.1 staruml.io
@@ -200,4 +211,3 @@
 
 # This work is licensed under a modified HOSTS License.
 # https://github.com/googlehosts/hosts/raw/master/LICENSE
-

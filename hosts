@@ -126,6 +126,8 @@
 127.0.0.1 shepherd.ff.avast.com
 127.0.0.1 ip-info.ff.avast.com
 127.0.0.1 emupdate.avcdn.net
+# Database Tour
+127.0.0.1 qlm1.net
 # mongobooster
 0.0.0.0 www.nosqlbooster.com
 # xunlei crack

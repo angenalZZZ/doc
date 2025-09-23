@@ -48,6 +48,9 @@ deactivate
 
 ### `推荐`[`uv`](https://astral.sh/uv) 一个 Rust 编写的 Python 包管理器, 聚合 pip, venv, pip-tools, pipx 等工具
 ~~~cmd
+:: 修改默认安装源, 可添加环境变量 UV_DEFAULT_INDEX = ┈┄↓↓↓┄┈
+uv add pandas --index https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple
+
 :: 创建虚拟环境
 uv venv
 :: 激活虚拟环境

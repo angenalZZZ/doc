@@ -30,12 +30,12 @@ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/
 :: 安装virtualenv(先安装Python各版本)
 pip install virtualenv
 
-:: 创建虚拟环境(先进入项目所在目录)
+:: 创建虚拟环境(先进入项目所在目录)  用于创建一个 .venv 文件夹
 virtualenv -p /usr/local/bin/python3.10 venv
 ::virtualenv -p D:\Program\anaconda3\envs\python3.10 venv_appname
 :: 激活虚拟环境
-source venv/bin/activate
-:: venv/bin/activate.bat
+source .venv/bin/activate
+:: .venv/Scripts/activate.bat
 :: python --version
 :: pip install -r requirements.txt
 :: pip install --force-reinstall numpy==1.23.5  # 重新安装指定版本
@@ -43,6 +43,37 @@ source venv/bin/activate
 :: pip install *** -i https://pypi.tuna.tsinghua.edu.cn/simple # 清华源
 :: 退出虚拟环境
 deactivate
+
+~~~
+
+### `推荐`[`uv`](https://astral.sh/uv) 一个 Rust 编写的 Python 包管理器, 聚合 pip, venv, pip-tools, pipx 等工具
+~~~bash
+:: 创建虚拟环境
+uv venv
+:: 激活虚拟环境
+source .venv/bin/activate
+:: .venv/Scripts/activate.bat
+
+uv pip list      :: 列出包
+uv pip tree      :: 以树状图清晰展示依赖关系 (远胜 pipdeptree)
+uv pip check     :: 检查环境兼容性
+uv pip uninstall :: 卸载包
+uv cache clean   :: 清理缓存
+uv self update   :: (仅限独立安装) 自我更新
+
+:: 极速安装包
+uv pip install pandas polars "fastapi[all]"
+:: 依赖锁定 compile/sync
+:: requirements.in << pandas requests # 创建 requirements.in 文件，声明顶级依赖
+:: 编译生成锁文件 requirements.txt
+uv pip compile requirements.in -o requirements.txt
+:: 在新环境中一键同步
+uv pip sync -r requirements.txt
+
+:: 工具箱: uv tool 解决全局安装 ruff, black 等工具而污染环境
+uv tool install ruff black
+:: 临时运行一个工具，不安装
+uv tool run --from ruff ruff --version
 
 ~~~
 

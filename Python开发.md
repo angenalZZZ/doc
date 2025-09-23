@@ -3,6 +3,23 @@
 #### [conda](https://anaconda.org) [安装](https://anaconda.org.cn/anaconda/install)、[使用](https://anaconda.org.cn/anaconda/user-guide/getting-started)
 Anaconda 是专门为了方便使用 Python 进行数据科学研究而建立的一组软件包，涵盖了数据科学领域常见的 Python 库，并且自带了专门用来解决软件环境依赖问题的 conda 包管理系统。主要是提供了包管理与环境管理的功能，可以很方便地解决多版本python并存、切换以及各种第三方包安装问题。
 
+### `版本环境`
+~~~cmd
+:: 配置文件
+:: Linux:   ~/.config/pip/pip.conf
+:: Windows: %APPDATA%\pip\pip.ini
+:: 更新包管理器
+python -m pip install --upgrade pip
+:: 缓存位置
+pip config set global.cache-dir "E:\Administrator\.cache\pip"
+:: 国内.镜像源
+pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
+:: 国内.清华源
+pip install *** -i https://pypi.tuna.tsinghua.edu.cn/simple
+:: 国内.阿里源
+pip install *** -i https://mirrors.aliyun.com/pypi/simple
+~~~
+
 ### `虚拟环境`
 ~~~cmd
 :: conda 24.11.3
@@ -11,15 +28,17 @@ Anaconda 是专门为了方便使用 Python 进行数据科学研究而建立的
 
 :: 配置conda
 conda info -e
-conda create -n python3.10 python=3.10
-conda remove --name python3.10 --all
+conda create -n python3.10 python=3.10      # 创建虚拟环境
+conda remove --name python3.10 --all        # 删除虚拟环境
 ::conda create --name new_env_name --clone old_env_name
-::conda env export > env_name.yml
-::conda activate python3.10
+::conda activate python3.10                 # 进入虚拟环境
 :: conda install --yes --file requirements.txt # 安装依赖包
-::conda deactivate
+:: [Anaconda3]\envs\python310\python.exe -m pip install -r requirements.txt
+conda list -e > requirements.txt            # 生成依赖包
+conda env export > environment.yml          # 导出依赖包
+::conda deactivate                          # 退出虚拟环境
 :: conda config --remove-key channels       # 恢复默认官方源defaults
-:: conda config --show channels
+:: conda config --show channels             # 查看镜像源
 :: conda config --set show_channel_urls yes # 搜索时显示通道地址|后添加的优先级更高
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
@@ -32,7 +51,7 @@ pip install virtualenv
 
 :: 创建虚拟环境(先进入项目所在目录)  用于创建一个 .venv 文件夹
 virtualenv -p /usr/local/bin/python3.10 venv
-::virtualenv -p D:\Program\anaconda3\envs\python3.10 venv_appname
+::virtualenv -p D:\Program\anaconda3\envs\python3.10 venv_app_name
 :: 激活虚拟环境
 source .venv/bin/activate
 :: .venv/Scripts/activate.bat
@@ -43,12 +62,35 @@ source .venv/bin/activate
 :: pip install *** -i https://pypi.tuna.tsinghua.edu.cn/simple # 清华源
 :: 退出虚拟环境
 deactivate
-
 ~~~
 
 ### `推荐`[`uv`](https://astral.sh/uv) 一个 Rust 编写的 Python 包管理器, 聚合 pip, venv, pip-tools, pipx 等工具
 ~~~cmd
-:: 修改默认安装源, 可添加环境变量 UV_DEFAULT_INDEX = ┈┄↓↓↓┄┈
+:: 配置文件
+:: Linux:   ~/.config/uv/uv.toml  |  /etc/uv/uv.toml
+:: Windows: %APPDATA%\uv\uv.toml  |  %SYSTEMDRIVE%\ProgramData\uv\uv.toml
+
+[tool.uv]
+cache-dir = "E:\Administrator\.cache\pip"
+
+[[index]]
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+default = true
+
+:: 新建项目
+uv init            # pyproject.toml, .python-version, .gitignore, README.md, main.py
+
+[[tool.uv.index]]  # 选1.持久化的索引URL
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+default = true
+
+[tool.uv.pip]      # 选2.只影响 uv pip 子命令
+index-url = "https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+[project]          # 项目
+...
+
+:: 安装依赖包::国内.清华源, 默认读取源 uv.toml 或全局环境变量 UV_DEFAULT_INDEX ┈┄↓↓↓┄┈
 uv add pandas --index https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple
 
 :: 创建虚拟环境
@@ -61,6 +103,7 @@ uv pip list      :: 列出包
 uv pip tree      :: 以树状图清晰展示依赖关系 (远胜 pipdeptree)
 uv pip check     :: 检查环境兼容性
 uv pip uninstall :: 卸载包
+uv cache dir     :: 查看缓存
 uv cache clean   :: 清理缓存
 uv self update   :: (仅限独立安装) 自我更新
 

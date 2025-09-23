@@ -4,7 +4,7 @@
 Anaconda 是专门为了方便使用 Python 进行数据科学研究而建立的一组软件包，涵盖了数据科学领域常见的 Python 库，并且自带了专门用来解决软件环境依赖问题的 conda 包管理系统。主要是提供了包管理与环境管理的功能，可以很方便地解决多版本python并存、切换以及各种第三方包安装问题。
 
 ### `虚拟环境`
-~~~bash
+~~~cmd
 :: conda 24.11.3
 :: D:\Program\anaconda3\python.exe
 :: D:\Program\anaconda3\Scripts\pip.exe
@@ -47,7 +47,7 @@ deactivate
 ~~~
 
 ### `推荐`[`uv`](https://astral.sh/uv) 一个 Rust 编写的 Python 包管理器, 聚合 pip, venv, pip-tools, pipx 等工具
-~~~bash
+~~~cmd
 :: 创建虚拟环境
 uv venv
 :: 激活虚拟环境

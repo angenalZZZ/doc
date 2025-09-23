@@ -64,7 +64,7 @@ source .venv/bin/activate
 deactivate
 ~~~
 
-### `推荐`[`uv`](https://astral.sh/uv) 一个 Rust 编写的 Python 包管理器, 聚合 pip, venv, pip-tools, pipx 等工具
+### `推荐`[`uv`](https://astral.sh/uv) [快速入门](https://uv.doczh.com/getting-started/) Rust 编写的 Python 包管理器, 聚合 pip, venv, pip-tools, pipx 等工具
 ~~~cmd
 :: 配置文件
 :: Linux:   ~/.config/uv/uv.toml  |  /etc/uv/uv.toml

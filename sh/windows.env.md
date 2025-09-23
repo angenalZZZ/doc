@@ -74,12 +74,18 @@ E:\Software\AI\Ollama
 
 :: 用户变量*
 ::  %TEMP% = %USERPROFILE%\AppData\Local\Temp
-GOPROXY      https://goproxy.cn,https://goproxy.io,direct
-GOCACHE      E:\Administrator\AppData\Local\go-build
-GOPATH       A:\go
-ORA_HOME     %USERPROFILE%\OraHomeX64
-TNS_ADMIN    %USERPROFILE%\OraHomeX64\network\admin  :: // Oracle客户端连接别名
-NLS_LANG     AMERICAN_AMERICA.US7ASCII               :: // Oracle客户端字符编码
+#GO111MODULE  auto
+#GOENV        A:\go\env
+GOPATH        A:\go
+GOROOT        D:\Program\Go
+#GOTOOLS      D:\Program\Go\pkg\tool
+GOCACHE       E:\Administrator\AppData\Local\go-build
+#GOPROXY      https://goproxy.io,direct
+GOPROXY       https://goproxy.cn,https://goproxy.io,direct
+ORA_HOME      %USERPROFILE%\OraHomeX64
+TNS_ADMIN     %USERPROFILE%\OraHomeX64\network\admin  :: // Oracle客户端连接别名
+NLS_LANG      AMERICAN_AMERICA.US7ASCII               :: // Oracle客户端字符编码
+
 ```
 
 - 系统变量/Path
@@ -110,8 +116,6 @@ Windows Registry Editor Version 5.00
 %DENO_DIR%\bin
 %ERLANG_HOME%\bin
 %GIT_DEV%
-%GOROOT%\bin
-%GOPATH%\bin
 %JAVA_DEV%
 %LUA_DEV%
 %LUA_DEV%\clibs
@@ -123,6 +127,7 @@ Windows Registry Editor Version 5.00
 %PERL_DEV%\c\bin
 %PERL_DEV%\perl\bin
 %PERL_DEV%\perl\site\bin
+%PYTHON%
 %PYTHON_DEV%
 %PYTHON_DEV%\Scripts
 %R_DEV%\bin
@@ -139,13 +144,15 @@ Windows Registry Editor Version 5.00
 %NSIGHT_PATH%
 %NVDLISR_PATH%
 
-D:\Tool\SysinternalsSuite
-D:\Tool\SysinternalsSuite\platform-tools
-D:\Program\D-Bus\bin
+A:\go\bin
+D:\Program\Go\bin
+D:\Program\D-Bus\bin\
 D:\Program\nng\bin
 D:\Program\nanomsg\bin
 D:\Program\NSIS\bin
+D:\Program\Nmap
 D:\Program\MongoDB\mongosh
+D:\Program\PuTTY
 D:\Program\Redis
 D:\Program\vcpkg
 D:\Program\v\.bin
@@ -153,6 +160,8 @@ D:\Program\zstd
 D:\Program\rocksdb
 D:\Program\JMeter\bin
 C:\tools\lxrunoffline
+D:\Tool\SysinternalsSuite
+D:\Tool\SysinternalsSuite\platform-tools
 C:\Program Files\Common Files\Oracle\Java\javapath
 C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\
 C:\Program Files\Microsoft SQL Server\150\Tools\Binn
@@ -200,15 +209,8 @@ DOTNET_REACTOR D:\Tool\Decompile\Reactor\
 
 ERLANG_HOME   D:\Program\erl10.5
 
-GIT_DEV       C:\Program Files\Git\cmd
-
-GO111MODULE   auto
-GOCACHE       D:\Users\Administrator\AppData\Local\go-build
-GOENV         A:\go\env
-GOPATH        A:\go
-GOPROXY       https://goproxy.io,direct
-GOROOT        D:\Program\Go
-GOTOOLS       D:\Program\Go\pkg\tool
+GIT_DEV       D:\Program\Git\cmd
+#GIT_DEV      C:\Program Files\Git\cmd
 
 IPFS_PATH     A:\database\ipfs\.ipfs
 
@@ -243,6 +245,7 @@ PKG_CONFIG_PATH D:\Program\msys64\mingw64\lib\pkgconfig    #// mingw系统linux�
 
 PERL_DEV      D:\Program\Strawberry
 
+PYTHON        D:\Program\Python
 PYTHON_DEV    D:\Program\Python\Python39
 
 R_DEV         D:\Program\R\R-3.6.1

@@ -64,7 +64,7 @@ source .venv/bin/activate
 deactivate
 ~~~
 
-### `推荐`[`uv`](https://astral.sh/uv) [快速入门](https://uv.doczh.com/getting-started/) Rust 编写的 Python 包管理器, 聚合 pip, venv, pip-tools, pipx 等工具
+### [`推荐`](https://docs.astral.sh/uv/)[`uv`](https://astral.sh/uv) [快速入门](https://uv.doczh.com/getting-started/) Rust 编写的 Python 包管理器, 聚合 pip, venv, pip-tools, pipx 等工具
 ~~~cmd
 :: 配置文件
 :: Linux:   ~/.config/uv/uv.toml  |  /etc/uv/uv.toml
@@ -78,7 +78,7 @@ url = "https://pypi.tuna.tsinghua.edu.cn/simple"
 default = true
 
 :: 新建项目
-uv init            # pyproject.toml, .python-version, .gitignore, README.md, main.py
+uv init [example]  # pyproject.toml, .python-version, .gitignore, README.md, main.py
 
 [[tool.uv.index]]  # 选1.持久化的索引URL
 url = "https://pypi.tuna.tsinghua.edu.cn/simple"

@@ -4,9 +4,9 @@
 ```cmd
 :: Del 删除临时文件
 del /q /f /s %temp%
-:: Cleanmgr 命令参数 /sageset:1 (提供图形界面) /sagerun:1 (不显示界面,直接运行预设的清理任务)
+:: Cleanmgr 命令参数: /sageset:1 提供图形界面 /sagerun:1 不显示界面,直接运行预设的清理任务
 cleanmgr /sageset:1
-:: Dism 命令参数 ResetBase (删除所有旧版系统组件，无法回退系统更新)
+:: Dism 命令参数: /ResetBase 删除所有旧版系统组件，无法回退系统更新
 DISM /Online /Cleanup-Image /StartComponentCleanup /ResetBase
 ```
 
@@ -99,10 +99,10 @@ Windows Registry Editor Version 5.00
 ```
 ```
 %SystemRoot%
-%SystemRoot%\system32
+%SystemRoot%\System32
 %SystemRoot%\System32\wbem
-%SystemRoot%\System32\WindowsPowerShell\v1.0
-%SystemRoot%\System32\OpenSSH
+%SYSTEMROOT%\System32\OpenSSH
+%SYSTEMROOT%\System32\WindowsPowerShell\v1.0
 
 %android%
 %ANT_HOME%\bin
@@ -115,14 +115,13 @@ Windows Registry Editor Version 5.00
 
 %DENO_DIR%\bin
 %ERLANG_HOME%\bin
+%JAVA_HOME%\bin
 %GIT_DEV%
-%JAVA_DEV%
 %LUA_DEV%
 %LUA_DEV%\clibs
 %NVM_HOME%
 %NVM_SYMLINK%
-%NODE_HOME%
-%NODE_HOME%\node_global
+%NVM_SYMLINK%\node_global
 %MINGW_PATH%\bin
 %PERL_DEV%\c\bin
 %PERL_DEV%\perl\bin
@@ -226,6 +225,9 @@ JAVA_OPTS     -Xms512m -Xmx1024m -XX:PermSize=256M -Dfile.encoding=utf-8  #//_JA
 M2_HOME       D:\Program\apache-maven-3.8.1
 MAVEN_HOME    D:\Program\apache-maven-3.8.1
 
+NVM_HOME      D:\Program\nvm
+NVM_SYMLINK   D:\Program\nodejs
+
 KUBECONFIG    C:\Users\Administrator\.kube\config
 
 LUA_DEV       D:\Program\Lua\5.1
@@ -246,7 +248,7 @@ PKG_CONFIG_PATH D:\Program\msys64\mingw64\lib\pkgconfig    #// mingw系统linux�
 PERL_DEV      D:\Program\Strawberry
 
 PYTHON        D:\Program\Python
-PYTHON_DEV    D:\Program\Python\Python39
+PYTHON_DEV    D:\Program\anaconda3
 
 R_DEV         D:\Program\R\R-3.6.1
 

@@ -1,7 +1,8 @@
 # 抓取工具 crawler
 
 #### 1. [`ejs`](https://github.com/angenalZZZ/doc-zip/blob/master/crawler-ejs.zip) based on [miniblink c++](https://github.com/weolar/miniblink49)、[miniblink c#](https://gitee.com/angenal/NetMiniblink)、[gowebui](https://github.com/selfplan/gowebui)、[blink-demo](https://github.com/raintean/blink-demo)
-- [爬虫案例](https://scrape.center/)
+- [爬虫案例](https://scrape.center/)[：](https://gitee.com/angenal/Desktop/tree/master/src/Desktop/Crawler)[EO.WebBrowser](https://gitee.com/angenal/Desktop/tree/master/src/Desktop/Crawler/EO.Crawler)、[Microsoft.Web.WebView2](https://gitee.com/angenal/Desktop/tree/master/src/Desktop/Crawler/Edge.Crawler)
+- [`Web Data API for AI`](https://www.firecrawl.dev/)[开源](https://github.com/firecrawl/firecrawl)
 - [Browse AI's powerful web scraping API](https://www.browse.ai/)
 - [pip install requests scrapy](https://scrapy.org/)
 

@@ -73,7 +73,13 @@ netsh winhttp import proxy source=ie
 #网络和共享的依赖服务被禁用或组件无法启动时->以管理员身份运行CMD->然后重启
 netsh winsock reset catalog
 ~~~
-
+> Windows 重置 TCP/IP 协议
+~~~cmd
+ipconfig /flushdns
+ipconfig /renew
+netsh int ip reset
+netsh winsock reset
+~~~
 > Windows WiFi 密码
 ~~~bash
 netsh wlan show profiles          # 1.获取WiFi信号
@@ -142,10 +148,12 @@ runas /user:administrator "mmc %windir%\system32\services.msc"
 
 REM 将Windows防火墙服务配置为自动启动
 sc config mpssvc start=auto
-REM 启动Windows防火墙
+REM 启动Windows防火墙服务
 net stop mpssvc && net start mpssvc
-REM 启用Windows防火墙配置文件
+REM 启用Windows防火墙配置
 netsh advfirewall set allprofiles state on
+REM 临时关闭防火墙，防火墙可能阻止了目标端口的访问
+netsh advfirewall set allprofiles state off
 
 REM 拒绝从特定IP地址输入 block IP in your firewall
 netsh advfirewall firewall add rule name="*App* Block *IP*" dir=in action=block remoteip=*IP*

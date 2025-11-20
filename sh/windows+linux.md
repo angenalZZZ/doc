@@ -56,16 +56,16 @@ REG add "HKLM\SYSTEM\CurrentControlSet\Services\UsoSvc" /v Start /t REG_DWORD /d
 但需要让管理员激活“启用 Win32 长路径”组策略，
 或在注册表键 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem 中设置 LongPathsEnabled 为 1
 ~~~
-> Windows 系统目录权限排查
+> Windows 目录权限问题排查
 ~~~bash
 #.查看目录权限
 icacls "C:\ProgramData\Your-App"
 #.将用户权限配置给目录(执行PowerShell脚本) >> ProgramData目录权限问题.ps1 <<
-$Path = "C:\ProgramData\TEC-IT"
+$Path = "C:\ProgramData\Your-App"
 $User = "ANGENAL-PC\Administrator"
 $Acl = Get-Acl $Path
-$Ar = New-Object System.Security.AccessControl.FileSystemAccessRule($User, "Modify", "ContainerInherit,ObjectInherit", "None", "Allow")
-$Acl.SetAccessRule($Ar)
+$A = New-Object System.Security.AccessControl.FileSystemAccessRule($User,"Modify","ContainerInherit,ObjectInherit","None","Allow")
+$Acl.SetAccessRule($A)
 Set-Acl $Path $Acl
 ~~~
 > Windows 10 系统问题排查

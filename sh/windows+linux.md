@@ -1861,6 +1861,12 @@ pacman -S mingw-w64-i686-gtk2 mingw-w64-i686-gtk3 mingw-w64-i686-gtk4 # 同时�
 # 桌面开发Qt环境
 pacman -S mingw-w64-x86_64-qt5 mingw-w64-x86_64-qt-creator # 安装64位Qt5 # github.com/peterq/pan-light (推荐)
 pacman -S mingw-w64-i686-qt5 mingw-w64-i686-qt-creator     # 安装32位Qt5 # github.com/therecipe/qt
+
+
+# 清理所有未安装软件包缓存
+sudo pacman -Sc
+# 更彻底的清理（包括安装包缓存）
+sudo pacman -Scc
 ~~~
 
 

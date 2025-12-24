@@ -489,6 +489,22 @@ yum install -y sudo                         # 安装*sudo(为普通用户临时�
 yum install -y ca-certificates openssl      # 安装*ca/openssl [可选]
 yum install -y GraphicsMagick               # 安装*GraphicsMagick(2D图库) [可选]
 
+# 安装中文输入法
+sudo yum install epel-release -y
+sudo yum update -y
+sudo dnf copr enable atim/fcitx5            # CentOS 8/9默认仓库可能不包含Fcitx 5，需添加第三方仓库
+sudo dnf install fcitx5 fcitx5-chinese-addons fcitx5-configtool -y # fcitx5-chinese-addons：包含拼音五笔
+# 下载搜狗拼音：Linux版：可选：https://pinyin.sogou.com/linux
+# 设置输入法环境后重启
+cat <<EOF | sudo tee ~/.bash_profile
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+EOF
+# 应用输入法环境
+source ~/.bash_profile
+
+
 # 下载源码 gcc 准备编译安装升级
 sudo -u && cd /tmp
 wget -O gcc-7.5.0.tar.xz http://ftp.gnu.org/gnu/gcc/gcc-7.5.0/gcc-7.5.0.tar.xz
@@ -869,7 +885,7 @@ groupadd        # 添加用户组 > groupadd ubuntu
 groupdel        # 删除用户组 > groupdel ubuntu
 passwd admin    # 修改密码
 login           # 用户登录
-whoami && w && id # 当前用户信息及id
+whoami && w && id # 当前用户信息及id2004
 id            # 返回 uid=0(root) gid=0(root) groups=0(root)  ; root登录:  su root ; su - ;目录不变
 id -u         # 返回 uid 添加用户(-d=$home) (-G=附加用户组) 例如(用户名=admin)
 echo -e "$USER\n$HOME\n$SHELL\n$PATH\n$LOGNAME\n$MAIL" # 当前用户环境 [-e允许反斜杠转义字符]
@@ -945,6 +961,19 @@ sudo apt-get update
 sudo apt-get install -y libgdiplus
 # Using libgdiplus on macOS
 dotnet add package runtime.osx.10.10-x64.CoreCompat.System.Drawing
+
+# 安装中文输入法
+sudo apt install fcitx5 fcitx5-chinese-addons fcitx5-configtool -y  # fcitx5-chinese-addons：包含拼音五笔
+# 下载搜狗拼音：Linux版：可选：https://pinyin.sogou.com/linux
+sudo dpkg -i sogoupinyin_*.deb
+sudo apt install -f  # 修复依赖
+# 设置输入法环境后重启
+cat <<EOF | sudo tee ~/.xprofile
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+EOF
+
 
 # 设置分辨率
 sudo displayconfig-gtk  # 打开显示器和显卡设置
@@ -1173,6 +1202,33 @@ sudo apt-get update \
 PUPPETEER_DOWNLOAD_HOST=https://npm.taobao.org/mirrors
 npm config set puppeteer_download_host=https://npm.taobao.org/mirrors
 npm install puppeteer-chromium-resolver crawlab-sdk -g --unsafe-perm=true --registry=https://registry.npm.taobao.org
+
+
+# 安装 Yandex Browser on Linux
+# sudo apt update && sudo apt upgrade
+# 导入 GPG Key
+curl -fsSL https://repo.yandex.ru/yandex-browser/YANDEX-BROWSER-KEY.GPG | sudo gpg --dearmor -o /usr/share/keyrings/yandex-browser.gpg
+# 验证文件存在
+file /usr/share/keyrings/yandex-browser.gpg
+# 导入 Repository
+cat <<EOF | sudo tee /etc/apt/sources.list.d/yandex-browser-stable.sources
+Types: deb
+URIs: https://repo.yandex.ru/yandex-browser/deb
+Suites: stable
+Components: main
+Architectures: amd64
+Signed-By: /usr/share/keyrings/yandex-browser.gpg
+EOF
+# 更新 Package Index
+sudo apt update
+# 安装 Yandex Browser Stable Version
+sudo apt install yandex-browser-stable
+yandex-browser --version
+# 删除重复 Repository
+sudo rm -f /etc/apt/sources.list.d/yandex-browser*.list
+sudo touch /etc/apt/sources.list.d/yandex-browser.list
+sudo chmod 444 /etc/apt/sources.list.d/yandex-browser.list
+sudo apt update
 
 
 # 微服务 - 消息中间件 - 跨语言LGPLed - 通信方案

@@ -975,6 +975,32 @@ export XMODIFIERS=@im=fcitx
 EOF
 
 
+# 设置时间
+date -s “2024-09-04 23:55:00"  # 手动设置时间
+dpkg -l | grep chrony  # 检查是否安装了时间同步服务
+dpkg -l | grep ntpd    # 检查
+sudo apt remove ntpsec-ntpdate openntpd # 卸载旧安装
+sudo dpkg -P ntpsec-ntpdate openntpd    # 清除旧配置
+sudo apt update -y
+sudo apt install -y chrony # 安装chrony时钟同步服务
+vi /etc/chrony/chrony.conf # 编辑配置
+#pool 2.debian.pool.ntp.org iburst # 屏蔽官方配置
+server ntp1.aliyun.com iburst
+server ntp2.aliyun.com iburst      # 配置结束
+sudo systemctl daemon-reload       # 设置启动
+sudo systemctl enable chrony       # 设置启动时自动运行
+sudo systemctl start chrony        # 启动同步服务
+
+
+timedatectl set-timezone Asia/Shanghai # 设置时区
+timedatactl                            # 查看系统时间管理
+
+# 将系统时间写入硬件时钟(BIOS时间)
+apt-get install util-linux-extra -y    # 安装额外的程序
+hwclock --systohc # 写入
+hwclock --show    # 查看
+
+
 # 设置分辨率
 sudo displayconfig-gtk  # 打开显示器和显卡设置
 #   1.选择"显卡"-点击"驱动程序"-进入"按名称选择驱动程序"-选择"vboxvideo" 
